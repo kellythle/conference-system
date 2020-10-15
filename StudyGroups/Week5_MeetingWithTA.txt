@@ -1,3 +1,4 @@
 Questions:
 1. Can you explain the concept of MVP again? (An Yen)
 2. When writing CRC cards, how can I identify Use cases with Entities? (An Yen)
+3. How can we deal with/make design decisions with regards to design principles that conflict? (Wenying)
