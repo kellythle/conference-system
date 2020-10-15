@@ -3,3 +3,4 @@ Questions:
 2. When writing CRC cards, how can I identify Use cases with Entities? (An Yen)
 3. How can we deal with/make design decisions with regards to design principles that conflict? (Wenying)
 4. How do we decide which nouns to choose as entities?
+5. Can you explain exactly what a 'responsibility' is for Single Responsibility Principle? (Filip)
