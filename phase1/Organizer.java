@@ -1,0 +1,3 @@
+class Organizer extends UserAccount {
+
+}
