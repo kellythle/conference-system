@@ -12,7 +12,7 @@ class Conference {
      * @param attendees
      * @param events
      */
-    public Conference(ArratList<String> attendees, ArrayList<Integer> events){
+    public Conference(ArrayList<String> attendees, ArrayList<Integer> events){
         this.attendees = attendees;
         this.events = events;
     }
