@@ -7,26 +7,26 @@ import java.util.Date;
  */
 class Event {
     private String name; // name of event
-    private int Id; // id of event
+    private static int id= -1; // id of event
     private String speaker; // name of speaker
     private Date time; //time of the event
-    private Arraylist<String> attendees; // names of the attendees
+    private ArrayList<String> attendees; // names of the attendees
     private String room; //the room number where this event is held
 
     /**
      * The name, ID, occuring time, occuring place, and speaker required to create an event.
-     * @param name
-     * @param id
-     * @param speaker
-     * @param time
-     * @param room
+     * @param name-
+     * @param speaker-
+     * @param time-
+     * @param room-
      */
-    public Event (String name, int id, String speaker, Date time, String room) {
+    public Event (String name, String speaker, Date time, String room) {
         this.name = name;
-        this.id = id;
         this.speaker = speaker;
         this.time = time;
         this.room = room;
+        this.attendees = new ArrayList<>();
+        id += 1;
     }
 
     /**
@@ -42,7 +42,7 @@ class Event {
      * @return the id of this Event.
      */
     public int getId() {
-        return Id;
+        return id;
     }
 
     /**
@@ -71,31 +71,27 @@ class Event {
 
     /**
      * This method sets the attendee list of this event.
-     * @param attendees
+     * @param attendeeName-
      */
-    public void setAttendees(Arraylist<String> attendees) {
-        this.attendees = attendees;
+    public void addAttendee(String attendeeName) {
+        this.attendees.add(attendeeName);
     }
 
     /**
-     * This method sets the ID of this event.
-     * @param id
+     * Return the list of attendees
+     * @return the list of attendees
      */
-    public void setId(int id) {
-        Id = id;
-    }
+    public ArrayList<String> getAttendees() {return attendees;}
 
     /**
      * This method sets the name of this event.
-     * @param name
+     * @param name-
      */
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void setName(String name) {this.name = name; }
 
     /**
      * This method sets the room number of where this event will be held.
-     * @param room
+     * @param room-
      */
     public void setRoom(String room) {
         this.room = room;
@@ -103,7 +99,7 @@ class Event {
 
     /**
      * This method assign a speaker to this event by the speaker's name.
-     * @param speaker
+     * @param speaker-
      */
     public void setSpeaker(String speaker) {
         this.speaker = speaker;
@@ -111,7 +107,7 @@ class Event {
 
     /**
      * This method sets the occuring time of this event.
-     * @param time
+     * @param time-
      */
     public void setTime(Date time) {
         this.time = time;

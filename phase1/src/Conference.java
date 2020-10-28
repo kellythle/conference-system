@@ -4,13 +4,13 @@ import java.util.ArrayList;
  * @author An Yen
  */
 class Conference {
-    private Arraylist<Stirng> attendees;
-    private Arraylist<Integer> events;
+    private final ArrayList<String> attendees;
+    private final ArrayList<Integer> events;
 
     /**
      * Creates a Conference with an attendee list and an event list.
-     * @param attendees
-     * @param events
+     * @param attendees-
+     * @param events-
      */
     public Conference(ArrayList<String> attendees, ArrayList<Integer> events){
         this.attendees = attendees;
@@ -21,7 +21,7 @@ class Conference {
      * Returns the event list of this conference.
      * @return the event list of thi Conference
      */
-    public Arraylist<Integer> getEvents() {
+    public ArrayList<Integer> getEvents() {
         return events;
     }
 
@@ -29,13 +29,13 @@ class Conference {
      * Returns the attendee list of this conference.
      * @return the attendee list of this Conference
      */
-    public Arraylist<Stirng> getAttendees() {
+    public ArrayList<String> getAttendees() {
         return attendees;
     }
 
     /**
      * Add a new attendee to the attendee list of this conference.
-     * @param attendeeName
+     * @param attendeeName-
      */
     public void setAttendees(String attendeeName){
         attendees.add(attendeeName);
@@ -43,7 +43,7 @@ class Conference {
 
     /**
      * Add a new event to the event list of this conference.
-     * @param eventId
+     * @param eventId-
      */
     public void setEvents (int eventId){
         events.add(eventId);
