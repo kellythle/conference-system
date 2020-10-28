@@ -9,8 +9,8 @@ class Conference {
 
     /**
      * Creates a Conference with an attendee list and an event list.
-     * @param attendees-
-     * @param events-
+     * @param attendees- list of attendee names
+     * @param events- list of event IDs
      */
     public Conference(ArrayList<String> attendees, ArrayList<Integer> events){
         this.attendees = attendees;
@@ -35,7 +35,7 @@ class Conference {
 
     /**
      * Add a new attendee to the attendee list of this conference.
-     * @param attendeeName-
+     * @param attendeeName- an attendee name
      */
     public void setAttendees(String attendeeName){
         attendees.add(attendeeName);
@@ -43,7 +43,7 @@ class Conference {
 
     /**
      * Add a new event to the event list of this conference.
-     * @param eventId-
+     * @param eventId- an event ID
      */
     public void setEvents (int eventId){
         events.add(eventId);

@@ -14,11 +14,11 @@ class Event {
     private String room; //the room number where this event is held
 
     /**
-     * The name, ID, occuring time, occuring place, and speaker required to create an event.
-     * @param name-
-     * @param speaker-
-     * @param time-
-     * @param room-
+     * The name, ID, occurring time, occurring place, and speaker required to create an event.
+     * @param name- the name of this event
+     * @param speaker- the speaker's name
+     * @param time- the occurring time of this event
+     * @param room- the occurring room number of this event
      */
     public Event (String name, String speaker, Date time, String room) {
         this.name = name;
@@ -54,16 +54,16 @@ class Event {
     }
 
     /**
-     * Returns the occuring time of this event.
-     * @return the occuring time of this Event
+     * Returns the occurring time of this event.
+     * @return the occurring time of this Event
      */
     public Date getTime() {
         return time;
     }
 
     /**
-     * Returns the occuring room number of this event.
-     * @return the occuring room number of this Event
+     * Returns the occurring room number of this event.
+     * @return the occurring room number of this Event
      */
     public String getRoom() {
         return room;
@@ -71,7 +71,7 @@ class Event {
 
     /**
      * This method sets the attendee list of this event.
-     * @param attendeeName-
+     * @param attendeeName- the attendee's name
      */
     public void addAttendee(String attendeeName) {
         this.attendees.add(attendeeName);
@@ -85,13 +85,13 @@ class Event {
 
     /**
      * This method sets the name of this event.
-     * @param name-
+     * @param name- the name of this event
      */
     public void setName(String name) {this.name = name; }
 
     /**
      * This method sets the room number of where this event will be held.
-     * @param room-
+     * @param room- the room number
      */
     public void setRoom(String room) {
         this.room = room;
@@ -99,7 +99,7 @@ class Event {
 
     /**
      * This method assign a speaker to this event by the speaker's name.
-     * @param speaker-
+     * @param speaker- the name of the speaker
      */
     public void setSpeaker(String speaker) {
         this.speaker = speaker;
@@ -107,7 +107,7 @@ class Event {
 
     /**
      * This method sets the occuring time of this event.
-     * @param time-
+     * @param time- the time of this event
      */
     public void setTime(Date time) {
         this.time = time;
