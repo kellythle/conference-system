@@ -41,9 +41,8 @@ abstract class UserAccount {
     /**
      * Modify the user name
      *
-     * @return the user name
      */
-    public String setUserName() {return userName;}
+    public void setUserName(String name) {this.userName = name;}
 
     /**
      * Return the password
