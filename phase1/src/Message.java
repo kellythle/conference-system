@@ -2,10 +2,11 @@ import java.time.LocalTime;
 
 
 class Message {
+    private static int nextId = 0;// next available id for use
+    private int id; // id of message
     private String sender;// Stores the name of the sender
     private String receiver;// Stores the name of the receiver
     private String content;// Stores the content of the message
-    private static int id = -1;// id of the message
     private final LocalTime time = LocalTime.now();// time when the message create
 
     /**
@@ -18,7 +19,8 @@ class Message {
         this.sender = sender;
         this.receiver = receiver;
         this.content = content;
-        id += 1;
+        this.id = nextId;
+        nextId++;
     }
 
     /**
@@ -73,7 +75,7 @@ class Message {
      * Getter of id
      * @return message id
      */
-    public static int getId() {
+    public int getId() {
         return id;
     }
 

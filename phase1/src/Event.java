@@ -6,8 +6,9 @@ import java.util.Date;
  * @author An Yen
  */
 class Event {
+    private static int nextId = 0; // next available id
+    private int id; // id of event
     private String name; // name of event
-    private static int id= -1; // id of event
     private String speaker; // name of speaker
     private Date time; //time of the event
     private ArrayList<String> attendees; // names of the attendees
@@ -26,7 +27,8 @@ class Event {
         this.time = time;
         this.room = room;
         this.attendees = new ArrayList<>();
-        id += 1;
+        this.id = nextId;
+        nextId++;
     }
 
     /**
