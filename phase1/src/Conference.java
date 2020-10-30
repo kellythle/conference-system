@@ -1,52 +1,83 @@
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Map;
+
 /**
  * A class that represents a conference.
+ * The conference stores the earliest legal starting time and the
+ * last legal ending time for events of a day.
+ * The conference also stores a map, Map<Date, Integer>, that represents
+ * the scheduled times and room numbers.
+ *
  * @author An Yen
  */
 class Conference {
-    private final ArrayList<String> attendees;
-    private final ArrayList<Integer> events;
+    private int legalStartHour = 9; //earliest legal starting time for events of a day
+    private int legalEndHour = 17; //last legal ending time for events of a day
+    private ArrayList<Integer> legalRoomNumbers; // a list of existing room numbers
+    private Map<Date, Integer> scheduledSpot; // a map of time to room number that has been scheduled
 
     /**
-     * Creates a Conference with an attendee list and an event list.
-     * @param attendees- list of attendee names
-     * @param events- list of event IDs
+     * Creates a conference with the list of room numbers.
+     * This conference has default start hour and end hour. (from 9am to 5 pm)
+     * @param RoomNumbers- an Arraylist of room numbers
      */
-    public Conference(ArrayList<String> attendees, ArrayList<Integer> events){
-        this.attendees = attendees;
-        this.events = events;
+    public Conference(ArrayList<Integer> RoomNumbers){
+        this.legalRoomNumbers = RoomNumbers;
     }
 
     /**
-     * Returns the event list of this conference.
-     * @return the event list of thi Conference
+     * Creates a conference by the given start hour, end hour and a list of room numbers.
+     * @param startHour- earliest legal starting time for events of a day
+     * @param endHour- last legal ending time for events of a day
+     * @param RoomNumbers- a list of existing room numbers
      */
-    public ArrayList<Integer> getEvents() {
-        return events;
+    public Conference(int startHour, int endHour, ArrayList<Integer> RoomNumbers){
+        this(RoomNumbers);
+        this.legalStartHour = startHour;
+        this.legalEndHour = endHour;
     }
 
     /**
-     * Returns the attendee list of this conference.
-     * @return the attendee list of this Conference
+     * Returns the legal start hour of the conference.
+     * @return the earliest legal starting time for events of a day
      */
-    public ArrayList<String> getAttendees() {
-        return attendees;
+    public int getLegalStartHour() {
+        return legalStartHour;
     }
 
     /**
-     * Add a new attendee to the attendee list of this conference.
-     * @param attendeeName- an attendee name
+     * Returns the legal end hour of the conference.
+     * @return the last legal ending time for events of a day
      */
-    public void setAttendees(String attendeeName){
-        attendees.add(attendeeName);
+    public int getLegalEndHour() {
+        return legalEndHour;
     }
 
     /**
-     * Add a new event to the event list of this conference.
-     * @param eventId- an event ID
+     * Returns a map of scheduled spots tha maps from time to room number.
+     * @return a Map of the scheduled spots.
      */
-    public void setEvents (int eventId){
-        events.add(eventId);
+    public Map<Date, Integer> getScheduledSpot() {
+        return scheduledSpot;
+    }
+
+    /**
+     * Returns a list of legal room numbers.
+     * @return an Arraylist of legal room numbers.
+     */
+    public ArrayList<Integer> getLegalRoomNumbers() {
+        return legalRoomNumbers;
+    }
+
+    /**
+     * Add a new scheduled spot to the list of scheduled spots.
+     * @param date- occurring time of the event
+     * @param roomNumber- occurring room number of the event
+     */
+    public void addScheduledSpot(Date date, int roomNumber){
+        this.scheduledSpot.putIfAbsent(date, roomNumber);
     }
 
 }
