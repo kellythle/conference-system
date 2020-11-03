@@ -114,4 +114,14 @@ class Event {
     public void setTime(Date time) {
         this.time = time;
     }
+
+    /**
+     * This method returns true if an attendee is in the list of attendees,
+     * and false otherwise.
+     * @param attendeeName- the attendee's name
+     */
+    public boolean hasAttendee(String attendeeName)
+    {
+        return this.attendees.contains(attendeeName);
+    }
 }
