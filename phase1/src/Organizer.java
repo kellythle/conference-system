@@ -8,6 +8,4 @@ class Organizer extends UserAccount {
         super(userName, passWord);
         this.isOrganizer = true;
     }
-
-
 }
