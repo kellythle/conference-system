@@ -1,11 +1,15 @@
-class Attendee extends UserAccount {
+package Entity;
+
+
+
+public class Speaker extends UserAccount {
     /**
      * Create user account by given user name and password
      * @param userName- name of user
      * @param passWord- identify user by password
      */
-    public Attendee(String userName, String passWord){
+    public Speaker(String userName, String passWord){
         super(userName, passWord);
+        this.isSpeaker = true;
     }
-
 }

@@ -1,10 +1,13 @@
-import java.time.LocalTime;
+package UseCase;
+
+import Entity.Event;
+import UseCase.MessageManager;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * A class that stores, manages, creates messages
- * MessageManager stores a map of message IDs to messages
+ * UseCase.MessageManager stores a map of message IDs to messages
  * stores ID of user sending messages
  * Getters for message sender, receiver, time, and content from messageID
  * Getter for message history of current user
@@ -13,10 +16,10 @@ import java.util.HashMap;
  * @author Yu Jin Kim
  */
 
-public class OrganizerMessageManager extends MessageManager{
+public class OrganizerMessageManager extends MessageManager {
 
     /**
-     * Creates an OrganizerMessageManager
+     * Creates an UseCase.OrganizerMessageManager
      * @param senderID - ID of the current user logged in
      */
 
@@ -59,7 +62,7 @@ public class OrganizerMessageManager extends MessageManager{
     /**
      * Returns True if Organizer sent message to all Speakers in the system
      *
-     * Cannot implement until StorageManager implemented
+     * Cannot implement until UseCase.StorageManager implemented
      *
      * @param event
      * @param messageContent
@@ -75,7 +78,7 @@ public class OrganizerMessageManager extends MessageManager{
     /**
      * Returns True if Organizer sent message to one speaker in the system
      *
-     * Cannot implement until StorageManager implemented
+     * Cannot implement until UseCase.StorageManager implemented
      *
      * @param event
      * @param messageContent

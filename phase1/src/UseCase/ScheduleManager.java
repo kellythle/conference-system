@@ -1,3 +1,8 @@
+package UseCase;
+
+import Entity.Conference;
+import Entity.Event;
+
 import java.util.ArrayList;
 import java.util.Date;
 

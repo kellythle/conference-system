@@ -1,3 +1,11 @@
+package UseCase;
+
+import Entity.UserAccount;
+import UseCase.AttendeeManager;
+import UseCase.OrganizerManager;
+import UseCase.SpeakerManager;
+import UseCase.StorageManager;
+
 /**
  * A Class that manages UserAccounts by creating new accounts and checking login information
  */

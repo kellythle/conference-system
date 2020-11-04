@@ -1,5 +1,8 @@
+package UseCase;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import Entity.UserAccount;
 
 /**
  * A class that stores a list of users.

@@ -1,4 +1,8 @@
+package UseCase;
+
 import java.util.ArrayList;
+import Entity.Event;
+import Entity.UserAccount;
 
 /**
  * A class that represents a Use Case for signing up for events.

@@ -1,3 +1,8 @@
+package UseCase;
+
+import Entity.Speaker;
+import Entity.UserAccount;
+
 /**
  * A Class that manages Speaker accounts
  */

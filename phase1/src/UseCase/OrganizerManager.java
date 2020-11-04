@@ -1,7 +1,9 @@
+package UseCase;
+
 /**
  * A Class that manages Organizer accounts
  */
-public class OrganizerManager extends UserManagaer{
+public class OrganizerManager extends UserManagaer {
     /**
      * Creates a new Organizer
      *

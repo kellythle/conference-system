@@ -1,11 +1,15 @@
-class Organizer extends UserAccount {
+package Entity;
+
+import Entity.UserAccount;
+
+public class Attendee extends UserAccount {
     /**
      * Create user account by given user name and password
      * @param userName- name of user
      * @param passWord- identify user by password
      */
-    public Organizer(String userName, String passWord){
+    public Attendee(String userName, String passWord){
         super(userName, passWord);
-        this.isOrganizer = true;
     }
+
 }

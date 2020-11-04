@@ -1,10 +1,12 @@
+package Entity;
+
 import java.util.ArrayList;
 
 /**
  * A class that represents abstract class user account.
  * @author Qianwen Wu
  */
-abstract class UserAccount {
+public abstract class UserAccount {
     private String userName;
     private String passWord;
     private ArrayList<String> friendList; // Stores the userNames
