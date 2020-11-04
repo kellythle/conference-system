@@ -52,10 +52,10 @@ public class ScheduleManager {
      * @return event if event was created
      */
     public boolean createEvent(Conference conference, String name, String speaker, Date time, String room) {
-       if (time.compareTo(conference.getLegalStartHour()) >= 0 && conference.getLegalEndHour().compareTo(time) == -1) {
-           Event newEvent = new Event(name, speaker, time, room);
-       }
-       return newEvent;
+        if (time.compareTo(conference.getLegalStartHour()) >= 0 && conference.getLegalEndHour().compareTo(time) == -1) {
+            Event newEvent = new Event(name, speaker, time, room);
+        }
+        return newEvent;
     }
 
     /**
