@@ -33,12 +33,11 @@ public class SpeakerMessageManager extends MessageManager{
      * @return boolean
      */
     public boolean sendAllMessageEvent(Event event, String messageContent){
-        for (attendee:event.attendee) {
-            sendSingleMessage(receiverID, messageContent);
+        for (String userName : event.getAttendees()) {
+            sendSingleMessage(userName, messageContent);
             }
         return true;
         }
-    }
 
 
     /**
@@ -48,13 +47,13 @@ public class SpeakerMessageManager extends MessageManager{
      * @param messageContent
      * @return boolean
      */
-    public boolean sendAllMessageAllEvent(String speakerId, String messageContent, Event placeholder){
-        for (placeholder) {
-            if (speakerId == placeholder.speaker.userName) {
-                sendAllMessageEvent(placeholder, messageContent);
-            }
-        }
-        return true;
-    }
+    //public boolean sendAllMessageAllEvent(String speakerId, String messageContent, StorageManager storage){
+        //for (attendee : event.attendees) {
+            //if (sendSingleMessage(receiverID, messageContent) == false) {
+               // return false;
+        //    }
+        //return true;
+    //}
+
 
 }
