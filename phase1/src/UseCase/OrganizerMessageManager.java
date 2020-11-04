@@ -64,11 +64,10 @@ public class OrganizerMessageManager extends MessageManager {
      *
      * Cannot implement until UseCase.StorageManager implemented
      *
-     * @param event
      * @param messageContent
      * @return boolean
      */
-    public boolean sendAllMessageSpeaker(Event event, String messageContent, StorageManager storage){
+    public boolean sendAllMessageSpeaker(String messageContent, StorageManager storage){
         for (String userName: storage.userMap.keySet()) {
             sendSingleMessage(userName, messageContent);
         }
