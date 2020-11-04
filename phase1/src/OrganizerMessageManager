@@ -32,10 +32,10 @@ public class OrganizerMessageManager extends MessageManager{
      * @return boolean
      */
     public boolean sendAllMessageEvent(Event event, String messageContent){
-        for (attendee:event.attendee) {
-            sendSingleMessage(attendee.userName, messageContent);
+        for (String userName : event.getAttendees()) {
+            sendSingleMessage(userName, messageContent);
         }
-        return true
+        return true;
     }
 
     /**
@@ -47,7 +47,7 @@ public class OrganizerMessageManager extends MessageManager{
      * @return boolean
      */
     public boolean sendSingleMessageEvent(Event event, String messageContent, String receiverID){
-        if (event.attendee.contains(receiverID)) {
+        if (event.getAttendees().contains(receiverID)) {
             sendSingleMessage(receiverID, messageContent);
             return true;
         }
@@ -63,11 +63,11 @@ public class OrganizerMessageManager extends MessageManager{
      *
      * @param event
      * @param messageContent
-     * @return true
+     * @return boolean
      */
-    public void sendAllMessageSpeaker(Event event, String messageContent, ArrayList<Speaker> speakers){
-        for (speakers) {
-            sendSingleMessage(attendee.userName, messageContent);
+    public boolean sendAllMessageSpeaker(Event event, String messageContent, StorageManager storage){
+        for (String userName: storage.userMap.keySet()) {
+            sendSingleMessage(userName, messageContent);
         }
         return true;
     }
@@ -83,7 +83,7 @@ public class OrganizerMessageManager extends MessageManager{
      * @return boolean
      */
     public boolean sendSingleMessageSpeaker(Event event, String messageContent, String receiverID){
-        if (event.attendee.contains(receiverID)) {
+        if (event.getAttendees().contains(receiverID)) {
             sendSingleMessage(receiverID, messageContent);
             return true;
         }
