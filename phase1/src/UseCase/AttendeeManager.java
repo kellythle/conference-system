@@ -1,3 +1,8 @@
+package UseCase;
+
+import Entity.Attendee;
+import Entity.UserAccount;
+
 /**
  * A Class that manages Attendee accounts
  */

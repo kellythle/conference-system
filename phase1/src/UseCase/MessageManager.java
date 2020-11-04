@@ -1,10 +1,13 @@
+package UseCase;
+
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import Entity.Message;
 
 /**
  * A class that stores, manages, creates messages
- * MessageManager stores a map of message IDs to messages
+ * UseCase.MessageManager stores a map of message IDs to messages
  * stores ID of user sending messages
  * Getters for message sender, receiver, time, and content from messageID
  * Getter for message history of current user
@@ -19,7 +22,7 @@ public class MessageManager {
     private String senderID;
 
     /**
-     * Creates a MessageManager
+     * Creates a UseCase.MessageManager
      * @param senderID - ID of the current user logged in
      */
 
@@ -92,7 +95,7 @@ public class MessageManager {
      * Returns True if user is allowed to send a message to
      * the user with the receiverID
      *
-     * Cannot implement until StorageManager implemented
+     * Cannot implement until UseCase.StorageManager implemented
      *
      * @param receiverID
      * @return true if the receiver is in the sender's friendlist
@@ -127,7 +130,7 @@ public class MessageManager {
     /**
      * Adds contact's ID to friendlist
      *
-     * Cannot implement until StorageManager implemented
+     * Cannot implement until UseCase.StorageManager implemented
      *
      * @param friendID
      * @return true if friend added to user friendlist

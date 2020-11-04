@@ -1,11 +1,15 @@
-class Speaker extends UserAccount {
+package Entity;
+
+import Entity.UserAccount;
+
+public class Organizer extends UserAccount {
     /**
      * Create user account by given user name and password
      * @param userName- name of user
      * @param passWord- identify user by password
      */
-    public Speaker(String userName, String passWord){
+    public Organizer(String userName, String passWord){
         super(userName, passWord);
-        this.isSpeaker = true;
+        this.isOrganizer = true;
     }
 }
