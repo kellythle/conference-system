@@ -30,16 +30,6 @@ public class ScheduleManager {
     }
 
     /**
-     * Adds the event to the evnt list.
-     *
-     * @param event - the event object
-     */
-
-    private void addEvent(Event event) {
-        this.eventList.add(event);
-    }
-
-    /**
      * Check if the starting of the event wanted to be created is in the legal starting and ending time of
      * the conference.
      * @param conference - the conference the event takes place in
@@ -78,7 +68,7 @@ public class ScheduleManager {
      * @param room - the occurring room of this event
      * @return true if successfully creates and adds the new event to the conference and false otherwise
      */
-    public boolean canAddEvent(Conference conference, String name, String speaker,
+    public boolean addEvent(Conference conference, String name, String speaker,
                                Date time, Pair<Integer, Integer> room) {
         if (!canCreateEvent(conference, time)){
             return false;
@@ -91,7 +81,7 @@ public class ScheduleManager {
             }
         }
         Event newEvent = createEvent(name, speaker, time, room);
-        this.addEvent(newEvent);
+        this.eventList.add(newEvent);
         return true;
     }
 }
