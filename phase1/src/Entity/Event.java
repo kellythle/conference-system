@@ -1,4 +1,6 @@
 package Entity;
+
+import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -7,27 +9,29 @@ import java.util.Date;
  * @author An Yen
  */
 public class Event {
+    private static int nextId = 0; // next available id
+    private int id; // id of event
     private String name; // name of event
-    private static int id= -1; // id of event
     private String speaker; // name of speaker
     private Date time; //time of the event
     private ArrayList<String> attendees; // names of the attendees
-    private String room; //the room number where this event is held
+    private Pair<Integer, Integer> room; //<room number, capacity>
 
     /**
-     * The name, ID, occuring time, occuring place, and speaker required to create an event.
-     * @param name-
-     * @param speaker-
-     * @param time-
-     * @param room-
+     * The name, ID, occurring time, occurring place, and speaker required to create an event.
+     * @param name- the name of this event
+     * @param speaker- the speaker's name
+     * @param time- the occurring time of this event
+     * @param room- the occurring room number of this event
      */
-    public Event (String name, String speaker, Date time, String room) {
+    public Event (String name, String speaker, Date time, Pair<Integer, Integer> room) {
         this.name = name;
         this.speaker = speaker;
         this.time = time;
         this.room = room;
         this.attendees = new ArrayList<>();
-        id += 1;
+        this.id = nextId;
+        nextId++;
     }
 
     /**
@@ -55,27 +59,38 @@ public class Event {
     }
 
     /**
-     * Returns the occuring time of this event.
-     * @return the occuring time of this Event
+     * Returns the occurring time of this event.
+     * @return the occurring time of this Event
      */
     public Date getTime() {
         return time;
     }
 
     /**
-     * Returns the occuring room number of this event.
-     * @return the occuring room number of this Event
+     * Returns the occurring room number of this event.
+     * @return the occurring room number of this Event
      */
-    public String getRoom() {
-        return room;
+    public Integer getRoomNum() {
+        return room.getKey();
+    }
+
+    /**
+     * Returns the capacity of the room where this event is hold.
+     * @return the occurring room's capacity of this Event
+     */
+    public Integer getRoomCapacity() {
+        return room.getValue();
     }
 
     /**
      * This method sets the attendee list of this event.
-     * @param attendeeName-
+     * @param attendeeName- the attendee's name
      */
-    public void addAttendee(String attendeeName) {
+    public boolean addAttendee(String attendeeName) {
+        if (this.attendees.size() == 2)
+            return false;
         this.attendees.add(attendeeName);
+        return true;
     }
 
     /**
@@ -86,21 +101,22 @@ public class Event {
 
     /**
      * This method sets the name of this event.
-     * @param name-
+     * @param name- the name of this event
      */
     public void setName(String name) {this.name = name; }
 
     /**
-     * This method sets the room number of where this event will be held.
-     * @param room-
+     * This method sets the room with its room number and room capacity of where
+     * this event will be held.
+     * @param room- Pair<room number, room capacity>
      */
-    public void setRoom(String room) {
+    public void setRoom(Pair<Integer, Integer> room) {
         this.room = room;
     }
 
     /**
      * This method assign a speaker to this event by the speaker's name.
-     * @param speaker-
+     * @param speaker- the name of the speaker
      */
     public void setSpeaker(String speaker) {
         this.speaker = speaker;
@@ -108,7 +124,7 @@ public class Event {
 
     /**
      * This method sets the occuring time of this event.
-     * @param time-
+     * @param time- the time of this event
      */
     public void setTime(Date time) {
         this.time = time;

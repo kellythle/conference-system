@@ -1,54 +1,31 @@
 package Entity;
 
-import java.util.ArrayList;
+
+import java.time.LocalDateTime;
+import java.util.Date;
+
 /**
- * A class that represents a conference.
+ * A class that represents a conference. All events in this conference should
+ * occur between the starting time and ending time of the conference.
  * @author An Yen
  */
 public class Conference {
-    private final ArrayList<String> attendees;
-    private final ArrayList<Integer> events;
+    private int startTime = 9; // the opening time of this conference is 9 am.
+    private int endTime = 17; // the ending time of this conference is 5 pm.
 
     /**
-     * Creates a Conference with an attendee list and an event list.
-     * @param attendees-
-     * @param events-
+     * Returns the starting time of this conference
+     * @return the startTime of this Conference
      */
-    public Conference(ArrayList<String> attendees, ArrayList<Integer> events){
-        this.attendees = attendees;
-        this.events = events;
+    public int getStartTime() {
+        return startTime;
     }
 
     /**
-     * Returns the event list of this conference.
-     * @return the event list of thi Conference
+     * Returns the ending time of this conference.
+     * @return the endTime of this Conference
      */
-    public ArrayList<Integer> getEvents() {
-        return events;
+    public int getEndTime() {
+        return endTime;
     }
-
-    /**
-     * Returns the attendee list of this conference.
-     * @return the attendee list of this Conference
-     */
-    public ArrayList<String> getAttendees() {
-        return attendees;
-    }
-
-    /**
-     * Add a new attendee to the attendee list of this conference.
-     * @param attendeeName-
-     */
-    public void setAttendees(String attendeeName){
-        attendees.add(attendeeName);
-    }
-
-    /**
-     * Add a new event to the event list of this conference.
-     * @param eventId-
-     */
-    public void setEvents (int eventId){
-        events.add(eventId);
-    }
-
 }

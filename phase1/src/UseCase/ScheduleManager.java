@@ -2,6 +2,7 @@ package UseCase;
 
 import Entity.Conference;
 import Entity.Event;
+import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,60 +30,68 @@ public class ScheduleManager {
     }
 
     /**
-     * Returns true if event is added to the list of events.
+     * Adds the event to the evnt list.
      *
      * @param event - the event object
-     * @param conference - the conference the event takes place in
-     *
-     * @return true if event was added to the list, false otherwise
      */
-    public boolean addEvent(Event event) {
-        if (canAddEvent(conference, event)) {
-            eventList.add(event);
+
+    private void addEvent(Event event) {
+        this.eventList.add(event);
+    }
+
+    /**
+     * Check if the starting of the event wanted to be created is in the legal starting and ending time of
+     * the conference.
+     * @param conference - the conference the event takes place in
+     * @param time - the occurring time of this event
+     * @return true if the event can be created and false if cannot
+     */
+    private boolean canCreateEvent(Conference conference, Date time){
+        if(time.getHours() >= conference.getStartTime() && time.getHours() < conference.getEndTime()){
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
      * Returns an event that is created.
      *
+     * @param name - the name of this event
+     * @param speaker - the speaker's name
+     * @param time - the occurring time of this event
+     * @param room - the occurring room of this event
+     *
+     * @return the Event that is created
+     */
+    private Event createEvent(String name, String speaker,
+                               Date time, Pair<Integer, Integer> room) {
+        return new Event(name, speaker, time, room);
+    }
+
+    /**
+     * Returns true if an event is created and added to the conference successfully.
+     * Returns false if the event cannot be created or added.
      * @param conference - the conference the event takes place in
      * @param name - the name of this event
      * @param speaker - the speaker's name
      * @param time - the occurring time of this event
-     * @param room - the occurring room number of this event
-     *
-     * @return event if event was created
+     * @param room - the occurring room of this event
+     * @return true if successfully creates and adds the new event to the conference and false otherwise
      */
-    public boolean createEvent(Conference conference, String name, String speaker, Date time, String room) {
-        if (time.compareTo(conference.getLegalStartHour()) >= 0 && conference.getLegalEndHour().compareTo(time) == -1) {
-            Event newEvent = new Event(name, speaker, time, room);
-        }
-        return newEvent;
-    }
-
-    /**
-     * Returns if an event can be added to the list of events.
-     *
-     * @param conference - the conference the event takes place in
-     * @param event - the event object that wants to join the list of events
-     *
-     * @return true if the event can be added
-     */
-    public boolean canAddEvent(Conference conference, Event event) {
-        if (time.before(conference.getLegalStartHour()) || conference.getLegalEndHour().after(time)) {
+    public boolean canAddEvent(Conference conference, String name, String speaker,
+                               Date time, Pair<Integer, Integer> room) {
+        if (!canCreateEvent(conference, time)){
             return false;
         }
 
         for (Event e : eventList) {
-            if ((e.getTime() == event.getTime() && e.getRoom() == event.getRoom()) || (e.getTIme() == event.getTime()
-                    && e.getSpeaker() == event.getSpeaker())) {
+            if ((e.getTime() == time && e.getRoomNum().equals(room.getKey())) || (e.getTime() == time
+                    && e.getSpeaker().equals(speaker))) {
                 return false;
             }
         }
+        Event newEvent = createEvent(name, speaker, time, room);
+        this.addEvent(newEvent);
         return true;
     }
-
 }

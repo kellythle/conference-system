@@ -1,5 +1,8 @@
 package UseCase;
 
+import Entity.Organizer;
+import Entity.UserAccount;
+
 /**
  * A Class that manages Organizer accounts
  */
