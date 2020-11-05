@@ -1,9 +1,7 @@
 package UseCase;
 
-import Entity.Conference;
 import Entity.Event;
 import javafx.util.Pair;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -71,7 +69,7 @@ public class ScheduleManager {
      * @return the Event that is created
      */
     private Event createEvent(String name, String speaker,
-                               Date time, Pair<Integer, Integer> room) {
+                              Date time, Pair<Integer, Integer> room) {
         return new Event(name, speaker, time, room);
     }
 
@@ -85,7 +83,7 @@ public class ScheduleManager {
      * @return true if successfully creates and adds the new event to the conference and false otherwise
      */
     public boolean addEvent(String name, String speaker,
-                               Date time, Pair<Integer, Integer> room) {
+                            Date time, Pair<Integer, Integer> room) {
         if (!canCreateEvent(time)){
             return false;
         }

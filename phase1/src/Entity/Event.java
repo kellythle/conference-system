@@ -1,8 +1,10 @@
 package Entity;
 
 import javafx.util.Pair;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.sql.Time;
 
 /**
  * A class that represents an event.
@@ -123,7 +125,7 @@ public class Event {
     }
 
     /**
-     * This method sets the occuring time of this event.
+     * This method sets the occurring time of this event.
      * @param time- the time of this event
      */
     public void setTime(Date time) {
