@@ -19,6 +19,24 @@ import java.util.Date;
 public class ScheduleManager {
 
     private ArrayList<Event> eventList;
+    private int startTime = 9; // the opening time of this conference is 9 am.
+    private int endTime = 17; // the ending time of this conference is 5 pm.
+
+    /**
+     * Returns the starting time of this conference
+     * @return the startTime of this conference
+     */
+    public int getStartTime() {
+        return startTime;
+    }
+
+    /**
+     * Returns the ending time of this conference.
+     * @return the endTime of this conference
+     */
+    public int getEndTime() {
+        return endTime;
+    }
 
     /**
      * Returns the list of events.
@@ -32,12 +50,11 @@ public class ScheduleManager {
     /**
      * Check if the starting of the event wanted to be created is in the legal starting and ending time of
      * the conference.
-     * @param conference - the conference the event takes place in
      * @param time - the occurring time of this event
      * @return true if the event can be created and false if cannot
      */
-    private boolean canCreateEvent(Conference conference, Date time){
-        if(time.getHours() >= conference.getStartTime() && time.getHours() < conference.getEndTime()){
+    private boolean canCreateEvent(Date time){
+        if(time.getHours() >= this.getStartTime() && time.getHours() < this.getEndTime()){
             return true;
         }
         return false;
@@ -61,16 +78,15 @@ public class ScheduleManager {
     /**
      * Returns true if an event is created and added to the conference successfully.
      * Returns false if the event cannot be created or added.
-     * @param conference - the conference the event takes place in
      * @param name - the name of this event
      * @param speaker - the speaker's name
      * @param time - the occurring time of this event
      * @param room - the occurring room of this event
      * @return true if successfully creates and adds the new event to the conference and false otherwise
      */
-    public boolean addEvent(Conference conference, String name, String speaker,
+    public boolean addEvent(String name, String speaker,
                                Date time, Pair<Integer, Integer> room) {
-        if (!canCreateEvent(conference, time)){
+        if (!canCreateEvent(time)){
             return false;
         }
 
