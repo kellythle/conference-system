@@ -1,7 +1,7 @@
 package Controller;
 
 import Entity.Event;
-import UseCase.ScheduleManager; // may change into EventManager after merging
+import UseCase.EventManager;
 import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,10 +13,10 @@ import java.util.Date;
  * @author Ann Yen
  */
 public class ScheduleController {
-    private ScheduleManager scheduleManager;
+    private EventManager eventManager;
 
     /**
-     * Calls the addEvent() method of ScheduleManager and returns
+     * Calls the addEvent() method of EventManager and returns
      * true if a event is successfully created. Returns false otherwise.
      *
      * @param name - name of the event wanted to be created (receive from UI)
@@ -27,7 +27,7 @@ public class ScheduleController {
      */
     public boolean callAddEvent(String name, String speaker,
                                Date time, Pair<Integer, Integer> room){
-        return scheduleManager.addEvent(name, speaker, time, room);
+        return eventManager.addEvent(name, speaker, time, room);
     }
 
     /**
@@ -35,7 +35,7 @@ public class ScheduleController {
      * @return a Pair<startTime, endTime>
      */
     public Pair<Integer, Integer> getLegalTime(){
-        return new Pair<>(scheduleManager.getStartTime(), scheduleManager.getEndTime());
+        return new Pair<>(eventManager.getStartTime(), eventManager.getEndTime());
     }
 
     /**
@@ -44,7 +44,7 @@ public class ScheduleController {
      * @return an ArrayList<Event> of the existing events
      */
     public ArrayList<Event> getEventList(){
-        return scheduleManager.getEventList();
+        return eventManager.getEventList();
     }
 }
 

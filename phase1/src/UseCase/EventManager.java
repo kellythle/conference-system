@@ -6,15 +6,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * A class that stores and creates events.
- * Store a list of events: an ArrayList of variable that stores the existing events
- * Create events: calls the constructor of event
- * Check time conflicts
+ * This class stores a list of existing events, legal starting
+ * time, legal ending time and manages every event related command.
  *
- * @author Kelly Le
+ * @author Kelly Le, Filip Jovanovic, Ann Yen
  */
-
-public class ScheduleManager {
+public class EventManager {
 
     private ArrayList<Event> eventList;
     private int startTime = 9; // the opening time of this conference is 9 am.
@@ -97,5 +94,52 @@ public class ScheduleManager {
         Event newEvent = createEvent(name, speaker, time, room);
         this.eventList.add(newEvent);
         return true;
+    }
+
+    /**
+     * Decide whether this user can sign up for this event or not.
+     * If the user is already in this event, or this user had signed up
+     * another event that occurs at the same time as this event, or this
+     * event is already fulled, or this user is the speaker of this event
+     * this user cannot sign up for this event and this method returns false.
+     * Otherwise the user can sign up for this event and this method
+     * returns true.
+     *
+     * @param username - the username of this user.
+     * @param event - the event the user wanted to sign up for.
+     * @return true is the user can sign up for this event. Otherwise false.
+     */
+    private boolean canAddUserToEvent(String username, Event event){
+        if (event.getSpeaker().equals(username)){
+            return false;
+        }
+        if (event.getRoomCapacity().equals(event.getAttendees().size())) {
+            return false;
+        }
+        for (Event e: eventList){
+            if(event.getTime().equals(e.getTime())) {
+                if(e.getAttendees().contains(username)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Returns true if the user is added successfully to
+     * this event, and returns false if fails to add this
+     * user to this event.
+     *
+     * @param username - the name of the user
+     * @param event - the event the user wanted to sign up for.
+     * @return true if this user is added successfully yo he event, otherwise false.
+     */
+    public boolean addUserToEvent(String username, Event event){
+        if (canAddUserToEvent(username, event)){
+            event.addAttendee(username);
+            return true;
+        }
+        return false;
     }
 }
