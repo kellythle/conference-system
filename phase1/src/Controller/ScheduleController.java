@@ -1,7 +1,7 @@
 package Controller;
 
-import Entity.Event;
 import UseCase.EventManager;
+import UseCase.UserManager;
 import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,11 +10,20 @@ import java.util.Date;
  * A controller class that calls EventManager to manage any
  * command related to adding events.
  *
- * @author Ann Yen
+ * @author An Yen
  */
 public class ScheduleController {
     private EventManager eventManager;
+    private UserManager userManager;
 
+    /**
+     * Returns a list of available speaker usernames.
+     *
+     * @return an arraylist of speaker usernames
+     */
+    public ArrayList<String> getSpeakerList(){
+        return userManager.getSpeakerList();
+    }
     /**
      * Calls the addEvent() method of EventManager and returns
      * true if a event is successfully created. Returns false otherwise.
@@ -27,24 +36,19 @@ public class ScheduleController {
      */
     public boolean callAddEvent(String name, String speaker,
                                Date time, Pair<Integer, Integer> room){
+        if(!userManager.isSpeaker(speaker)){
+            return false;
+        }
         return eventManager.addEvent(name, speaker, time, room);
     }
 
     /**
      * Returns a pair of the legal start time and end time that an event can take place.
+     *
      * @return a Pair<startTime, endTime>
      */
     public Pair<Integer, Integer> getLegalTime(){
         return new Pair<>(eventManager.getStartTime(), eventManager.getEndTime());
-    }
-
-    /**
-     * MOVE THIS TO SIGNUPCONTROLLER!!!
-     * Returns an arraylist of the existing events.
-     * @return an ArrayList<Event> of the existing events
-     */
-    public ArrayList<Event> getEventList(){
-        return eventManager.getEventList();
     }
 }
 

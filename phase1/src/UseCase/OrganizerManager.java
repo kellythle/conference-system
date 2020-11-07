@@ -6,7 +6,7 @@ import Entity.UserAccount;
 /**
  * A Class that manages Organizer accounts
  */
-public class OrganizerManager extends UserManagaer {
+public class OrganizerManager extends UserManager {
     /**
      * Creates a new Organizer
      *

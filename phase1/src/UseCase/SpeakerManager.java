@@ -6,7 +6,7 @@ import Entity.UserAccount;
 /**
  * A Class that manages Speaker accounts
  */
-public class SpeakerManager extends UserManagaer {
+public class SpeakerManager extends UserManager {
     /**
      * Creates a new Speaker
      *

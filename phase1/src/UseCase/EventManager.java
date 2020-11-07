@@ -9,7 +9,7 @@ import java.util.Date;
  * This class stores a list of existing events, legal starting
  * time, legal ending time and manages every event related command.
  *
- * @author Kelly Le, Filip Jovanovic, Ann Yen
+ * @author Kelly Le, Filip Jovanovic, An Yen
  */
 public class EventManager {
 
@@ -19,6 +19,7 @@ public class EventManager {
 
     /**
      * Returns the starting time of this conference
+     *
      * @return the startTime of this conference
      */
     public int getStartTime() {
@@ -27,6 +28,7 @@ public class EventManager {
 
     /**
      * Returns the ending time of this conference.
+     *
      * @return the endTime of this conference
      */
     public int getEndTime() {
@@ -45,6 +47,7 @@ public class EventManager {
     /**
      * Check if the starting of the event wanted to be created is in the legal starting and ending time of
      * the conference.
+     *
      * @param time - the occurring time of this event
      * @return true if the event can be created and false if cannot
      */
@@ -62,7 +65,6 @@ public class EventManager {
      * @param speaker - the speaker's name
      * @param time - the occurring time of this event
      * @param room - the occurring room of this event
-     *
      * @return the Event that is created
      */
     private Event createEvent(String name, String speaker,
@@ -73,6 +75,7 @@ public class EventManager {
     /**
      * Returns true if an event is created and added to the conference successfully.
      * Returns false if the event cannot be created or added.
+     *
      * @param name - the name of this event
      * @param speaker - the speaker's name
      * @param time - the occurring time of this event

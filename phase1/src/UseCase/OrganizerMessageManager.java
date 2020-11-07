@@ -67,8 +67,8 @@ public class OrganizerMessageManager extends MessageManager {
      * @param messageContent
      * @return boolean
      */
-    public boolean sendAllMessageSpeaker(String messageContent, StorageManager storage){
-        for (String userName: storage.userMap.keySet()) {
+    public boolean sendAllMessageSpeaker(String messageContent, UserManager um){
+        for (String userName: um.userMap.keySet()) {
             sendSingleMessage(userName, messageContent);
         }
         return true;

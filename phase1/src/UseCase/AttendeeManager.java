@@ -6,7 +6,7 @@ import Entity.UserAccount;
 /**
  * A Class that manages Attendee accounts
  */
-public class AttendeeManager extends UserManagaer {
+public class AttendeeManager extends UserManager {
     /**
      * Creates a new Attendee
      *

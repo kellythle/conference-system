@@ -2,7 +2,7 @@ package Controller;
 
 import Entity.Event;
 import UseCase.EventManager;
-import UseCase.UserManagaer;
+import UseCase.UserManager;
 
 import java.util.ArrayList;
 
@@ -14,9 +14,10 @@ import java.util.ArrayList;
  */
 public class SignUpController {
     private EventManager eventManager;
-    private UserManagaer userManagaer;
+    private UserManager userManager;
     /**
      * Returns an arraylist of the existing events.
+     *
      * @return an ArrayList<Event> of the existing events
      */
     public ArrayList<Event> getEventList(){
@@ -24,6 +25,7 @@ public class SignUpController {
     }
 
     /**
+     * Returns true is the user can sign up for this event.
      *
      * @param username- the name of the user
      * @param event- the event the user want to sign up
