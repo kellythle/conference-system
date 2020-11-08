@@ -13,8 +13,10 @@ import java.util.ArrayList;
  * @author An Yen, Kelly Le, Filip Jovanovic
  */
 public class SignUpController {
-    private EventManager eventManager;
+    private EventManager eventManager = new EventManager();
     private UserManager userManager;
+    //remove comment after Richard done with UserManager Factory
+    //private UserManager userManager = new UserManager();
 
     /**
      * Returns an arraylist of the existing events.
@@ -26,13 +28,13 @@ public class SignUpController {
     }
 
     /**
-     * Returns an arraylist of the events this user has signed up for.
+     * Returns an arraylist of the event names this user has signed up for.
      *
      * @param username - the name of the user
      *
      * @return an ArrayList<Event> of the events this user has signed up for.
      */
-    public ArrayList<Event> getRegisteredEventList(String username){
+    public ArrayList<String> getRegisteredEventList(String username){
         return userManager.getRegisteredEvents(username);
     }
 

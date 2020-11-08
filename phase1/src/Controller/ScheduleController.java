@@ -13,8 +13,10 @@ import java.util.Date;
  * @author An Yen
  */
 public class ScheduleController {
-    private EventManager eventManager;
+    private EventManager eventManager = new EventManager();
     private UserManager userManager;
+    //remove comment after Richard done with UserManager Factory
+    //private UserManager userManager = new UserManager();
 
     /**
      * Returns a list of available speaker usernames.
