@@ -1,6 +1,7 @@
 package UseCase;
 
 import Entity.Attendee;
+import Entity.Speaker;
 import Entity.UserAccount;
 
 /**
@@ -9,17 +10,16 @@ import Entity.UserAccount;
 public class AttendeeManager extends UserManager {
     /**
      * Creates a new Attendee
-     *
-     * @param userName The new user's username, *cannot be a duplicate within the system
-     * @param password The new user's password
-     * @return The newly created Attendee
-     * @throws IllegalArgumentException If there is a duplicate userName
      */
-    public UserAccount createAttendee(String userName, String password) {
-        if (!super.idChecker(userName)) { //checks for duplicates first
-            return new Attendee(userName, password);
+    public AttendeeManager(){super();}
+
+    @Override
+    public UserAccount createUser(String userName, String password, String type) {
+        if (!super.containsUser(userName)) { //checks for duplicates first
+            UserAccount newA = new Speaker(userName, password) ;
+            userMap.put(userName, newA);
+            return newA;
         }
         throw new IllegalArgumentException("Duplicate userName");
-        //TODO: Maybe add the new user to the list?
     }
 }

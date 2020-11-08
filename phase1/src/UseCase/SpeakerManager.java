@@ -7,19 +7,19 @@ import Entity.UserAccount;
  * A Class that manages Speaker accounts
  */
 public class SpeakerManager extends UserManager {
-    /**
-     * Creates a new Speaker
-     *
-     * @param userName The new user's username, *cannot be a duplicate within the system
-     * @param password The new user's password
-     * @return The newly created Speaker
-     * @throws IllegalArgumentException If there is a duplicate userName
-     */
-    public UserAccount createSpeaker(String userName, String password) {
-        if (!super.idChecker(userName)) { //checks for duplicates first
-            return new Speaker(userName, password);
+
+    public SpeakerManager() {
+        super();
+    }
+
+    @Override
+    public UserAccount createUser(String userName, String password, String type) {
+        if (!super.containsUser(userName)) { //checks for duplicates first
+            UserAccount newS = new Speaker(userName, password) ;
+            userMap.put(userName, newS);
+            return newS;
         }
         throw new IllegalArgumentException("Duplicate userName");
-        //TODO: Maybe add the new user to the list?
     }
+
 }

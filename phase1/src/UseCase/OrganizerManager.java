@@ -1,12 +1,17 @@
 package UseCase;
 
 import Entity.Organizer;
+import Entity.Speaker;
 import Entity.UserAccount;
 
 /**
  * A Class that manages Organizer accounts
  */
 public class OrganizerManager extends UserManager {
+
+    public OrganizerManager(){super();}
+
+    @Override
     /**
      * Creates a new Organizer
      *
@@ -15,11 +20,16 @@ public class OrganizerManager extends UserManager {
      * @return The newly created Organizer
      * @throws IllegalArgumentException If there is a duplicate userName
      */
-    public UserAccount createOrganizer(String userName, String password) {
-        if (!super.idChecker(userName)) { //checks for duplicates first
-            return new Organizer(userName, password);
+    public UserAccount createUser(String userName, String password, String type) {
+        if (!super.containsUser(userName)) { //checks for duplicates first
+            UserAccount newO = new Speaker(userName, password) ;
+            userMap.put(userName, newO);
+            return newO;
         }
         throw new IllegalArgumentException("Duplicate userName");
-        //TODO: Maybe add the new user to the list?
     }
+
+
+
+
 }
