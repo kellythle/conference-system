@@ -20,6 +20,6 @@ public class AttendeeManager extends UserManager {
             return new Attendee(userName, password);
         }
         throw new IllegalArgumentException("Duplicate userName");
-        //TODO: Maybe add the new user to the list?
+        // now adds user to the map in the superclass method
     }
 }

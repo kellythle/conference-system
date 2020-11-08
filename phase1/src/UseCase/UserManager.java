@@ -20,17 +20,16 @@ public class UserManager {
      * @param password The new user's password
      * @param type The type of user added, can only be 3 strings: "Attendee", "Speaker",
      *             or ""Organizer"
-     * @return Returns the pointer of the newly created UserAccount, throws
      * @throws IllegalArgumentException when a type is unrecognized
      */
-    public UserAccount createUser(String userName, String password, String type) {
+    public void createUser(String userName, String password, String type) {
         switch (type) {
             case "Attendee":
-                return new AttendeeManager().createAttendee(userName, password);
+                userMap.put(userName, new AttendeeManager().createAttendee(userName, password));
             case "Speaker":
-                return new SpeakerManager().createSpeaker(userName, password);
+                userMap.put(userName, new SpeakerManager().createSpeaker(userName, password));
             case "Organizer":
-                return new OrganizerManager().createOrganizer(userName, password);
+                userMap.put(userName, new OrganizerManager().createOrganizer(userName, password));
             default:
                 throw new IllegalArgumentException("Unknown type of user");
         }
@@ -220,6 +219,18 @@ public class UserManager {
      */
     public boolean idChecker(String id) {
         return containsUser(id);
+    }
+
+    public boolean canSend(String username, String receiver){
+        if (isOrganizer(username)){
+            return true;
+        } else if (isSpeaker(username)){
+            if (isOrganizer(receiver)||isSpeaker(receiver)) {return false;}
+            return true;
+        } else{
+            if (isOrganizer(receiver)) {return false;}
+            return true;
+        }
     }
 }
 
