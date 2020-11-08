@@ -76,7 +76,7 @@ public class EventManager {
      * Returns true if an event is created and added to the conference successfully.
      * Returns false if the event cannot be created or added.
      * Checks if there exists an event occurring in the same room and
-     * at the ame time. Also checks if the speaker gives another talk
+     * at the same time. Also checks if the speaker gives another talk
      * at the same time.
      *
      * @param name - the name of this event
