@@ -33,7 +33,7 @@ public class ScheduleController {
      * @return true if this speaker name is not an existed username of this conference
      */
     private boolean canCreateSpeaker(String speakerName){
-        return !UserManager.userMap.containsKey(speakerName);
+        return !userManager.userMap.containsKey(speakerName);
     }
 
     /**

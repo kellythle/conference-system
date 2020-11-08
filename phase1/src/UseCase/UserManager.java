@@ -214,5 +214,18 @@ public abstract class UserManager {
     public boolean idChecker(String id) {
         return containsUser(id);
     }
+
+
+    public boolean canSend(String username, String receiver){
+        if (isOrganizer(username)){
+            return true;
+        } else if (isSpeaker(username)){
+            if (isOrganizer(receiver)||isSpeaker(receiver)) {return false;}
+            return true;
+        } else{
+            if (isOrganizer(receiver)) {return false;}
+            return true;
+        }
+    }
 }
 
