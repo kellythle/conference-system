@@ -69,6 +69,10 @@ public class EventManager {
      */
     private Event createEvent(String name, String speaker,
                               Date time, Pair<Integer, Integer> room) {
+        if (eventList.contains(name)) {
+            String newName = name + I;
+            return new Event(newName, speaker, time, room)
+        }
         return new Event(name, speaker, time, room);
     }
 
@@ -139,7 +143,7 @@ public class EventManager {
      *
      * @param username - the name of the user
      * @param event - the event the user wanted to sign up for.
-     * @return true if this user is added successfully yo he event, otherwise false.
+     * @return true if this user is added successfully to the event, otherwise false.
      */
     public boolean addUserToEvent(String username, Event event){
         if (canAddUserToEvent(username, event)){
@@ -148,4 +152,21 @@ public class EventManager {
         }
         return false;
     }
+
+    /**
+     * Returns true if the user is successfully deleted from
+     * this event, and returns false if fails to delete this
+     * user from this event (not in event list).
+     *
+     * @param username - the name of the user
+     * @param event - the event the user wanted to sign up for.
+     * @return true if this user is successfully deleted from the event, otherwise false.
+     */
+    public boolean deleteUserFromEvent(String username, Event event){
+        if (event.getAttendees().contains(username)){
+            return event.getAttendees().remove(username);
+        }
+        return false;
+    }
+
 }
