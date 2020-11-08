@@ -46,8 +46,9 @@ public class MessageManager {
      * @param messageContent
      */
 
-    private boolean createMessage(String receiverID, String messageContent){
+    public boolean createMessage(String receiverID, String messageContent){
         Message newMessage = new Message(senderID, receiverID, messageContent);
+        systemMessages.put(newMessage.getId(), newMessage);
         return true;
     }
 
@@ -103,6 +104,7 @@ public class MessageManager {
     public boolean canSend(String receiverID) {return true;}
 
     /**
+     * TO BE REMOVED FROM MESSAGEMANAGER CLASS
      *
      * @param receiverID
      * @param messageContent
@@ -123,7 +125,7 @@ public class MessageManager {
      */
     public boolean replyToMessage(int messageID, String messageContent){
         if (getMessageReceiver(messageID) == senderID) {
-            return createMessage(getMessageSender(messageID), messageContent);
+            return sendSingleMessage(getMessageSender(messageID), messageContent);
         } else { return false; }
     }
 
