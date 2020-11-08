@@ -69,9 +69,11 @@ public class EventManager {
      */
     private Event createEvent(String name, String speaker,
                               Date time, Pair<Integer, Integer> room) {
-        if (eventList.contains(name)) {
-            String newName = name + I;
-            return new Event(newName, speaker, time, room)
+        for (Event e: eventList){
+            if (e.getName().equals(name)) {
+                String newName = name + "I";
+                return new Event(newName, speaker, time, room);
+            }
         }
         return new Event(name, speaker, time, room);
     }
