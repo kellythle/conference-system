@@ -45,8 +45,7 @@ public class ScheduleController {
      */
     public boolean addNewSpeaker(String speakerName, String password) {
         if(canCreateSpeaker(speakerName)) {
-            UserManager.userMap.put(speakerName,
-                    userManager.createUser(speakerName, password, "Speaker"));
+            userManager.createUser(speakerName, password, "Speaker");
             return true;
         }
         return false;
