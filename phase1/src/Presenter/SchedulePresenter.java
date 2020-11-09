@@ -4,6 +4,9 @@ import Entity.Event;
 import UseCase.EventManager
 import UseCase.UserManager
 
+import java.util.ArrayList;
+import java.util.Date;
+
 /**
  * A presenter class that returns values that will be displayed in the UI
  * when an Organizer is scheduling events.
