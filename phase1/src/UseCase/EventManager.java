@@ -161,12 +161,16 @@ public class EventManager {
      * user from this event (not in event list).
      *
      * @param username - the name of the user
-     * @param event - the event the user wanted to sign up for.
+     * @param eventName - the event's name the user wanted to sign up for.
      * @return true if this user is successfully deleted from the event, otherwise false.
      */
-    public boolean deleteUserFromEvent(String username, Event event){
-        if (event.getAttendees().contains(username)){
-            return event.getAttendees().remove(username);
+    public boolean deleteUserFromEvent(String username, String eventName){
+        for (Event e: this.eventList){
+            if (e.getName().equals(eventName)) {
+                if (e.getAttendees().contains(username)) {
+                    return e.getAttendees().remove(username);
+                }
+            }
         }
         return false;
     }

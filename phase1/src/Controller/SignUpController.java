@@ -45,7 +45,7 @@ public class SignUpController {
      * @param event- the event the user want to sign up
      * @return true if the user sign up for the event successfully, else false
      */
-    public boolean SignUpEvent(String username, Event event){
+    public boolean signUpEvent(String username, Event event){
         if (eventManager.addUserToEvent(username, event)){
             userManager.addRegisteredEvent(username, event.getName());
             return true;
@@ -57,12 +57,12 @@ public class SignUpController {
      * Returns true is the user successfully cancels their enrollment for this event.
      *
      * @param username- the name of the user
-     * @param event- the event the user want to sign up
+     * @param eventName- the event's name the user want to sign up
      * @return true if the user cancels their enrollment for this event, else false
      */
-    public boolean DeleteEvent(String username, Event event){
-        if (eventManager.deleteUserFromEvent(username, event)){
-            userManager.getRegisteredEvents(username).remove(event.getName());
+    public boolean deleteEvent(String username, String eventName){
+        if (eventManager.deleteUserFromEvent(username, eventName)){
+            userManager.getRegisteredEvents(username).remove(eventName);
             return true;
         }
         return false;
