@@ -14,6 +14,7 @@ import java.util.Date;
 public class EventManager {
 
     private ArrayList<Event> eventList;
+    private ArrayList<Pair<Integer, Integer>> roomList;
     private int startTime = 9; // the opening time of this conference is 9 am.
     private int endTime = 17; // the ending time of this conference is 5 pm.
 
@@ -42,6 +43,30 @@ public class EventManager {
      */
     public ArrayList<Event> getEventList() {
         return eventList;
+    }
+
+    /**
+     * Returns the list of rooms.
+     *
+     * @return room list
+     */
+    public ArrayList<Pair<Integer, Integer>> getRoomList() {
+        return roomList;
+    }
+
+    /**
+     * Returns true if a room has been added to room list.
+     *
+     * @param room - the room wanting to be added
+     *
+     * @return true if the room has successfully been added to room list, false otherwise
+     */
+    private boolean addRoom(Pair<Integer, Integer> room) {
+        if (!this.roomList.contains(room)){
+            this.roomList.add(room);
+            return true;
+        }
+        return false
     }
 
     /**

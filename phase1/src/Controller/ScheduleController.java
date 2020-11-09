@@ -10,7 +10,7 @@ import java.util.Date;
  * A controller class that calls EventManager to manage any
  * command related to adding events.
  *
- * @author An Yen
+ * @author An Yen, Kelly Le
  */
 public class ScheduleController {
     private EventManager eventManager = new EventManager();
@@ -52,6 +52,21 @@ public class ScheduleController {
         }
         return false;
     }
+
+    /**
+     * Returns true if a new room has been added to this conference.
+     *
+     * @param room - room that is wanting to be added
+     *
+     * @return true if room was successfully added, false otherwise
+     */
+    public boolean addNewRoom(Pair<Integer, Integer> room) {
+        if (eventManager.addRoom(room)) {
+            return true;
+        }
+        return false
+    }
+
     /**
      * Calls the addEvent() method of EventManager and returns
      * true if a event is successfully created. Returns false otherwise.
