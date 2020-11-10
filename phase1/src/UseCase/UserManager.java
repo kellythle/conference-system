@@ -1,9 +1,6 @@
 package UseCase;
 
-import Entity.Attendee;
-import Entity.Speaker;
 import Entity.UserAccount;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
