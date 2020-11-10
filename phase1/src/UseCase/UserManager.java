@@ -9,31 +9,25 @@ import java.util.Set;
 /**
  * A Class that manages UserAccounts by creating new accounts and checking login information
  */
-public class UserManager {
+public abstract class UserManager {
 
     public HashMap<String, UserAccount> userMap;
+
+    public UserManager() {
+        HashMap<String, UserAccount> userMap= new HashMap<String , UserAccount>();
+    }
 
     /**
      * Creates a new user, given the type of user and account information.
      *
      * @param userName The new user's username, *cannot be a duplicate within the system
      * @param password The new user's password
-     * @param type The type of user added, can only be 3 strings: "Attendee", "Speaker",
-     *             or ""Organizer"
+     * @param type     The type of user added, can only be 3 strings: "Attendee", "Speaker",
+     *                 or ""Organizer"
+     * @return Returns the pointer of the newly created UserAccount, throws
      * @throws IllegalArgumentException when a type is unrecognized
      */
-    public void createUser(String userName, String password, String type) {
-        switch (type) {
-            case "Attendee":
-                userMap.put(userName, new AttendeeManager().createAttendee(userName, password));
-            case "Speaker":
-                userMap.put(userName, new SpeakerManager().createSpeaker(userName, password));
-            case "Organizer":
-                userMap.put(userName, new OrganizerManager().createOrganizer(userName, password));
-            default:
-                throw new IllegalArgumentException("Unknown type of user");
-        }
-    }
+    public abstract UserAccount createUser(String userName, String password, String type);
 
     /**
      * Returns true is the user exists.
@@ -220,6 +214,7 @@ public class UserManager {
     public boolean idChecker(String id) {
         return containsUser(id);
     }
+
 
     public boolean canSend(String username, String receiver){
         if (isOrganizer(username)){
