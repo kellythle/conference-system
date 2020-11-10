@@ -54,20 +54,6 @@ public class ScheduleController {
     }
 
     /**
-     * Returns true if a new room has been added to this conference.
-     *
-     * @param room - room that is wanting to be added
-     *
-     * @return true if room was successfully added, false otherwise
-     */
-    public boolean addNewRoom(Pair<Integer, Integer> room) {
-        if (eventManager.addRoom(room)) {
-            return true;
-        }
-        return false
-    }
-
-    /**
      * Calls the addEvent() method of EventManager and returns
      * true if a event is successfully created. Returns false otherwise.
      *
