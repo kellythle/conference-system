@@ -1,8 +1,8 @@
 package Presenter;
 
 import Entity.Event;
-import UseCase.EventManager
-import UseCase.UserManager
+import UseCase.EventManager;
+import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,38 +17,36 @@ import java.util.Date;
 public class SchedulePresenter {
 
     private EventManager eventManager = new EventManager();
-    private UserManager userManager = new UserManager();
 
     /**
      * Returns a string of speakers that are available and unavailable
      * given the room and time chosen by the Organizer.
      *
      * @param speakerList - the list of existing speakers
-     * @param room - the chosen room
      * @param time - the chosen time
      *
      * @return a string of available and unavailable speakers
      */
-    public String displaySpeakerList(ArrayList<String> speakerList, Pair<Integer, Integer> room, Date time) {
+    public String displaySpeakerList(ArrayList<String> speakerList, Date time) {
         String availableSpeakers = "Available Speakers: ";
         String unavailableSpeakers = "Unavailable Speakers: ";
         ArrayList<String> unavailableList = new ArrayList<>();
         for (Event e : eventManager.getEventList()) {
-            if (e.getTime() == time && e.getRoomNum().equals(room.getKey())) {
+            if (e.getTime() == time) {
                 unavailableSpeakers += e.getSpeaker() + ", ";
                 unavailableList.add(e.getSpeaker());
             }
         }
 
-        for (String s : userManager.getSpeakerList()) {
+        for (String s : speakerList) {
             if (!unavailableList.contains(s)) {
                 availableSpeakers += s + ", ";
             }
-
-            availableSpeakers = availableSpeakers.replaceAll(", $", "");
-            unavailableSpeakers = unavailableSpeakers.replaceAll(", $", "");
-            return availableSpeakers + "\n" + unavailableSpeakers;
         }
+            //availableSpeakers = availableSpeakers.replaceAll(", $", "");
+            //unavailableSpeakers = unavailableSpeakers.replaceAll(", $", "");
+            return availableSpeakers + "\n" + unavailableSpeakers;
+
     }
 
     /**
@@ -60,11 +58,11 @@ public class SchedulePresenter {
         String availableTimes = "";
         int startTime = eventManager.getStartTime();
         while (startTime < eventManager.getEndTime()){
-            availableTimes += startTime.toString() + ", ";
+            availableTimes += startTime + ", ";
             startTime += 1;
         }
 
-        availableTimes = availableTimes.replaceAll(", $", "");
+        // availableTimes = availableTimes.replaceAll(", $", "");
         return availableTimes;
 
     }
@@ -82,20 +80,20 @@ public class SchedulePresenter {
         ArrayList <Pair<Integer, Integer>> unavailableList = new ArrayList<>();
         for (Event e : eventManager.getEventList()) {
             if (e.getTime() == time){
-                Pair<Integer, Integer> unavailableRoom = <e.getRoomNum(), getRoomCapacity()>;
+                Pair<Integer, Integer> unavailableRoom = new Pair(e.getRoomNum(), e.getRoomCapacity());
                 unavailableList.add(unavailableRoom);
                 unavailableRooms += e.getRoomNum().toString();
             }
         }
 
-        for (Room r: eventManager.getRoomList()) {
+        for (Pair r: eventManager.getRoomList()) {
             if (!unavailableList.contains(r)){
-                availableRooms += r.getRoomNum().toString() + ", ";
+                availableRooms += r.getKey().toString() + ", ";
             }
         }
 
-        availableRooms = availableRooms.replaceAll(", $", "");
-        unavailableRooms = unavailableRooms.replaceAll(", $", "");
+        //availableRooms = availableRooms.replaceAll(", $", "");
+        //unavailableRooms = unavailableRooms.replaceAll(", $", "");
         return availableRooms + "\n" + unavailableRooms;
     }
 
@@ -110,11 +108,11 @@ public class SchedulePresenter {
     public String createEventResult(boolean creationSuccess, Event event) {
         if (creationSuccess) {
             return "Event Creation Successful!" +
-                    "\n" + "Name: " + e.getName() +
-                    "\n" + "Time: " + e.getTime().toString() +
-                    "\n" + "Speaker: " + e.getSpeaker() +
-                    "\n" + "Room Number: " + e.getRoomNum().toString();
+                    "\n" + "Name: " + event.getName() +
+                    "\n" + "Time: " + event.getTime().toString() +
+                    "\n" + "Speaker: " + event.getSpeaker() +
+                    "\n" + "Room Number: " + event.getRoomNum().toString();
         }
         return "Event Creation Failed";
-
+    }
 }

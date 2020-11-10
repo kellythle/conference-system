@@ -66,7 +66,7 @@ public class EventManager {
             this.roomList.add(room);
             return true;
         }
-        return false
+        return false;
     }
 
     /**
