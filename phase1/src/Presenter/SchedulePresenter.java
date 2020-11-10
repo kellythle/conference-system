@@ -43,8 +43,8 @@ public class SchedulePresenter {
                 availableSpeakers += s + ", ";
             }
         }
-            //availableSpeakers = availableSpeakers.replaceAll(", $", "");
-            //unavailableSpeakers = unavailableSpeakers.replaceAll(", $", "");
+            availableSpeakers = availableSpeakers.replaceAll(", $", "");
+            unavailableSpeakers = unavailableSpeakers.replaceAll(", $", "");
             return availableSpeakers + "\n" + unavailableSpeakers;
 
     }
@@ -62,7 +62,7 @@ public class SchedulePresenter {
             startTime += 1;
         }
 
-        // availableTimes = availableTimes.replaceAll(", $", "");
+        availableTimes = availableTimes.replaceAll(", $", "");
         return availableTimes;
 
     }
@@ -92,8 +92,8 @@ public class SchedulePresenter {
             }
         }
 
-        //availableRooms = availableRooms.replaceAll(", $", "");
-        //unavailableRooms = unavailableRooms.replaceAll(", $", "");
+        availableRooms = availableRooms.replaceAll(", $", "");
+        unavailableRooms = unavailableRooms.replaceAll(", $", "");
         return availableRooms + "\n" + unavailableRooms;
     }
 
