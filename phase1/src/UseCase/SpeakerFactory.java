@@ -6,7 +6,7 @@ import Entity.UserAccount;
 /**
  * A Class that manages Speaker accounts
  */
-public class SpeakerManager extends UserManager {
+public class SpeakerFactory implements AccountFactory {
     /**
      * Creates a new Speaker
      *
@@ -15,11 +15,8 @@ public class SpeakerManager extends UserManager {
      * @return The newly created Speaker
      * @throws IllegalArgumentException If there is a duplicate userName
      */
-    public UserAccount createSpeaker(String userName, String password) {
-        if (!super.idChecker(userName)) { //checks for duplicates first
-            return new Speaker(userName, password);
-        }
-        throw new IllegalArgumentException("Duplicate userName");
-        // now adds user to the map in the superclass method
+    @Override
+    public UserAccount createAccount(String userName, String password) {
+        return new Speaker(userName, password);
     }
 }
