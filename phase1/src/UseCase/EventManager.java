@@ -55,21 +55,6 @@ public class EventManager {
     }
 
     /**
-     * Returns true if a room has been added to room list.
-     *
-     * @param room - the room wanting to be added
-     *
-     * @return true if the room has successfully been added to room list, false otherwise
-     */
-    private boolean addRoom(Pair<Integer, Integer> room) {
-        if (!this.roomList.contains(room)){
-            this.roomList.add(room);
-            return true;
-        }
-        return false
-    }
-
-    /**
      * Check if the starting of the event wanted to be created is in the legal starting and ending time of
      * the conference.
      *
