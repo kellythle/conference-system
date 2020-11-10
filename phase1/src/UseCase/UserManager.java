@@ -214,6 +214,20 @@ public class UserManager {
         return speakers;
     }
     /**
+     * Return a list of attendees' usernames.
+     *
+     * @return an ArrayList of String representing the usernames of speakers
+     */
+    public ArrayList<String> getAttendeeList(){
+        Set<String> usernames = userMap.keySet();
+        ArrayList<String> attendees = new ArrayList<>();
+        for(int i = 0; i < usernames.size(); i++){
+            if (!userMap.get(usernames.toArray()[i]).isSpeaker() && !userMap.get(usernames.toArray()[i]).isOrganizer())
+                attendees.add((String)usernames.toArray()[i]);
+        }
+        return attendees;
+    }
+    /**
      * Checks whether or not a person can login with given account information.
      *
      * @param userName The userName id of the user
