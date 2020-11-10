@@ -30,24 +30,24 @@ public class SchedulePresenter {
      * @return a string of available and unavailable speakers
      */
     public String displaySpeakerList(ArrayList<String> speakerList, Pair<Integer, Integer> room, Date time) {
-        String available_speakers = "Available Speakers: ";
-        String unavailable_speakers = "Unavailable Speakers: ";
-        ArrayList<String> unavailable_list = new ArrayList<>();
+        String availableSpeakers = "Available Speakers: ";
+        String unavailableSpeakers = "Unavailable Speakers: ";
+        ArrayList<String> unavailableList = new ArrayList<>();
         for (Event e : eventManager.getEventList()) {
             if (e.getTime() == time && e.getRoomNum().equals(room.getKey())) {
-                unavailable_speakers += e.getSpeaker() + ", ";
-                unavailable_list.add(e.getSpeaker());
+                unavailableSpeakers += e.getSpeaker() + ", ";
+                unavailableList.add(e.getSpeaker());
             }
         }
 
         for (String s : userManager.getSpeakerList()) {
-            if (!unavailable_list.contains(s)) {
-                available_speakers += s + ", ";
+            if (!unavailableList.contains(s)) {
+                availableSpeakers += s + ", ";
             }
 
-            available_speakers = available_speakers.replaceAll(", $", "");
-            unavailable_speakers = unavailable_speakers.replaceAll(", $", "");
-            return available_speakers + "\n" + unavailable_speakers;
+            availableSpeakers = availableSpeakers.replaceAll(", $", "");
+            unavailableSpeakers = unavailableSpeakers.replaceAll(", $", "");
+            return availableSpeakers + "\n" + unavailableSpeakers;
         }
     }
 
@@ -57,15 +57,15 @@ public class SchedulePresenter {
      * @return a string of available start times
      */
     public String displayStartTimes () {
-        String available_times = "";
-        int start_time = eventManager.getStartTime();
-        while (start_time < eventManager.getEndTime()){
-            available_times += start_time.toString() + ", ";
-            start_time += 1;
+        String availableTimes = "";
+        int startTime = eventManager.getStartTime();
+        while (startTime < eventManager.getEndTime()){
+            availableTimes += startTime.toString() + ", ";
+            startTime += 1;
         }
 
-        available_times = available_times.replaceAll(", $", "");
-        return available_times;
+        availableTimes = availableTimes.replaceAll(", $", "");
+        return availableTimes;
 
     }
 
@@ -76,24 +76,27 @@ public class SchedulePresenter {
      *
      * @return a string of available rooms
      */
-    public String displayAvailableRooms (Date time) {
-        String available_rooms = "";
-        ArrayList <Pair<Integer, Integer>> unavailable_rooms = new ArrayList<>();
+    public String displayRoomList (Date time) {
+        String availableRooms = "Available Rooms: ";
+        String unavailableRooms = "Unavailable Rooms: ";
+        ArrayList <Pair<Integer, Integer>> unavailableList = new ArrayList<>();
         for (Event e : eventManager.getEventList()) {
             if (e.getTime() == time){
-                Pair<Integer, Integer> unavailable_room = <e.getRoomNum(), getRoomCapacity()>;
-                unavailable_rooms.add(unavailable_room);
+                Pair<Integer, Integer> unavailableRoom = <e.getRoomNum(), getRoomCapacity()>;
+                unavailableList.add(unavailableRoom);
+                unavailableRooms += e.getRoomNum().toString();
             }
         }
 
         for (Room r: eventManager.getRoomList()) {
-            if (!unavailable_rooms.contains(r)){
-                available_rooms += r + ", ";
+            if (!unavailableList.contains(r)){
+                availableRooms += r.getRoomNum().toString() + ", ";
             }
         }
 
-        available_rooms = available_rooms.replaceAll(", $", "");
-        return available_rooms;
+        availableRooms = availableRooms.replaceAll(", $", "");
+        unavailableRooms = unavailableRooms.replaceAll(", $", "");
+        return availableRooms + "\n" + unavailableRooms;
     }
 
     /**
