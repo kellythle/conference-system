@@ -46,6 +46,14 @@ public class EventManager {
     }
 
     /**
+     * Sets the list of events to a version from a read file
+     * @param readInList The version of eventList from a read file
+     */
+    public void setEventList(ArrayList<Event> readInList) {
+        this.eventList = readInList;
+    }
+
+    /**
      * Returns the list of rooms.
      *
      * @return room list

@@ -24,10 +24,10 @@ public class EventGateway implements ReadWrite {
         ObjectOutput output = new ObjectOutputStream(buffer);
 
         // serialize the List of events
-        EventManager em = new EventManager();
-        ArrayList<Event> eventListToWrite = null;
         //TODO figure out the actual storage of use cases and access it
-        eventListToWrite = em.getEventList();
+        EventManager em = new EventManager();
+
+        ArrayList<Event> eventListToWrite = em.getEventList();
         output.writeObject(eventListToWrite);
         output.close();
     }
@@ -50,7 +50,7 @@ public class EventGateway implements ReadWrite {
 
             //TODO figure out the actual storage of use cases and store the list into it
             EventManager em = new EventManager();
-            //em.eventList = eventListIN
+            em.setEventList(eventListIn);
         } catch (IOException ex) {
 //            logger.log(Level.SEVERE, "Cannot read from input file, returning" +
 //                    "a new StudentManager.", ex);
