@@ -1,9 +1,10 @@
 package Entity;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 
 
-public class Message {
+public class Message implements Serializable {
     private static int nextId = 0;// next available id for use
     private int id; // id of message
     private String sender;// Stores the name of the sender

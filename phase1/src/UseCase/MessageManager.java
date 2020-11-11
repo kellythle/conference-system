@@ -32,6 +32,25 @@ public class MessageManager {
     }
 
     /**
+     * Gets the HashMap of all messages.
+     *
+     * @return the systemMessages HashMap, with message IDs as keys and Message objects as values
+     */
+    public HashMap<Integer, Message> getSystemMessages() {
+        return systemMessages;
+    }
+
+    /**
+     * Sets the HashMap of all messages.
+     *
+     * @param systemMessages - Hashmap with message IDs as keys and Message objects as values
+     *
+     */
+    public void setSystemMessages(HashMap<Integer, Message> systemMessages) {
+        this.systemMessages = systemMessages;
+    }
+
+    /**
      *
      * @return ID of current user logged in
      */

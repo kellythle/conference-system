@@ -2,7 +2,6 @@ package Gateway;
 
 import Entity.Message;
 import UseCase.MessageManager;
-
 import java.io.*;
 import java.util.HashMap;
 
@@ -17,8 +16,7 @@ public class MessageGateway {
         ObjectOutput output = new ObjectOutputStream(buffer);
 
         // Get HashMap from UserManager
-        // TODO: Need getter / setter for MessageManager systemMessages
-        // HashMap<Integer, Message> messageHashMap = messageManager.systemMessages;
+        HashMap<Integer, Message> messageHashMap = messageManager.getSystemMessages();
 
         // Write to file and close streams
         // output.writeObject(messageHashMap);
@@ -29,21 +27,21 @@ public class MessageGateway {
 
     public void readFromFile(String readFilepath) throws ClassNotFoundException
     {
+        HashMap<Integer, Message> systemMessages;
         try {
             InputStream file = new FileInputStream(readFilepath); // String path should be "fileName.ser"
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
 
             // deserialize the HashMap
-            // TODO: Need getter / setter for MessageManager systemMessages
-            // messageManager.systemMessages = (HashMap) input.readObject();
+            messageManager.setSystemMessages((HashMap) input.readObject());
             input.close();
             buffer.close();
             file.close();
 
         } catch (IOException ex) {
-            // TODO: Need getter / setter for MessageManager systemMessages
-            // messageManager.systemMessages = new HashMap<Integer, Message>();
+            systemMessages = new HashMap<>();
+            messageManager.setSystemMessages(systemMessages);
         }
     }
 }

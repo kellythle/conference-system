@@ -1,9 +1,11 @@
 package UseCase;
 
 import Entity.Event;
+import Entity.UserAccount;
 import UseCase.MessageManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A class that stores, manages, creates messages
@@ -68,7 +70,8 @@ public class OrganizerMessageManager extends MessageManager {
      * @return boolean
      */
     public boolean sendAllMessageSpeaker(String messageContent, UserManager um){
-        for (String userName: um.userMap.keySet()) {
+        HashMap<String, UserAccount> userMap = um.getUserMap();
+        for (String userName: userMap.keySet()) {
             sendSingleMessage(userName, messageContent);
         }
         return true;

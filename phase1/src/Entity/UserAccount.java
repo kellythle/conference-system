@@ -1,12 +1,13 @@
 package Entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * A class that represents abstract class user account.
  * @author Qianwen Wu
  */
-public abstract class UserAccount {
+public abstract class UserAccount implements Serializable {
     private String userName;
     private String passWord;
     private ArrayList<String> friendList; // Stores the userNames

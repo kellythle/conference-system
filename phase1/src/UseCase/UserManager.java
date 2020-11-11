@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public class UserManager {
 
-    public HashMap<String, UserAccount> userMap;
+    private HashMap<String, UserAccount> userMap;
 
     /**
      * Constructor of UserManager
@@ -40,6 +40,25 @@ public class UserManager {
             default:
                 throw new IllegalArgumentException("Unknown type of user");
         }
+    }
+
+    /**
+     * Gets the HashMap of all UserAccounts.
+     *
+     * @return the user HashMap with usernames as keys and UserAccount objects as values
+     */
+    public HashMap<String, UserAccount> getUserMap() {
+        return userMap;
+    }
+
+    /**
+     * Sets the HashMap of all UserAccounts.
+     *
+     * @param userMap - Hashmap with usernames as keys and UserAccount objects as values
+     *
+     */
+    public void setUserMap(HashMap<String, UserAccount> userMap) {
+        this.userMap = userMap;
     }
 
     /**

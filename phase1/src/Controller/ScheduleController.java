@@ -1,10 +1,12 @@
 package Controller;
 
+import Entity.UserAccount;
 import UseCase.EventManager;
 import UseCase.UserManager;
 import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * A controller class that calls EventManager to manage any
@@ -35,7 +37,9 @@ public class ScheduleController {
      * @return true if this speaker name is not an existed username of this conference
      */
     private boolean canCreateSpeaker(String speakerName){
-        return !userManager.userMap.containsKey(speakerName);
+        HashMap<String, UserAccount> userMap = userManager.getUserMap();
+
+        return !userMap.containsKey(speakerName);
     }
 
     /**

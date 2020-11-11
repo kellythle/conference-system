@@ -16,7 +16,7 @@ public class UserGateway implements ReadWrite {
         ObjectOutput output = new ObjectOutputStream(buffer);
 
         // Get HashMap from UserManager
-        HashMap<String, UserAccount> userHashMap = userManager.userMap;
+        HashMap<String, UserAccount> userHashMap = userManager.getUserMap();
 
         // Write to file and close streams
         output.writeObject(userHashMap);
@@ -27,19 +27,21 @@ public class UserGateway implements ReadWrite {
 
     public void readFromFile(String readFilepath) throws ClassNotFoundException
     {
+        HashMap<String, UserAccount> userMap;
         try {
             InputStream file = new FileInputStream(readFilepath); // String path should be "fileName.ser"
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
 
             // deserialize the HashMap
-            userManager.userMap = (HashMap) input.readObject();
+            userManager.setUserMap((HashMap) input.readObject());
             input.close();
             buffer.close();
             file.close();
 
         } catch (IOException ex) {
-            userManager.userMap = new HashMap<String, UserAccount>();
+            userMap = new HashMap<>();
+            userManager.setUserMap(userMap);
         }
     }
 }

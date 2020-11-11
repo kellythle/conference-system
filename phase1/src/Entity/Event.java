@@ -2,6 +2,7 @@ package Entity;
 
 import javafx.util.Pair;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.sql.Time;
@@ -10,7 +11,7 @@ import java.sql.Time;
  * A class that represents an event.
  * @author An Yen
  */
-public class Event {
+public class Event implements Serializable {
     private static int nextId = 0; // next available id
     private int id; // id of event
     private String name; // name of event
