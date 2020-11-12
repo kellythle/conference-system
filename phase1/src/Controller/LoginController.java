@@ -3,14 +3,21 @@ import UseCase.UserManager;
 
 /**
  * A controller that deals with account creation and login information
+ *
+ * @author Chaolin Wang
  */
 public class LoginController {
     private String loggedInUser;
-    private UserManager um;
+    private final UserManager um;
 
-    public LoginController() {
+    /**
+     * A constructor for Login controller.
+     * Takes in a MangerFacade, call the getter for userManager
+     * @param managerFacade The ManagerFacade object where we get the managers from
+     */
+    public LoginController(ManagerFacade managerFacade) {
         this.loggedInUser = null;
-        this.um = new UserManager();
+        this.um = managerFacade.getUserManager();
     }
 
     /**

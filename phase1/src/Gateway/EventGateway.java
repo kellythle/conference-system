@@ -1,5 +1,6 @@
 package Gateway;
 
+import Controller.ManagerFacade;
 import Entity.Event;
 import UseCase.EventManager;
 
@@ -12,6 +13,12 @@ import java.util.ArrayList;
  * @author Chaolin Wang
  */
 public class EventGateway implements ReadWrite {
+    private EventManager em;
+
+    public EventGateway(ManagerFacade managerFacade) {
+        this.em = managerFacade.getEventManager();
+    }
+
     /**
      *
      * @param filePath The files path the method writes to
@@ -24,11 +31,11 @@ public class EventGateway implements ReadWrite {
         ObjectOutput output = new ObjectOutputStream(buffer);
 
         // serialize the List of events
-        //TODO figure out the actual storage of use cases and access it
-        EventManager em = new EventManager();
-
-        ArrayList<Event> eventListToWrite = em.getEventList();
+        ArrayList<Event> eventListToWrite = this.em.getEventList();
         output.writeObject(eventListToWrite);
+
+        file.close();
+        buffer.close();
         output.close();
     }
 
@@ -46,11 +53,11 @@ public class EventGateway implements ReadWrite {
 
             // deserialize the eventList
             ArrayList<Event> eventListIn = (ArrayList) input.readObject();
-            input.close();
+            this.em.setEventList(eventListIn);
 
-            //TODO figure out the actual storage of use cases and store the list into it
-            EventManager em = new EventManager();
-            em.setEventList(eventListIn);
+            file.close();
+            buffer.close();
+            input.close();
         } catch (IOException ex) {
 //            logger.log(Level.SEVERE, "Cannot read from input file, returning" +
 //                    "a new StudentManager.", ex);
