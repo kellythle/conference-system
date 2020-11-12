@@ -1,7 +1,9 @@
 package UseCase;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 
@@ -109,8 +111,11 @@ public class MessageManager {
      * @param messageID
      * @return time of message
      */
-    public LocalDateTime getMessageTime(int messageID){
-        return getMessage(messageID).getTime();
+    public String getMessageTime(int messageID){
+        LocalDateTime messageTime = getMessage(messageID).getTime();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss a");
+        String dateTimeString = messageTime.format(formatter);
+        return dateTimeString;
     }
 
     /**
@@ -167,11 +172,11 @@ public class MessageManager {
      * @return Arraylist containing all messageIDs in account's message history
      *          as both sender and receiver
      */
-    private ArrayList<Integer> getMessages(String userID) {
-        ArrayList<Integer> messageHistory = new ArrayList<Integer>();
+    private ArrayList<Message> getMessages(String userID) {
+        ArrayList<Message> messageHistory = new ArrayList<>();
         for (Message m : systemMessages.values()) {
             if (m.getSender().equals(userID) || m.getReceiver().equals(userID)){
-                messageHistory.add(m.getId());}
+                messageHistory.add(m);}
         }
         return messageHistory;
     }
@@ -182,7 +187,7 @@ public class MessageManager {
      * @return ArrayList containing all messageIDs of all sent or received
      * messages of current user
      */
-    public ArrayList<Integer> getAllSenderMessages(){
+    private ArrayList<Message> getAllSenderMessages(){
         return getMessages(senderID);
     }
 
@@ -202,15 +207,24 @@ public class MessageManager {
      * Returns list of String usernames of users that current user has conversations with.
      */
     public ArrayList<String> getSenderConversations(){
-        ArrayList<Integer> messages = getAllSenderMessages();
+        ArrayList<Message> messages = getAllSenderMessages();
         ArrayList<String> conversations = new ArrayList<String>();
-        for (int i: messages){
-            if (isSender(i)){
-                conversations.add(getMessageReceiver(i));
-            } else {conversations.add(getMessageSender(i));}
+        for (Message i: messages){
+            if (isSender(i.getId())){
+                conversations.add(i.getReceiver());
+            } else {conversations.add(i.getSender());}
         }
         LinkedHashSet<String> hashSet = new LinkedHashSet<>(conversations);
         ArrayList<String> conversationsWithoutDuplicates = new ArrayList<>(hashSet);
         return conversationsWithoutDuplicates;
+    }
+
+    public ArrayList<Integer> getSingleConversation(String otherID){
+        ArrayList<Message> conversation = getAllSenderMessages();
+        Collections.sort(conversation);
+        ArrayList<Integer> singleConversation = new ArrayList<>();
+        for (Message i: conversation){
+            singleConversation.add(i.getId());
+        } return singleConversation;
     }
 }

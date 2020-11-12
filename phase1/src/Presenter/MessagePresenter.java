@@ -3,18 +3,15 @@ package Presenter;
 import UseCase.MessageManager;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class MessagePresenter {
-    private MessageManager messageManager;
     private String username;
 
-    public MessagePresenter(MessageManager manager, String username){
-        messageManager = manager;
+    public MessagePresenter(String username){
         this.username = username;
     }
 
-    public String getMessageText(int messageID){
+    public String getMessageText(MessageManager messageManager, int messageID){
         String sender;
         String receiver;
         if (messageManager.isSender(messageID)){
@@ -24,56 +21,69 @@ public class MessagePresenter {
             sender = messageManager.getMessageSender(messageID);
             receiver = "you";
         }
-        String messageText = sender + "sent to" + receiver + "\n" + messageManager.getMessageContent(messageID);
+        String messageText = sender + "sent to" + receiver + "\n" + messageManager.getMessageContent(messageID) +
+                "\n           at " + messageManager.getMessageTime(messageID);
         return messageText;
     }
 
-    public ArrayList<String> getConversationList(){
-        return messageManager.getSenderConversations();
-    }
-
-    public int messageMenu(){
-        Scanner scan = new Scanner(System.in);
+    public void printMessageMenu(){
         System.out.println("Welcome to Message menu. Please select an action:");
         System.out.println("Enter 0 to exit Messages\n " +
                 "Enter 1 to view conversations\n" +
-                "Enter 2 to send a message");
-        int i = scan.nextInt();
-        return i;
-    }
+                "Enter 2 to send a message" +
+                "Enter 3 to return to the main menu.");
+        }
 
-    public String viewConversations(){
-        Scanner scan = new Scanner(System.in);
+    public void viewConversations(MessageManager messageManager){
         System.out.println("You have conversations with these users:");
-        System.out.println(getConversationList());
+        System.out.println(messageManager.getSenderConversations());
         System.out.println("Enter a username to see your message history\n" +
-                "Enter 0 to return to menu");
-        String name = scan.next();
-        return name;
+                "Enter 0 to return to Message menu:");
     }
 
-    public ArrayList<String> sendToSingleUser(){
-        Scanner scan = new Scanner(System.in);
+    public void viewSingleConversation(MessageManager messageManager, String recipientID) {
+        System.out.println("Your conversation with " + recipientID + ": ");
+        ArrayList<Integer> singleConversation = messageManager.getSingleConversation(recipientID);
+        for (int i: singleConversation){
+            String messageText = getMessageText(messageManager, i);
+            System.out.println(messageText);
+        }
+    }
+
+    public void printReceiverIDPrompt(){
         System.out.println("Enter the username of the user you wish to message:");
-        String name = scan.next();
-        System.out.println("Enter the message you wish to send:");
-        String content = scan.next();
-        ArrayList<String> toSend = new ArrayList<String>();
-        toSend.add(name);
-        toSend.add(content);
-        return toSend;
     }
 
-    public ArrayList<String> sendToEventAttendees(){
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Enter the ID of the event you wish to message the attendees of:");
-        String event = scan.next();
-        System.out.println("Enter the message you wish to send:");
-        String content = scan.next();
-        ArrayList<String> toSend = new ArrayList<String>();
-        toSend.add(event);
-        toSend.add(content);
-        return toSend;
+    public void printEventIDPrompt(){
+        System.out.println("Enter the ID of the event whose attendees you wish to message:");
     }
 
+    public void printSpeakerMessagePrompt(){
+        System.out.println("Enter the ID of your talk whose attendees you wish to message \n" +
+                "or enter nothing to message all your talks:");
+    }
+
+    public void printContentPrompt(){
+        System.out.println("Enter the message text:");
+    }
+
+    public void printMessageSuccess(){
+        System.out.println("Message successfully sent.");
+    }
+
+    public void printInvalidInput(){
+        System.out.println("Input invalid. Try again.");
+    }
+
+    public void printInvalidUsername(){
+        System.out.println("This user does not exist. Try again.");
+    }
+
+    public void printCannotSend(){
+        System.out.println("You do not have permission to send messages to this user.");
+    }
+
+    public void printReplyPrompt(){
+        System.out.println("If you want to reply to a message, ");
+    }
 }
