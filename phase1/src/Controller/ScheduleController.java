@@ -20,11 +20,12 @@ public class ScheduleController {
 
     /**
      * Creates a instance of ScheduleController with a ManagerFacade instance.
-     * @param mf - ManagerFacade instance
+     * @param em - an EventManager instance
+     * @param um - an UserManager instance
      */
-    public ScheduleController(ManagerFacade mf){
-        this.eventManager = mf.getEventManager();
-        this.userManager = mf.getUserManager();
+    public ScheduleController(EventManager em, UserManager um){
+        this.eventManager = em;
+        this.userManager = um;
     }
     /**
      * Returns a list of available speaker usernames.
