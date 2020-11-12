@@ -13,11 +13,11 @@ public class LoginController {
     /**
      * A constructor for Login controller.
      * Takes in a MangerFacade, call the getter for userManager
-     * @param managerFacade The ManagerFacade object where we get the managers from
+     * @param userManager The ManagerFacade object where we get the managers from
      */
-    public LoginController(ManagerFacade managerFacade) {
+    public LoginController(UserManager userManager) {
         this.loggedInUser = null;
-        this.um = managerFacade.getUserManager();
+        this.um = userManager;
     }
 
     /**

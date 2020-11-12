@@ -1,6 +1,6 @@
 package Gateway;
 
-import Controller.ManagerFacade;
+import Controller.ConferenceSystem;
 import Entity.Event;
 import UseCase.EventManager;
 
@@ -13,10 +13,10 @@ import java.util.ArrayList;
  * @author Chaolin Wang
  */
 public class EventGateway implements ReadWrite {
-    private EventManager em;
+    private final EventManager em;
 
-    public EventGateway(ManagerFacade managerFacade) {
-        this.em = managerFacade.getEventManager();
+    public EventGateway(EventManager eventManager) {
+        this.em = eventManager;
     }
 
     /**
