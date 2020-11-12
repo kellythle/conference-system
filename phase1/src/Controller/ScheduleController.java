@@ -15,11 +15,17 @@ import java.util.HashMap;
  * @author An Yen, Kelly Le
  */
 public class ScheduleController {
-    private EventManager eventManager = new EventManager();
+    private EventManager eventManager;
     private UserManager userManager;
-    //remove comment after Richard done with UserManager Factory
-    //private UserManager userManager = new UserManager();
 
+    /**
+     * Creates a instance of ScheduleController with a ManagerFacade instance.
+     * @param mf - ManagerFacade instance
+     */
+    public ScheduleController(ManagerFacade mf){
+        this.eventManager = mf.getEventManager();
+        this.userManager = mf.getUserManager();
+    }
     /**
      * Returns a list of available speaker usernames.
      *

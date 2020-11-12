@@ -13,10 +13,17 @@ import java.util.ArrayList;
  * @author An Yen, Kelly Le, Filip Jovanovic
  */
 public class SignUpController {
-    private EventManager eventManager = new EventManager();
+    private EventManager eventManager;
     private UserManager userManager;
-    //remove comment after Richard done with UserManager Factory
-    //private UserManager userManager = new UserManager();
+
+    /**
+     * Creates a instance of ScheduleController with a ManagerFacade instance.
+     * @param mf - ManagerFacade instance
+     */
+    public SignUpController(ManagerFacade mf){
+        this.eventManager = mf.getEventManager();
+        this.userManager = mf.getUserManager();
+    }
 
     /**
      * Returns an arraylist of the existing events.
