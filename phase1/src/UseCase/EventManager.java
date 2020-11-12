@@ -4,6 +4,7 @@ import Entity.Event;
 import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * This class stores a list of existing events, legal starting
@@ -59,6 +60,14 @@ public class EventManager {
      */
     public ArrayList<Pair<Integer, Integer>> getRoomList() {
         return roomList;
+    }
+
+    /**
+     * Sets the room list to a version from a read file
+     * @param readInRoomList The version of roomList from a read file
+     */
+    public void setRoomList(ArrayList<Pair<Integer, Integer>> readInRoomList){
+        this.roomList = readInRoomList;
     }
 
     /**
