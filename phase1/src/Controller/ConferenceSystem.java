@@ -15,16 +15,27 @@ import UseCase.UserManager;
  * }
  */
 public class ConferenceSystem {
+    //Gateways read in userMap, eventList, roomList, and MessagesMap
+
+    // Use case class instances
     private final EventManager eventManager = new EventManager();
     private final UserManager userManager = new UserManager();
     private MessageManager messageManager; // not final as this can be changed along with the logged in user
+    // Controller class instances
+    private final LoginController loginController = new LoginController(userManager);
+    private final SignUpController signUpController = new SignUpController(eventManager, userManager);
+    private final ScheduleController scheduleController = new ScheduleController(eventManager, userManager);
+    // MessageCs needs parameter username, maybe initialize after login in.
+    private MessageController messageController;
+    private OrganizerMessageController organizerMessageController;
+    private SpeakerMessageController speakerMessageController;
 
     public ConferenceSystem() {
 
     }
 
     // TODO
-    public static void run() {
+    public void run() {
 
     }
 
