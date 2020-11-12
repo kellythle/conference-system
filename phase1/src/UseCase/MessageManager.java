@@ -1,8 +1,11 @@
 package UseCase;
 
+import java.lang.reflect.Array;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
+
 import Entity.Message;
 
 /**
@@ -143,7 +146,7 @@ public class MessageManager {
      * @return true if message created
      */
     public boolean replyToMessage(int messageID, String messageContent){
-        if (getMessageReceiver(messageID) == senderID) {
+        if (getMessageReceiver(messageID).equals(senderID)) {
             return sendSingleMessage(getMessageSender(messageID), messageContent);
         } else { return false; }
     }
@@ -168,7 +171,7 @@ public class MessageManager {
     private ArrayList<Integer> getMessages(String userID) {
         ArrayList<Integer> messageHistory = new ArrayList<Integer>();
         for (Message m : systemMessages.values()) {
-            if (m.getSender() == userID || m.getReceiver() == userID){
+            if (m.getSender().equals(userID) || m.getReceiver().equals(userID)){
                 messageHistory.add(m.getId());}
         }
         return messageHistory;
@@ -182,5 +185,33 @@ public class MessageManager {
      */
     public ArrayList<Integer> getAllSenderMessages(){
         return getMessages(senderID);
+    }
+
+    /**
+     * Checks if current user is sender of message
+     *
+     * @return true if sender is sender of the message
+     */
+
+    public boolean isSender(int messageID) {
+        if (senderID.equals(getMessageSender(messageID))){
+            return true;
+        } else {return false;}
+    }
+
+    /**
+     * Returns list of String usernames of users that current user has conversations with.
+     */
+    public ArrayList<String> getSenderConversations(){
+        ArrayList<Integer> messages = getAllSenderMessages();
+        ArrayList<String> conversations = new ArrayList<String>();
+        for (int i: messages){
+            if (isSender(i)){
+                conversations.add(getMessageReceiver(i));
+            } else {conversations.add(getMessageSender(i));}
+        }
+        LinkedHashSet<String> hashSet = new LinkedHashSet<>(conversations);
+        ArrayList<String> conversationsWithoutDuplicates = new ArrayList<>(hashSet);
+        return conversationsWithoutDuplicates;
     }
 }
