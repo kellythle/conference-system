@@ -17,7 +17,6 @@ public class EventManager {
     private ArrayList<Pair<Integer, Integer>> roomList;
     private int startTime = 9; // the opening time of this conference is 9 am.
     private int endTime = 17; // the ending time of this conference is 5 pm.
-
     /**
      * Returns the starting time of this conference
      *
