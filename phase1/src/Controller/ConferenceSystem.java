@@ -15,8 +15,8 @@ import UseCase.UserManager;
  * }
  */
 public class ConferenceSystem {
-    //Gateways read in userMap, eventList, roomList, and MessagesMap
-
+    // Gateways read in userMap, eventList, roomList, and MessagesMap
+    // After gateways are done, please initialize ^^^ into the corresponding classes.
     // Use case class instances
     private final EventManager eventManager = new EventManager();
     private final UserManager userManager = new UserManager();
