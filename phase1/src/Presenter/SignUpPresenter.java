@@ -6,23 +6,35 @@ import UseCase.EventManager;
 import java.util.ArrayList;
 
 /**
- * A presenter class that contain methods that contains methods
- * that returns values which should be displayed in the UI.
+ * A presenter class that prints information on UI that directs the user
+ * and shows result to the user during all sign up event ans delete event
+ * processes.
  *
  * @author An Yen
  */
 public class SignUpPresenter {
 
-    private EventManager eventManager = new EventManager();
+    /**
+     * Prints the menu of Sign Up System.
+     */
+    public void printMenu(){
+        System.out.println("Welcome to Sign Up System! \n" +
+                "Options:\n" +
+                "1. Sign up an event\n" +
+                "2. Delete an registered event\n" +
+                "3. See all events\n" +
+                "4. See registered events\n" +
+                "5. Exist Sign Up System\n" +
+                "(Enter 1, 2, 3, 4, or 5");
+    }
 
     /**
-     * Returns a string with all events with its detail in the format:
-     * Name, Time, Speaker, Room Number, Full/Available for each event.
+     * Generates a display format of events.
      *
-     * @param eventList - the list of existing events
-     * @return a string of event details
+     * @param eventList - an arraylist of events
+     * @return a String object that is the display format of events.
      */
-    public String displayEventList(ArrayList<Event> eventList){
+    private String EventListGenerator(ArrayList<Event> eventList){
         String events = "";
         for (Event e: eventList){
             int space = e.getRoomCapacity() - e.getAttendees().size();
@@ -40,47 +52,67 @@ public class SignUpPresenter {
     }
 
     /**
-     * Returns a string with all events an user registered with its detail in the format:
-     * Name, Time, Speaker, Room Number, Full/Available for each event.
+     * Prints all events. Each line represents one event and is in the
+     * sequence: "Name, Time, Speaker, Room Number, Available/Full".
      *
-     * @param registeredEventNames - a list of event names an user registered
-     * @return a string of registered event details
+     * @param eventList - an arraylist of events
      */
-    public String displayRegisteredEvents(ArrayList<String> registeredEventNames) {
+    public void displayEventList(ArrayList<Event> eventList){
+        String events = this.EventListGenerator(eventList);
+        System.out.println("All Events: ");
+        System.out.println(events);
+        System.out.println();
+        System.out.println("Enter the event name you want to sign up for: ");
+    }
+
+    /**
+     * Prints the events whose name are in the given arraylist
+     * Each line represents one event and is in the sequence:
+     * "Name, Time, Speaker, Room Number, Available/Full".
+     *
+     * @param registeredEventNames - an arraylist of event names
+     * @param em - an instance of EventManager
+     */
+    public void displayRegisteredEvents(ArrayList<String> registeredEventNames, EventManager em) {
         ArrayList<Event> registeredEvents = new ArrayList<>();
-        for (Event e: eventManager.getEventList()) {
+        for (Event e: em.getEventList()) {
             if (registeredEventNames.contains(e.getName())){
                 registeredEvents.add(e);
             }
         }
-        return displayEventList(registeredEvents);
-    }
-
-    /**
-     * Returns a message to show whether an user signed up for an event successfully.
-     *
-     * @param signUpSuccess - a boolean value, true if sign up succeed
-     * @return a string to show whether the user signed up for an event successfully
-     */
-    public String signUpResult(boolean signUpSuccess){
-        if (signUpSuccess) {
-            return "Sign up success!";
-        }
-        return "You cannot register this event. Sign up failed...";
+        String events = this.EventListGenerator(registeredEvents);
+        System.out.println("Registered Events: ");
+        System.out.println(events);
+        System.out.println();
+        System.out.println("Enter the event name you want to delete: ");
 
     }
 
     /**
-     * Returns a message to show whether an user dropped an event successfully.
-     * @param deleteSuccess - a boolean value, true if deletion succeed.
-     *                      (Dropped an event successfully)
-     * @return a string to show whether the user dropped an event successfully
+     * Prints "Sign up success!".
      */
-    public String deleteEventResult(boolean deleteSuccess) {
-        if (deleteSuccess) {
-            return "Deletion success!";
-        }
-        return "Deletion fail";
+    public void printSignUpSuccess(){
+            System.out.println("Sign up success!");
+    }
 
+    /**
+     * Prints "You cannot sign up for this event. Sign up failed...".
+     */
+    public void printSignUpFail(){
+        System.out.println("You cannot sign up for this event. Sign up failed...");
+    }
+
+    /**
+     * Prints "Deletion success!".
+     */
+    public void printDeleteEventSuccess() {
+        System.out.println("Deletion success!");
+    }
+
+    /**
+     * Prints "Deletion fail.".
+     */
+    public void printDeleteEventFail(){
+        System.out.println("Deletion fail.");
     }
 }

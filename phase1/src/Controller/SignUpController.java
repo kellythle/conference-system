@@ -1,77 +1,107 @@
 package Controller;
 
 import Entity.Event;
+import Presenter.SignUpPresenter;
 import UseCase.EventManager;
 import UseCase.UserManager;
 
-import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * A controller class that calls EventManager and UserManager
  * to manage any command related to signing up events.
+ * And calls SignUpPresenter's printing methods to show information
+ * to the user.
  *
  * @author An Yen, Kelly Le, Filip Jovanovic
  */
 public class SignUpController {
     private EventManager eventManager;
     private UserManager userManager;
+    private SignUpPresenter sp = new SignUpPresenter();
 
     /**
-     * Creates a instance of ScheduleController with a ManagerFacade instance.
-     * @param mf - ManagerFacade instance
+     * Creates a instance of ScheduleController with EventManager and UserManager as parameters.
+     * @param em - EventManager instance
+     * @param um - UserManager instance
      */
-    public SignUpController(ManagerFacade mf){
-        this.eventManager = mf.getEventManager();
-        this.userManager = mf.getUserManager();
+    public SignUpController(EventManager em, UserManager um){
+        this.eventManager = em;
+        this.userManager = um;
     }
 
     /**
-     * Returns an arraylist of the existing events.
+     * Calls SignUpPresenter to print out the menu of Sign Up System.
+     * Gets the input of the user and returns a string of the option
+     * the user entered.
      *
-     * @return an ArrayList<Event> of the existing events
+     * @return - String, option the user entered.
      */
-    public ArrayList<Event> getEventList(){
-        return eventManager.getEventList();
+    public String getMenu(){
+        Scanner scan = new Scanner(System.in);
+        sp.printMenu();
+        return scan.nextLine();
+    }
+
+
+    /**
+     * Calls SignUpPresenter to print out all events.
+     */
+    public void getEventList(){
+        sp.displayEventList(eventManager.getEventList());
     }
 
     /**
-     * Returns an arraylist of the event names this user has signed up for.
-     *
-     * @param username - the name of the user
-     *
-     * @return an ArrayList<Event> of the events this user has signed up for.
+     * Calls SignUpPresenter to print out the registered events
+     * of this user.
+     * @param username - the user's username
      */
-    public ArrayList<String> getRegisteredEventList(String username){
-        return userManager.getRegisteredEvents(username);
+    public void getRegisteredEventList(String username){
+        sp.displayRegisteredEvents(userManager.getRegisteredEvents(username), eventManager);
     }
 
     /**
-     * Returns true if the user signs up for this event.
+     * Calls SignUpPresenter to print out all events, then asks the user
+     * to enter the name of the event he/she wanted to sign up for.
+     * After receiving the input from user, SignUpPresenter will be called
+     * to print the sign up result on the UI.
      *
-     * @param username- the name of the user
-     * @param event- the event the user want to sign up
-     * @return true if the user sign up for the event successfully, else false
+     * @param username - the user's username
      */
-    public boolean signUpEvent(String username, Event event){
-        if (eventManager.addUserToEvent(username, event)){
-            userManager.addRegisteredEvent(username, event.getName());
-            return true;
+    public void signUpEvent(String username){
+        Scanner scan1 = new Scanner(System.in);
+        //prints the events
+        this.getEventList();
+        String eventName = scan1.nextLine();
+        for (Event e: eventManager.getEventList()){
+            if (e.getName().equals(eventName)){
+                if (eventManager.addUserToEvent(username, e)) {
+                    userManager.addRegisteredEvent(username, e.getName());
+                    sp.printSignUpSuccess();
+                    return;
+                }
+            }
         }
-        return false;
+        sp.printSignUpFail();
     }
 
     /**
-     * Returns true is the user successfully cancels their enrollment for this event.
+     * Calls SignUpPresenter to print out registered events of this user,
+     * then asks the user to enter the name of the event he/she wanted to delete
+     * from the registered events. After receiving the input from user,
+     * SignUpPresenter will be called to print the deletion result on the UI.
      *
-     * @param username- the name of the user
-     * @param eventName- the event's name the user want to sign up
-     * @return true if the user cancels their enrollment for this event, else false
+     * @param username - the user's username
      */
-    public boolean deleteEvent(String username, String eventName){
+    public void deleteEvent(String username){
+        Scanner scan1 = new Scanner(System.in);
+        //prints registered events
+        this.getRegisteredEventList(username);
+        String eventName = scan1.nextLine();
         if (eventManager.deleteUserFromEvent(username, eventName)){
             userManager.getRegisteredEvents(username).remove(eventName);
-            return true;
+            sp.printDeleteEventSuccess();
         }
-        return false;
+        sp.printDeleteEventFail();
     }
 }
