@@ -1,6 +1,7 @@
 package Entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 
@@ -10,7 +11,7 @@ public class Message implements Serializable, Comparable<Message> {
     private String sender;// Stores the name of the sender
     private String receiver;// Stores the name of the receiver
     private String content;// Stores the content of the message
-    private final LocalTime time = LocalTime.now();// time when the message create
+    private final LocalDateTime time = LocalDateTime.now();// time when the message create
 
     /**
      * Create new message
@@ -86,7 +87,7 @@ public class Message implements Serializable, Comparable<Message> {
      * Getter of time
      * @return time when the message sends
      */
-    public LocalTime getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 

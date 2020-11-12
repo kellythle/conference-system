@@ -1,7 +1,6 @@
 package UseCase;
 
-import java.lang.reflect.Array;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -110,7 +109,7 @@ public class MessageManager {
      * @param messageID
      * @return time of message
      */
-    public LocalTime getMessageTime(int messageID){
+    public LocalDateTime getMessageTime(int messageID){
         return getMessage(messageID).getTime();
     }
 
