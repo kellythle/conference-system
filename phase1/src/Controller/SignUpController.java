@@ -16,9 +16,9 @@ import java.util.Scanner;
  * @author An Yen, Kelly Le, Filip Jovanovic
  */
 public class SignUpController {
-    private EventManager eventManager;
-    private UserManager userManager;
-    private SignUpPresenter sp = new SignUpPresenter();
+    private final EventManager eventManager;
+    private final UserManager userManager;
+    private final SignUpPresenter sp = new SignUpPresenter();
 
     /**
      * Creates a instance of ScheduleController with EventManager and UserManager as parameters.
