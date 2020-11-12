@@ -29,8 +29,12 @@ public class LoginController {
      *             or ""Organizer"
      * @throws IllegalArgumentException when a type is unrecognized
      */
-    public void createAccount(String userName, String password, String type) {
+    public boolean createAccount(String userName, String password, String type) {
+        if (um.containsUser(userName)){
+            return false;
+        }
         this.um.createUser(userName, password, type);
+        return true;
     }
 
     /**
