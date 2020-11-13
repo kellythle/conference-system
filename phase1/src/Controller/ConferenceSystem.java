@@ -93,6 +93,8 @@ public class ConferenceSystem {
                 case "3":
                     scheduleController.endScheduling();
                     break;
+                default:
+                    scheduleController.failScheduleMenu();
             }
         } while (!scheduleMenuOption.equals("3"));
     }
