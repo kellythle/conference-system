@@ -38,6 +38,10 @@ public class ConferenceSystem {
 
     // TODO
     public void run() {
+        //1. calls LoginController >>> register or login menu
+        //after login (register), show the corresponding menu >>> for attendee, organizer, speaker
+        //2. shows Main menu >>> sign up or (schedule) or message
+        //3. return if entered a character for exist.
 
     }
 
