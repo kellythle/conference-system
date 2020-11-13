@@ -9,10 +9,10 @@ import UseCase.UserManager;
 import java.util.Scanner;
 
 public class SpeakerMessageController {
-    private MessageManager myMessageManager;
-    private UserManager myUserManager;
-    private EventManager myEventManager;
-    private String username;
+    private final MessageManager myMessageManager;
+    private final UserManager myUserManager;
+    private final EventManager myEventManager;
+    private final String username;
     public MessagePresenter messagePresenter;
 
 
@@ -28,7 +28,7 @@ public class SpeakerMessageController {
     /**
      *
      *
-     * @param messageContent
+     * @param messageContent - message of the content
      * @return true if message created
      */
     public boolean sendAllMessageAllEvent(String messageContent) {
@@ -64,7 +64,7 @@ public class SpeakerMessageController {
     /**
      *
      *
-     * @param messageContent
+     * @param messageContent - message of the content
      * @return true if message created
      */
     public boolean sendAllMessageAnEvent(String messageContent, int eventID) {
@@ -102,17 +102,19 @@ public class SpeakerMessageController {
     public void sendMessage(){
         Scanner scanner = new Scanner(System.in);
         messagePresenter.printSpeakerMessagePrompt();
-        while (true) {
-            messagePresenter.printSpeakerMessageMenu();
-            String input = scanner.nextLine();
-            if (input.equals("0")){
-                sendMessagesToAttendeesOfATalk();
-            } else if (input.equals("1")){
-                sendMessagesToAttendeesOfAllTalks();
-            } else {
-                messageMenu();
+        String input = scanner.nextLine();
+        do {
+            switch (input) {
+                case "0":
+                    break;
+                case "1":
+                    sendMessagesToAttendeesOfATalk();
+                    break;
+                case "2":
+                    sendMessagesToAttendeesOfAllTalks();
+                    break;
             }
-        }
+        } while (!input.equals("2"));
     }
 
     /**
@@ -124,16 +126,14 @@ public class SpeakerMessageController {
         String input = scanner.nextLine();
         if (myMessageManager.getSenderConversations().contains(input)){
             viewSingleConversation(input);
-        } else {
-            return;
         }
     }
 
     /**
      * Creates single message.
      *
-     * @param receiverID
-     * @param messageContent
+     * @param receiverID - username of user receiving the message
+     * @param messageContent - message of the content
      * @return true if message created
      */
     public boolean sendSingleMessage(String receiverID, String messageContent){
@@ -146,25 +146,28 @@ public class SpeakerMessageController {
      * Displays single message history. Prompts the user to either reply to the conversation,
      * continue browsing conversations, or return to Message menu.
      *
-     * @param conversationPartner
+     * @param conversationPartner - Partner who has been messaging with the user
      */
     public void viewSingleConversation(String conversationPartner){
         Scanner scanner = new Scanner(System.in);
         messagePresenter.viewSingleConversation(myMessageManager, myUserManager, conversationPartner);
         String input = scanner.nextLine();
-        if (input == "0"){
-            replyToConversation(conversationPartner);
-        } else if (input == "1"){
-            viewConversations();
-        } else {
-            return;
-        }
+        do {
+            switch (input) {
+                case "0":
+                    replyToConversation(conversationPartner);
+                    break;
+                case "1":
+                    viewConversations();
+                    break;
+            }
+        } while (!input.equals("1"));
     }
 
     /**
      * Prompts user for reply content and replies to conversation.
      *
-     * @param conversationPartner
+     * @param conversationPartner - Partner who has been messaging with the user
      */
     public void replyToConversation(String conversationPartner){
         if (myMessageManager.canSend(conversationPartner)) {
@@ -180,35 +183,12 @@ public class SpeakerMessageController {
     }
 
     /**
-     * Displays message menu. The user can select an action. Once that action is completed
-     * the user will return to the message menu, unless the action is to exit messages
-     * and return to the main menu.
-     */
-    public void messageMenu() {
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            messagePresenter.printSpeakerMessageMenu();
-            String input = scanner.nextLine();
-            if (input.equals("0")){
-                break;
-            } else if (input.equals("1")){
-                viewConversations();
-            } else if (input.equals("2")){
-                sendMessage();
-            } else {
-                messagePresenter.printInvalidInput();
-            }
-        }
-    }
-
-    /**
      * Calls MessagePresenter to print out the Message Menu.
      */
     public String getMessageMenu(){
         Scanner scan = new Scanner(System.in);
         messagePresenter.printSpeakerMessageMenu();
-        String input = scan.nextLine();
-        return input;
+        return scan.nextLine();
     }
 
     public void invalidInput(){
