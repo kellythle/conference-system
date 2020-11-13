@@ -53,5 +53,9 @@ public class LoginPresenter {
     public void displayLoginUser(String info){
         System.out.println("Current user is "+ info);
     }
+
+    public void displayLogoutUser(){
+        System.out.println("Log out successfully!");
+    }
 }
 
