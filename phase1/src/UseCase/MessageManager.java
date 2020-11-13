@@ -143,19 +143,6 @@ public class MessageManager {
     }
 
     /**
-     * Replies to message.
-     *
-     * @param messageID
-     * @param messageContent
-     * @return true if message created
-     */
-    public boolean replyToMessage(int messageID, String messageContent){
-        if (getMessageReceiver(messageID).equals(senderID)) {
-            return sendSingleMessage(getMessageSender(messageID), messageContent);
-        } else { return false; }
-    }
-
-    /**
      * Adds contact's ID to friendlist
      *
      * Cannot implement until UseCase.StorageManager implemented

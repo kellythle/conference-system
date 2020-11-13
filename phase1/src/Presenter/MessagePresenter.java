@@ -1,6 +1,7 @@
 package Presenter;
 
 import UseCase.MessageManager;
+import UseCase.UserManager;
 
 import java.util.ArrayList;
 
@@ -29,25 +30,30 @@ public class MessagePresenter {
     public void printMessageMenu(){
         System.out.println("Welcome to Message menu. Please select an action:");
         System.out.println("Enter 0 to exit Messages\n " +
-                "Enter 1 to view conversations\n" +
-                "Enter 2 to send a message" +
-                "Enter 3 to return to the main menu.");
+                "Enter 1 to view conversations and reply to messages\n" +
+                "Enter 2 to send a message:");
         }
 
     public void viewConversations(MessageManager messageManager){
         System.out.println("You have conversations with these users:");
         System.out.println(messageManager.getSenderConversations());
         System.out.println("Enter a username to see your message history\n" +
-                "Enter 0 to return to Message menu:");
+                "Enter anything else to return to Message Menu:");
     }
 
-    public void viewSingleConversation(MessageManager messageManager, String recipientID) {
-        System.out.println("Your conversation with " + recipientID + ": ");
+    public void viewSingleConversation(MessageManager messageManager, UserManager userManager, String recipientID) {
+        String identity = "Attendee";
+        if (userManager.isOrganizer(recipientID)) {identity = "Organizer";}
+        else if (userManager.isSpeaker(recipientID)) {identity = "Speaker";}
+        System.out.println("Your conversation with " + identity + " " + recipientID + ": ");
         ArrayList<Integer> singleConversation = messageManager.getSingleConversation(recipientID);
         for (int i: singleConversation){
             String messageText = getMessageText(messageManager, i);
             System.out.println(messageText);
         }
+        System.out.println("Enter 0 reply to this conversation\n" +
+                "Enter 1 to continue browsing conversations\n" +
+                "Enter anything else to return to Message Menu:");
     }
 
     public void printReceiverIDPrompt(){
@@ -71,6 +77,10 @@ public class MessagePresenter {
         System.out.println("Message successfully sent.");
     }
 
+    public void printMessageFailed(){
+        System.out.println("Message failed.");
+    }
+
     public void printInvalidInput(){
         System.out.println("Input invalid. Try again.");
     }
@@ -83,7 +93,5 @@ public class MessagePresenter {
         System.out.println("You do not have permission to send messages to this user.");
     }
 
-    public void printReplyPrompt(){
-        System.out.println("If you want to reply to a message, ");
-    }
+
 }
