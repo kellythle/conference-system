@@ -62,7 +62,8 @@ public class SignUpController {
 
     /**
      * Calls SignUpPresenter to print out all events, then asks the user
-     * to enter the name of the event he/she wanted to sign up for.
+     * to enter the name of the event he/she wanted to sign up for,
+     * or enter 0 if don't want to sign up any event.
      * After receiving the input from user, SignUpPresenter will be called
      * to print the sign up result on the UI.
      *
@@ -73,6 +74,8 @@ public class SignUpController {
         //prints the events
         this.getEventList();
         String eventName = scan1.nextLine();
+        if (eventName.equals("0"))
+                return;
         for (Event e: eventManager.getEventList()){
             if (e.getName().equals(eventName)){
                 if (eventManager.addUserToEvent(username, e)) {
@@ -88,8 +91,9 @@ public class SignUpController {
     /**
      * Calls SignUpPresenter to print out registered events of this user,
      * then asks the user to enter the name of the event he/she wanted to delete
-     * from the registered events. After receiving the input from user,
-     * SignUpPresenter will be called to print the deletion result on the UI.
+     * from the registered events, or enter 0 if don't want to delete any event.
+     * After receiving the input from user, SignUpPresenter will be called to print
+     * the deletion result on the UI.
      *
      * @param username - the user's username
      */
@@ -98,6 +102,8 @@ public class SignUpController {
         //prints registered events
         this.getRegisteredEventList(username);
         String eventName = scan1.nextLine();
+        if (eventName.equals("0"))
+            return;
         if (eventManager.deleteUserFromEvent(username, eventName)){
             userManager.getRegisteredEvents(username).remove(eventName);
             sp.printDeleteEventSuccess();

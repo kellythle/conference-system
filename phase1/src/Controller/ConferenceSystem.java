@@ -67,6 +67,7 @@ public class ConferenceSystem {
                     break;
                 case "5":
                     System.out.println("End of Sign Up System.");
+                    break;
                 default:
                     System.out.println("Invalid input,please try again.");
             }

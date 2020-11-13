@@ -62,7 +62,7 @@ public class SignUpPresenter {
         System.out.println("All Events: ");
         System.out.println(events);
         System.out.println();
-        System.out.println("Enter the event name you want to sign up for: ");
+        System.out.println("Enter the event name you want to sign up for (or enter 0 to go back to Sign Up System menu): ");
     }
 
     /**
@@ -84,7 +84,7 @@ public class SignUpPresenter {
         System.out.println("Registered Events: ");
         System.out.println(events);
         System.out.println();
-        System.out.println("Enter the event name you want to delete: ");
+        System.out.println("Enter the event name you want to delete (or enter 0 to go back to Sign Up System menu): ");
 
     }
 
