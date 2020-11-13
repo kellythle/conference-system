@@ -94,7 +94,7 @@ public class ConferenceSystem {
                     scheduleController.endScheduling();
                     break;
             }
-        } while (!menuOption.equals("3"));
+        } while (!scheduleMenuOption.equals("3"));
     }
 
 }
