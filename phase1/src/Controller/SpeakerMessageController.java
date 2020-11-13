@@ -35,7 +35,12 @@ public class SpeakerMessageController {
         for (Event event : myEventManager.getEventList()) {
             if (event.getSpeaker().equals(username)) {
                 for (String userName : event.getAttendees()) {
-                    myMessageManager.createMessage(userName, messageContent);
+                    if (myUserManager.canSend(this.username, userName)) {
+                        return false;
+                    }
+                    else {
+                        myMessageManager.createMessage(userName, messageContent);
+                    }
                 }
             }
         }
@@ -66,7 +71,12 @@ public class SpeakerMessageController {
         for (Event event : myEventManager.getEventList()) {
             if (event.getId() == eventID) {
                 for (String userName : event.getAttendees()) {
-                    myMessageManager.createMessage(userName, messageContent);
+                    if (myUserManager.canSend(this.username, userName)) {
+                        return false;
+                    }
+                    else {
+                        myMessageManager.createMessage(userName, messageContent);
+                    }
                 }
             }
         }
@@ -189,6 +199,20 @@ public class SpeakerMessageController {
                 messagePresenter.printInvalidInput();
             }
         }
+    }
+
+    /**
+     * Calls MessagePresenter to print out the Message Menu.
+     */
+    public String getMessageMenu(){
+        Scanner scan = new Scanner(System.in);
+        messagePresenter.printSpeakerMessageMenu();
+        String input = scan.nextLine();
+        return input;
+    }
+
+    public void invalidInput(){
+        messagePresenter.printInvalidInput();
     }
 
 
