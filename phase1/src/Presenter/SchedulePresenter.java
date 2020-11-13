@@ -4,8 +4,8 @@ import Entity.Event;
 import UseCase.EventManager;
 import javafx.util.Pair;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * A presenter class that prints values that will be displayed in the UI
@@ -46,7 +46,7 @@ public class SchedulePresenter {
      *
      * @return list of available Speakers
      */
-    public ArrayList<String> availableSpeakers(ArrayList<String> speakerList, Date time) {
+    public ArrayList<String> availableSpeakers(ArrayList<String> speakerList, LocalDateTime time) {
         ArrayList<String> availableList = new ArrayList<>();
         ArrayList<String> unavailableList = new ArrayList<>();
         for (Event e : eventManager.getEventList()) {
@@ -71,7 +71,7 @@ public class SchedulePresenter {
      * @param time - the chosen time
      *
      */
-    public void displaySpeakerList(ArrayList<String> speakerList, Date time) {
+    public void displaySpeakerList(ArrayList<String> speakerList, LocalDateTime time) {
         StringBuilder availableSpeakers = new StringBuilder("Available Speakers: ");
         StringBuilder unavailableSpeakers = new StringBuilder("Unavailable Speakers: ");
 
@@ -108,8 +108,7 @@ public class SchedulePresenter {
         }
 
         availableTimes = availableTimes.replaceAll(", $", "");
-        System.out.println("Here are the available start times:\n" + availableTimes + "\n" + "Please enter the " +
-                "Time you wish to book for this Event: ");
+        System.out.println("Here are the available start times:\n" + availableTimes +"\n");
 
     }
 
@@ -126,7 +125,7 @@ public class SchedulePresenter {
      * @param time - time for Event
      * @return list of available rooms
      */
-    public ArrayList<Integer> availableRooms (Date time) {
+    public ArrayList<Integer> availableRooms (LocalDateTime time) {
         ArrayList<Integer> availableRooms = new ArrayList<>();
         ArrayList<Integer> unavailableRooms = new ArrayList<>();
         for (Event e : eventManager.getEventList()) {
@@ -143,12 +142,24 @@ public class SchedulePresenter {
         }
         return availableRooms;
     }
+
+    public void printEnterDate(){
+        System.out.println("Enter a date in format yyyy-mm-dd (ex. 2020-05-21): ");
+    }
+
+    public void printEnterTime(){
+        System.out.println("Enter the starting hour of this event (ex. 9 am is 09, 4 pm is 16): ");
+    }
+
+    public void printInvalidDate(){
+        System.out.println("Invalid Date.");
+    }
     /**
      * Prints a string of all the available rooms for an event given the chosen time.
      *
      * @param time - the chosen time
      */
-    public void displayRoomList (Date time) {
+    public void displayRoomList (LocalDateTime time) {
         StringBuilder availableRooms = new StringBuilder("Available Rooms: ");
         StringBuilder unavailableRooms = new StringBuilder("Unavailable Rooms: ");
         ArrayList <Pair<Integer, Integer>> unavailableList = new ArrayList<>();

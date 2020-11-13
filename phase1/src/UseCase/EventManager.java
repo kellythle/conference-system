@@ -2,8 +2,9 @@ package UseCase;
 
 import Entity.Event;
 import javafx.util.Pair;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * This class stores a list of existing events, legal starting
@@ -85,20 +86,6 @@ public class EventManager {
     }
 
     /**
-     * Check if the starting of the event wanted to be created is in the legal starting and ending time of
-     * the conference.
-     *
-     * @param time - the occurring time of this event
-     * @return true if the event can be created and false if cannot
-     */
-    public boolean canCreateEvent(Date time){
-        if(time.getHours() >= this.getStartTime() && time.getHours() < this.getEndTime()){
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * Returns an event that is created.
      *
      * @param name - the name of this event
@@ -108,7 +95,7 @@ public class EventManager {
      * @return the Event that is created
      */
     private Event createEvent(String name, String speaker,
-                              Date time, Pair<Integer, Integer> room) {
+                              LocalDateTime time, Pair<Integer, Integer> room) {
         for (Event e: eventList){
             if (e.getName().equals(name)) {
                 String newName = name + "I";
@@ -132,11 +119,7 @@ public class EventManager {
      * @return true if successfully creates and adds the new event to the conference and false otherwise
      */
     public boolean addEvent(String name, String speaker,
-                            Date time, Pair<Integer, Integer> room) {
-        if (!canCreateEvent(time)){
-            return false;
-        }
-
+                            LocalDateTime time, Pair<Integer, Integer> room) {
         for (Event e : eventList) {
             if ((e.getTime() == time && e.getRoomNum().equals(room.getKey())) || (e.getTime() == time
                     && e.getSpeaker().equals(speaker))) {

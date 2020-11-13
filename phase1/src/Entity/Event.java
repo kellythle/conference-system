@@ -3,9 +3,8 @@ package Entity;
 import javafx.util.Pair;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
-import java.sql.Time;
 
 /**
  * A class that represents an event.
@@ -16,7 +15,7 @@ public class Event implements Serializable {
     private int id; // id of event
     private String name; // name of event
     private String speaker; // name of speaker
-    private Date time; //time of the event
+    private LocalDateTime time; //time of the event
     private ArrayList<String> attendees; // names of the attendees
     private Pair<Integer, Integer> room; //<room number, capacity>
 
@@ -27,7 +26,7 @@ public class Event implements Serializable {
      * @param time- the occurring time of this event
      * @param room- the occurring room number of this event
      */
-    public Event (String name, String speaker, Date time, Pair<Integer, Integer> room) {
+    public Event (String name, String speaker, LocalDateTime time, Pair<Integer, Integer> room) {
         this.name = name;
         this.speaker = speaker;
         this.time = time;
@@ -65,7 +64,7 @@ public class Event implements Serializable {
      * Returns the occurring time of this event.
      * @return the occurring time of this Event
      */
-    public Date getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
@@ -129,7 +128,7 @@ public class Event implements Serializable {
      * This method sets the occurring time of this event.
      * @param time- the time of this event
      */
-    public void setTime(Date time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 }

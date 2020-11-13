@@ -7,7 +7,8 @@ import UseCase.EventManager;
 import UseCase.UserManager;
 import javafx.util.Pair;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -22,7 +23,7 @@ import java.util.Scanner;
 public class ScheduleController {
     private final EventManager eventManager;
     private final UserManager userManager;
-    private final SchedulePresenter schp = new SchedulePresenter();
+    private final SchedulePresenter scheduleP = new SchedulePresenter();
 
     /**
      * Creates a instance of ScheduleController with a ManagerFacade instance.
@@ -39,9 +40,8 @@ public class ScheduleController {
      */
     public String getScheduleMenu(){
         Scanner scan = new Scanner(System.in);
-        schp.printScheduleMenu();
+        scheduleP.printScheduleMenu();
         String option = scan.nextLine();
-        // do we need a presenter for when the user doesnt input the correct number?
         return scan.nextLine();
     }
 
@@ -51,38 +51,52 @@ public class ScheduleController {
      */
     public void createEvent(){
         Scanner scan = new Scanner(System.in);
-        schp.printName();
+        scheduleP.printName();
         String name = scan.nextLine();
         if (name.equals("0")) {
             return;
         }
 
-        Scanner scan1 = new Scanner(System.in);
-        schp.displayStartTimes();
-        String time = scan1.nextLine();
-        int intTime = Integer.parseInt(time);
-        if (!(eventManager.getStartTime() <= intTime && intTime < eventManager.getEndTime())){
-            schp.printFailStartTimes();
+        //enter date, check date
+        Scanner scanD = new Scanner(System.in);
+        scheduleP.printEnterDate();
+        String inputDate = scanD.nextLine();
+        LocalDate localDate = LocalDate.parse(inputDate);
+        if (localDate.compareTo(LocalDate.now()) < 0){
+            scheduleP.printInvalidDate();
+        }
+
+        //enter time, check time
+        Scanner scanT = new Scanner(System.in);
+        scheduleP.displayStartTimes();
+        scheduleP.printEnterTime();
+        String inputTime = scanT.nextLine();
+        int intT = Integer.parseInt(inputTime);
+        if (!(eventManager.getStartTime() <= intT && intT < eventManager.getEndTime())){
+            scheduleP.printFailStartTimes();
             return;
         }
 
+        //combine the date and time into one LocalDateTime instance
+        LocalDateTime eventTime = LocalDateTime.parse(inputDate + "T" + inputTime + ":00:00");
+
         Scanner scan2 = new Scanner(System.in);
-        schp.displayRoomList(time);
+        scheduleP.displayRoomList(eventTime);
         String room = scan2.nextLine();
         Integer intRoom = Integer.parseInt(room);
-        if (!schp.availableRooms(time).contains(intRoom)){
-            schp.printFailRoom();
+        if (!scheduleP.availableRooms(eventTime).contains(intRoom)){
+            scheduleP.printFailRoom();
             return;
         }
 
         Scanner scan3 = new Scanner(System.in);
-        schp.displaySpeakerList(userManager.getSpeakerList(), time);
+        scheduleP.displaySpeakerList(userManager.getSpeakerList(), eventTime);
         String speaker = scan3.nextLine();
-        if (!schp.availableSpeakers(userManager.getSpeakerList(), time).contains(speaker)) {
-            schp.printFailSpeaker();
+        if (!scheduleP.availableSpeakers(userManager.getSpeakerList(), eventTime).contains(speaker)) {
+            scheduleP.printFailSpeaker();
             return;
         }
-        this.callAddEvent(name, speaker, time, eventManager.getRoom(intRoom));
+        this.callAddEvent(name, speaker, eventTime, eventManager.getRoom(intRoom));
     }
 
 
@@ -104,16 +118,16 @@ public class ScheduleController {
      */
     public void addNewSpeaker() {
         Scanner scan = new Scanner(System.in);
-        schp.addSpeaker();
+        scheduleP.addSpeaker();
         String speakerName = scan.nextLine();
         Scanner scan1 = new Scanner(System.in);
-        schp.addSpeakerPassword();
+        scheduleP.addSpeakerPassword();
         String password = scan1.nextLine();
         if(canCreateSpeaker(speakerName)) {
             userManager.createUser(speakerName, password, "Speaker");
-            schp.successSpeaker();
+            scheduleP.successSpeaker();
         }
-        schp.failedSpeaker();
+        scheduleP.failedSpeaker();
     }
 
     /**
@@ -126,21 +140,25 @@ public class ScheduleController {
      * @param room - the occurring room of the event wanted to be created (receive from UI)
      */
     public void callAddEvent(String name, String speaker,
-                             Date time, Pair<Integer, Integer> room){
+                             LocalDateTime time, Pair<Integer, Integer> room){
         // create a speaker account if this speaker haven't have an account yet.
         Event event = new Event (name, speaker, time, room);
         if(!userManager.isSpeaker(speaker)){
-            schp.createEventResult(false, event);
+            scheduleP.createEventResult(false, event);
         }
         eventManager.addEvent(name, speaker, time, room);
-        schp.createEventResult(true, event);
+        scheduleP.createEventResult(true, event);
     }
 
     /**
      * Prints that the scheduling system has been exited.
      */
     public void endScheduling(){
-        schp.printEndScheduling();
+        scheduleP.printEndScheduling();
+    }
+
+    public void failScheduleMenu(){
+        scheduleP.printFailScheduleMenu();
     }
 }
 
