@@ -7,9 +7,9 @@ import UseCase.UserManager;
 import java.util.Scanner;
 
 public class OrganizerMessageController {
-    private MessageManager myMessageManager;
+    private final MessageManager myMessageManager;
     public UserManager myUserManager;
-    private String username;
+    private final String username;
     public MessagePresenter messagePresenter;
 
     public OrganizerMessageController(String username, UserManager myUserManager){
@@ -21,8 +21,8 @@ public class OrganizerMessageController {
 
     /**
      *
-     * @param receiverID
-     * @param messageContent
+     * @param receiverID - username of user receiving the message
+     * @param messageContent - content of the message
      * @return true if message created
      */
     public boolean sendSingleMessage(String receiverID, String messageContent){
@@ -43,10 +43,8 @@ public class OrganizerMessageController {
         String content = scanner.nextLine();
         if (sendSingleMessage(receiver, content)){
             messagePresenter.printMessageSuccess();
-            return;
         } else {
             messagePresenter.printInvalidUsername();
-            return;
         }
     }
 
@@ -54,7 +52,7 @@ public class OrganizerMessageController {
     /**
      *
      *
-     * @param messageContent
+     * @param messageContent - content of the message
      * @return true if message created
      */
     public boolean sendAllSpeakersMessage(String messageContent){
@@ -63,7 +61,7 @@ public class OrganizerMessageController {
                 return false;
             }
             else {
-                myMessageManager.createMessage(userName, messageContent);
+               myMessageManager.createMessage(userName, messageContent);
             }
         }
         return !myUserManager.getSpeakerList().isEmpty();
@@ -86,7 +84,7 @@ public class OrganizerMessageController {
 
     /**
      *
-     * @param messageContent
+     * @param messageContent - content of the message
      * @return true if message created
      */
     public boolean sendAllAttendeesMessage(String messageContent){
@@ -110,10 +108,8 @@ public class OrganizerMessageController {
         String content = scanner.nextLine();
         if (sendAllAttendeesMessage(content)){
             messagePresenter.printMessageSuccess();
-            return;
         } else {
             messagePresenter.printMessageFailed();
-            return;
         }
     }
 
@@ -125,8 +121,7 @@ public class OrganizerMessageController {
     public String getMessageMenu(){
         Scanner scan = new Scanner(System.in);
         messagePresenter.printOrganizerMessageMenu();
-        String input = scan.nextLine();
-        return input;
+        return scan.nextLine();
     }
 
     /**
@@ -138,8 +133,6 @@ public class OrganizerMessageController {
         String input = scanner.nextLine();
         if (myMessageManager.getSenderConversations().contains(input)){
             viewOrganizerSingleConversation(input);
-        } else {
-            return;
         }
     }
 
@@ -147,16 +140,14 @@ public class OrganizerMessageController {
      * Displays single message history.
      * continue browsing conversations, or return to Message menu.
      *
-     * @param conversationPartner
+     * @param conversationPartner - Partner who has been messaging with the user
      */
     public void viewOrganizerSingleConversation(String conversationPartner){
         Scanner scanner = new Scanner(System.in);
         messagePresenter.viewOrganizerSingleConversation(myMessageManager, myUserManager, conversationPartner);
         String input = scanner.nextLine();
-        if (input == "0"){
+        if (input.equals("0")){
             viewConversations();
-        } else {
-            return;
         }
     }
 
