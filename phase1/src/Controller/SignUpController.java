@@ -74,18 +74,26 @@ public class SignUpController {
         //prints the events
         this.getEventList();
         String eventName = scan1.nextLine();
+        //back to Sign Up System Menu
         if (eventName.equals("0"))
-                return;
+                return; //back to Sign Up System Menu
         for (Event e: eventManager.getEventList()){
+            //check is the input is a valid event name
             if (e.getName().equals(eventName)){
+                //check if this user can sign up for this event
                 if (eventManager.addUserToEvent(username, e)) {
                     userManager.addRegisteredEvent(username, e.getName());
                     sp.printSignUpSuccess();
-                    return;
+                    return; //back to Sign Up System Menu
+                }
+                else{
+                    sp.printSignUpFail();
+                    return; //back to Sign Up System Menu
                 }
             }
         }
-        sp.printSignUpFail();
+        sp.printInvalidInput();
+        //back to Sign Up System Menu
     }
 
     /**
@@ -97,17 +105,34 @@ public class SignUpController {
      *
      * @param username - the user's username
      */
-    public void deleteEvent(String username){
+    public void deleteEvent(String username) {
         Scanner scan1 = new Scanner(System.in);
         //prints registered events
         this.getRegisteredEventList(username);
         String eventName = scan1.nextLine();
+        //back to Sign Up System Menu
         if (eventName.equals("0"))
             return;
+        //check if this user has registered for this event
+        if (!userManager.getRegisteredEvents(username).contains(eventName)){
+            sp.printNotInRegisteredEvent();
+            return; //back to Sign Up System Menu
+        }
+        //check if this user can delete this event
         if (eventManager.deleteUserFromEvent(username, eventName)){
             userManager.getRegisteredEvents(username).remove(eventName);
             sp.printDeleteEventSuccess();
+            return; //back to Sign Up System Menu
         }
         sp.printDeleteEventFail();
+        //back to Sign Up System Menu
+    }
+
+    public void signUpSystemEnd(){
+        sp.printEndSignUpSystem();
+    }
+
+    public void InvalidInput(){
+        sp.printInvalidInput();
     }
 }

@@ -115,4 +115,25 @@ public class SignUpPresenter {
     public void printDeleteEventFail(){
         System.out.println("Deletion fail.");
     }
+
+    /**
+     * Prints "You didn't sign up for this event."
+     */
+    public void printNotInRegisteredEvent(){
+        System.out.println("You didn't sign up for this event.");
+    }
+
+    /**
+     * Prints "End of Sign Up System."
+     */
+    public void printEndSignUpSystem(){
+        System.out.println("End of Sign Up System.");
+    }
+
+    /**
+     * Prints "Invalid input, please try again."
+     */
+    public void printInvalidInput(){
+        System.out.println("Invalid input, please try again.");
+    }
 }

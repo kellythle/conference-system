@@ -51,6 +51,7 @@ public class ConferenceSystem {
     private void signUpHelper(){
         String menuOption;
         do{
+            // Sign Up System Menu
             menuOption = signUpController.getMenu();
             switch (menuOption){
                 case "1":
@@ -66,10 +67,10 @@ public class ConferenceSystem {
                     signUpController.getRegisteredEventList(username);
                     break;
                 case "5":
-                    System.out.println("End of Sign Up System.");
+                    signUpController.signUpSystemEnd();
                     break;
                 default:
-                    System.out.println("Invalid input,please try again.");
+                    signUpController.InvalidInput();
             }
         } while (!menuOption.equals("5"));
     }
