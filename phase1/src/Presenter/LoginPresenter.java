@@ -7,7 +7,7 @@ public class LoginPresenter {
         System.out.println("Welcome to Start Menu! \n" +
                 "Options:\n" +
                 "1. Sign in \n" +
-                "2. Sign up\n" +
+                "2. Register\n" +
                 "(Enter 1, 2");
     }
 

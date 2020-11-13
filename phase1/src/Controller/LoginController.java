@@ -2,6 +2,8 @@ package Controller;
 import UseCase.UserManager;
 import Presenter.LoginPresenter;
 
+import java.util.Scanner;
+
 /**
  * A controller that deals with account creation and login information
  *
@@ -21,6 +23,12 @@ public class LoginController {
         this.loggedInUser = null;
         this.um = userManager;
         LoginPresenter lp = new LoginPresenter();
+    }
+
+    public String StartMenu(){
+        Scanner scan = new Scanner(System.in);
+        lp.printStartMenu();
+        return scan.nextLine();
     }
 
     /**

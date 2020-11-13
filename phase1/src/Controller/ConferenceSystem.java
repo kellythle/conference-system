@@ -15,7 +15,7 @@ import UseCase.UserManager;
  * }
  */
 public class ConferenceSystem {
-    // Gateways read in userMap, eventList, roomList, and MessagesMap
+    // (1) Filip: Gateways read in userMap, eventList, roomList, and MessagesMap
     // After gateways are done, please initialize ^^^ into the corresponding classes.
     // Use case class instances
     private final EventManager eventManager = new EventManager();
@@ -38,10 +38,31 @@ public class ConferenceSystem {
 
     // TODO
     public void run() {
+        //William and Richard vvvvv
         //1. calls LoginController >>> register or login menu
-        //after login (register), show the corresponding menu >>> for attendee, organizer, speaker
+        //maybe in helper
+        String option = loginController.StartMenu();
+        if (option.equals("1")){
+            //loginController.login();
+        }else{
+            //loginController.createAccount();
+        }
         //2. shows Main menu >>> sign up or (schedule) or message
-        //3. return if entered a character for exist.
+        // after login (register), show the corresponding menu >>> for attendee, organizer, speaker
+        // example
+        //switch(mainmenuoption)
+        // case("1")
+        // signUpHelper
+        //...
+        // ^^^^^^^^
+
+
+        //initialize all classes that need the username
+        messageController = new MessageController(username, userManager);
+        organizerMessageController = new OrganizerMessageController(username, userManager);
+        speakerMessageController = new SpeakerMessageController(username, userManager, eventManager);
+        //3. return if the user logout.
+
 
     }
 
