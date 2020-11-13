@@ -104,30 +104,15 @@ public class OrganizerMessageController {
     }
 
 
+
     /**
-     * Displays message menu. The user can select an action. Once that action is completed
-     * the user will return to the message menu, unless the action is to exit messages
-     * and return to the main menu.
+     * Calls MessagePresenter to print out the Message Menu.
      */
-    public void messageMenu() {
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            messagePresenter.printOrganizerMessageMenu();
-            String input = scanner.nextLine();
-            if (input.equals("0")){
-                break;
-            } else if (input.equals("1")){
-                viewConversations();
-            } else if (input.equals("2")){
-                sendMessage();
-            } else if (input.equals("3")){
-                sendMessagesToSpeakers();
-            } else if (input.equals("4")){
-                sendMessagesToAttendees();
-            } else {
-                messagePresenter.printInvalidInput();
-            }
-        }
+    public String getMessageMenu(){
+        Scanner scan = new Scanner(System.in);
+        messagePresenter.printOrganizerMessageMenu();
+        String input = scan.nextLine();
+        return input;
     }
 
     /**
@@ -140,7 +125,7 @@ public class OrganizerMessageController {
         if (myMessageManager.getSenderConversations().contains(input)){
             viewOrganizerSingleConversation(input);
         } else {
-            messageMenu();
+            return;
         }
     }
 
@@ -157,12 +142,13 @@ public class OrganizerMessageController {
         if (input == "0"){
             viewConversations();
         } else {
-            messageMenu();
+            return;
         }
     }
 
-
-
+    public void invalidInput(){
+        messagePresenter.printInvalidInput();
+    }
 
 
 }

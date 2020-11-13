@@ -191,6 +191,20 @@ public class SpeakerMessageController {
         }
     }
 
+    /**
+     * Calls MessagePresenter to print out the Message Menu.
+     */
+    public String getMessageMenu(){
+        Scanner scan = new Scanner(System.in);
+        messagePresenter.printSpeakerMessageMenu();
+        String input = scan.nextLine();
+        return input;
+    }
+
+    public void invalidInput(){
+        messagePresenter.printInvalidInput();
+    }
+
 
 }
 
