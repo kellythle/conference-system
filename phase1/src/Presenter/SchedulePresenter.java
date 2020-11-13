@@ -108,8 +108,7 @@ public class SchedulePresenter {
         }
 
         availableTimes = availableTimes.replaceAll(", $", "");
-        System.out.println("Here are the available start times:\n" + availableTimes + "\n" + "Please enter the " +
-                "Time you wish to book for this Event: ");
+        System.out.println("Here are the available start times:\n" + availableTimes +"\n");
 
     }
 
@@ -145,11 +144,11 @@ public class SchedulePresenter {
     }
 
     public void printEnterDate(){
-        System.out.println("Enter a date in format yyyy-mm-dd, ex. 2020-05-21");
+        System.out.println("Enter a date in format yyyy-mm-dd (ex. 2020-05-21): ");
     }
 
     public void printEnterTime(){
-        System.out.println("Enter the starting hour of this event.\n ex. 9 am is 09, 4 pm in 16");
+        System.out.println("Enter the starting hour of this event (ex. 9 am is 09, 4 pm is 16): ");
     }
 
     public void printInvalidDate(){
