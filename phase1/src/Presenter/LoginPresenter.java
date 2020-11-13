@@ -3,6 +3,23 @@ package Presenter;
 
 public class LoginPresenter {
 
+    public void printStartMenu(){
+        System.out.println("Welcome to Start Menu! \n" +
+                "Options:\n" +
+                "1. Sign in \n" +
+                "2. Sign up\n" +
+                "(Enter 1, 2");
+    }
+
+    public void inputName(){
+        System.out.println("Enter your name:\n");
+    }
+
+    public void inputPassword(){
+        System.out.println("Enter your name:\n");
+    }
+
+
     /**
      * display information when an account is created
      * @param value- boolean value got from login controller
