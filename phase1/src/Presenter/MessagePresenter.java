@@ -34,6 +34,22 @@ public class MessagePresenter {
                 "Enter 2 to send a message:");
         }
 
+    public void printOrganizerMessageMenu(){
+        System.out.println("Welcome to Organizer Message menu. Please select an action:");
+        System.out.println("Enter 0 to exit Messages\n " +
+                "Enter 1 to view conversations\n" +
+                "Enter 2 to send a message to a single user\n" +
+                "Enter 3 to send a message to all Attendees\n" +
+                "Enter 4 to send a message to all Speakers:");
+    }
+
+    public void printSpeakerMessageMenu(){
+        System.out.println("Welcome to Speaker Message menu. Please select an action:");
+        System.out.println("Enter 0 to exit Messages\n " +
+                "Enter 1 to view conversations and reply to messages\n" +
+                "Enter 2 to send a message to Attendees of your Talks:");
+    }
+
     public void viewConversations(MessageManager messageManager){
         System.out.println("You have conversations with these users:");
         System.out.println(messageManager.getSenderConversations());
@@ -56,6 +72,21 @@ public class MessagePresenter {
                 "Enter anything else to return to Message Menu:");
     }
 
+    public void viewOrganizerSingleConversation(MessageManager messageManager, UserManager userManager, String recipientID) {
+        String identity = "Attendee";
+        if (userManager.isOrganizer(recipientID)) {identity = "Organizer";}
+        else if (userManager.isSpeaker(recipientID)) {identity = "Speaker";}
+        System.out.println("Your conversation with " + identity + " " + recipientID + ": ");
+        ArrayList<Integer> singleConversation = messageManager.getSingleConversation(recipientID);
+        for (int i: singleConversation){
+            String messageText = getMessageText(messageManager, i);
+            System.out.println(messageText);
+        }
+        System.out.println("Enter 0 to continue browsing conversations\n" +
+                "Enter anything else to return to Message Menu:");
+    }
+
+
     public void printReceiverIDPrompt(){
         System.out.println("Enter the username of the user you wish to message:");
     }
@@ -65,8 +96,9 @@ public class MessagePresenter {
     }
 
     public void printSpeakerMessagePrompt(){
-        System.out.println("Enter the ID of your talk whose attendees you wish to message \n" +
-                "or enter nothing to message all your talks:");
+        System.out.println("Enter 0 to choose a Talk\n" +
+                "Enter 1 to send to all of your Talks\n" +
+                "Enter anything else to return to go back:");
     }
 
     public void printContentPrompt(){
