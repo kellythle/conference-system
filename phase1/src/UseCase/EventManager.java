@@ -4,7 +4,6 @@ import Entity.Event;
 import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
 /**
  * This class stores a list of existing events, legal starting
@@ -63,6 +62,21 @@ public class EventManager {
     }
 
     /**
+     * Returns the room pair given the room's number.
+     * @param roomNum - the room's number
+     *
+     * @return the room pair
+     */
+    public Pair<Integer, Integer> getRoom(Integer roomNum){
+        for (Pair<Integer, Integer> r: this.getRoomList()){
+            if(r.getKey().equals(roomNum)){
+                return r;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Sets the room list to a version from a read file
      * @param readInRoomList The version of roomList from a read file
      */
@@ -77,7 +91,7 @@ public class EventManager {
      * @param time - the occurring time of this event
      * @return true if the event can be created and false if cannot
      */
-    private boolean canCreateEvent(Date time){
+    public boolean canCreateEvent(Date time){
         if(time.getHours() >= this.getStartTime() && time.getHours() < this.getEndTime()){
             return true;
         }

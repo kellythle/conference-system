@@ -75,4 +75,26 @@ public class ConferenceSystem {
         } while (!menuOption.equals("5"));
     }
 
+    /**
+     * Helper method that allows Organizers to either create events, create speakers, or exit this menu by inputting
+     * a specific number.
+     */
+    private void scheduleHelper(){
+        String scheduleMenuOption;
+        do{
+            scheduleMenuOption = scheduleController.getScheduleMenu();
+            switch (scheduleMenuOption){
+                case "1":
+                    scheduleController.createEvent();
+                    break;
+                case "2":
+                    scheduleController.addNewSpeaker();
+                    break;
+                case "3":
+                    scheduleController.endScheduling();
+                    break;
+            }
+        } while (!menuOption.equals("3"));
+    }
+
 }
