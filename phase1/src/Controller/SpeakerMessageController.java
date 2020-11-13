@@ -191,6 +191,20 @@ public class SpeakerMessageController {
         }
     }
 
+    /**
+     * Calls SchedulePresenter to print out the Scheduling Menu.
+     */
+    public String getMessageMenu(){
+        Scanner scan = new Scanner(System.in);
+        messagePresenter.printSpeakerMessageMenu();
+        String input = scan.nextLine();
+        return input;
+    }
+
+    public void invalidInput(){
+        messagePresenter.printInvalidInput();
+    }
+
 
 }
 
