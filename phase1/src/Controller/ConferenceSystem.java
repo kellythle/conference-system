@@ -155,4 +155,27 @@ public class ConferenceSystem {
         } while (!speakerMessageMenuOption.equals("2"));
     }
 
+    /**
+     * Helper method that allows Speakers to either send message to all attendees of their one event or all events,
+     * or reply to an attendee, or exit this menu by inputting  a specific number.
+     */
+    private void attendeeMessageHelper(){
+        String attendeeMessageMenuOption;
+        do{
+            attendeeMessageMenuOption = messageController.getMessageMenu();
+            switch (attendeeMessageMenuOption){
+                case "0":
+                    break;
+                case "1":
+                    messageController.viewConversations();
+                    break;
+                case "2":
+                    messageController.sendMessage();
+                    break;
+                default:
+                    messageController.invalidInput();
+            }
+        } while (!attendeeMessageMenuOption.equals("2"));
+    }
+
 }

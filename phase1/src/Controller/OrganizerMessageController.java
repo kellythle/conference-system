@@ -106,7 +106,7 @@ public class OrganizerMessageController {
 
 
     /**
-     * Calls SchedulePresenter to print out the Scheduling Menu.
+     * Calls MessagePresenter to print out the Message Menu.
      */
     public String getMessageMenu(){
         Scanner scan = new Scanner(System.in);
