@@ -16,7 +16,7 @@ public class LoginPresenter {
     }
 
     public void inputPassword(){
-        System.out.println("Enter your name:\n");
+        System.out.println("Enter your password:\n");
     }
 
 
