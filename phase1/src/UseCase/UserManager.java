@@ -12,10 +12,6 @@ public class UserManager {
 
     private HashMap<String, UserAccount> userMap;
 
-    /**
-     * Constructor of UserManager
-     */
-    public UserManager() {}
 
     /**
      * Creates a new user, given the type of user and account information.
@@ -26,9 +22,10 @@ public class UserManager {
      *             or ""Organizer"
      * @throws IllegalArgumentException when a type is unrecognized
      */
-    public void createUser(String userName, String password, String type) {
+    public boolean createUser(String userName, String password, String type) {
+        if(userName == null || password == null){throw new IllegalArgumentException("Invalid input");}
         if (userMap.containsKey(userName)){
-            throw new IllegalArgumentException("Duplicate name");
+            throw new IllegalArgumentException("The user is already existed");
         }
         switch (type) {
             case "Attendee":
@@ -37,9 +34,8 @@ public class UserManager {
                 userMap.put(userName, new SpeakerFactory().createAccount(userName, password));
             case "Organizer":
                 userMap.put(userName, new OrganizerFactory().createAccount(userName, password));
-            default:
-                throw new IllegalArgumentException("Unknown type of user");
         }
+        return true;
     }
 
     /**

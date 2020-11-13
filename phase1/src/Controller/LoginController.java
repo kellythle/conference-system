@@ -1,5 +1,6 @@
 package Controller;
 import UseCase.UserManager;
+import Presenter.LoginPresenter;
 
 /**
  * A controller that deals with account creation and login information
@@ -9,6 +10,7 @@ import UseCase.UserManager;
 public class LoginController {
     private String loggedInUser;
     private final UserManager um;
+    private LoginPresenter lp;
 
     /**
      * A constructor for Login controller.
@@ -18,6 +20,7 @@ public class LoginController {
     public LoginController(UserManager userManager) {
         this.loggedInUser = null;
         this.um = userManager;
+        LoginPresenter lp = new LoginPresenter();
     }
 
     /**
@@ -29,12 +32,12 @@ public class LoginController {
      *             or ""Organizer"
      * @throws IllegalArgumentException when a type is unrecognized
      */
-    public boolean createAccount(String userName, String password, String type) {
-        if (um.containsUser(userName)){
-            return false;
+    public void createAccount(String userName, String password, String type) {
+        try {boolean tempValue = this.um.createUser(userName, password, type);
+            lp.displayAccountCreateInfo(tempValue);
         }
-        this.um.createUser(userName, password, type);
-        return true;
+        catch (IllegalArgumentException i){System.out.print(i.getMessage());}
+
     }
 
     /**
