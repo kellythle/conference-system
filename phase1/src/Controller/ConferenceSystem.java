@@ -11,7 +11,6 @@ import javafx.util.Pair;
 
 import java.io.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -57,6 +56,17 @@ public class ConferenceSystem {
 
 
     public void run() {
+        try {
+            boolean readSuccessful = readData();
+            if (readSuccessful)
+                System.out.println("Read successful."); // FOR TESTING
+            else
+                System.out.println("Read unsuccessful."); // FOR TESTING
+        } catch (ClassNotFoundException e) {
+            System.out.println("Class not found"); // FOR TESTING
+            return;
+        }
+
         //William and Richard vvvvv
         //1. calls LoginController >>> register or login menu
         initialLoginHelper();
@@ -78,6 +88,11 @@ public class ConferenceSystem {
                 break;
             }
         //3. return if the user logout.
+        boolean writeSuccessful = writeData();
+        if (writeSuccessful)
+            System.out.println("Write successful."); // FOR TESTING
+        else
+            System.out.println("Write unsuccessful."); // FOR TESTING
         }
 
     /**
@@ -98,14 +113,27 @@ public class ConferenceSystem {
             messages.createNewFile();
             rooms.createNewFile();
 
-            HashMap<String, UserAccount> userMap = (HashMap<String, UserAccount>)
-                    readWriteGateway.readFromFile(usersPath);
-            ArrayList<Event> eventList = (ArrayList<Event>)
-                    readWriteGateway.readFromFile(eventsPath);
-            HashMap<Integer, Message> messageMap = (HashMap<Integer, Message>)
-                    readWriteGateway.readFromFile(messagesPath);
-            ArrayList<Pair<Integer, Integer>> roomList = (ArrayList<Pair<Integer, Integer>>)
-                    readWriteGateway.readFromFile(roomsPath);
+            HashMap<String, UserAccount> userMap = new HashMap<>();
+            ArrayList<Event> eventList = new ArrayList<>();
+            HashMap<Integer, Message> messageMap = new HashMap<>();
+            ArrayList<Pair<Integer, Integer>> roomList = new ArrayList<>();
+
+            if (users.length() != 0) {
+                userMap = (HashMap<String, UserAccount>)
+                        readWriteGateway.readFromFile(usersPath);
+            }
+            if (events.length() != 0) {
+                eventList = (ArrayList<Event>)
+                        readWriteGateway.readFromFile(eventsPath);
+            }
+            if (messages.length() != 0) {
+                messageMap = (HashMap<Integer, Message>)
+                        readWriteGateway.readFromFile(messagesPath);
+            }
+            if (rooms.length() != 0) {
+                roomList = (ArrayList<Pair<Integer, Integer>>)
+                        readWriteGateway.readFromFile(roomsPath);
+            }
 
             userManager.setUserMap(userMap);
             eventManager.setEventList(eventList);
