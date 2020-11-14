@@ -7,6 +7,8 @@ import Gateway.ReadWriteGateway;
 import UseCase.EventManager;
 import UseCase.MessageManager;
 import UseCase.UserManager;
+import javafx.util.Pair;
+
 import java.io.*;
 
 import java.lang.reflect.Array;
@@ -83,10 +85,12 @@ public class ConferenceSystem {
             File users = new File("./users.ser");
             File events = new File("./events.ser");
             File messages = new File("./messages.ser");
+            File rooms = new File("./rooms.ser")
 
             users.createNewFile();
             events.createNewFile();
             messages.createNewFile();
+            rooms.createNewFile();
 
             HashMap<String, UserAccount> userMap = (HashMap<String, UserAccount>)
                     readWriteGateway.readFromFile("./users.ser");
@@ -94,10 +98,13 @@ public class ConferenceSystem {
                     readWriteGateway.readFromFile("./events.ser");
             HashMap<Integer, Message> messageMap = (HashMap<Integer, Message>)
                     readWriteGateway.readFromFile("./users.ser");
+            ArrayList<Pair<Integer, Integer>> roomList = (ArrayList<Pair<Integer, Integer>>)
+                    readWriteGateway.readFromFile("./rooms.ser");
 
             userManager.setUserMap(userMap);
             eventManager.setEventList(eventList);
             messageManager.setSystemMessages(messageMap);
+            eventManager.setRoomList(roomList);
 
         } catch (IOException e) {
             return false;
