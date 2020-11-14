@@ -125,8 +125,9 @@ public class ScheduleController {
         if(canCreateSpeaker(speakerName)) {
             userManager.createUser(speakerName, password, "Speaker");
             scheduleP.successSpeaker();
+        } else {
+            scheduleP.failedSpeaker();
         }
-        scheduleP.failedSpeaker();
     }
 
     /**
