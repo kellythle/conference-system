@@ -93,7 +93,7 @@ public class LoginPresenter {
     }
 
     public void printAttendeeMenu(){
-        System.out.println("Welcome to Speaker Menu! \n" +
+        System.out.println("Welcome to Attendee Menu! \n" +
                 "Options:\n" +
                 "1. Sign up\n" +
                 "2. Send message\n"+
