@@ -64,5 +64,32 @@ public class LoginPresenter {
     public void displayLogoutUser(){
         System.out.println("Logged out successfully!");
     }
+
+    public void printOrganizerMenu(){
+        System.out.println("Welcome to Organizer Menu! \n" +
+                "Options:\n" +
+                "1. Sign up\n" +
+                "2. New talk\n" +
+                "3. Send message\n"+
+                "4/ Log out\n"+
+                "(Enter 1, 2, 3, 4)");
+    }
+
+    public void printSpeakerMenu(){
+        System.out.println("Welcome to Speaker Menu! \n" +
+                "Options:\n" +
+                "1. Send message\n"+
+                "2. Log out\n"+
+                "(Enter 1, 2)");
+    }
+
+    public void printAttendeeMenu(){
+        System.out.println("Welcome to Speaker Menu! \n" +
+                "Options:\n" +
+                "1. Sign up\n" +
+                "2. Send message\n"+
+                "3. Log out\n"+
+                "(Enter 1, 2, 3)");
+    }
 }
 
