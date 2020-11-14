@@ -30,7 +30,7 @@ public class ConferenceSystem {
     // Use case class instances
     private final EventManager eventManager = new EventManager();
     private final UserManager userManager = new UserManager();
-    private MessageManager messageManager; // not final as this can be changed along with the logged in user
+    private final MessageManager messageManager = new MessageManager(); // not final as this can be changed along with the logged in user
 
     private ReadWriteGateway readWriteGateway = new ReadWriteGateway();
 
@@ -70,6 +70,7 @@ public class ConferenceSystem {
         //William and Richard vvvvv
         //1. calls LoginController >>> register or login menu
         initialLoginHelper();
+        messageManager.setSenderID(username);
         //initialize all classes that need the username
         messageController = new MessageController(username, userManager);
         organizerMessageController = new OrganizerMessageController(username, userManager);

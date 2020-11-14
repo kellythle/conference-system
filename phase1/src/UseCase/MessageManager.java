@@ -29,10 +29,15 @@ public class MessageManager {
      * Creates a UseCase.MessageManager
      * @param senderID - ID of the current user logged in
      */
-
     public MessageManager(String senderID){
         HashMap<Integer, Message> systemMessages = new HashMap<Integer, Message>();
         this.senderID = senderID;
+    }
+
+    public MessageManager()
+    {
+        HashMap<Integer, Message> systemMessages = new HashMap<Integer, Message>();
+        this.senderID = "";
     }
 
     /**
@@ -61,6 +66,15 @@ public class MessageManager {
     public String getSenderID(){
         return senderID;
     }
+
+    /**
+     * Sets sender ID.
+     * @param senderID - message sender's ID
+     */
+    public void setSenderID(String senderID) {
+        this.senderID = senderID;
+    }
+
     /**
      * Creates a message. Other methods call this method
      * to 'send' a message. This does not check whether or not
@@ -68,7 +82,6 @@ public class MessageManager {
      * @param receiverID
      * @param messageContent
      */
-
     public boolean createMessage(String receiverID, String messageContent){
         Message newMessage = new Message(senderID, receiverID, messageContent);
         systemMessages.put(newMessage.getId(), newMessage);
