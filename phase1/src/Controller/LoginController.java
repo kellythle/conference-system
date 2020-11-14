@@ -26,10 +26,6 @@ public class LoginController {
         lp = new LoginPresenter();
     }
 
-    public String StartMenu() {
-        lp.printStartMenu();
-        return scanner.nextLine();
-    }
 
     /**
      * Creates a new user, given the type of user and account information.
@@ -62,32 +58,29 @@ public class LoginController {
      * Logs in a user if the account information provided is correct
      * @param userName The user's username
      * @param password The user's password
-     * @return true if user successfully logged in, false otherwise
      */
-    public boolean login(String userName, String password) {
+    public void login(String userName, String password) {
         boolean okay = um.canLogin(userName, password);
         lp.displayLoginInfo(okay);
         if(okay) {
             this.loggedInUser = userName;
             lp.displayLoginUser(loggedInUser);
-            return true;
         }
         else {
             this.loggedInUser = null;
-            return false;
         }
     }
 
     /**
      * Overloaded login that takes in user input from scanner, to be used in ConferenceSystem
-     * @return True if and only if successfully logged in
+
      */
-    public boolean login() {
+    public void login() {
         lp.inputName();
         String userName = scanner.nextLine();
         lp.inputPassword();
         String password = scanner.nextLine();
-        return this.login(userName, password);
+        this.login(userName, password);
     }
 
     /**
@@ -99,6 +92,20 @@ public class LoginController {
         return scanner.nextLine();
     }
 
+    public String getOrganizerMenu(){
+        lp.printOrganizerMenu();
+        return scanner.nextLine();
+    }
+
+    public String getSpeakerMenu(){
+        lp.printOrganizerMenu();
+        return scanner.nextLine();
+    }
+
+    public String getAttendeeMenu(){
+        lp.printOrganizerMenu();
+        return scanner.nextLine();
+    }
     /**
      * Logs out any existing user
      */
@@ -115,6 +122,9 @@ public class LoginController {
         return this.loggedInUser;
     }
 
+    /**
+     * Print the invalid option
+     */
     public void invalidOption() {
         lp.printInvalidInput();
     }
@@ -122,5 +132,14 @@ public class LoginController {
     public String getEndMenu() {
         lp.printEndMenu();
         return scanner.nextLine();
+    }
+
+    /**
+     * Getter of user type by name
+     * @param username - User name
+     * @return String of user type
+     */
+    public String getUserType(String username){
+        return um.getUserType(username);
     }
 }

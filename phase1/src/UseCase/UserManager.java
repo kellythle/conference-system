@@ -67,6 +67,18 @@ public class UserManager {
     }
 
     /**
+     *
+     * @param username - name of the user
+     * @return the user type
+     */
+    public String getUserType(String username){
+
+        if (this.getUserByName(username).isOrganizer()){return "Organizer";}
+        else if (this.getUserByName(username).isSpeaker()){return "Speaker";}
+        else{return "Attendee";}
+    }
+
+    /**
      * Returns true is the user exists.
      *
      * @param username - the username of this user

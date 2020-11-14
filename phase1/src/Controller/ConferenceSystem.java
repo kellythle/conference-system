@@ -53,13 +53,24 @@ public class ConferenceSystem {
     // Variable for keeping track with user, should be initialized after login.
     String username;
 
-    public ConferenceSystem() {}
+    public ConferenceSystem() {username = null;}
 
-    // TODO
+
     public void run() {
         //William and Richard vvvvv
         //1. calls LoginController >>> register or login menu
         initialLoginHelper();
+        switch (loginController.getUserType(username)){
+            case "Organizer" -> {
+                organizerHelper();
+            }
+            case "Speaker" -> {
+                speakerHelper();
+            }
+            case "Attendee" -> {
+                attendeeHelper();
+            }
+        }
 
         //2. shows Main menu >>> sign up or (schedule) or message
         // after login (register), show the corresponding menu >>> for attendee, organizer, speaker
@@ -142,36 +153,92 @@ public class ConferenceSystem {
         return true;
     }
 
-        /**
-         * Helper method that deals with signing up, deleting events.
-         * First, it shows a menu of Sign Up System.
-         * User can input a number to do either signing up for event,
-         * deleting registered event, see events, see registered events,
-         * and exist Sign Up System to main menu.
-         */
-    private void signUpHelper(){
+    /**
+     * Helper method at the start that deals with login and account creation
+     */
+    private void initialLoginHelper() {
+        String loginMenuOption;
+        do {
+            loginMenuOption = loginController.getStartMenu();
+            switch (loginMenuOption) {
+                case "1" -> {
+                    loginController.login();
+                    this.username = loginController.getLoggedInUser();
+                }
+                case "2" -> loginController.createAccount();
+                default -> loginController.invalidOption();
+            }
+        } while (loginController.getLoggedInUser() == null);
+    }
+
+    /**
+     * organizer menu helper class
+     */
+    private void organizerHelper(){
         String menuOption;
         do{
-            // Sign Up System Menu
+            // Organizer start menu
+            menuOption = loginController.getOrganizerMenu();
+            switch (menuOption) {
+                case "1" -> signUpHelper();
+                case "2" -> scheduleHelper();
+                case "3" -> organizerMessageHelper();
+                case "4" -> loginController.logout();
+                default ->  loginController.invalidOption();
+            }
+        } while (!menuOption.equals("4"));
+    }
+
+    /**
+     * Speaker menu helper class
+     */
+    private void speakerHelper(){
+        String menuOption;
+        do{//Speaker start menu
+            menuOption = loginController.getSpeakerMenu();
+            switch (menuOption) {
+                case "1" -> speakerMessageHelper();
+                case "2" -> loginController.logout();
+                default ->  loginController.invalidOption();
+            }
+        } while (!menuOption.equals("2"));
+    }
+
+    /**
+     * Attendee menu helper class
+     */
+    private void attendeeHelper(){
+        String menuOption;
+        do{
+            // Attendee start menu
+            menuOption = loginController.getAttendeeMenu();
+            switch (menuOption) {
+                case "1" -> signUpHelper();
+                case "2" -> organizerMessageHelper();
+                case "3" -> loginController.logout();
+                default ->  loginController.invalidOption();
+            }
+        } while (!menuOption.equals("3"));
+    }
+
+    /**
+     * Helper method that deals with signing up, deleting events.
+     * First, it shows a menu of Sign Up System.
+     * User can input a number to do either signing up for event,
+     * deleting registered event, see events, see registered events,
+     * and exist Sign Up System to main menu.
+     */
+    private void signUpHelper(){
+        String menuOption;
+        do{// Sign Up System Menu
             menuOption = signUpController.getMenu();
-            switch (menuOption){
-                case "1":
-                    signUpController.signUpEvent(username);
-                    break;
-                case "2":
-                    signUpController.deleteEvent(username);
-                    break;
-                case "3":
-                    signUpController.getEventList();
-                    break;
-                case "4":
-                    signUpController.getRegisteredEventList(username);
-                    break;
-                case "5":
-                    signUpController.signUpSystemEnd();
-                    break;
-                default:
-                    signUpController.InvalidInput();
+            switch (menuOption) {
+                case "1" -> signUpController.signUpEvent(username);
+                case "2" -> signUpController.deleteEvent(username);
+                case "3" -> signUpController.getEventList();
+                case "4" -> signUpController.getRegisteredEventList(username);
+                case "5" -> signUpController.signUpSystemEnd();
+                default -> signUpController.InvalidInput();
             }
         } while (!menuOption.equals("5"));
     }
@@ -184,18 +251,11 @@ public class ConferenceSystem {
         String scheduleMenuOption;
         do{
             scheduleMenuOption = scheduleController.getScheduleMenu();
-            switch (scheduleMenuOption){
-                case "1":
-                    scheduleController.createEvent();
-                    break;
-                case "2":
-                    scheduleController.addNewSpeaker();
-                    break;
-                case "3":
-                    scheduleController.endScheduling();
-                    break;
-                default:
-                    scheduleController.failScheduleMenu();
+            switch (scheduleMenuOption) {
+                case "1" -> {scheduleController.createEvent();}
+                case "2" -> scheduleController.addNewSpeaker();
+                case "3" -> scheduleController.endScheduling();
+                default -> scheduleController.failScheduleMenu();
             }
         } while (!scheduleMenuOption.equals("3"));
     }
@@ -276,42 +336,5 @@ public class ConferenceSystem {
     }
 
 
-    /**
-     * Helper method at the start that deals with login and account creation
-     */
-    private void initialLoginHelper() {
-        String loginMenuOption;
-        do {
-            loginMenuOption = loginController.getStartMenu();
-            switch (loginMenuOption) {
-                case "1":
-                    loginController.login();
-                    this.username = loginController.getLoggedInUser();
-                    break;
-                case "2":
-                    loginController.createAccount();
-                    break;
-                default:
-                    loginController.invalidOption();
-            }
-        } while (loginController.getLoggedInUser() != null);
-    }
 
-    private void logOutHelper() {
-        String option;
-        do {
-            option = loginController.getEndMenu();
-            switch(option) {
-                case "1":
-                    loginController.logout();
-                    break;
-                case "2":
-                    break;  // do nothing and stay logged in
-                case "3":
-                    return;
-                default:
-                    loginController.invalidOption();
-            }
-        } while (true);
-    }
 }
