@@ -41,7 +41,6 @@ public class ScheduleController {
     public String getScheduleMenu(){
         Scanner scan = new Scanner(System.in);
         scheduleP.printScheduleMenu();
-        String option = scan.nextLine();
         return scan.nextLine();
     }
 
