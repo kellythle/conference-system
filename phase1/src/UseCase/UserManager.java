@@ -22,10 +22,13 @@ public class UserManager {
      *             or ""Organizer"
      * @throws IllegalArgumentException when a type is unrecognized
      */
-    public boolean createUser(String userName, String password, String type) {
-        if(userName == null || password == null){throw new IllegalArgumentException("Invalid input");}
+    public void createUser(String userName, String password, String type) {
+        // Makes sure the strings passed in are not null or empty
+        if(userName == null || password == null){throw new IllegalArgumentException("Invalid inputs: null");}
+        else if(userName.isEmpty() || password.isEmpty()){throw new IllegalArgumentException("Invalid inputs: Empty");}
+
         if (userMap.containsKey(userName)){
-            throw new IllegalArgumentException("The user is already existed");
+            throw new IllegalArgumentException("The user already exists");
         }
         switch (type) {
             case "Attendee":
@@ -37,8 +40,9 @@ public class UserManager {
             case "Organizer":
                 userMap.put(userName, new OrganizerFactory().createAccount(userName, password));
                 break;
+            default:
+                throw new IllegalArgumentException("Invalid input: unknown type");
         }
-        return true;
     }
 
     /**

@@ -30,20 +30,38 @@ public class LoginController {
     /**
      * Creates a new user, given the type of user and account information.
      *
+     * ***This should only create Attendees and Organizers
+     *
      * @param userName The new user's username, *cannot be a duplicate within the system
      * @param password The new user's password
-     * @param type The type of user added, can only be 3 strings: "Attendee", "Speaker",
-     *             or ""Organizer"
-     * @throws IllegalArgumentException when a type is unrecognized
+     * @param type The type of user added, can only be 2 strings: "Attendee" or "Organizer"
      */
     public void createAccount(String userName, String password, String type) {
-        try {boolean tempValue = this.um.createUser(userName, password, type);
-            lp.displayAccountCreateInfo(tempValue);
+        //null edge case
+        if (type == null) {
+            lp.displayAccountCreateInfo(false);
+            return;
         }
-        catch (IllegalArgumentException i){System.out.print(i.getMessage());}
+        // Since UserManager's create user can make Speakers, we need to exclude this edge case:
+        else if (type.equals("Speaker")) {
+            lp.displayAccountCreateInfo(false);
+            return;
+        }
+        // below deals with any input other than null or speaker
+        try {
+            this.um.createUser(userName, password, type);
+            lp.displayAccountCreateInfo(true); // successfully created account
+        }
+        catch (IllegalArgumentException i) {
+            System.out.println(i.getMessage()); // for testing right now: prints the type of error if needed
+            lp.displayAccountCreateInfo(false); // unrecognized input or duplicate user
+        }
 
     }
 
+    /**
+     * Overloaded createAccount to use in initial account creation, should NOT allow speakers
+     */
     public void createAccount() {
         lp.inputName();
         String userName = scanner.nextLine();

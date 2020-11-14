@@ -20,7 +20,7 @@ public class LoginPresenter {
     }
 
     public void inputName(){
-        System.out.println("Enter your name:\n");
+        System.out.println("Enter your unique username:\n");
     }
 
     public void inputPassword(){
@@ -42,10 +42,10 @@ public class LoginPresenter {
      */
     public void displayAccountCreateInfo(boolean value){
         if (value){
-            System.out.println("The user account is created successfully");
+            System.out.println("The user account is created successfully!");
         }
         else
-            System.out.println("This username already exists, please try another");
+            System.out.println("Failed to create account, please try again.");
     }
 
     /**
