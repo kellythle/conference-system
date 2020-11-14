@@ -129,6 +129,11 @@ public class LoginController {
         lp.printInvalidInput();
     }
 
+    public String getEndMenu() {
+        lp.printEndMenu();
+        return scanner.nextLine();
+    }
+
     /**
      * Getter of user type by name
      * @param username - User name

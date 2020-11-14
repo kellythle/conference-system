@@ -1,8 +1,19 @@
 package Controller;
 
+import Entity.Event;
+import Entity.Message;
+import Entity.UserAccount;
+import Gateway.ReadWriteGateway;
 import UseCase.EventManager;
 import UseCase.MessageManager;
 import UseCase.UserManager;
+import javafx.util.Pair;
+
+import java.io.*;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * This is the main controller class that contains all the instances of the Managers and Controllers
@@ -22,6 +33,8 @@ public class ConferenceSystem {
     private final UserManager userManager = new UserManager();
     private MessageManager messageManager; // not final as this can be changed along with the logged in user
 
+    private ReadWriteGateway readWriteGateway = new ReadWriteGateway();
+
     // Controller class instances
     private final LoginController loginController = new LoginController(userManager);
     private final SignUpController signUpController = new SignUpController(eventManager, userManager);
@@ -30,6 +43,12 @@ public class ConferenceSystem {
     private MessageController messageController;
     private OrganizerMessageController organizerMessageController;
     private SpeakerMessageController speakerMessageController;
+
+    // File paths
+    private final String usersPath = "../../users.ser";
+    private final String eventsPath = "../../events.ser";
+    private final String messagesPath = "../../messages.ser";
+    private final String roomsPath = "../../rooms.ser";
 
     // Variable for keeping track with user, should be initialized after login.
     String username;
@@ -68,8 +87,70 @@ public class ConferenceSystem {
         organizerMessageController = new OrganizerMessageController(username, userManager);
         speakerMessageController = new SpeakerMessageController(username, userManager, eventManager);
         //3. return if the user logout.
+        logOutHelper();
 
+    }
 
+    /**
+     * Reads in all user, event, and message data from the files.
+     *
+     * @return Boolean indicating if reading was successful.
+     * @throws ClassNotFoundException if class type of data read in is not defined in program.
+     */
+    public boolean readData() throws ClassNotFoundException {
+        try {
+            File users = new File(usersPath);
+            File events = new File(eventsPath);
+            File messages = new File(messagesPath);
+            File rooms = new File(roomsPath);
+
+            users.createNewFile();
+            events.createNewFile();
+            messages.createNewFile();
+            rooms.createNewFile();
+
+            HashMap<String, UserAccount> userMap = (HashMap<String, UserAccount>)
+                    readWriteGateway.readFromFile(usersPath);
+            ArrayList<Event> eventList = (ArrayList<Event>)
+                    readWriteGateway.readFromFile(eventsPath);
+            HashMap<Integer, Message> messageMap = (HashMap<Integer, Message>)
+                    readWriteGateway.readFromFile(messagesPath);
+            ArrayList<Pair<Integer, Integer>> roomList = (ArrayList<Pair<Integer, Integer>>)
+                    readWriteGateway.readFromFile(roomsPath);
+
+            userManager.setUserMap(userMap);
+            eventManager.setEventList(eventList);
+            messageManager.setSystemMessages(messageMap);
+            eventManager.setRoomList(roomList);
+
+        } catch (IOException e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Writes all user, event, and message data to their respective files.
+     *
+     * @return Boolean indicating if reading was successful.
+     */
+    private boolean writeData()
+    {
+        HashMap<String, UserAccount> userMap = userManager.getUserMap();
+        ArrayList<Event> eventList = eventManager.getEventList();
+        HashMap<Integer, Message> messageMap = messageManager.getSystemMessages();
+        ArrayList<Pair<Integer, Integer>> roomList = eventManager.getRoomList();
+
+        try {
+            readWriteGateway.saveToFile(usersPath, userMap);
+            readWriteGateway.saveToFile(eventsPath, eventList);
+            readWriteGateway.saveToFile(messagesPath, messageMap);
+            readWriteGateway.saveToFile(roomsPath, roomList);
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
     }
 
     /**

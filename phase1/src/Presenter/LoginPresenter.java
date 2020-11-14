@@ -11,6 +11,14 @@ public class LoginPresenter {
                 "(Enter 1, 2");
     }
 
+    public void printEndMenu(){
+        System.out.println("This is the to log out Menu! \n" +
+                "Options:\n" +
+                "1. Log out \n" +
+                "2. Stay logged in\n" +
+                "(Enter 1, 2");
+    }
+
     public void inputName(){
         System.out.println("Enter your name:\n");
     }
