@@ -60,6 +60,10 @@ public class ConferenceSystem {
         //William and Richard vvvvv
         //1. calls LoginController >>> register or login menu
         initialLoginHelper();
+        //initialize all classes that need the username
+        messageController = new MessageController(username, userManager);
+        organizerMessageController = new OrganizerMessageController(username, userManager);
+        speakerMessageController = new SpeakerMessageController(username, userManager, eventManager);
         //2. shows Main menu >>> sign up or (schedule) or message
         // after login (register), show the corresponding menu >>> for attendee, organizer, speaker
         switch (loginController.getUserType(username)){
@@ -73,24 +77,8 @@ public class ConferenceSystem {
                 attendeeHelper();
                 break;
             }
-
-
-        //2. shows Main menu >>> sign up or (schedule) or message
-        // after login (register), show the corresponding menu >>> for attendee, organizer, speaker
-        // example
-        //switch(mainMenuoption)
-        // case("1")
-        // signUpHelper
-        //...
-        // ^^^^^^^^
-
-
-        //initialize all classes that need the username
-        messageController = new MessageController(username, userManager);
-        organizerMessageController = new OrganizerMessageController(username, userManager);
-        speakerMessageController = new SpeakerMessageController(username, userManager, eventManager);
         //3. return if the user logout.
-        logOutHelper();
+        return;
 
         }
 
