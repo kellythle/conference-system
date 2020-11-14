@@ -78,9 +78,9 @@ public class MessageController {
         Scanner scanner = new Scanner(System.in);
         messagePresenter.viewSingleConversation(myMessageManager, myUserManager, conversationPartner);
         String input = scanner.nextLine();
-        if (input == "0"){
+        if (input.equals("0")){
             replyToConversation(conversationPartner);
-        } else if (input == "1"){
+        } else if (input.equals("1")){
             viewConversations();
         } else {
             return;
