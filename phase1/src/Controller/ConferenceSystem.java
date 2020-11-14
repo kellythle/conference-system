@@ -60,17 +60,20 @@ public class ConferenceSystem {
         //William and Richard vvvvv
         //1. calls LoginController >>> register or login menu
         initialLoginHelper();
+        //2. shows Main menu >>> sign up or (schedule) or message
+        // after login (register), show the corresponding menu >>> for attendee, organizer, speaker
         switch (loginController.getUserType(username)){
-            case "Organizer" -> {
+            case "Organizer":
                 organizerHelper();
-            }
-            case "Speaker" -> {
+                break;
+            case "Speaker":
                 speakerHelper();
-            }
-            case "Attendee" -> {
+                break;
+            case "Attendee":
                 attendeeHelper();
+                break;
             }
-        }
+
 
         //2. shows Main menu >>> sign up or (schedule) or message
         // after login (register), show the corresponding menu >>> for attendee, organizer, speaker
@@ -89,7 +92,7 @@ public class ConferenceSystem {
         //3. return if the user logout.
         logOutHelper();
 
-    }
+        }
 
     /**
      * Reads in all user, event, and message data from the files.
@@ -161,12 +164,16 @@ public class ConferenceSystem {
         do {
             loginMenuOption = loginController.getStartMenu();
             switch (loginMenuOption) {
-                case "1" -> {
+                case "1":
                     loginController.login();
                     this.username = loginController.getLoggedInUser();
-                }
-                case "2" -> loginController.createAccount();
-                default -> loginController.invalidOption();
+                    break;
+                case "2":
+                    loginController.createAccount();
+                    this.username = loginController.getLoggedInUser();
+                    break;
+                default:
+                    loginController.invalidOption();
             }
         } while (loginController.getLoggedInUser() == null);
     }
@@ -180,11 +187,20 @@ public class ConferenceSystem {
             // Organizer start menu
             menuOption = loginController.getOrganizerMenu();
             switch (menuOption) {
-                case "1" -> signUpHelper();
-                case "2" -> scheduleHelper();
-                case "3" -> organizerMessageHelper();
-                case "4" -> loginController.logout();
-                default ->  loginController.invalidOption();
+                case "1":
+                    signUpHelper();
+                    break;
+                case "2":
+                    scheduleHelper();
+                    break;
+                case "3":
+                    organizerMessageHelper();
+                    break;
+                case "4":
+                    loginController.logout();
+                    break;
+                default:
+                    loginController.invalidOption();
             }
         } while (!menuOption.equals("4"));
     }
@@ -197,9 +213,14 @@ public class ConferenceSystem {
         do{//Speaker start menu
             menuOption = loginController.getSpeakerMenu();
             switch (menuOption) {
-                case "1" -> speakerMessageHelper();
-                case "2" -> loginController.logout();
-                default ->  loginController.invalidOption();
+                case "1":
+                    speakerMessageHelper();
+                    break;
+                case "2":
+                    loginController.logout();
+                    break;
+                default:
+                    loginController.invalidOption();
             }
         } while (!menuOption.equals("2"));
     }
@@ -213,10 +234,17 @@ public class ConferenceSystem {
             // Attendee start menu
             menuOption = loginController.getAttendeeMenu();
             switch (menuOption) {
-                case "1" -> signUpHelper();
-                case "2" -> organizerMessageHelper();
-                case "3" -> loginController.logout();
-                default ->  loginController.invalidOption();
+                case "1":
+                    signUpHelper();
+                    break;
+                case "2":
+                    organizerMessageHelper();
+                    break;
+                case "3":
+                    loginController.logout();
+                    break;
+                default:
+                    loginController.invalidOption();
             }
         } while (!menuOption.equals("3"));
     }
@@ -233,12 +261,23 @@ public class ConferenceSystem {
         do{// Sign Up System Menu
             menuOption = signUpController.getMenu();
             switch (menuOption) {
-                case "1" -> signUpController.signUpEvent(username);
-                case "2" -> signUpController.deleteEvent(username);
-                case "3" -> signUpController.getEventList();
-                case "4" -> signUpController.getRegisteredEventList(username);
-                case "5" -> signUpController.signUpSystemEnd();
-                default -> signUpController.InvalidInput();
+                case "1":
+                    signUpController.signUpEvent(username);
+                    break;
+                case "2":
+                    signUpController.deleteEvent(username);
+                    break;
+                case "3":
+                    signUpController.getEventList();
+                    break;
+                case "4":
+                    signUpController.getRegisteredEventList(username);
+                    break;
+                case "5":
+                    signUpController.signUpSystemEnd();
+                    break;
+                default:
+                    signUpController.InvalidInput();
             }
         } while (!menuOption.equals("5"));
     }
@@ -252,10 +291,17 @@ public class ConferenceSystem {
         do{
             scheduleMenuOption = scheduleController.getScheduleMenu();
             switch (scheduleMenuOption) {
-                case "1" -> {scheduleController.createEvent();}
-                case "2" -> scheduleController.addNewSpeaker();
-                case "3" -> scheduleController.endScheduling();
-                default -> scheduleController.failScheduleMenu();
+                case "1":
+                    scheduleController.createEvent();
+                    break;
+                case "2":
+                    scheduleController.addNewSpeaker();
+                    break;
+                case "3":
+                    scheduleController.endScheduling();
+                    break;
+                default:
+                    scheduleController.failScheduleMenu();
             }
         } while (!scheduleMenuOption.equals("3"));
     }
