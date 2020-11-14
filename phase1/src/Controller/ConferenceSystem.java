@@ -57,7 +57,7 @@ public class ConferenceSystem {
         organizerMessageController = new OrganizerMessageController(username, userManager);
         speakerMessageController = new SpeakerMessageController(username, userManager, eventManager);
         //3. return if the user logout.
-
+        logOutHelper();
 
     }
 
@@ -214,5 +214,23 @@ public class ConferenceSystem {
                     loginController.invalidOption();
             }
         } while (loginController.getLoggedInUser() != null);
+    }
+
+    private void logOutHelper() {
+        String option;
+        do {
+            option = loginController.getEndMenu();
+            switch(option) {
+                case "1":
+                    loginController.logout();
+                    break;
+                case "2":
+                    break;  // do nothing and stay logged in
+                case "3":
+                    return;
+                default:
+                    loginController.invalidOption();
+            }
+        } while (true);
     }
 }

@@ -118,4 +118,9 @@ public class LoginController {
     public void invalidOption() {
         lp.printInvalidInput();
     }
+
+    public String getEndMenu() {
+        lp.printEndMenu();
+        return scanner.nextLine();
+    }
 }
