@@ -85,7 +85,7 @@ public class ConferenceSystem {
             File users = new File("./users.ser");
             File events = new File("./events.ser");
             File messages = new File("./messages.ser");
-            File rooms = new File("./rooms.ser")
+            File rooms = new File("./rooms.ser");
 
             users.createNewFile();
             events.createNewFile();
