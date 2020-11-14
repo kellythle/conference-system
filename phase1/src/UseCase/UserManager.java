@@ -30,10 +30,13 @@ public class UserManager {
         switch (type) {
             case "Attendee":
                 userMap.put(userName, new AttendeeFactory().createAccount(userName, password));
+                break;
             case "Speaker":
                 userMap.put(userName, new SpeakerFactory().createAccount(userName, password));
+                break;
             case "Organizer":
                 userMap.put(userName, new OrganizerFactory().createAccount(userName, password));
+                break;
         }
         return true;
     }

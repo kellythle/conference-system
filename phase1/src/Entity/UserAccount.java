@@ -32,6 +32,8 @@ public abstract class UserAccount implements Serializable {
         this.messageReceived = new ArrayList<>();
         this.messageSent = new ArrayList<>();
         this.registeredEvents = new ArrayList<>();
+        this.isOrganizer = false;
+        this.isSpeaker = false;
     }
 
     /**
