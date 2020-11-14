@@ -40,17 +40,12 @@ public class ConferenceSystem {
     public void run() {
         //William and Richard vvvvv
         //1. calls LoginController >>> register or login menu
-        //maybe in helper
-        String option = loginController.StartMenu();
-        if (option.equals("1")){
-            //loginController.login();
-        }else{
-            //loginController.createAccount();
-        }
+        initialLoginHelper();
+
         //2. shows Main menu >>> sign up or (schedule) or message
         // after login (register), show the corresponding menu >>> for attendee, organizer, speaker
         // example
-        //switch(mainmenuoption)
+        //switch(mainMenuoption)
         // case("1")
         // signUpHelper
         //...
@@ -199,4 +194,25 @@ public class ConferenceSystem {
         } while (!attendeeMessageMenuOption.equals("2"));
     }
 
+
+    /**
+     * Helper method at the start that deals with login and account creation
+     */
+    private void initialLoginHelper() {
+        String loginMenuOption;
+        do {
+            loginMenuOption = loginController.getStartMenu();
+            switch (loginMenuOption) {
+                case "1":
+                    loginController.login();
+                    this.username = loginController.getLoggedInUser();
+                    break;
+                case "2":
+                    loginController.createAccount();
+                    break;
+                default:
+                    loginController.invalidOption();
+            }
+        } while (loginController.getLoggedInUser() != null);
+    }
 }

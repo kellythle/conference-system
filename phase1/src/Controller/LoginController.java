@@ -12,7 +12,8 @@ import java.util.Scanner;
 public class LoginController {
     private String loggedInUser;
     private final UserManager um;
-    private LoginPresenter lp;
+    private final LoginPresenter lp;
+    private final Scanner scanner = new Scanner(System.in);
 
     /**
      * A constructor for Login controller.
@@ -22,13 +23,12 @@ public class LoginController {
     public LoginController(UserManager userManager) {
         this.loggedInUser = null;
         this.um = userManager;
-        LoginPresenter lp = new LoginPresenter();
+        lp = new LoginPresenter();
     }
 
-    public String StartMenu(){
-        Scanner scan = new Scanner(System.in);
+    public String StartMenu() {
         lp.printStartMenu();
-        return scan.nextLine();
+        return scanner.nextLine();
     }
 
     /**
@@ -48,6 +48,16 @@ public class LoginController {
 
     }
 
+    public void createAccount() {
+        lp.inputName();
+        String userName = scanner.nextLine();
+        lp.inputPassword();
+        String password = scanner.nextLine();
+        lp.inputUserType();
+        String type = scanner.nextLine();
+        createAccount(userName, password, type);
+    }
+
     /**
      * Logs in a user if the account information provided is correct
      * @param userName The user's username
@@ -55,8 +65,11 @@ public class LoginController {
      * @return true if user successfully logged in, false otherwise
      */
     public boolean login(String userName, String password) {
-        if(um.canLogin(userName, password)) {
+        boolean okay = um.canLogin(userName, password);
+        lp.displayLoginInfo(okay);
+        if(okay) {
             this.loggedInUser = userName;
+            lp.displayLoginUser(loggedInUser);
             return true;
         }
         else {
@@ -66,10 +79,32 @@ public class LoginController {
     }
 
     /**
+     * Overloaded login that takes in user input from scanner, to be used in ConferenceSystem
+     * @return True if and only if successfully logged in
+     */
+    public boolean login() {
+        lp.inputName();
+        String userName = scanner.nextLine();
+        lp.inputPassword();
+        String password = scanner.nextLine();
+        return this.login(userName, password);
+    }
+
+    /**
+     * Prints a list of options using LoginPresenter and takes in an option using a scanner
+     * @return The option entered
+     */
+    public String getStartMenu() {
+        lp.printStartMenu();
+        return scanner.nextLine();
+    }
+
+    /**
      * Logs out any existing user
      */
     public void logout() {
         this.loggedInUser = null;
+        lp.displayLogoutUser();
     }
 
     /**
@@ -78,5 +113,9 @@ public class LoginController {
      */
     public String getLoggedInUser() {
         return this.loggedInUser;
+    }
+
+    public void invalidOption() {
+        lp.printInvalidInput();
     }
 }

@@ -19,6 +19,13 @@ public class LoginPresenter {
         System.out.println("Enter your password:\n");
     }
 
+    public void inputUserType(){
+        System.out.println("Enter the type of user you wish to create:\n");
+    }
+
+    public void printInvalidInput() {
+        System.out.println("Invalid input, please try again.");
+    }
 
     /**
      * display information when an account is created
@@ -29,7 +36,7 @@ public class LoginPresenter {
             System.out.println("The user account is created successfully");
         }
         else
-            System.out.println("The user account is existed");
+            System.out.println("This username already exists, please try another");
     }
 
     /**
@@ -55,7 +62,7 @@ public class LoginPresenter {
     }
 
     public void displayLogoutUser(){
-        System.out.println("Log out successfully!");
+        System.out.println("Logged out successfully!");
     }
 }
 
