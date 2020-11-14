@@ -1,8 +1,17 @@
 package Controller;
 
+import Entity.Event;
+import Entity.Message;
+import Entity.UserAccount;
+import Gateway.ReadWriteGateway;
 import UseCase.EventManager;
 import UseCase.MessageManager;
 import UseCase.UserManager;
+import java.io.*;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * This is the main controller class that contains all the instances of the Managers and Controllers
@@ -21,6 +30,8 @@ public class ConferenceSystem {
     private final EventManager eventManager = new EventManager();
     private final UserManager userManager = new UserManager();
     private MessageManager messageManager; // not final as this can be changed along with the logged in user
+
+    private ReadWriteGateway readWriteGateway = new ReadWriteGateway();
 
     // Controller class instances
     private final LoginController loginController = new LoginController(userManager);
@@ -62,12 +73,46 @@ public class ConferenceSystem {
     }
 
     /**
-     * Helper method that deals with signing up, deleting events.
-     * First, it shows a menu of Sign Up System.
-     * User can input a number to do either signing up for event,
-     * deleting registered event, see events, see registered events,
-     * and exist Sign Up System to main menu.
+     * Reads in all user, event, and message data from the files.
+     *
+     * @return Boolean indicating if reading was successful.
+     * @throws ClassNotFoundException if class type of data read in is not defined in program.
      */
+    public boolean readData() throws ClassNotFoundException {
+        try {
+            File users = new File("./users.ser");
+            File events = new File("./events.ser");
+            File messages = new File("./messages.ser");
+
+            users.createNewFile();
+            events.createNewFile();
+            messages.createNewFile();
+
+            HashMap<String, UserAccount> userMap = (HashMap<String, UserAccount>)
+                    readWriteGateway.readFromFile("./users.ser");
+            ArrayList<Event> eventList = (ArrayList<Event>)
+                    readWriteGateway.readFromFile("./events.ser");
+            HashMap<Integer, Message> messageMap = (HashMap<Integer, Message>)
+                    readWriteGateway.readFromFile("./users.ser");
+
+            userManager.setUserMap(userMap);
+            eventManager.setEventList(eventList);
+            messageManager.setSystemMessages(messageMap);
+
+        } catch (IOException e) {
+            return false;
+        }
+
+        return true;
+    }
+
+        /**
+         * Helper method that deals with signing up, deleting events.
+         * First, it shows a menu of Sign Up System.
+         * User can input a number to do either signing up for event,
+         * deleting registered event, see events, see registered events,
+         * and exist Sign Up System to main menu.
+         */
     private void signUpHelper(){
         String menuOption;
         do{
