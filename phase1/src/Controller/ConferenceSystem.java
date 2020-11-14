@@ -44,6 +44,12 @@ public class ConferenceSystem {
     private OrganizerMessageController organizerMessageController;
     private SpeakerMessageController speakerMessageController;
 
+    // File paths
+    private final String usersPath = "../data/users.ser";
+    private final String eventsPath = "../data/events.ser";
+    private final String messagesPath = "../data/messages.ser";
+    private final String roomsPath = "../data/rooms.ser";
+
     // Variable for keeping track with user, should be initialized after login.
     String username;
 
@@ -82,10 +88,10 @@ public class ConferenceSystem {
      */
     public boolean readData() throws ClassNotFoundException {
         try {
-            File users = new File("./users.ser");
-            File events = new File("./events.ser");
-            File messages = new File("./messages.ser");
-            File rooms = new File("./rooms.ser");
+            File users = new File(usersPath);
+            File events = new File(eventsPath);
+            File messages = new File(messagesPath);
+            File rooms = new File(roomsPath);
 
             users.createNewFile();
             events.createNewFile();
@@ -93,13 +99,13 @@ public class ConferenceSystem {
             rooms.createNewFile();
 
             HashMap<String, UserAccount> userMap = (HashMap<String, UserAccount>)
-                    readWriteGateway.readFromFile("./users.ser");
+                    readWriteGateway.readFromFile(usersPath);
             ArrayList<Event> eventList = (ArrayList<Event>)
-                    readWriteGateway.readFromFile("./events.ser");
+                    readWriteGateway.readFromFile(eventsPath);
             HashMap<Integer, Message> messageMap = (HashMap<Integer, Message>)
-                    readWriteGateway.readFromFile("./users.ser");
+                    readWriteGateway.readFromFile(messagesPath);
             ArrayList<Pair<Integer, Integer>> roomList = (ArrayList<Pair<Integer, Integer>>)
-                    readWriteGateway.readFromFile("./rooms.ser");
+                    readWriteGateway.readFromFile(roomsPath);
 
             userManager.setUserMap(userMap);
             eventManager.setEventList(eventList);
@@ -110,6 +116,29 @@ public class ConferenceSystem {
             return false;
         }
 
+        return true;
+    }
+
+    /**
+     * Writes all user, event, and message data to their respective files.
+     *
+     * @return Boolean indicating if reading was successful.
+     */
+    private boolean writeData()
+    {
+        HashMap<String, UserAccount> userMap = userManager.getUserMap();
+        ArrayList<Event> eventList = eventManager.getEventList();
+        HashMap<Integer, Message> messageMap = messageManager.getSystemMessages();
+        ArrayList<Pair<Integer, Integer>> roomList = eventManager.getRoomList();
+
+        try {
+            readWriteGateway.saveToFile(usersPath, userMap);
+            readWriteGateway.saveToFile(eventsPath, eventList);
+            readWriteGateway.saveToFile(messagesPath, messageMap);
+            readWriteGateway.saveToFile(roomsPath, roomList);
+        } catch (IOException e) {
+            return false;
+        }
         return true;
     }
 
