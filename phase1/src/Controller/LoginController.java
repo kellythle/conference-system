@@ -98,12 +98,12 @@ public class LoginController {
     }
 
     public String getSpeakerMenu(){
-        lp.printOrganizerMenu();
+        lp.printSpeakerMenu();
         return scanner.nextLine();
     }
 
     public String getAttendeeMenu(){
-        lp.printOrganizerMenu();
+        lp.printAttendeeMenu();
         return scanner.nextLine();
     }
     /**
