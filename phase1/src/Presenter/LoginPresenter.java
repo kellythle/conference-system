@@ -28,7 +28,8 @@ public class LoginPresenter {
     }
 
     public void inputUserType(){
-        System.out.println("Enter the type of user you wish to create:\n");
+        System.out.println("Enter the type of user you wish to create:\n" +
+                "(Enter Attendee or Organizer)");
     }
 
     public void printInvalidInput() {
