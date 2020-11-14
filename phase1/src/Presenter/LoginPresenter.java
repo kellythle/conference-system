@@ -8,7 +8,7 @@ public class LoginPresenter {
                 "Options:\n" +
                 "1. Sign in \n" +
                 "2. Register\n" +
-                "(Enter 1, 2");
+                "(Enter 1, 2)");
     }
 
     public void printEndMenu(){
@@ -16,7 +16,7 @@ public class LoginPresenter {
                 "Options:\n" +
                 "1. Log out \n" +
                 "2. Stay logged in\n" +
-                "(Enter 1, 2");
+                "(Enter 1, 2)");
     }
 
     public void inputName(){

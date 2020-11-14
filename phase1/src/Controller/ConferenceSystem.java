@@ -252,7 +252,7 @@ public class ConferenceSystem {
                     signUpHelper();
                     break;
                 case "2":
-                    organizerMessageHelper();
+                    attendeeMessageHelper();
                     break;
                 case "3":
                     loginController.logout();
