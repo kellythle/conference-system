@@ -78,8 +78,6 @@ public class ConferenceSystem {
                 break;
             }
         //3. return if the user logout.
-        return;
-
         }
 
     /**
