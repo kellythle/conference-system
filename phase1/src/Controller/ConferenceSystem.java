@@ -68,7 +68,7 @@ public class ConferenceSystem {
         }
 
         // add default rooms
-        if (eventManager.getRoomList() == null) {
+        if (eventManager.getRoomList() == null || eventManager.getRoomList().isEmpty()) {
             Pair<Integer, Integer> room1= new Pair<>(1, 2);
             Pair<Integer, Integer> room2= new Pair<>(2, 2);
             Pair<Integer, Integer> room3= new Pair<>(3, 2);
