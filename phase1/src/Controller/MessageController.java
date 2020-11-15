@@ -126,7 +126,7 @@ public class MessageController {
      */
     public String getMessageMenu(){
         Scanner scan = new Scanner(System.in);
-        messagePresenter.printSpeakerMessageMenu();
+        messagePresenter.printMessageMenu();
         String input = scan.nextLine();
         return input;
     }
