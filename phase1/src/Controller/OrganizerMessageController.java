@@ -57,7 +57,7 @@ public class OrganizerMessageController {
      */
     public boolean sendAllSpeakersMessage(String messageContent){
         for (String userName: myUserManager.getSpeakerList()) {
-            if (myUserManager.canSend(this.username, userName)) {
+            if (!myUserManager.canSend(this.username, userName)) {
                 return false;
             }
             else {
@@ -89,7 +89,7 @@ public class OrganizerMessageController {
      */
     public boolean sendAllAttendeesMessage(String messageContent){
         for (String userName: myUserManager.getAttendeeList()) {
-            if (myUserManager.canSend(this.username, userName)) {
+            if (!myUserManager.canSend(this.username, userName)) {
                 return false;
             }
             else {

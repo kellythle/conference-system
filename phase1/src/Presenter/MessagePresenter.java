@@ -39,8 +39,8 @@ public class MessagePresenter {
         System.out.println("Enter 0 to exit Messages\n" +
                 "Enter 1 to view conversations\n" +
                 "Enter 2 to send a message to a single user\n" +
-                "Enter 3 to send a message to all Attendees\n" +
-                "Enter 4 to send a message to all Speakers:");
+                "Enter 3 to send a message to all Speakers\n" +
+                "Enter 4 to send a message to all Attendees:");
     }
 
     public void printSpeakerMessageMenu(){
@@ -62,7 +62,7 @@ public class MessagePresenter {
         if (userManager.isOrganizer(recipientID)) {identity = "Organizer";}
         else if (userManager.isSpeaker(recipientID)) {identity = "Speaker";}
         System.out.println("Your conversation with " + identity + " " + recipientID + ": ");
-        ArrayList<Integer> singleConversation = messageManager.getSingleConversation(recipientID);
+        ArrayList<Integer> singleConversation = messageManager.getSingleConversation();
         for (int i: singleConversation){
             String messageText = getMessageText(messageManager, i);
             System.out.println(messageText);
@@ -77,7 +77,7 @@ public class MessagePresenter {
         if (userManager.isOrganizer(recipientID)) {identity = "Organizer";}
         else if (userManager.isSpeaker(recipientID)) {identity = "Speaker";}
         System.out.println("Your conversation with " + identity + " " + recipientID + ": ");
-        ArrayList<Integer> singleConversation = messageManager.getSingleConversation(recipientID);
+        ArrayList<Integer> singleConversation = messageManager.getOrganizerSingleConversation(recipientID);
         for (int i: singleConversation){
             String messageText = getMessageText(messageManager, i);
             System.out.println(messageText);
