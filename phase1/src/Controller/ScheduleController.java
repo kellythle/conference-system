@@ -74,7 +74,7 @@ public class ScheduleController {
                     ValidDate = true;
                 }
             }catch (Exception e){
-                System.out.println("Invalid date format");
+                scheduleP.printInvalidDateFormat();
             }
 
         } while (!ValidDate);

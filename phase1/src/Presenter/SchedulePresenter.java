@@ -165,6 +165,10 @@ public class SchedulePresenter {
         System.out.println("Enter the starting hour of this event (ex. 9 am is 09, 4 pm is 16): ");
     }
 
+    public void printInvalidDateFormat(){
+        System.out.println("Invalid date format");
+    }
+
     public void printInvalidDate(){
         System.out.println("Invalid Date.");
     }
