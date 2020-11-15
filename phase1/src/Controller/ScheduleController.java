@@ -59,24 +59,29 @@ public class ScheduleController {
 
         //enter date, check date
         String inputDate;
-        boolean ValidDate;
+        boolean ValidDate = false;
         do {
             Scanner scanD = new Scanner(System.in);
             scheduleP.printEnterDate();
             inputDate = scanD.nextLine();
-            LocalDate localDate = LocalDate.parse(inputDate);
-
-            if (localDate.compareTo(LocalDate.now()) < 0) {
-                scheduleP.printInvalidDate();
-                ValidDate = false;
-            } else{
-                ValidDate = true;
+            LocalDate localDate;
+            try {
+                localDate = LocalDate.parse(inputDate);
+                if (localDate.compareTo(LocalDate.now()) < 0) {
+                    scheduleP.printInvalidDate();
+                    ValidDate = false;
+                } else{
+                    ValidDate = true;
+                }
+            }catch (Exception e){
+                System.out.println("Invalid date format");
             }
+
         } while (!ValidDate);
 
         //enter time, check time
         String inputTime;
-        boolean ValidTime;
+        boolean ValidTime = false;
         do {
             Scanner scanT = new Scanner(System.in);
             scheduleP.displayStartTimes();
