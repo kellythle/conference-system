@@ -80,7 +80,7 @@ public class LoginPresenter {
                 "1. Sign up\n" +
                 "2. New talk\n" +
                 "3. Send message\n"+
-                "4/ Log out\n"+
+                "4. Log out\n"+
                 "(Enter 1, 2, 3, 4)");
     }
 

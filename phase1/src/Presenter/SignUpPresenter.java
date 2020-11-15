@@ -61,7 +61,6 @@ public class SignUpPresenter {
         String events = this.EventListGenerator(eventList);
         System.out.println("All Events: ");
         System.out.println(events);
-        System.out.println();
     }
 
     /**
@@ -91,7 +90,6 @@ public class SignUpPresenter {
         String events = this.EventListGenerator(registeredEvents);
         System.out.println("Registered Events: ");
         System.out.println(events);
-        System.out.println();
     }
 
     /**
