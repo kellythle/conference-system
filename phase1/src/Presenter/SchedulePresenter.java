@@ -85,7 +85,7 @@ public class SchedulePresenter {
         StringBuilder unavailableSpeakers = new StringBuilder("Unavailable Speakers: ");
 
         for (String s : speakerList) {
-            if (this.availableSpeakers(speakerList, time).contains(s)) {
+            if (!this.availableSpeakers(speakerList, time).contains(s)) {
                 availableSpeakers.append(s).append(", ");
             } else {
                 unavailableSpeakers.append(s).append(", ");
@@ -156,6 +156,22 @@ public class SchedulePresenter {
             }
         }
         return availableRooms;
+    }
+
+    /**
+     * Returns if this room exists in the room list.
+     *
+     * @param roomNum - room number
+     *
+     * @return true if the room is a member the the room list, false otherwise.
+     */
+    public boolean roomExist(Integer roomNum){
+        for(Pair r: eventManager.getRoomList()){
+            if(r.getKey().equals(roomNum)){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -276,6 +292,13 @@ public class SchedulePresenter {
     public void printName(){
         System.out.println("What would you like to name the Event? Enter the desired Event name or 0 to exit from " +
                 "creating an event: ");
+    }
+
+    /**
+     * Prints "You have entered no name for the Event.".
+     */
+    public void printFailedName(){
+        System.out.println("You have entered no name for the Event");
     }
 
     /**

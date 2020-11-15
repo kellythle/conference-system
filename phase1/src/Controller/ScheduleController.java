@@ -50,12 +50,22 @@ public class ScheduleController {
      * if successful.
      */
     public void createEvent(){
-        Scanner scan = new Scanner(System.in);
-        scheduleP.printName();
-        String name = scan.nextLine();
-        if (name.equals("0")) {
-            return;
-        }
+        String name;
+        boolean ValidName = false;
+        do {
+            Scanner scan = new Scanner(System.in);
+            scheduleP.printName();
+            name = scan.nextLine();
+            if (name.equals("0")) {
+                return;
+            }
+            else if (name.trim().isEmpty()){
+                scheduleP.printFailedName();
+                ValidName = false;
+            } else {
+                ValidName = true;
+            }
+        } while (!ValidName);
 
         //enter date, check date
         String inputDate;
@@ -103,18 +113,25 @@ public class ScheduleController {
         scheduleP.displayRoomList(eventTime);
         String room = scan2.nextLine();
         Integer intRoom = Integer.parseInt(room);
-        if (!scheduleP.availableRooms(eventTime).contains(intRoom)){
+        if (!scheduleP.availableRooms(eventTime).contains(intRoom) || !scheduleP.roomExist(intRoom)){
             scheduleP.printFailRoom();
             return;
         }
 
-        Scanner scan3 = new Scanner(System.in);
-        scheduleP.displaySpeakerList(userManager.getSpeakerList(), eventTime);
-        String speaker = scan3.nextLine();
-        if (!scheduleP.availableSpeakers(userManager.getSpeakerList(), eventTime).contains(speaker)) {
-            scheduleP.printFailSpeaker();
-            return;
-        }
+        String speaker;
+        boolean ValidSpeaker = false;
+        do {
+            Scanner scanS = new Scanner(System.in);
+            scheduleP.displaySpeakerList(userManager.getSpeakerList(), eventTime);
+            speaker = scanS.nextLine();
+            if (scheduleP.availableSpeakers(userManager.getSpeakerList(), eventTime).contains(speaker)) {
+                scheduleP.printFailSpeaker();
+                ValidSpeaker = false;
+            } else {
+                ValidSpeaker = true;
+            }
+        } while (!ValidSpeaker);
+
         this.callAddEvent(name, speaker, eventTime, eventManager.getRoom(intRoom));
     }
 
