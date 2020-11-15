@@ -59,24 +59,29 @@ public class ScheduleController {
 
         //enter date, check date
         String inputDate;
-        boolean ValidDate;
+        boolean ValidDate = false;
         do {
             Scanner scanD = new Scanner(System.in);
             scheduleP.printEnterDate();
             inputDate = scanD.nextLine();
-            LocalDate localDate = LocalDate.parse(inputDate);
-
-            if (localDate.compareTo(LocalDate.now()) < 0) {
-                scheduleP.printInvalidDate();
-                ValidDate = false;
-            } else{
-                ValidDate = true;
+            LocalDate localDate;
+            try {
+                localDate = LocalDate.parse(inputDate);
+                if (localDate.compareTo(LocalDate.now()) < 0) {
+                    scheduleP.printInvalidDate();
+                    ValidDate = false;
+                } else{
+                    ValidDate = true;
+                }
+            }catch (Exception e){
+                scheduleP.printInvalidDateFormat();
             }
+
         } while (!ValidDate);
 
         //enter time, check time
         String inputTime;
-        boolean ValidTime;
+        boolean ValidTime = false;
         do {
             Scanner scanT = new Scanner(System.in);
             scheduleP.displayStartTimes();
@@ -116,9 +121,10 @@ public class ScheduleController {
 
     /**
      * Checks if this username already exists. Returns true if
-     * this username is not an existed username of this conference.
+     * this username is not an existing username of this conference.
      *
      * @param speakerName - name of the speaker
+     *
      * @return true if this speaker name is not an existed username of this conference
      */
     private boolean canCreateSpeaker(String speakerName){
@@ -128,7 +134,7 @@ public class ScheduleController {
     }
 
     /**
-     * Prints if the new speaker account is added to this conference.
+     * Prints whether or not the new speaker account is added to this conference.
      */
     public void addNewSpeaker() {
         Scanner scan = new Scanner(System.in);
@@ -172,6 +178,9 @@ public class ScheduleController {
         scheduleP.printEndScheduling();
     }
 
+    /**
+     * Prints that the user has put an invalid option in for the Menu.
+     */
     public void failScheduleMenu(){
         scheduleP.printFailScheduleMenu();
     }
