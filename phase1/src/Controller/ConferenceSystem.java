@@ -72,7 +72,7 @@ public class ConferenceSystem {
         initialLoginHelper();
         messageManager.setSenderID(username);
         //initialize all classes that need the username
-        messageController = new MessageController(username, userManager);
+        messageController = new MessageController(username, userManager, messageManager);
         organizerMessageController = new OrganizerMessageController(username, userManager);
         speakerMessageController = new SpeakerMessageController(username, userManager, eventManager);
         //2. shows Main menu >>> sign up or (schedule) or message

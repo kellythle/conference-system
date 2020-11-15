@@ -22,21 +22,21 @@ public class MessagePresenter {
             sender = messageManager.getMessageSender(messageID);
             receiver = "you";
         }
-        String messageText = sender + "sent to" + receiver + "\n" + messageManager.getMessageContent(messageID) +
+        String messageText = sender + " sent to " + receiver + ":\n" + messageManager.getMessageContent(messageID) +
                 "\n           at " + messageManager.getMessageTime(messageID);
         return messageText;
     }
 
     public void printMessageMenu(){
-        System.out.println("Welcome to Message menu. Please select an action:");
-        System.out.println("Enter 0 to exit Messages\n " +
+        System.out.println("Welcome to Attendee Message menu. Please select an action:");
+        System.out.println("Enter 0 to exit Messages\n" +
                 "Enter 1 to view conversations and reply to messages\n" +
                 "Enter 2 to send a message:");
         }
 
     public void printOrganizerMessageMenu(){
         System.out.println("Welcome to Organizer Message menu. Please select an action:");
-        System.out.println("Enter 0 to exit Messages\n " +
+        System.out.println("Enter 0 to exit Messages\n" +
                 "Enter 1 to view conversations\n" +
                 "Enter 2 to send a message to a single user\n" +
                 "Enter 3 to send a message to all Attendees\n" +
@@ -45,7 +45,7 @@ public class MessagePresenter {
 
     public void printSpeakerMessageMenu(){
         System.out.println("Welcome to Speaker Message menu. Please select an action:");
-        System.out.println("Enter 0 to exit Messages\n " +
+        System.out.println("Enter 0 to exit Messages\n" +
                 "Enter 1 to view conversations and reply to messages\n" +
                 "Enter 2 to send a message to Attendees of your Talks:");
     }

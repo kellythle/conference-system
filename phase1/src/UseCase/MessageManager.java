@@ -30,13 +30,13 @@ public class MessageManager {
      * @param senderID - ID of the current user logged in
      */
     public MessageManager(String senderID){
-        HashMap<Integer, Message> systemMessages = new HashMap<Integer, Message>();
+        systemMessages = new HashMap<Integer, Message>();
         this.senderID = senderID;
     }
 
     public MessageManager()
     {
-        HashMap<Integer, Message> systemMessages = new HashMap<Integer, Message>();
+        systemMessages = new HashMap<Integer, Message>();
         this.senderID = "";
     }
 

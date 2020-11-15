@@ -12,8 +12,8 @@ public class MessageController {
     private String username;
     public MessagePresenter messagePresenter;
 
-    public MessageController(String username, UserManager myUserManager){
-        myMessageManager = new MessageManager(username);
+    public MessageController(String username, UserManager myUserManager, MessageManager messageManager){
+        myMessageManager = messageManager;
         this.myUserManager = myUserManager;
         this.username = username;
         messagePresenter = new MessagePresenter(username);
