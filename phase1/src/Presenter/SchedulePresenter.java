@@ -38,7 +38,7 @@ public class SchedulePresenter {
     }
 
     /**
-     * Prints a message if the user entered an invalid menu option.
+     * Prints "That is not an option in our menu."
      */
     public void printFailScheduleMenu(){
         System.out.println("That is not an option in our menu.");
@@ -51,7 +51,7 @@ public class SchedulePresenter {
      * @param time - the chosen time
      *
      *
-     * @return list of available Speakers
+     * @return a list of available Speakers
      */
     public ArrayList<String> availableSpeakers(ArrayList<String> speakerList, LocalDateTime time) {
         ArrayList<String> availableList = new ArrayList<>();
@@ -99,7 +99,7 @@ public class SchedulePresenter {
     }
 
     /**
-     * Prints a message if the user entered an invalid speaker.
+     * Prints "This Speaker does not exist in our system or is unavailable."
      */
     public void printFailSpeaker(){
         System.out.println("This Speaker does not exist in our system or is unavailable.");
@@ -125,7 +125,7 @@ public class SchedulePresenter {
     }
 
     /**
-     * Prints a message if the user entered an invalid start time.
+     * Prints "That time is not an option or is unavailable."
      */
     public void printFailStartTimes(){
         System.out.println("That time is not an option or is unavailable.");
@@ -135,7 +135,8 @@ public class SchedulePresenter {
      * Returns a list of available rooms.
      *
      * @param time - time for Event
-     * @return list of available rooms
+     *
+     * @return a list of available rooms
      */
     public ArrayList<Integer> availableRooms (LocalDateTime time) {
         ArrayList<Integer> availableRooms = new ArrayList<>();
@@ -157,23 +158,35 @@ public class SchedulePresenter {
         return availableRooms;
     }
 
+    /**
+     * Prints asking the Organizer to choose the date when creating an event.
+     */
     public void printEnterDate(){
         System.out.println("Enter a date in format yyyy-mm-dd (ex. 2020-05-21): ");
     }
 
+    /**
+     * Prints asking the Organizer to choose the starting hour when creating an event.
+     */
     public void printEnterTime(){
         System.out.println("Enter the starting hour of this event (ex. 9 am is 09, 4 pm is 16): ");
     }
 
+    /**
+     * Prints "Invalid date format"
+     */
     public void printInvalidDateFormat(){
         System.out.println("Invalid date format");
     }
 
+    /**
+     * Prints "Invalid Date."
+     */
     public void printInvalidDate(){
         System.out.println("Invalid Date.");
     }
     /**
-     * Prints a string of all the available rooms for an event given the chosen time.
+     * Prints a string of all the available and unavailable rooms for an event given the chosen time.
      *
      * @param time - the chosen time
      */
@@ -204,14 +217,14 @@ public class SchedulePresenter {
     }
 
     /**
-     * Prints a message if the user entered an invalid room.
+     * Prints "That room does not exist or is unavailable."
      */
     public void printFailRoom(){
         System.out.println("That room does not exist or is unavailable.");
     }
 
     /**
-     * Returns a string that creating an event was a success.
+     * Prints whether or not creating an event was a success.
      *
      * @param creationSuccess - true if an event was created
      * @param event - the event to be created
@@ -230,35 +243,35 @@ public class SchedulePresenter {
     }
 
     /**
-     * Prints asking for a Speaker username.
+     * Prints asking the Organizer for a Speaker username
      */
     public void addSpeaker(){
         System.out.println("Please enter the username of who you would like to make a Speaker: ");
     }
 
     /**
-     * Prints asking for a Speaker username.
+     * Prints asking the Organizer for a Speaker password.
      */
     public void addSpeakerPassword(){
         System.out.println("Please enter the password you want this Speaker to have: ");
     }
 
     /**
-     * Prints that a Speaker was created.
+     * Prints "Speaker was successfully created."
      */
     public void successSpeaker(){
         System.out.println("Speaker was successfully created.");
     }
 
     /**
-     * Prints that a Speaker was not created.
+     * Prints "Speaker could not be created."
      */
     public void failedSpeaker(){
         System.out.println("Speaker could not be created.");
     }
 
     /**
-     * Prints asking for an event name.
+     * Prints asking the Organizer for an event name.
      */
     public void printName(){
         System.out.println("What would you like to name the Event? Enter the desired Event name or 0 to exit from " +
@@ -266,7 +279,7 @@ public class SchedulePresenter {
     }
 
     /**
-     * Prints out the scheduling system has been exited.
+     * Prints "You have exited the Scheduling System."
      */
     public void printEndScheduling(){
         System.out.println("You have exited the Scheduling System.");
