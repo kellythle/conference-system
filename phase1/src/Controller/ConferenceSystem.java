@@ -67,16 +67,26 @@ public class ConferenceSystem {
             return;
         }
 
-        //William and Richard vvvvv
-        //1. calls LoginController >>> register or login menu
+        // add default rooms
+        if (eventManager.getRoomList() == null) {
+            Pair<Integer, Integer> room1= new Pair<>(1, 2);
+            Pair<Integer, Integer> room2= new Pair<>(2, 2);
+            Pair<Integer, Integer> room3= new Pair<>(3, 2);
+            ArrayList<Pair<Integer, Integer>> rooms = new ArrayList<>();
+            rooms.add(room1);
+            rooms.add(room2);
+            rooms.add(room3);
+            eventManager.setRoomList(rooms);
+        }
+
+        //Menu for sign in or register
         initialLoginHelper();
         messageManager.setSenderID(username);
         //initialize all classes that need the username
         messageController = new MessageController(username, userManager, messageManager);
         organizerMessageController = new OrganizerMessageController(username, userManager);
         speakerMessageController = new SpeakerMessageController(username, userManager, eventManager);
-        //2. shows Main menu >>> sign up or (schedule) or message
-        // after login (register), show the corresponding menu >>> for attendee, organizer, speaker
+        //2. shows Main menu for each user
         switch (loginController.getUserType(username)){
             case "Organizer":
                 organizerHelper();
@@ -88,7 +98,7 @@ public class ConferenceSystem {
                 attendeeHelper();
                 break;
             }
-        //3. return if the user logout.
+        //3. return if the user logout. Write out data to files.
         boolean writeSuccessful = writeData();
         if (writeSuccessful)
             System.out.println("Write successful."); // FOR TESTING

@@ -73,6 +73,7 @@ public class SignUpController {
         Scanner scan1 = new Scanner(System.in);
         //prints the events
         this.getEventList();
+        sp.printSignUpEventPrompt();
         String eventName = scan1.nextLine();
         //back to Sign Up System Menu
         if (eventName.equals("0"))
@@ -109,6 +110,7 @@ public class SignUpController {
         Scanner scan1 = new Scanner(System.in);
         //prints registered events
         this.getRegisteredEventList(username);
+        sp.printDeleteEventPrompt();
         String eventName = scan1.nextLine();
         //back to Sign Up System Menu
         if (eventName.equals("0"))

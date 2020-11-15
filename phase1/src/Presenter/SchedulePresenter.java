@@ -16,8 +16,15 @@ import java.util.ArrayList;
 
 public class SchedulePresenter {
 
-    private final EventManager eventManager = new EventManager();
+    private EventManager eventManager;
 
+    /**
+     * Creates an instance of SchedulePresenter with parameter EventManager.
+     * @param em
+     */
+    public SchedulePresenter(EventManager em){
+        this.eventManager = em;
+    }
     /**
      * Prints a menu for scheduling Events.
      */
@@ -49,9 +56,11 @@ public class SchedulePresenter {
     public ArrayList<String> availableSpeakers(ArrayList<String> speakerList, LocalDateTime time) {
         ArrayList<String> availableList = new ArrayList<>();
         ArrayList<String> unavailableList = new ArrayList<>();
-        for (Event e : eventManager.getEventList()) {
-            if (e.getTime() == time) {
-                unavailableList.add(e.getSpeaker());
+        if (eventManager.getEventList() != null) {
+            for (Event e : eventManager.getEventList()) {
+                if (e.getTime() == time) {
+                    unavailableList.add(e.getSpeaker());
+                }
             }
         }
 
@@ -131,10 +140,12 @@ public class SchedulePresenter {
     public ArrayList<Integer> availableRooms (LocalDateTime time) {
         ArrayList<Integer> availableRooms = new ArrayList<>();
         ArrayList<Integer> unavailableRooms = new ArrayList<>();
-        for (Event e : eventManager.getEventList()) {
-            if (e.getTime() == time) {
-                Pair<Integer, Integer> unavailableRoom = new Pair(e.getRoomNum(), e.getRoomCapacity());
-                unavailableRooms.add(unavailableRoom.getKey());
+        if (eventManager.getEventList() != null) {
+            for (Event e : eventManager.getEventList()) {
+                if (e.getTime() == time) {
+                    Pair<Integer, Integer> unavailableRoom = new Pair(e.getRoomNum(), e.getRoomCapacity());
+                    unavailableRooms.add(unavailableRoom.getKey());
+                }
             }
         }
 
@@ -166,11 +177,13 @@ public class SchedulePresenter {
         StringBuilder availableRooms = new StringBuilder("Available Rooms: ");
         StringBuilder unavailableRooms = new StringBuilder("Unavailable Rooms: ");
         ArrayList <Pair<Integer, Integer>> unavailableList = new ArrayList<>();
-        for (Event e : eventManager.getEventList()) {
-            if (e.getTime() == time){
-                Pair<Integer, Integer> unavailableRoom = new Pair(e.getRoomNum(), e.getRoomCapacity());
-                unavailableList.add(unavailableRoom);
-                unavailableRooms.append(e.getRoomNum().toString());
+        if (eventManager.getEventList() != null) {
+            for (Event e : eventManager.getEventList()) {
+                if (e.getTime() == time) {
+                    Pair<Integer, Integer> unavailableRoom = new Pair(e.getRoomNum(), e.getRoomCapacity());
+                    unavailableList.add(unavailableRoom);
+                    unavailableRooms.append(e.getRoomNum().toString());
+                }
             }
         }
 
@@ -183,7 +196,7 @@ public class SchedulePresenter {
         availableRooms = new StringBuilder(availableRooms.toString().replaceAll(", $", ""));
         unavailableRooms = new StringBuilder(unavailableRooms.toString().replaceAll(", $", ""));
         System.out.println("Here are the available and unavailable rooms:\n" + availableRooms + "\n" +
-                unavailableRooms + "Please enter the room you wish to book for this Event: ");
+                unavailableRooms + "\nPlease enter the room you wish to book for this Event: ");
     }
 
     /**
@@ -207,8 +220,9 @@ public class SchedulePresenter {
                     "\n" + "Time: " + event.getTime().toString() +
                     "\n" + "Speaker: " + event.getSpeaker() +
                     "\n" + "Room Number: " + event.getRoomNum().toString());
+        } else{
+            System.out.println("Event Creation Failed");
         }
-        System.out.println("Event Creation Failed");
     }
 
     /**

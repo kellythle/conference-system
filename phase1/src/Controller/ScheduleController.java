@@ -23,7 +23,7 @@ import java.util.Scanner;
 public class ScheduleController {
     private final EventManager eventManager;
     private final UserManager userManager;
-    private final SchedulePresenter scheduleP = new SchedulePresenter();
+    private final SchedulePresenter scheduleP;
 
     /**
      * Creates a instance of ScheduleController with a ManagerFacade instance.
@@ -33,6 +33,7 @@ public class ScheduleController {
     public ScheduleController(EventManager em, UserManager um){
         this.eventManager = em;
         this.userManager = um;
+        this.scheduleP  = new SchedulePresenter(eventManager);
     }
 
     /**
@@ -77,7 +78,6 @@ public class ScheduleController {
         String inputTime;
         boolean ValidTime;
         do {
-            System.out.println("Time111");
             Scanner scanT = new Scanner(System.in);
             scheduleP.displayStartTimes();
             scheduleP.printEnterTime();

@@ -25,7 +25,7 @@ public class SignUpPresenter {
                 "3. See all events\n" +
                 "4. See registered events\n" +
                 "5. Exist Sign Up System\n" +
-                "(Enter 1, 2, 3, 4, or 5");
+                "(Enter 1, 2, 3, 4, or 5)");
     }
 
     /**
@@ -45,7 +45,7 @@ public class SignUpPresenter {
             events += "Name: " + e.getName() +
                     ", Time: " + e.getTime().toString() +
                     ", Speaker: " + e.getSpeaker() +
-                    ", Room Number: " + e.getRoomNum().toString() +
+                    ", Room Number: " + e.getRoomNum().toString() + ", " +
                     available + "\n";
         }
         return events;
@@ -62,7 +62,15 @@ public class SignUpPresenter {
         System.out.println("All Events: ");
         System.out.println(events);
         System.out.println();
-        System.out.println("Enter the event name you want to sign up for (or enter 0 to go back to Sign Up System menu): ");
+    }
+
+    /**
+     * Prints message that asks the user to enter an event name that
+     * he/she wants to sign up for or 0 to exists
+     */
+    public void printSignUpEventPrompt(){
+        System.out.println("Enter the event name you want to sign up for " +
+                "(or enter 0 to go back to Sign Up System menu): ");
     }
 
     /**
@@ -84,8 +92,14 @@ public class SignUpPresenter {
         System.out.println("Registered Events: ");
         System.out.println(events);
         System.out.println();
-        System.out.println("Enter the event name you want to delete (or enter 0 to go back to Sign Up System menu): ");
+    }
 
+    /**
+     * Prints message that asks the user to enter an event name that
+     * he/she wants to delete or 0 to exists
+     */
+    public void printDeleteEventPrompt(){
+        System.out.println("Enter the event name you want to delete (or enter 0 to go back to Sign Up System menu): ");
     }
 
     /**
