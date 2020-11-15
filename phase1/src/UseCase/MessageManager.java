@@ -69,10 +69,20 @@ public class MessageManager {
      */
     public boolean createMessage(String receiverID, String messageContent){
         Message newMessage = new Message(senderID, receiverID, messageContent);
+        if (systemMessages.keySet().size() != 0) {
+            while (systemMessages.containsKey(newMessage.getId())) {
+                newMessage.setId(generatingRandomID());
+            }
+        }
         systemMessages.put(newMessage.getId(), newMessage);
         return true;
     }
 
+    private Integer generatingRandomID(){
+        double max = 100000000;
+        double min = 0;
+        return (Integer) (int) (Math.random() * (max - min));
+    }
     /**
      * @param messageID
      * @return the message object that corresponds to the messageID
@@ -213,18 +223,13 @@ public class MessageManager {
         } return singleConversation;
     }
 
-    private ArrayList<Message> getOrganizerSingleConversationHelper(){
-        ArrayList<Message> conversation = getAllSenderMessages();
-        Collections.sort(conversation);
-        return new ArrayList<>(conversation);
-    }
 
-    public ArrayList<Integer> getOrganizerSingleConversation(String otherID){
-        ArrayList<Message> conversation = getOrganizerSingleConversationHelper();
+    public ArrayList<Integer> getSingleConversationByReceiver(String otherID){
+        ArrayList<Message> conversation = getAllSenderMessages();
         Collections.sort(conversation);
         ArrayList<Integer> singleConversation = new ArrayList<>();
         for (Message i: conversation){
-            if (otherID.equals(i.getReceiver())) {
+            if (otherID.equals(i.getReceiver()) || otherID.equals(i.getSender())) {
                 singleConversation.add(i.getId());
             }
         } return singleConversation;

@@ -77,7 +77,7 @@ public class MessagePresenter {
         if (userManager.isOrganizer(recipientID)) {identity = "Organizer";}
         else if (userManager.isSpeaker(recipientID)) {identity = "Speaker";}
         System.out.println("Your conversation with " + identity + " " + recipientID + ": ");
-        ArrayList<Integer> singleConversation = messageManager.getOrganizerSingleConversation(recipientID);
+        ArrayList<Integer> singleConversation = messageManager.getSingleConversationByReceiver(recipientID);
         for (int i: singleConversation){
             String messageText = getMessageText(messageManager, i);
             System.out.println(messageText);
@@ -96,9 +96,9 @@ public class MessagePresenter {
     }
 
     public void printSpeakerMessagePrompt(){
-        System.out.println("Enter 0 to choose a Talk\n" +
-                "Enter 1 to send to all of your Talks\n" +
-                "Enter anything else to return to go back:");
+        System.out.println("Enter 0 to return to go back\n"
+                + "Enter 1 to choose a Talk\n" +
+                "Enter 2 to send to all of your Talks: ");
     }
 
     public void printContentPrompt(){

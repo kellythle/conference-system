@@ -114,7 +114,7 @@ public class SpeakerMessageController {
                     sendMessagesToAttendeesOfAllTalks();
                     break;
             }
-        } while (!input.equals("2"));
+        } while (!input.equals("0"));
     }
 
     /**
@@ -155,13 +155,15 @@ public class SpeakerMessageController {
         do {
             switch (input) {
                 case "0":
-                    replyToConversation(conversationPartner);
                     break;
                 case "1":
+                    replyToConversation(conversationPartner);
+                    break;
+                case "2":
                     viewConversations();
                     break;
             }
-        } while (!input.equals("1"));
+        } while (!input.equals("0"));
     }
 
     /**

@@ -6,7 +6,6 @@ import java.time.LocalTime;
 
 
 public class Message implements Serializable, Comparable<Message> {
-    private static int nextId = 0;// next available id for use
     private int id; // id of message
     private String sender;// Stores the name of the sender
     private String receiver;// Stores the name of the receiver
@@ -23,8 +22,7 @@ public class Message implements Serializable, Comparable<Message> {
         this.sender = sender;
         this.receiver = receiver;
         this.content = content;
-        this.id = nextId;
-        nextId++;
+        this.id = generatingRandomID();
     }
 
     /**
@@ -94,4 +92,13 @@ public class Message implements Serializable, Comparable<Message> {
     public int compareTo(Message msg) {
         return this.time.compareTo(msg.time);
     }
+
+    public void setId(int id) {this.id = id;}
+
+    private Integer generatingRandomID(){
+        double max = 10000000;
+        double min = 0;
+        return (Integer) (int) (Math.random() * (max - min));
+    }
+
 }
