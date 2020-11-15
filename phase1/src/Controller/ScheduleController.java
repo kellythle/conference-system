@@ -57,24 +57,39 @@ public class ScheduleController {
         }
 
         //enter date, check date
-        Scanner scanD = new Scanner(System.in);
-        scheduleP.printEnterDate();
-        String inputDate = scanD.nextLine();
-        LocalDate localDate = LocalDate.parse(inputDate);
-        if (localDate.compareTo(LocalDate.now()) < 0){
-            scheduleP.printInvalidDate();
-        }
+        String inputDate;
+        boolean ValidDate;
+        do {
+            Scanner scanD = new Scanner(System.in);
+            scheduleP.printEnterDate();
+            inputDate = scanD.nextLine();
+            LocalDate localDate = LocalDate.parse(inputDate);
+
+            if (localDate.compareTo(LocalDate.now()) < 0) {
+                scheduleP.printInvalidDate();
+                ValidDate = false;
+            } else{
+                ValidDate = true;
+            }
+        } while (!ValidDate);
 
         //enter time, check time
-        Scanner scanT = new Scanner(System.in);
-        scheduleP.displayStartTimes();
-        scheduleP.printEnterTime();
-        String inputTime = scanT.nextLine();
-        int intT = Integer.parseInt(inputTime);
-        if (!(eventManager.getStartTime() <= intT && intT < eventManager.getEndTime())){
-            scheduleP.printFailStartTimes();
-            return;
-        }
+        String inputTime;
+        boolean ValidTime;
+        do {
+            System.out.println("Time111");
+            Scanner scanT = new Scanner(System.in);
+            scheduleP.displayStartTimes();
+            scheduleP.printEnterTime();
+            inputTime = scanT.nextLine();
+            int intT = Integer.parseInt(inputTime);
+            if (!(eventManager.getStartTime() <= intT && intT < eventManager.getEndTime())) {
+                scheduleP.printFailStartTimes();
+                ValidTime = false;
+            } else {
+                ValidTime = true;
+            }
+        } while (!ValidTime);
 
         //combine the date and time into one LocalDateTime instance
         LocalDateTime eventTime = LocalDateTime.parse(inputDate + "T" + inputTime + ":00:00");

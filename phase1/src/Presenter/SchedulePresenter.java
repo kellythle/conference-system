@@ -103,10 +103,13 @@ public class SchedulePresenter {
         String availableTimes = "";
         int startTime = eventManager.getStartTime();
         while (startTime < eventManager.getEndTime()){
-            availableTimes += startTime + ", ";
+            if (startTime < 10){
+                availableTimes += "0" + startTime + ", ";
+            } else {
+                availableTimes += startTime + ", ";
+            }
             startTime += 1;
         }
-
         availableTimes = availableTimes.replaceAll(", $", "");
         System.out.println("Here are the available start times:\n" + availableTimes +"\n");
 
