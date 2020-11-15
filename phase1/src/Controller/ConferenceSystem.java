@@ -347,7 +347,7 @@ public class ConferenceSystem {
                 default:
                     organizerMessageController.invalidInput();
             }
-        } while (!organizerMessageMenuOption.equals("4"));
+        } while (!organizerMessageMenuOption.equals("0"));
     }
 
     /**
@@ -370,7 +370,7 @@ public class ConferenceSystem {
                 default:
                     speakerMessageController.invalidInput();
             }
-        } while (!speakerMessageMenuOption.equals("2"));
+        } while (!speakerMessageMenuOption.equals("0"));
     }
 
     /**
@@ -393,7 +393,7 @@ public class ConferenceSystem {
                 default:
                     messageController.invalidInput();
             }
-        } while (!attendeeMessageMenuOption.equals("2"));
+        } while (!attendeeMessageMenuOption.equals("0"));
     }
 
 

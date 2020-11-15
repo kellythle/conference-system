@@ -219,12 +219,29 @@ public class MessageManager {
         return conversationsWithoutDuplicates;
     }
 
-    public ArrayList<Integer> getSingleConversation(String otherID){
+    public ArrayList<Integer> getSingleConversation(){
         ArrayList<Message> conversation = getAllSenderMessages();
         Collections.sort(conversation);
         ArrayList<Integer> singleConversation = new ArrayList<>();
         for (Message i: conversation){
             singleConversation.add(i.getId());
+        } return singleConversation;
+    }
+
+    private ArrayList<Message> getOrganizerSingleConversationHelper(){
+        ArrayList<Message> conversation = getAllSenderMessages();
+        Collections.sort(conversation);
+        return new ArrayList<>(conversation);
+    }
+
+    public ArrayList<Integer> getOrganizerSingleConversation(String otherID){
+        ArrayList<Message> conversation = getOrganizerSingleConversationHelper();
+        Collections.sort(conversation);
+        ArrayList<Integer> singleConversation = new ArrayList<>();
+        for (Message i: conversation){
+            if (otherID.equals(i.getReceiver())) {
+                singleConversation.add(i.getId());
+            }
         } return singleConversation;
     }
 }
