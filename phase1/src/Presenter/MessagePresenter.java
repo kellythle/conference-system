@@ -22,7 +22,7 @@ public class MessagePresenter {
             sender = messageManager.getMessageSender(messageID);
             receiver = "you";
         }
-        String messageText = sender + "sent to" + receiver + "\n" + messageManager.getMessageContent(messageID) +
+        String messageText = sender + " sent to " + receiver + ":\n" + messageManager.getMessageContent(messageID) +
                 "\n           at " + messageManager.getMessageTime(messageID);
         return messageText;
     }
