@@ -32,27 +32,6 @@ public class MessageController {
         } else {return false;}
     }
 
-    /**
-     * Displays message menu. The user can select an action. Once that action is completed
-     * the user will return to the message menu, unless the action is to exit messages
-     * and return to the main menu.
-     */
-    public void messageMenu() {
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            messagePresenter.printMessageMenu();
-            String input = scanner.nextLine();
-            if (input.equals("0")){
-                break;
-            } else if (input.equals("1")){
-                viewConversations();
-            } else if (input.equals("2")){
-                sendMessage();
-            } else {
-                messagePresenter.printInvalidInput();
-            }
-        }
-    }
 
     /**
      * Displays all conversations of user. Prompts the user to view a specific message history.

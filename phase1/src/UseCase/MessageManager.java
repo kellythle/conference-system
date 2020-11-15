@@ -26,21 +26,6 @@ public class MessageManager {
     private String senderID;
 
     /**
-     * Creates a UseCase.MessageManager
-     * @param senderID - ID of the current user logged in
-     */
-    public MessageManager(String senderID){
-        systemMessages = new HashMap<Integer, Message>();
-        this.senderID = senderID;
-    }
-
-    public MessageManager()
-    {
-        systemMessages = new HashMap<Integer, Message>();
-        this.senderID = "";
-    }
-
-    /**
      * Gets the HashMap of all messages.
      *
      * @return the systemMessages HashMap, with message IDs as keys and Message objects as values

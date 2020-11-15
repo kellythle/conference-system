@@ -16,8 +16,8 @@ public class SpeakerMessageController {
     public MessagePresenter messagePresenter;
 
 
-    public SpeakerMessageController(String username, UserManager myUserManager, EventManager myEventManager){
-        myMessageManager = new MessageManager(username);
+    public SpeakerMessageController(String username, MessageManager myMessageManager, UserManager myUserManager, EventManager myEventManager){
+        this.myMessageManager = myMessageManager;
         this.myUserManager = myUserManager;
         this.myEventManager = myEventManager;
         this.username = username;

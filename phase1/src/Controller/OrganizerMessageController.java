@@ -12,8 +12,8 @@ public class OrganizerMessageController {
     private final String username;
     public MessagePresenter messagePresenter;
 
-    public OrganizerMessageController(String username, UserManager myUserManager){
-        myMessageManager = new MessageManager(username);
+    public OrganizerMessageController(String username, MessageManager myMessageManager, UserManager myUserManager){
+        this.myMessageManager = myMessageManager;
         this.myUserManager = myUserManager;
         this.username = username;
         messagePresenter = new MessagePresenter(username);

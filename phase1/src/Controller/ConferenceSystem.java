@@ -84,8 +84,8 @@ public class ConferenceSystem {
         messageManager.setSenderID(username);
         //initialize all classes that need the username
         messageController = new MessageController(username, userManager, messageManager);
-        organizerMessageController = new OrganizerMessageController(username, userManager);
-        speakerMessageController = new SpeakerMessageController(username, userManager, eventManager);
+        organizerMessageController = new OrganizerMessageController(username, messageManager, userManager);
+        speakerMessageController = new SpeakerMessageController(username, messageManager, userManager, eventManager);
         //2. shows Main menu for each user
         switch (loginController.getUserType(username)){
             case "Organizer":
