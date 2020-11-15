@@ -25,35 +25,32 @@ import java.util.HashMap;
  * }
  */
 public class ConferenceSystem {
-    // (1) Filip: Gateways read in userMap, eventList, roomList, and MessagesMap
-    // After gateways are done, please initialize ^^^ into the corresponding classes.
     // Use case class instances
     private final EventManager eventManager = new EventManager();
     private final UserManager userManager = new UserManager();
-    private final MessageManager messageManager = new MessageManager(); // not final as this can be changed along with the logged in user
+    private final MessageManager messageManager = new MessageManager();
 
+    // Gateway class instance
     private ReadWriteGateway readWriteGateway = new ReadWriteGateway();
 
     // Controller class instances
     private final LoginController loginController = new LoginController(userManager);
     private final SignUpController signUpController = new SignUpController(eventManager, userManager);
     private final ScheduleController scheduleController = new ScheduleController(eventManager, userManager);
-    // MessageCs needs parameter username, maybe initialize after login in.
     private MessageController messageController;
     private OrganizerMessageController organizerMessageController;
     private SpeakerMessageController speakerMessageController;
 
     // File paths
-    private final String usersPath = "../../users.ser";
-    private final String eventsPath = "../../events.ser";
-    private final String messagesPath = "../../messages.ser";
-    private final String roomsPath = "../../rooms.ser";
+    private final String usersPath = "./phase1/src/users.ser";
+    private final String eventsPath = "./phase1/src/events.ser";
+    private final String messagesPath = "./phase1/src/messages.ser";
+    private final String roomsPath = "./phase1/src/rooms.ser";
 
     // Variable for keeping track with user, should be initialized after login.
     String username;
 
     public ConferenceSystem() {username = null;}
-
 
     public void run() {
         try {
@@ -159,7 +156,7 @@ public class ConferenceSystem {
     }
 
     /**
-     * Writes all user, event, and message data to their respective files.
+     * Writes all data to the respective files.
      *
      * @return Boolean indicating if reading was successful.
      */
