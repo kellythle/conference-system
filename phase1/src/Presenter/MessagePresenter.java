@@ -57,7 +57,7 @@ public class MessagePresenter {
                 "Enter anything else to return to Message Menu:");
     }
 
-    public void viewSingleConversation(MessageManager messageManager, UserManager userManager, String recipientID) {
+    public void printSingleConversation(MessageManager messageManager, UserManager userManager, String recipientID){
         String identity = "Attendee";
         if (userManager.isOrganizer(recipientID)) {identity = "Organizer";}
         else if (userManager.isSpeaker(recipientID)) {identity = "Speaker";}
@@ -67,21 +67,17 @@ public class MessagePresenter {
             String messageText = getMessageText(messageManager, i);
             System.out.println(messageText);
         }
+    }
+
+    public void viewSingleConversation(MessageManager messageManager, UserManager userManager, String recipientID) {
+        printSingleConversation(messageManager, userManager, recipientID);
         System.out.println("Enter 0 reply to this conversation\n" +
                 "Enter 1 to continue browsing conversations\n" +
                 "Enter anything else to return to Message Menu:");
     }
 
     public void viewOrganizerSingleConversation(MessageManager messageManager, UserManager userManager, String recipientID) {
-        String identity = "Attendee";
-        if (userManager.isOrganizer(recipientID)) {identity = "Organizer";}
-        else if (userManager.isSpeaker(recipientID)) {identity = "Speaker";}
-        System.out.println("Your conversation with " + identity + " " + recipientID + ": ");
-        ArrayList<Integer> singleConversation = messageManager.getSingleConversationByReceiver(recipientID);
-        for (int i: singleConversation){
-            String messageText = getMessageText(messageManager, i);
-            System.out.println(messageText);
-        }
+        printSingleConversation(messageManager, userManager, recipientID);
         System.out.println("Enter 0 to continue browsing conversations\n" +
                 "Enter anything else to return to Message Menu:");
     }
