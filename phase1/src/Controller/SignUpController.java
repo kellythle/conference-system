@@ -70,30 +70,38 @@ public class SignUpController {
      * @param username - the user's username
      */
     public void signUpEvent(String username){
-        Scanner scan1 = new Scanner(System.in);
-        //prints the events
-        this.getEventList();
-        sp.printSignUpEventPrompt();
-        String eventName = scan1.nextLine();
-        //back to Sign Up System Menu
-        if (eventName.equals("0"))
-                return; //back to Sign Up System Menu
-        for (Event e: eventManager.getEventList()){
-            //check is the input is a valid event name
-            if (e.getName().equals(eventName)){
-                //check if this user can sign up for this event
-                if (eventManager.addUserToEvent(username, e)) {
-                    userManager.addRegisteredEvent(username, e.getName());
-                    sp.printSignUpSuccess();
+        boolean validEventName = false;
+        String eventName;
+        do {
+            do {
+                Scanner scan1 = new Scanner(System.in);
+                //prints the events
+                this.getEventList();
+                sp.printSignUpEventPrompt();
+                eventName = scan1.nextLine();
+                //back to Sign Up System Menu
+                if (eventName.equals("0"))
                     return; //back to Sign Up System Menu
+                if (!eventManager.getEvent(eventName)) {
+                    sp.printInvalidEventName(); //invalid event name
+                } else {
+                    validEventName = true;
                 }
-                else{
-                    sp.printSignUpFail();
-                    return; //back to Sign Up System Menu
+            } while (!validEventName);
+            for (Event e : eventManager.getEventList()) {
+                //check is the input is a valid event name
+                if (e.getName().equals(eventName)) {
+                    //check if this user can sign up for this event
+                    if (eventManager.addUserToEvent(username, e)) {
+                        userManager.addRegisteredEvent(username, e.getName());
+                        sp.printSignUpSuccess();
+                    } else {
+                        sp.printSignUpFail();
+                        validEventName = false;
+                    }
                 }
             }
-        }
-        sp.printInvalidInput();
+        }while(!validEventName);
         //back to Sign Up System Menu
     }
 
@@ -107,19 +115,24 @@ public class SignUpController {
      * @param username - the user's username
      */
     public void deleteEvent(String username) {
-        Scanner scan1 = new Scanner(System.in);
-        //prints registered events
-        this.getRegisteredEventList(username);
-        sp.printDeleteEventPrompt();
-        String eventName = scan1.nextLine();
-        //back to Sign Up System Menu
-        if (eventName.equals("0"))
-            return;
-        //check if this user has registered for this event
-        if (!userManager.getRegisteredEvents(username).contains(eventName)){
-            sp.printNotInRegisteredEvent();
-            return; //back to Sign Up System Menu
-        }
+        boolean registered = false;
+        String eventName;
+        do {
+            Scanner scan1 = new Scanner(System.in);
+            //prints registered events
+            this.getRegisteredEventList(username);
+            sp.printDeleteEventPrompt();
+            eventName = scan1.nextLine();
+            //back to Sign Up System Menu
+            if (eventName.equals("0"))
+                return;
+            //check if this user has registered for this event
+            if (!userManager.getRegisteredEvents(username).contains(eventName)) {
+                sp.printNotInRegisteredEvent();
+            }else{
+                registered = true;
+            }
+        }while (!registered);
         //check if this user can delete this event
         if (eventManager.deleteUserFromEvent(username, eventName)){
             userManager.getRegisteredEvents(username).remove(eventName);

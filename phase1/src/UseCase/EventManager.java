@@ -157,7 +157,22 @@ public class EventManager {
             }
         }
         Event newEvent = createEvent(name, speaker, time, room);
-        this.eventList.add(newEvent);
+        if(eventList.isEmpty()){
+            this.eventList.add(newEvent);
+        } else {
+            ArrayList<Event> sortedEvents = new ArrayList<>();
+            boolean Added = false;
+            for (Event e : eventList) {
+                if (e.getTime().isAfter(newEvent.getTime()) && !Added) {
+                    sortedEvents.add(newEvent);
+                    sortedEvents.add(e);
+                    Added = true;
+                } else {
+                    sortedEvents.add(e);
+                }
+            }
+            this.eventList = sortedEvents;
+        }
     }
 
     /**

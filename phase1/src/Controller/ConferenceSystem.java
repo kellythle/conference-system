@@ -94,7 +94,7 @@ public class ConferenceSystem {
             case "Attendee":
                 attendeeHelper();
                 break;
-            }
+        }
         //3. return if the user logout. Write out data to files.
         boolean writeSuccessful = writeData();
         if (writeSuccessful)

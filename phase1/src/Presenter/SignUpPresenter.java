@@ -111,7 +111,7 @@ public class SignUpPresenter {
      * Prints "You cannot sign up for this event. Sign up failed...".
      */
     public void printSignUpFail(){
-        System.out.println("You cannot sign up for this event. Sign up failed...");
+        System.out.println("You've already signed up for this event. Sign up failed...");
     }
 
     /**
@@ -140,6 +140,13 @@ public class SignUpPresenter {
      */
     public void printEndSignUpSystem(){
         System.out.println("End of Sign Up System.");
+    }
+
+    /**
+     * Prints "This event doesn't exists."
+     */
+    public void printInvalidEventName(){
+        System.out.println("This event doesn't exists.");
     }
 
     /**
