@@ -4,6 +4,7 @@ import Entity.Event;
 import UseCase.EventManager;
 import javafx.util.Pair;
 
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -44,33 +45,7 @@ public class SchedulePresenter {
         System.out.println("That is not an option in our menu.");
     }
 
-    /**
-     * Return a list of Speakers available at the given time.
-     *
-     * @param speakerList - the list of existing speakers
-     * @param time - the chosen time
-     *
-     *
-     * @return a list of available Speakers
-     */
-    public ArrayList<String> availableSpeakers(ArrayList<String> speakerList, LocalDateTime time) {
-        ArrayList<String> availableList = new ArrayList<>();
-        ArrayList<String> unavailableList = new ArrayList<>();
-        if (eventManager.getEventList() != null) {
-            for (Event e : eventManager.getEventList()) {
-                if (e.getTime() == time) {
-                    unavailableList.add(e.getSpeaker());
-                }
-            }
-        }
 
-        for (String s : speakerList) {
-            if (!unavailableList.contains(s)) {
-                availableList.add(s);
-            }
-        }
-        return availableList;
-    }
 
     /**
      * Prints a string of speakers that are available and unavailable
@@ -85,7 +60,7 @@ public class SchedulePresenter {
         StringBuilder unavailableSpeakers = new StringBuilder("Unavailable Speakers: ");
 
         for (String s : speakerList) {
-            if (!this.availableSpeakers(speakerList, time).contains(s)) {
+            if (eventManager.getAvailableSpeakers(speakerList, time).contains(s)) {
                 availableSpeakers.append(s).append(", ");
             } else {
                 unavailableSpeakers.append(s).append(", ");
@@ -109,70 +84,22 @@ public class SchedulePresenter {
      * Prints a string of all the available start times for an event.
      */
     public void displayStartTimes () {
-        String availableTimes = "";
-        int startTime = eventManager.getStartTime();
-        while (startTime < eventManager.getEndTime()){
-            if (startTime < 10){
-                availableTimes += "0" + startTime + ", ";
-            } else {
-                availableTimes += startTime + ", ";
-            }
-            startTime += 1;
+        StringBuilder availableTimes = new StringBuilder();
+        for (String t: eventManager.getStartTimes()){
+            availableTimes.append(t).append(", ");
         }
-        availableTimes = availableTimes.replaceAll(", $", "");
+        availableTimes = new StringBuilder(availableTimes.toString().replaceAll(", $", ""));
         System.out.println("Here are the available start times:\n" + availableTimes +"\n");
-
     }
 
+
     /**
-     * Prints "That time is not an option or is unavailable."
+     * Prints "That time is not a valid option."
      */
     public void printFailStartTimes(){
-        System.out.println("That time is not an option or is unavailable.");
+        System.out.println("That time is not a valid option.");
     }
 
-    /**
-     * Returns a list of available rooms.
-     *
-     * @param time - time for Event
-     *
-     * @return a list of available rooms
-     */
-    public ArrayList<Integer> availableRooms (LocalDateTime time) {
-        ArrayList<Integer> availableRooms = new ArrayList<>();
-        ArrayList<Integer> unavailableRooms = new ArrayList<>();
-        if (eventManager.getEventList() != null) {
-            for (Event e : eventManager.getEventList()) {
-                if (e.getTime() == time) {
-                    Pair<Integer, Integer> unavailableRoom = new Pair(e.getRoomNum(), e.getRoomCapacity());
-                    unavailableRooms.add(unavailableRoom.getKey());
-                }
-            }
-        }
-
-        for (Pair r : eventManager.getRoomList()) {
-            if (!unavailableRooms.contains(r.getKey())) {
-                availableRooms.add((Integer) r.getKey());
-            }
-        }
-        return availableRooms;
-    }
-
-    /**
-     * Returns if this room exists in the room list.
-     *
-     * @param roomNum - room number
-     *
-     * @return true if the room is a member the the room list, false otherwise.
-     */
-    public boolean roomExist(Integer roomNum){
-        for(Pair r: eventManager.getRoomList()){
-            if(r.getKey().equals(roomNum)){
-                return true;
-            }
-        }
-        return false;
-    }
 
     /**
      * Prints asking the Organizer to choose the date when creating an event.
@@ -209,19 +136,10 @@ public class SchedulePresenter {
     public void displayRoomList (LocalDateTime time) {
         StringBuilder availableRooms = new StringBuilder("Available Rooms: ");
         StringBuilder unavailableRooms = new StringBuilder("Unavailable Rooms: ");
-        ArrayList <Pair<Integer, Integer>> unavailableList = new ArrayList<>();
-        if (eventManager.getEventList() != null) {
-            for (Event e : eventManager.getEventList()) {
-                if (e.getTime() == time) {
-                    Pair<Integer, Integer> unavailableRoom = new Pair(e.getRoomNum(), e.getRoomCapacity());
-                    unavailableList.add(unavailableRoom);
-                    unavailableRooms.append(e.getRoomNum().toString());
-                }
-            }
-        }
-
-        for (Pair r: eventManager.getRoomList()) {
-            if (!unavailableList.contains(r)){
+        for (Pair<Integer, Integer> r: eventManager.getRoomList()) {
+            if (!eventManager.getAvailableRooms(time).contains(r.getKey())) {
+                unavailableRooms.append(r.getKey().toString()).append(", ");
+            } else {
                 availableRooms.append(r.getKey().toString()).append(", ");
             }
         }
@@ -295,10 +213,10 @@ public class SchedulePresenter {
     }
 
     /**
-     * Prints "You have entered no name for the Event.".
+     * Prints "You have entered no name for the Event or an Event name that already exists.".
      */
     public void printFailedName(){
-        System.out.println("You have entered no name for the Event");
+        System.out.println("You have entered no name for the Event or an Event name that already exists.");
     }
 
     /**
@@ -307,4 +225,5 @@ public class SchedulePresenter {
     public void printEndScheduling(){
         System.out.println("You have exited the Scheduling System.");
     }
+
 }

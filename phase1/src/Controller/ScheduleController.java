@@ -51,7 +51,7 @@ public class ScheduleController {
      */
     public void createEvent(){
         String name;
-        boolean ValidName = false;
+        boolean ValidName;
         do {
             Scanner scan = new Scanner(System.in);
             scheduleP.printName();
@@ -59,7 +59,7 @@ public class ScheduleController {
             if (name.equals("0")) {
                 return;
             }
-            else if (name.trim().isEmpty()){
+            else if (name.trim().isEmpty() || eventManager.getEvent(name)){
                 scheduleP.printFailedName();
                 ValidName = false;
             } else {
@@ -91,14 +91,13 @@ public class ScheduleController {
 
         //enter time, check time
         String inputTime;
-        boolean ValidTime = false;
+        boolean ValidTime;
         do {
             Scanner scanT = new Scanner(System.in);
             scheduleP.displayStartTimes();
             scheduleP.printEnterTime();
             inputTime = scanT.nextLine();
-            int intT = Integer.parseInt(inputTime);
-            if (!(eventManager.getStartTime() <= intT && intT < eventManager.getEndTime())) {
+            if (!eventManager.getStartTimes().contains(inputTime)) {
                 scheduleP.printFailStartTimes();
                 ValidTime = false;
             } else {
@@ -109,22 +108,38 @@ public class ScheduleController {
         //combine the date and time into one LocalDateTime instance
         LocalDateTime eventTime = LocalDateTime.parse(inputDate + "T" + inputTime + ":00:00");
 
-        Scanner scan2 = new Scanner(System.in);
-        scheduleP.displayRoomList(eventTime);
-        String room = scan2.nextLine();
-        Integer intRoom = Integer.parseInt(room);
-        if (!scheduleP.availableRooms(eventTime).contains(intRoom) || !scheduleP.roomExist(intRoom)){
-            scheduleP.printFailRoom();
-            return;
-        }
+        String room;
+        boolean ValidRoom = false;
+        do {
+            Scanner scan2 = new Scanner(System.in);
+            scheduleP.displayRoomList(eventTime);
+            room = scan2.nextLine();
+            try {
+                Integer intRoom = Integer.parseInt(room);
+                if (!eventManager.getAvailableRooms(eventTime).contains(intRoom) || eventManager.getRoom(intRoom)
+                        == null) {
+                    scheduleP.printFailRoom();
+                    ValidRoom = false;
+                } else {
+                    ValidRoom = true;
+                }
+            }catch (Exception e){
+                scheduleP.printFailRoom();
+            }
+
+        } while (!ValidRoom);
+
+
 
         String speaker;
-        boolean ValidSpeaker = false;
+        boolean ValidSpeaker;
         do {
             Scanner scanS = new Scanner(System.in);
             scheduleP.displaySpeakerList(userManager.getSpeakerList(), eventTime);
             speaker = scanS.nextLine();
-            if (scheduleP.availableSpeakers(userManager.getSpeakerList(), eventTime).contains(speaker)) {
+            if (speaker.equals("0")){
+                return;
+            } else if (!eventManager.getAvailableSpeakers(userManager.getSpeakerList(), eventTime).contains(speaker)) {
                 scheduleP.printFailSpeaker();
                 ValidSpeaker = false;
             } else {
@@ -132,6 +147,7 @@ public class ScheduleController {
             }
         } while (!ValidSpeaker);
 
+        Integer intRoom = Integer.parseInt(room);
         this.callAddEvent(name, speaker, eventTime, eventManager.getRoom(intRoom));
     }
 

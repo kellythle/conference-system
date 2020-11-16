@@ -38,6 +38,26 @@ public class EventManager {
     }
 
     /**
+     * Return a list of all possible start times.
+     *
+     * @return an ArrayList of strings of start times.
+     */
+    public ArrayList<String> getStartTimes () {
+        ArrayList<String> availableTimes = new ArrayList<>();
+        int startTime = this.getStartTime();
+        while (startTime < this.getEndTime()){
+            if (startTime < 10){
+                availableTimes.add("0" + startTime);
+            } else {
+                availableTimes.add(Integer.toString(startTime));
+            }
+            startTime += 1;
+        }
+        return availableTimes;
+    }
+
+
+    /**
      * Returns the list of events.
      *
      * @return event list
@@ -45,6 +65,7 @@ public class EventManager {
     public ArrayList<Event> getEventList() {
         return eventList;
     }
+
 
     /**
      * Sets the list of events to a version from a read file
@@ -97,13 +118,23 @@ public class EventManager {
      */
     private Event createEvent(String name, String speaker,
                               LocalDateTime time, Pair<Integer, Integer> room) {
-        for (Event e: eventList){
-            if (e.getName().equals(name)) {
-                String newName = name + "I";
-                return new Event(newName, speaker, time, room);
+        return new Event(name, speaker, time, room);
+    }
+
+    /**
+     * Returns true if the event name exists in the event list.
+     *
+     * @param name - the name of the event
+     *
+     * @return true if the event name exists
+     */
+    public boolean getEvent(String name){
+        for (Event e: this.getEventList()) {
+            if (e.getName().equals(name)){
+                return true;
             }
         }
-        return new Event(name, speaker, time, room);
+        return false;
     }
 
     /**
@@ -123,7 +154,7 @@ public class EventManager {
                             LocalDateTime time, Pair<Integer, Integer> room) {
         for (Event e : eventList) {
             if ((e.getTime() == time && e.getRoomNum().equals(room.getKey())) || (e.getTime() == time
-                    && e.getSpeaker().equals(speaker))) {
+                    && e.getSpeaker().equals(speaker)) || e.getName().equals(name)) {
                 return false;
             }
         }
@@ -199,4 +230,57 @@ public class EventManager {
         return false;
     }
 
+    /**
+     * Return a list of Speakers available at the given time.
+     *
+     * @param speakerList - the list of existing speakers
+     * @param time - the chosen time
+     *
+     *
+     * @return a list of available Speakers
+     */
+    public ArrayList<String> getAvailableSpeakers(ArrayList<String> speakerList, LocalDateTime time) {
+        ArrayList<String> availableList = new ArrayList<>();
+        ArrayList<String> unavailableList = new ArrayList<>();
+        if (this.eventList != null) {
+            for (Event e : this.getEventList()) {
+                if (e.getTime() == time) {
+                    unavailableList.add(e.getSpeaker());
+                }
+            }
+        }
+
+        for (String s : speakerList) {
+            if (!unavailableList.contains(s)) {
+                availableList.add(s);
+            }
+        }
+        return availableList;
+    }
+
+    /**
+     * Returns a list of available rooms.
+     *
+     * @param time - time for Event
+     *
+     * @return a list of available rooms
+     */
+    public ArrayList<Integer> getAvailableRooms (LocalDateTime time) {
+        ArrayList<Integer> availableRooms = new ArrayList<>();
+        ArrayList<Integer> unavailableRooms = new ArrayList<>();
+        if (this.eventList != null) {
+            for (Event e : this.eventList) {
+                if (e.getTime() == time) {
+                    unavailableRooms.add(e.getRoomNum());
+                }
+            }
+        }
+
+        for (Pair r : this.roomList) {
+            if (!unavailableRooms.contains(r.getKey())) {
+                availableRooms.add((Integer) r.getKey());
+            }
+        }
+        return availableRooms;
+    }
 }
