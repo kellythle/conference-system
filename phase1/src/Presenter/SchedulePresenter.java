@@ -66,11 +66,11 @@ public class SchedulePresenter {
                 unavailableSpeakers.append(s).append(", ");
             }
         }
-            availableSpeakers = new StringBuilder(availableSpeakers.toString().replaceAll(", $", ""));
-            unavailableSpeakers = new StringBuilder(unavailableSpeakers.toString().replaceAll(", $", ""));
-            System.out.println("Here are the available and unavailable speakers:\n" +
-                    availableSpeakers + "\n" + unavailableSpeakers + "\n"
-                    + "Please enter the Speaker you wish to book for this Event or 0 to exit: ");
+        availableSpeakers = new StringBuilder(availableSpeakers.toString().replaceAll(", $", ""));
+        unavailableSpeakers = new StringBuilder(unavailableSpeakers.toString().replaceAll(", $", ""));
+        System.out.println("Here are the available and unavailable speakers:\n" +
+                availableSpeakers + "\n" + unavailableSpeakers + "\n"
+                + "Please enter the Speaker you wish to book for this Event or 0 to exit: ");
     }
 
     /**
@@ -208,7 +208,7 @@ public class SchedulePresenter {
      * Prints "You cannot make a Speaker account with an empty username."
      */
     public void failedUsername(){
-        System.out.println("You cannot make a Speaker account with an empty username or you have " +
+        System.out.println("You cannot make a Speaker account with an empty username, 0 as username or you have " +
                 "entered a username that already exists in the system.");
     }
 

@@ -177,7 +177,9 @@ public class ScheduleController {
             Scanner scan = new Scanner(System.in);
             scheduleP.addSpeaker();
             speakerName = scan.nextLine();
-            if (speakerName.trim().isEmpty() || userManager.getSpeakerList().contains(speakerName)) {
+            if (speakerName.trim().isEmpty()
+                    || userManager.getSpeakerList().contains(speakerName)
+                    || speakerName.equals("0")) {
                 scheduleP.failedUsername();
                 ValidName = false;
             } else {
