@@ -214,15 +214,6 @@ public class MessageManager {
         return conversationsWithoutDuplicates;
     }
 
-    public ArrayList<Integer> getSingleConversation(){
-        ArrayList<Message> conversation = getAllSenderMessages();
-        Collections.sort(conversation);
-        ArrayList<Integer> singleConversation = new ArrayList<>();
-        for (Message i: conversation){
-            singleConversation.add(i.getId());
-        } return singleConversation;
-    }
-
 
     public ArrayList<Integer> getSingleConversationByReceiver(String otherID){
         ArrayList<Message> conversation = getAllSenderMessages();
