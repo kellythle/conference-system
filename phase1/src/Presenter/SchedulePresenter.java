@@ -205,6 +205,21 @@ public class SchedulePresenter {
     }
 
     /**
+     * Prints "You cannot make a Speaker account with an empty username."
+     */
+    public void failedUsername(){
+        System.out.println("You cannot make a Speaker account with an empty username or you have " +
+                "entered a username that already exists in the system.");
+    }
+
+    /**
+     * Prints "You cannot make a Speaker account with an empty password."
+     */
+    public void failedPassword(){
+        System.out.println("You cannot make a Speaker account with an empty password.");
+    }
+
+    /**
      * Prints asking the Organizer for an event name.
      */
     public void printName(){

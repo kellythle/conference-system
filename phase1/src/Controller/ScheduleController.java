@@ -116,8 +116,7 @@ public class ScheduleController {
             room = scan2.nextLine();
             try {
                 Integer intRoom = Integer.parseInt(room);
-                if (!eventManager.getAvailableRooms(eventTime).contains(intRoom) || eventManager.getRoom(intRoom)
-                        == null) {
+                if (!eventManager.getAvailableRooms(eventTime).contains(intRoom)){
                     scheduleP.printFailRoom();
                     ValidRoom = false;
                 } else {
@@ -170,12 +169,35 @@ public class ScheduleController {
      * Prints whether or not the new speaker account is added to this conference.
      */
     public void addNewSpeaker() {
-        Scanner scan = new Scanner(System.in);
-        scheduleP.addSpeaker();
-        String speakerName = scan.nextLine();
-        Scanner scan1 = new Scanner(System.in);
-        scheduleP.addSpeakerPassword();
-        String password = scan1.nextLine();
+        String speakerName;
+        String password;
+        boolean ValidName;
+        boolean ValidPassword;
+        do {
+            Scanner scan = new Scanner(System.in);
+            scheduleP.addSpeaker();
+            speakerName = scan.nextLine();
+            if (speakerName.trim().isEmpty() || userManager.getSpeakerList().contains(speakerName)) {
+                scheduleP.failedUsername();
+                ValidName = false;
+            } else {
+                ValidName = true;
+            }
+        } while (!ValidName);
+
+        do {
+            Scanner scan1 = new Scanner(System.in);
+            scheduleP.addSpeakerPassword();
+            password = scan1.nextLine();
+            if (password.trim().isEmpty()) {
+                scheduleP.failedPassword();
+                ValidPassword = false;
+            } else {
+                ValidPassword = true;
+            }
+        } while (!ValidPassword);
+
+
         if(canCreateSpeaker(speakerName)) {
             userManager.createUser(speakerName, password, "Speaker");
             scheduleP.successSpeaker();

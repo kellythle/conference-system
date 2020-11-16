@@ -3,7 +3,6 @@ package UseCase;
 import Entity.Event;
 import javafx.util.Pair;
 
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -138,29 +137,27 @@ public class EventManager {
     }
 
     /**
-     * Returns true if an event is created and added to the conference successfully.
-     * Returns false if the event cannot be created or added.
+     * Creates an event and is added to the conference.
+     * Passes silently if event was not able to be made.
      * Checks if there exists an event occurring in the same room and
-     * at the same time. Also checks if the speaker gives another talk
-     * at the same time.
+     * at the same time, if the speaker gives another talk
+     * at the same time, and if the event name already exists.
      *
      * @param name - the name of this event
      * @param speaker - the speaker's name
      * @param time - the occurring time of this event
      * @param room - the occurring room of this event
-     * @return true if successfully creates and adds the new event to the conference and false otherwise
      */
-    public boolean addEvent(String name, String speaker,
-                            LocalDateTime time, Pair<Integer, Integer> room) {
+    public void addEvent(String name, String speaker,
+                         LocalDateTime time, Pair<Integer, Integer> room) {
         for (Event e : eventList) {
             if ((e.getTime() == time && e.getRoomNum().equals(room.getKey())) || (e.getTime() == time
                     && e.getSpeaker().equals(speaker)) || e.getName().equals(name)) {
-                return false;
+                return;
             }
         }
         Event newEvent = createEvent(name, speaker, time, room);
         this.eventList.add(newEvent);
-        return true;
     }
 
     /**
@@ -243,8 +240,8 @@ public class EventManager {
         ArrayList<String> availableList = new ArrayList<>();
         ArrayList<String> unavailableList = new ArrayList<>();
         if (this.eventList != null) {
-            for (Event e : this.getEventList()) {
-                if (e.getTime() == time) {
+            for (Event e : this.eventList) {
+                if (e.getTime().compareTo(time) == 0) {
                     unavailableList.add(e.getSpeaker());
                 }
             }
@@ -270,15 +267,15 @@ public class EventManager {
         ArrayList<Integer> unavailableRooms = new ArrayList<>();
         if (this.eventList != null) {
             for (Event e : this.eventList) {
-                if (e.getTime() == time) {
+                if (e.getTime().compareTo(time) == 0) {
                     unavailableRooms.add(e.getRoomNum());
                 }
             }
         }
 
-        for (Pair r : this.roomList) {
+        for (Pair<Integer, Integer> r : this.roomList) {
             if (!unavailableRooms.contains(r.getKey())) {
-                availableRooms.add((Integer) r.getKey());
+                availableRooms.add(r.getKey());
             }
         }
         return availableRooms;
