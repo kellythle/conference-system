@@ -30,7 +30,7 @@ public class SchedulePresenter {
      * Prints a menu for scheduling Events.
      */
     public void printScheduleMenu(){
-        System.out.println("Welcome to the Scheduling Menu! \n " +
+        System.out.println("Welcome to the Scheduling Menu!\n" +
                 "Options:\n" +
                 "1. Schedule an Event\n" +
                 "2. Create a Speaker\n" +
@@ -180,7 +180,8 @@ public class SchedulePresenter {
      * Prints asking the Organizer for a Speaker username
      */
     public void addSpeaker(){
-        System.out.println("Please enter the username of who you would like to make a Speaker: ");
+        System.out.println("Please enter the username of who you would like to make a Speaker or 0 to return to " +
+                "the Scheduling Menu: ");
     }
 
     /**
@@ -205,11 +206,11 @@ public class SchedulePresenter {
     }
 
     /**
-     * Prints "You cannot make a Speaker account with an empty username, 0 as username, or you have
+     * Prints "You cannot make a Speaker account with an empty username or you have
      * entered a username that already exists in the system."
      */
     public void failedUsername(){
-        System.out.println("You cannot make a Speaker account with an empty username, 0 as username, or you have " +
+        System.out.println("You cannot make a Speaker account with an empty username or you have " +
                 "entered a username that already exists in the system.");
     }
 
