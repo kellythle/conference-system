@@ -52,7 +52,7 @@ public class MessagePresenter {
                 "Options:\n" +
                 "0. Exit Message Menu\n" +
                 "1. View conversations and reply to messages\n" +
-                "2. Send a message to Attendees of your Talks:" +
+                "2. Send a message to Attendees of your Talks:\n" +
                 "Enter 0, 1, or 2: ");
     }
 
@@ -95,7 +95,7 @@ public class MessagePresenter {
     }
 
     public void printEventIDPrompt(){
-        System.out.println("Enter the ID of the event whose attendees you wish to message: ");
+        System.out.println("Enter the name of the event whose attendees you wish to message: ");
     }
 
     public void printSpeakerMessagePrompt(){
