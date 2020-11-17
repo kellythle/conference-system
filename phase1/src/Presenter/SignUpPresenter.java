@@ -36,6 +36,9 @@ public class SignUpPresenter {
      */
     private String EventListGenerator(ArrayList<Event> eventList){
         String events = "";
+        if (eventList == null){
+            return events;
+        }
         for (Event e: eventList){
             int space = e.getRoomCapacity() - e.getAttendees().size();
             String available = "Full";
@@ -59,8 +62,12 @@ public class SignUpPresenter {
      */
     public void displayEventList(ArrayList<Event> eventList){
         String events = this.EventListGenerator(eventList);
-        System.out.println("All Events: ");
-        System.out.println(events);
+        if(events.equals("")){
+            System.out.println("There are no available events yet...");
+        }else {
+            System.out.println("All Events: ");
+            System.out.println(events);
+        }
     }
 
     /**
@@ -82,14 +89,18 @@ public class SignUpPresenter {
      */
     public void displayRegisteredEvents(ArrayList<String> registeredEventNames, EventManager em) {
         ArrayList<Event> registeredEvents = new ArrayList<>();
-        for (Event e: em.getEventList()) {
-            if (registeredEventNames.contains(e.getName())){
-                registeredEvents.add(e);
+        if (registeredEventNames.isEmpty()){
+            System.out.println("You didn't sign up for any events.");
+        }else {
+            for (Event e : em.getEventList()) {
+                if (registeredEventNames.contains(e.getName())) {
+                    registeredEvents.add(e);
+                }
             }
+            String events = this.EventListGenerator(registeredEvents);
+            System.out.println("Registered Events: ");
+            System.out.println(events);
         }
-        String events = this.EventListGenerator(registeredEvents);
-        System.out.println("Registered Events: ");
-        System.out.println(events);
     }
 
     /**
