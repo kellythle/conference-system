@@ -286,7 +286,9 @@ public class UserManager {
     }
 
     public boolean canSend(String username, String receiver){
-        if (isOrganizer(username)){
+        if (!idChecker(receiver)){
+            return false;
+        } else if (isOrganizer(username)){
             return true;
         } else if (isSpeaker(username)){
             if (isOrganizer(receiver)||isSpeaker(receiver)) {return false;}
