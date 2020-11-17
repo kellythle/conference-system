@@ -18,14 +18,14 @@ public class SignUpPresenter {
      * Prints the menu of Sign Up System.
      */
     public void printMenu(){
-        System.out.println("Welcome to Sign Up System! \n" +
+        System.out.println("Welcome to the Sign Up Menu! \n" +
                 "Options:\n" +
                 "1. Sign up an event\n" +
                 "2. Delete an registered event\n" +
                 "3. See all events\n" +
                 "4. See registered events\n" +
-                "5. Exist Sign Up System\n" +
-                "(Enter 1, 2, 3, 4, or 5)");
+                "5. Exit Sign Up Menu\n" +
+                "Enter 1, 2, 3, 4, or 5: ");
     }
 
     /**
@@ -65,11 +65,11 @@ public class SignUpPresenter {
 
     /**
      * Prints message that asks the user to enter an event name that
-     * he/she wants to sign up for or 0 to exists
+     * he/she wants to sign up for or 0 to exit
      */
     public void printSignUpEventPrompt(){
         System.out.println("Enter the event name you want to sign up for " +
-                "(or enter 0 to go back to Sign Up System menu): ");
+                "(or enter 0 to return to the Sign Up menu): ");
     }
 
     /**
@@ -97,7 +97,7 @@ public class SignUpPresenter {
      * he/she wants to delete or 0 to exists
      */
     public void printDeleteEventPrompt(){
-        System.out.println("Enter the event name you want to delete (or enter 0 to go back to Sign Up System menu): ");
+        System.out.println("Enter the event name you want to delete (or enter 0 to return to the Sign Up menu): ");
     }
 
     /**
@@ -115,17 +115,17 @@ public class SignUpPresenter {
     }
 
     /**
-     * Prints "Deletion success!".
+     * Prints "Event successfully deleted!".
      */
     public void printDeleteEventSuccess() {
-        System.out.println("Deletion success!");
+        System.out.println("Event successfully deleted!");
     }
 
     /**
-     * Prints "Deletion fail.".
+     * Prints "Deletion failed.".
      */
     public void printDeleteEventFail(){
-        System.out.println("Deletion fail.");
+        System.out.println("Deletion failed.");
     }
 
     /**
@@ -139,14 +139,14 @@ public class SignUpPresenter {
      * Prints "End of Sign Up System."
      */
     public void printEndSignUpSystem(){
-        System.out.println("End of Sign Up System.");
+        System.out.println("You have exited the Sign Up Menu.");
     }
 
     /**
-     * Prints "This event doesn't exists."
+     * Prints "This event doesn't exist."
      */
     public void printInvalidEventName(){
-        System.out.println("This event doesn't exists.");
+        System.out.println("This event doesn't exist.");
     }
 
     /**

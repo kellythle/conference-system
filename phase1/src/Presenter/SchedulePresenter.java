@@ -34,15 +34,15 @@ public class SchedulePresenter {
                 "Options:\n" +
                 "1. Schedule an Event\n" +
                 "2. Create a Speaker\n" +
-                "3. Exit this Menu\n" +
-                "Please enter 1, 2, or 3 to choose your option: ");
+                "3. Exit Scheduling Menu\n" +
+                "Enter 1, 2, or 3: ");
     }
 
     /**
-     * Prints "That is not an option in our menu."
+     * Prints "Input invalid, please try again."
      */
     public void printFailScheduleMenu(){
-        System.out.println("That is not an option in our menu.");
+        System.out.println("Input invalid, please try again.");
     }
 
 
@@ -70,7 +70,7 @@ public class SchedulePresenter {
         unavailableSpeakers = new StringBuilder(unavailableSpeakers.toString().replaceAll(", $", ""));
         System.out.println("Here are the available and unavailable speakers:\n" +
                 availableSpeakers + "\n" + unavailableSpeakers + "\n"
-                + "Please enter the Speaker you wish to book for this Event or 0 to exit: ");
+                + "Please enter the Speaker you wish to book for this Event or 0 to return to the Scheduling Menu: ");
     }
 
     /**
@@ -119,7 +119,7 @@ public class SchedulePresenter {
      * Prints "Invalid date format"
      */
     public void printInvalidDateFormat(){
-        System.out.println("Invalid date format");
+        System.out.println("Invalid date format.");
     }
 
     /**
@@ -172,7 +172,7 @@ public class SchedulePresenter {
                     "\n" + "Speaker: " + event.getSpeaker() +
                     "\n" + "Room Number: " + event.getRoomNum().toString());
         } else{
-            System.out.println("Event Creation Failed");
+            System.out.println("Event Creation Failed.");
         }
     }
 
@@ -191,24 +191,25 @@ public class SchedulePresenter {
     }
 
     /**
-     * Prints "Speaker was successfully created."
+     * Prints "Speaker successfully created!"
      */
     public void successSpeaker(){
-        System.out.println("Speaker was successfully created.");
+        System.out.println("Speaker successfully created!");
     }
 
     /**
-     * Prints "Speaker could not be created."
+     * Prints "Speaker creation failed."
      */
     public void failedSpeaker(){
-        System.out.println("Speaker could not be created.");
+        System.out.println("Speaker creation failed.");
     }
 
     /**
-     * Prints "You cannot make a Speaker account with an empty username."
+     * Prints "You cannot make a Speaker account with an empty username, 0 as username, or you have
+     * entered a username that already exists in the system."
      */
     public void failedUsername(){
-        System.out.println("You cannot make a Speaker account with an empty username, 0 as username or you have " +
+        System.out.println("You cannot make a Speaker account with an empty username, 0 as username, or you have " +
                 "entered a username that already exists in the system.");
     }
 
@@ -223,8 +224,8 @@ public class SchedulePresenter {
      * Prints asking the Organizer for an event name.
      */
     public void printName(){
-        System.out.println("What would you like to name the Event? Enter the desired Event name or 0 to exit from " +
-                "creating an event: ");
+        System.out.println("What would you like to name the Event? Enter the desired Event name or 0 to return to " +
+                "the Scheduling Menu: ");
     }
 
     /**

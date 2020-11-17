@@ -4,32 +4,31 @@ package Presenter;
 public class LoginPresenter {
 
     public void printStartMenu(){
-        System.out.println("Welcome to Start Menu! \n" +
+        System.out.println("Welcome to the Start Menu! \n" +
                 "Options:\n" +
                 "1. Sign in \n" +
                 "2. Register\n" +
-                "(Enter 1, 2)");
+                "Enter 1 or 2: ");
     }
 
     public void printEndMenu(){
-        System.out.println("This is the to log out Menu! \n" +
+        System.out.println("This is the Log Out Menu! \n" +
                 "Options:\n" +
                 "1. Log out \n" +
                 "2. Stay logged in\n" +
-                "(Enter 1, 2)");
+                "Enter 1 or 2: ");
     }
 
     public void inputName(){
-        System.out.println("Enter your unique username:\n");
+        System.out.println("Enter your unique username: ");
     }
 
     public void inputPassword(){
-        System.out.println("Enter your password:\n");
+        System.out.println("Enter your password: ");
     }
 
     public void inputUserType(){
-        System.out.println("Enter the type of user you wish to create:\n" +
-                "(Enter Attendee or Organizer)");
+        System.out.println("Enter the type of user you wish to create (Attendee or Organizer): ");
     }
 
     public void printInvalidInput() {
@@ -42,7 +41,7 @@ public class LoginPresenter {
      */
     public void displayAccountCreateInfo(boolean value){
         if (value){
-            System.out.println("The user account is created successfully!");
+            System.out.println("The user account was created successfully!");
         }
         else
             System.out.println("Failed to create account, please try again.");
@@ -55,10 +54,10 @@ public class LoginPresenter {
     public void displayLoginInfo(boolean value){
 
         if (value){
-            System.out.println("Correct Password");
+            System.out.println("Correct Password.");
         }
         else {
-            System.out.println("Incorrect user name or password");
+            System.out.println("Incorrect username or password.");
         }
     }
 
@@ -67,7 +66,7 @@ public class LoginPresenter {
      * @param info- user name got from login controller
      */
     public void displayLoginUser(String info){
-        System.out.println("Current user is "+ info);
+        System.out.println("Current user is " + info + ".");
     }
 
     public void displayLogoutUser(){
@@ -75,30 +74,30 @@ public class LoginPresenter {
     }
 
     public void printOrganizerMenu(){
-        System.out.println("Welcome to Organizer Menu! \n" +
+        System.out.println("Welcome to the Organizer Menu! \n" +
                 "Options:\n" +
                 "1. Sign up\n" +
                 "2. New talk\n" +
                 "3. Send message\n"+
                 "4. Log out\n"+
-                "(Enter 1, 2, 3, 4)");
+                "Enter 1, 2, 3, 4: ");
     }
 
     public void printSpeakerMenu(){
-        System.out.println("Welcome to Speaker Menu! \n" +
+        System.out.println("Welcome to the Speaker Menu! \n" +
                 "Options:\n" +
                 "1. Send message\n"+
                 "2. Log out\n"+
-                "(Enter 1, 2)");
+                "Enter 1 or 2: ");
     }
 
     public void printAttendeeMenu(){
-        System.out.println("Welcome to Attendee Menu! \n" +
+        System.out.println("Welcome to the Attendee Menu! \n" +
                 "Options:\n" +
                 "1. Sign up\n" +
                 "2. Send message\n"+
                 "3. Log out\n"+
-                "(Enter 1, 2, 3)");
+                "Enter 1, 2, or 3: ");
     }
 }
 
