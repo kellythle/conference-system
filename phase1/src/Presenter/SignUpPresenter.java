@@ -20,8 +20,8 @@ public class SignUpPresenter {
     public void printMenu(){
         System.out.println("Welcome to the Sign Up Menu! \n" +
                 "Options:\n" +
-                "1. Sign up an event\n" +
-                "2. Delete an registered event\n" +
+                "1. Sign up for an event\n" +
+                "2. Delete a registered event\n" +
                 "3. See all events\n" +
                 "4. See registered events\n" +
                 "5. Exit Sign Up Menu\n" +

@@ -6,7 +6,7 @@ public class LoginPresenter {
     public void printStartMenu(){
         System.out.println("Welcome to the Start Menu! \n" +
                 "Options:\n" +
-                "1. Sign in \n" +
+                "1. Sign in\n" +
                 "2. Register\n" +
                 "Enter 1 or 2: ");
     }
@@ -77,16 +77,16 @@ public class LoginPresenter {
         System.out.println("Welcome to the Organizer Menu! \n" +
                 "Options:\n" +
                 "1. Sign up\n" +
-                "2. New talk\n" +
-                "3. Send message\n"+
+                "2. Create a New Event/Speaker\n" +
+                "3. Send a message\n"+
                 "4. Log out\n"+
-                "Enter 1, 2, 3, 4: ");
+                "Enter 1, 2, 3, or 4: ");
     }
 
     public void printSpeakerMenu(){
         System.out.println("Welcome to the Speaker Menu! \n" +
                 "Options:\n" +
-                "1. Send message\n"+
+                "1. Send a message\n"+
                 "2. Log out\n"+
                 "Enter 1 or 2: ");
     }
@@ -95,7 +95,7 @@ public class LoginPresenter {
         System.out.println("Welcome to the Attendee Menu! \n" +
                 "Options:\n" +
                 "1. Sign up\n" +
-                "2. Send message\n"+
+                "2. Send a message\n"+
                 "3. Log out\n"+
                 "Enter 1, 2, or 3: ");
     }

@@ -28,18 +28,18 @@ public class MessagePresenter {
     }
 
     public void printMessageMenu(){
-        System.out.println("Welcome to the Attendee Message menu\n" +
+        System.out.println("Welcome to the Attendee Message Menu\n" +
                 "Options:\n" +
-                "0. Exit Messages\n" +
+                "0. Exit Message Menu\n" +
                 "1. View conversations and reply to messages\n" +
                 "2. Send a message:\n"+
                 "Enter 0, 1, or 2: ");
         }
 
     public void printOrganizerMessageMenu(){
-        System.out.println("Welcome to the Organizer Message menu.\n" +
+        System.out.println("Welcome to the Organizer Message Menu.\n" +
                 "Options:\n" +
-                "0. Exit Messages\n" +
+                "0. Exit Message Menu\n" +
                 "1. View conversations\n" +
                 "2. Send a message to a single user\n" +
                 "3. Send a message to all Speakers\n" +
@@ -48,9 +48,9 @@ public class MessagePresenter {
     }
 
     public void printSpeakerMessageMenu(){
-        System.out.println("Welcome to the Speaker Message menu.\n" +
+        System.out.println("Welcome to the Speaker Message Menu.\n" +
                 "Options:\n" +
-                "0. Exit Messages\n" +
+                "0. Exit Message Menu\n" +
                 "1. View conversations and reply to messages\n" +
                 "2. Send a message to Attendees of your Talks:" +
                 "Enter 0, 1, or 2: ");
