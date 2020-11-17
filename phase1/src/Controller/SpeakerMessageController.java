@@ -67,9 +67,9 @@ public class SpeakerMessageController {
      * @param messageContent - message of the content
      * @return true if message created
      */
-    public boolean sendAllMessageAnEvent(String messageContent, int eventID) {
+    public boolean sendAllMessageAnEvent(String messageContent, String eventName) {
         for (Event event : myEventManager.getEventList()) {
-            if (event.getId() == eventID) {
+            if (event.getName().equals(eventName)) {
                 for (String userName : event.getAttendees()) {
                     if (myUserManager.canSend(this.username, userName)) {
                         return false;
@@ -91,8 +91,8 @@ public class SpeakerMessageController {
         messagePresenter.printContentPrompt();
         String content = scanner.nextLine();
         messagePresenter.printEventIDPrompt();
-        int eventID = scanner.nextInt();
-        if (sendAllMessageAnEvent(content,eventID)) {
+        String eventName = scanner.nextLine();
+        if (sendAllMessageAnEvent(content, eventName)) {
             messagePresenter.printMessageSuccess();
         } else {
             messagePresenter.printMessageFailed();
@@ -171,8 +171,9 @@ public class SpeakerMessageController {
      *
      * @param conversationPartner - Partner who has been messaging with the user
      */
+
     public void replyToConversation(String conversationPartner){
-        if (myMessageManager.canSend(conversationPartner)) {
+        if (myUserManager.canSend(username, conversationPartner)) {
             messagePresenter.printContentPrompt();
             Scanner scanner = new Scanner(System.in);
             String content = scanner.nextLine();

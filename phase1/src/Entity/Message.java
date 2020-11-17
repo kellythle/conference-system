@@ -2,11 +2,11 @@ package Entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.util.UUID;
 
 
 public class Message implements Serializable, Comparable<Message> {
-    private int id; // id of message
+    private UUID id; // id of message
     private String sender;// Stores the name of the sender
     private String receiver;// Stores the name of the receiver
     private String content;// Stores the content of the message
@@ -22,7 +22,7 @@ public class Message implements Serializable, Comparable<Message> {
         this.sender = sender;
         this.receiver = receiver;
         this.content = content;
-        this.id = generatingRandomID();
+        this.id = UUID.randomUUID();
     }
 
     /**
@@ -77,7 +77,7 @@ public class Message implements Serializable, Comparable<Message> {
      * Getter of id
      * @return message id
      */
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -92,13 +92,4 @@ public class Message implements Serializable, Comparable<Message> {
     public int compareTo(Message msg) {
         return this.time.compareTo(msg.time);
     }
-
-    public void setId(int id) {this.id = id;}
-
-    private Integer generatingRandomID(){
-        double max = 10000000;
-        double min = 0;
-        return (Integer) (int) (Math.random() * (max - min));
-    }
-
 }

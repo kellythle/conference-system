@@ -4,6 +4,7 @@ import UseCase.MessageManager;
 import UseCase.UserManager;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class MessagePresenter {
     private String username;
@@ -12,7 +13,7 @@ public class MessagePresenter {
         this.username = username;
     }
 
-    public String getMessageText(MessageManager messageManager, int messageID){
+    public String getMessageText(MessageManager messageManager, UUID messageID){
         String sender;
         String receiver;
         if (messageManager.isSender(messageID)){
@@ -22,9 +23,8 @@ public class MessagePresenter {
             sender = messageManager.getMessageSender(messageID);
             receiver = "you";
         }
-        String messageText = sender + " sent to " + receiver + ":\n" + messageManager.getMessageContent(messageID) +
+        return sender + " sent to " + receiver + ":\n" + messageManager.getMessageContent(messageID) +
                 "\n           at " + messageManager.getMessageTime(messageID);
-        return messageText;
     }
 
     public void printMessageMenu(){
@@ -68,8 +68,8 @@ public class MessagePresenter {
         if (userManager.isOrganizer(recipientID)) {identity = "Organizer";}
         else if (userManager.isSpeaker(recipientID)) {identity = "Speaker";}
         System.out.println("Your conversation with " + identity + " " + recipientID + ": ");
-        ArrayList<Integer> singleConversation = messageManager.getSingleConversationByReceiver(recipientID);
-        for (int i: singleConversation){
+        ArrayList<UUID> singleConversation = messageManager.getSingleConversationByReceiver(recipientID);
+        for (UUID i: singleConversation){
             String messageText = getMessageText(messageManager, i);
             System.out.println(messageText);
         }

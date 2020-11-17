@@ -11,8 +11,6 @@ import java.util.ArrayList;
  * @author An Yen
  */
 public class Event implements Serializable {
-    private static int nextId = 0; // next available id
-    private int id; // id of event
     private String name; // name of event
     private String speaker; // name of speaker
     private LocalDateTime time; //time of the event
@@ -32,8 +30,6 @@ public class Event implements Serializable {
         this.time = time;
         this.room = room;
         this.attendees = new ArrayList<>();
-        this.id = nextId;
-        nextId++;
     }
 
     /**
@@ -42,14 +38,6 @@ public class Event implements Serializable {
      */
     public String getName() {
         return name;
-    }
-
-    /**
-     Return the ID of this event.
-     * @return the id of this Event.
-     */
-    public int getId() {
-        return id;
     }
 
     /**

@@ -13,6 +13,7 @@ import java.io.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * This is the main controller class that contains all the instances of the Managers and Controllers
@@ -123,7 +124,7 @@ public class ConferenceSystem {
 
             HashMap<String, UserAccount> userMap = new HashMap<>();
             ArrayList<Event> eventList = new ArrayList<>();
-            HashMap<Integer, Message> messageMap = new HashMap<>();
+            HashMap<UUID, Message> messageMap = new HashMap<>();
             ArrayList<Pair<Integer, Integer>> roomList = new ArrayList<>();
 
             if (users.length() != 0) {
@@ -135,7 +136,7 @@ public class ConferenceSystem {
                         readWriteGateway.readFromFile(eventsPath);
             }
             if (messages.length() != 0) {
-                messageMap = (HashMap<Integer, Message>)
+                messageMap = (HashMap<UUID, Message>)
                         readWriteGateway.readFromFile(messagesPath);
             }
             if (rooms.length() != 0) {
@@ -164,7 +165,7 @@ public class ConferenceSystem {
     {
         HashMap<String, UserAccount> userMap = userManager.getUserMap();
         ArrayList<Event> eventList = eventManager.getEventList();
-        HashMap<Integer, Message> messageMap = messageManager.getSystemMessages();
+        HashMap<UUID, Message> messageMap = messageManager.getSystemMessages();
         ArrayList<Pair<Integer, Integer>> roomList = eventManager.getRoomList();
 
         try {
