@@ -72,7 +72,7 @@ public class MessageController {
      * @param conversationPartner
      */
     public void replyToConversation(String conversationPartner){
-        if (myMessageManager.canSend(conversationPartner)) {
+        if (myUserManager.canSend(username, conversationPartner)) {
             messagePresenter.printContentPrompt();
             Scanner scanner = new Scanner(System.in);
             String content = scanner.nextLine();

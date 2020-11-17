@@ -127,40 +127,6 @@ public class MessageManager {
     }
 
     /**
-     * Returns True if user is allowed to send a message to
-     * the user with the receiverID
-     *
-     * Cannot implement until UseCase.StorageManager implemented
-     *
-     * @param receiverID
-     * @return true if the receiver is in the sender's friendlist
-     */
-    public boolean canSend(String receiverID) {return true;}
-
-    /**
-     * TO BE REMOVED FROM MESSAGEMANAGER CLASS
-     *
-     * @param receiverID
-     * @param messageContent
-     * @return true if message created
-     */
-    public boolean sendSingleMessage(String receiverID, String messageContent){
-        if (canSend(receiverID)){
-            return createMessage(receiverID, messageContent);
-        } else {return false;}
-    }
-
-    /**
-     * Adds contact's ID to friendlist
-     *
-     * Cannot implement until UseCase.StorageManager implemented
-     *
-     * @param friendID
-     * @return true if friend added to user friendlist
-     */
-    public boolean addToFriendList(String friendID) {return false;}
-
-    /**
      * Helper method, returns message history of single account
      *
      * @param userID
@@ -214,7 +180,13 @@ public class MessageManager {
         return conversationsWithoutDuplicates;
     }
 
-
+    /**
+     * Return list of message IDs that comprise the message history between
+     * the current user of the program and a given user.
+     *
+     * @param otherID
+     * @return list of integer message IDs.
+     */
     public ArrayList<Integer> getSingleConversationByReceiver(String otherID){
         ArrayList<Message> conversation = getAllSenderMessages();
         Collections.sort(conversation);
