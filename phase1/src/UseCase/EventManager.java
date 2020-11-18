@@ -115,7 +115,7 @@ public class EventManager {
      * @param room - the occurring room of this event
      * @return the Event that is created
      */
-    private Event createEvent(String name, String speaker,
+    private Event createNewEvent(String name, String speaker,
                               LocalDateTime time, Pair<Integer, Integer> room) {
         return new Event(name, speaker, time, room);
     }
@@ -156,7 +156,7 @@ public class EventManager {
                 return;
             }
         }
-        Event newEvent = createEvent(name, speaker, time, room);
+        Event newEvent = createNewEvent(name, speaker, time, room);
         if(eventList.isEmpty()){
             this.eventList.add(newEvent);
         } else {

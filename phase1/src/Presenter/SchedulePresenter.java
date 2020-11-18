@@ -1,10 +1,8 @@
 package Presenter;
 
-import Entity.Event;
 import UseCase.EventManager;
 import javafx.util.Pair;
 
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -161,16 +159,19 @@ public class SchedulePresenter {
      * Prints whether or not creating an event was a success.
      *
      * @param creationSuccess - true if an event was created
-     * @param event - the event to be created
-     *
+     * @param name - name of the event
+     * @param speaker - speaker of the event
+     * @param time - time of the event
+     * @param room - room the event takes place in
      */
-    public void createEventResult(boolean creationSuccess, Event event) {
+    public void createEventResult(boolean creationSuccess, String name, String speaker, LocalDateTime time,
+                                  Pair<Integer, Integer> room) {
         if (creationSuccess) {
             System.out.println("Event Creation Successful!" +
-                    "\n" + "Name: " + event.getName() +
-                    "\n" + "Time: " + event.getTime().toString() +
-                    "\n" + "Speaker: " + event.getSpeaker() +
-                    "\n" + "Room Number: " + event.getRoomNum().toString());
+                    "\n" + "Name: " + name +
+                    "\n" + "Time: " + time.toString() +
+                    "\n" + "Speaker: " + speaker +
+                    "\n" + "Room Number: " + room.getKey().toString());
         } else{
             System.out.println("Event Creation Failed.");
         }

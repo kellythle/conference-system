@@ -1,7 +1,5 @@
 package Controller;
 
-import Entity.UserAccount;
-import Entity.Event;
 import Presenter.SchedulePresenter;
 import UseCase.EventManager;
 import UseCase.UserManager;
@@ -9,7 +7,6 @@ import javafx.util.Pair;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -159,9 +156,7 @@ public class ScheduleController {
      * @return true if this speaker name is not an existed username of this conference
      */
     private boolean canCreateSpeaker(String speakerName){
-        HashMap<String, UserAccount> userMap = userManager.getUserMap();
-
-        return !userMap.containsKey(speakerName);
+        return userManager.idChecker(speakerName);
     }
 
     /**
@@ -220,12 +215,11 @@ public class ScheduleController {
     public void callAddEvent(String name, String speaker,
                              LocalDateTime time, Pair<Integer, Integer> room){
         // create a speaker account if this speaker haven't have an account yet.
-        Event event = new Event (name, speaker, time, room);
         if(!userManager.isSpeaker(speaker)){
-            scheduleP.createEventResult(false, event);
+            scheduleP.createEventResult(false, name, speaker, time, room);
         }
         eventManager.addEvent(name, speaker, time, room);
-        scheduleP.createEventResult(true, event);
+        scheduleP.createEventResult(true, name, speaker, time, room);
     }
 
     /**
