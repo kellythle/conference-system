@@ -285,16 +285,25 @@ public class UserManager {
         return containsUser(id);
     }
 
+    /**
+     * This checks if a user has permission to send messages to a receiver.
+     *
+     * @param username
+     * @param receiver
+     * @return
+     */
     public boolean canSend(String username, String receiver){
         if (!idChecker(receiver)){
             return false;
+        } else if (receiver.equals(username)){
+            return false;
         } else if (isOrganizer(username)){
+            if (isOrganizer(receiver)) {return false;}
             return true;
         } else if (isSpeaker(username)){
             if (isOrganizer(receiver)||isSpeaker(receiver)) {return false;}
             return true;
         } else{
-            if (isOrganizer(receiver)) {return false;}
             return true;
         }
     }
