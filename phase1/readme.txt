@@ -31,3 +31,30 @@ date. Third you must enter a valid time. Fourth, you must enter a valid room. Fi
 assign a valid speaker for your event.
 4. If you entered 2, you will create a speaker by entering their username and then password when prompted.
 5. If you entered 3, you will jump back to the Main Menu.
+
+[Message System]: This system helps view or send messages.
+1. Message System is accessible for all Users, but menu options will be generated for different types
+of users.
+2. On the Message System menu, there are these options:
+    For Attendees:  0. Exit Message Menu.
+                    1. View conversations and reply to messages.
+                    2. Send a message to a single user.
+    For Speakers:   0. Exit Message Menu.
+                    1. View conversations and reply to messages.
+                    2. Send a message to Attendees of your Talks.
+    For Organizers: 0. Exit Message Menu.
+                    1. View conversations.
+                    2. Send a message to a single user.
+                    3. Send a message to all Speakers.
+                    4. Send a message to all Attendees.
+    To access each of these options, enter the number corresponding to the option.
+3. For all users, if you entered 1, you will first view a list of all users with whom you have conversation
+histories. Enter the username of the user whose conversation you wish to view. Speakers will be able to respond
+to a conversations with Attendees, and Attendees will be able to respond to conversations with Attendees and
+Speakers. Organizers do not need the option to respond to conversations, because other Users cannot message
+Organizers.
+4. For other options, the user will be prompted for which individual username or subset of users they wish to message.
+For example, if a Speaker enters 2, they will be prompted to choose between messaging Attendees of all their talks, or
+Attendees of a specific talk. If they choose a specific talk, then they will be prompted to enter the ID of the event
+as well as the content of the message.
+5. Entering 0 for any type of User will return you to the main menu.
