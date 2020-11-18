@@ -36,6 +36,8 @@ public class OrganizerMessageController {
      * Prompts user for receiver ID and message content. Sends single message.
      */
     public void sendMessage(){
+        messagePresenter.printSpeakers(myUserManager);
+        messagePresenter.printAttendees(myUserManager);
         Scanner scanner = new Scanner(System.in);
         messagePresenter.printReceiverIDPrompt();
         String receiver = scanner.nextLine();

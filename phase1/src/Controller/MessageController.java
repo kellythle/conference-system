@@ -88,6 +88,8 @@ public class MessageController {
      * Prompts user for receiver ID and message content. Sends single message.
      */
     public void sendMessage(){
+        messagePresenter.printAttendees(myUserManager);
+        messagePresenter.printSpeakers(myUserManager);
         Scanner scanner = new Scanner(System.in);
         messagePresenter.printReceiverIDPrompt();
         String receiver = scanner.nextLine();
