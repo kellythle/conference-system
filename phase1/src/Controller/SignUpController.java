@@ -88,17 +88,13 @@ public class SignUpController {
                     validEventName = true;
                 }
             } while (!validEventName);
-            for (Event e : eventManager.getEventList()) {
-                //check is the input is a valid event name
-                if (e.getName().equals(eventName)) {
-                    //check if this user can sign up for this event
-                    if (eventManager.addUserToEvent(username, e)) {
-                        userManager.addRegisteredEvent(username, e.getName());
-                        sp.printSignUpSuccess();
-                    } else {
-                        sp.printSignUpFail();
-                        validEventName = false;
-                    }
+            if(eventManager.getEvent(eventName)){
+                if(eventManager.addUserToEvent(username, eventName)){
+                    userManager.addRegisteredEvent(username,eventName);
+                    sp.printSignUpSuccess();
+                } else{
+                    sp.printSignUpFail();
+                    validEventName = false;
                 }
             }
         }while(!validEventName);

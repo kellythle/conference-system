@@ -137,6 +137,21 @@ public class EventManager {
     }
 
     /**
+     * Returns the event instance if the event name exists in the event list.
+     * Else returns null.
+     * @param name - the event name
+     * @return the Event instance with the corresponding event name
+     */
+    private Event findEventByName(String name){
+        for (Event e: eventList){
+            if(getEvent(name)){
+                return e;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Creates an event and is added to the conference.
      * Passes silently if event was not able to be made.
      * Checks if there exists an event occurring in the same room and
@@ -185,10 +200,11 @@ public class EventManager {
      * returns true.
      *
      * @param username - the username of this user.
-     * @param event - the event the user wanted to sign up for.
+     * @param eventName - the event's name the user wanted to sign up for.
      * @return true is the user can sign up for this event. Otherwise false.
      */
-    private boolean canAddUserToEvent(String username, Event event){
+    private boolean canAddUserToEvent(String username, String eventName){
+        Event event = findEventByName(eventName);
         if (event.getSpeaker().equals(username)){
             return false;
         }
@@ -211,11 +227,12 @@ public class EventManager {
      * user to this event.
      *
      * @param username - the name of the user
-     * @param event - the event the user wanted to sign up for.
+     * @param eventName - the event's name the user wanted to sign up for.
      * @return true if this user is added successfully to the event, otherwise false.
      */
-    public boolean addUserToEvent(String username, Event event){
-        if (canAddUserToEvent(username, event)){
+    public boolean addUserToEvent(String username, String eventName){
+        Event event = findEventByName(eventName);
+        if (canAddUserToEvent(username, eventName)){
             event.addAttendee(username);
             return true;
         }
