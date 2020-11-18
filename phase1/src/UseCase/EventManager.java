@@ -128,6 +128,10 @@ public class EventManager {
      * @return true if the event name exists
      */
     public boolean getEvent(String name){
+        if (this.getEventList() == null){
+            return false;
+        }
+
         for (Event e: this.getEventList()) {
             if (e.getName().equals(name)){
                 return true;
@@ -165,29 +169,31 @@ public class EventManager {
      */
     public void addEvent(String name, String speaker,
                          LocalDateTime time, Pair<Integer, Integer> room) {
+        Event newEvent = createNewEvent(name, speaker, time, room);
+        if(eventList == null) {
+            this.eventList = new ArrayList<>();
+            this.eventList.add(newEvent);
+        }
         for (Event e : eventList) {
             if ((e.getTime() == time && e.getRoomNum().equals(room.getKey())) || (e.getTime() == time
                     && e.getSpeaker().equals(speaker)) || e.getName().equals(name)) {
                 return;
             }
         }
-        Event newEvent = createNewEvent(name, speaker, time, room);
-        if(eventList.isEmpty()){
-            this.eventList.add(newEvent);
-        } else {
-            ArrayList<Event> sortedEvents = new ArrayList<>();
-            boolean Added = false;
-            for (Event e : eventList) {
-                if (e.getTime().isAfter(newEvent.getTime()) && !Added) {
-                    sortedEvents.add(newEvent);
-                    sortedEvents.add(e);
-                    Added = true;
-                } else {
-                    sortedEvents.add(e);
-                }
+
+        ArrayList<Event> sortedEvents = new ArrayList<>();
+        boolean Added = false;
+        for (Event e : eventList) {
+            if (e.getTime().isAfter(newEvent.getTime()) && !Added) {
+                sortedEvents.add(newEvent);
+                sortedEvents.add(e);
+                Added = true;
+            } else {
+                sortedEvents.add(e);
             }
-            this.eventList = sortedEvents;
         }
+        this.eventList = sortedEvents;
+
     }
 
     /**
