@@ -116,7 +116,7 @@ public class EventManager {
      * @return the Event that is created
      */
     private Event createNewEvent(String name, String speaker,
-                              LocalDateTime time, Pair<Integer, Integer> room) {
+                                 LocalDateTime time, Pair<Integer, Integer> room) {
         return new Event(name, speaker, time, room);
     }
 
@@ -128,7 +128,7 @@ public class EventManager {
      * @return true if the event name exists
      */
     public boolean getEvent(String name){
-        if (this.getEventList() == null){
+        if (this.getEventList().isEmpty()){
             return false;
         }
 
@@ -148,7 +148,7 @@ public class EventManager {
      */
     private Event findEventByName(String name){
         for (Event e: eventList){
-            if(getEvent(name)){
+            if(e.getName().equals(name)){
                 return e;
             }
         }
@@ -170,7 +170,7 @@ public class EventManager {
     public void addEvent(String name, String speaker,
                          LocalDateTime time, Pair<Integer, Integer> room) {
         Event newEvent = createNewEvent(name, speaker, time, room);
-        if(eventList == null) {
+        if(eventList.isEmpty()) {
             this.eventList = new ArrayList<>();
             this.eventList.add(newEvent);
         }
@@ -180,7 +180,6 @@ public class EventManager {
                 return;
             }
         }
-
         ArrayList<Event> sortedEvents = new ArrayList<>();
         boolean Added = false;
         for (Event e : eventList) {
@@ -191,6 +190,9 @@ public class EventManager {
             } else {
                 sortedEvents.add(e);
             }
+        }
+        if (!Added){
+            sortedEvents.add(newEvent);
         }
         this.eventList = sortedEvents;
 
@@ -212,18 +214,24 @@ public class EventManager {
     private boolean canAddUserToEvent(String username, String eventName){
         Event event = findEventByName(eventName);
         if (event.getSpeaker().equals(username)){
+            System.out.println("****speaker name");//delete
             return false;
         }
         if (event.getRoomCapacity().equals(event.getAttendees().size())) {
+            System.out.println("*****room");//delete
             return false;
         }
         for (Event e: eventList){
+            System.out.println("*****in for");//delete
             if(event.getTime().equals(e.getTime())) {
+                System.out.println("*****first if");//delete
                 if(e.getAttendees().contains(username)){
+                    System.out.println("*****second if");//delete
                     return false;
                 }
             }
         }
+        System.out.println("*****success");//delete
         return true;
     }
 

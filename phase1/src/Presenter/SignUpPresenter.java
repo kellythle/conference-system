@@ -115,14 +115,14 @@ public class SignUpPresenter {
      * Prints "Sign up success!".
      */
     public void printSignUpSuccess(){
-            System.out.println("Sign up success!");
+        System.out.println("Sign up success!");
     }
 
     /**
      * Prints "You cannot sign up for this event. Sign up failed...".
      */
     public void printSignUpFail(){
-        System.out.println("You've already signed up for this event. Sign up failed...");
+        System.out.println("You've already signed up for this event or this event is full. Sign up failed...");
     }
 
     /**
