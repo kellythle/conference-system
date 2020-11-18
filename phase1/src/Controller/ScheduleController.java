@@ -156,7 +156,7 @@ public class ScheduleController {
      * @return true if this speaker name is not an existed username of this conference
      */
     private boolean canCreateSpeaker(String speakerName){
-        return userManager.containsUser(speakerName);
+        return !userManager.containsUser(speakerName);
     }
 
     /**
