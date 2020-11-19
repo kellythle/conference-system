@@ -146,7 +146,7 @@ public class SchedulePresenter {
         unavailableRooms = new StringBuilder(unavailableRooms.toString().replaceAll(", $", ""));
         System.out.println("Here are the available and unavailable rooms:\n" + availableRooms + "\n" +
                 unavailableRooms + "\nPlease enter the room you wish to book for this Event or 0 to return to the " +
-                "Scheduling Menu: : ");
+                "Scheduling Menu: ");
     }
 
     /**

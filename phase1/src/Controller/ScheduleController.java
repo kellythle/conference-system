@@ -145,7 +145,7 @@ public class ScheduleController {
         } while (!ValidSpeaker);
 
         Integer intRoom = Integer.parseInt(room);
-        this.callAddEvent(name, speaker, eventTime, eventManager.getRoom(intRoom));
+        this.callAddEvent(name.trim(), speaker, eventTime, eventManager.getRoom(intRoom));
     }
 
 
