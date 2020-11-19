@@ -1,4 +1,22 @@
 Instructions:
+[Login System]: The login system give user access to sign in an existed account or register a new account.
+1. Once you use the application, there is a start menu coming with 2 options: Sign in and register. You can choose either
+of them. If the user input unrelated strings, the system will notify the user to follow the instruction.
+2. For new user, choosing 'register' and you will enter register menu. You can choose the user type. For p1 we don't set
+any restrictions on username and password so you input anything as well as it is not empty, on which case the system will
+warn you not leaving it empty.
+3. For existed user, choosing 'sign in ', logging in and you will see the main menu if it is a successful login.Try again
+ if you input anything wrong. For different type of user you can different stuff.
+(a). For organizer you can access to sign up system, schedule system where you can either create a new talk or assign
+the a speaker to a talk, and logout option.
+(b). For speaker you can only enter messaging system and logout.
+(c). For attendee you can access to sign up system and message system as well as an option to logout.
+(d). If you choose logout on any menu there is a logout menu to assure whether you want logout or still keep login. If
+you choose
+to logout you will logout successfully if the system tell you that.
+(e). In any menu if you are too naughty to input something outside the options, our system will inform you to follow our
+instructions politely.
+
 [Sign Up System]: This system helps you sign up for events or delete registered events.
 1. Sign Up System is accessible for Attendees and Organizers, but not accessible for Speaker.
 2. On the Sign Up System menu, there are 5 options,
