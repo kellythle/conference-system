@@ -22,14 +22,14 @@ public class UserManager implements Serializable {
      * @param password The new user's password
      * @param type The type of user added, can only be 3 strings: "Attendee", "Speaker",
      *             or ""Organizer"
-     * @throws IllegalArgumentException when a type is unrecognized
+     * @throws IllegalArgumentException is thrown when any input doesn't meet the requirements
      */
-    public void createUser(String userName, String password, String type) {
+    public void createUser(String userName, String password, String type) throws IllegalArgumentException {
         // Makes sure the strings passed in are not null or empty
         if(userName == null || password == null){throw new IllegalArgumentException("Invalid inputs: null");}
         else if(userName.isEmpty() || password.isEmpty()){throw new IllegalArgumentException("Invalid inputs: Empty");}
 
-        if (userMap.containsKey(userName)){
+        if (containsUser(userName)){
             throw new IllegalArgumentException("The user already exists");
         }
         switch (type) {
@@ -45,6 +45,24 @@ public class UserManager implements Serializable {
             default:
                 throw new IllegalArgumentException("Invalid input: unknown type");
         }
+    }
+
+    /**
+     * Check for duplicate userNames, this also counts case-sensitive usernames as duplicates.
+     * ie: "Joe" and "JOE" are duplicates
+     * This method is to be used at the controller level.
+     * Important Note: this is different then the other method containsUser(String) as that checks for exact usernames
+     *
+     * @param userName The username entered
+     * @return true iff userName entered matches any names in the system, disregarding case
+     */
+    public boolean isDuplicate(String userName) {
+        for (String key : userMap.keySet()) {
+            if (key.toLowerCase().equals(userName.toLowerCase())){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -189,11 +207,11 @@ public class UserManager implements Serializable {
      * @param password The password of the user
      * @return true if the id is in the system and the password matches, false otherwise
      */
-    public boolean canLogin(String userName, String password) { // login checker
-        if (!containsUser(userName)) {
-            return false;
+    public boolean canLogin(String userName, String password) {
+        if (containsUser(userName)) {
+            return getPassword(userName).equals(password);
         }
-        return getPassword(userName).equals(password);
+        return false;
     }
 
     /**

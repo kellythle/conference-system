@@ -37,6 +37,19 @@ public class LoginPresenter {
     }
 
     /**
+     * Prints the error message: "Sorry this username is already taken."
+     */
+    public void printDuplicateName() {
+        System.out.println("Sorry this username is already taken.");
+    }
+
+    /**
+     * Prints the error message: "Sorry, your username and password cannot contain spaces."
+     */
+    public void printSpaceError() {
+        System.out.println("Sorry, your username and password cannot contain spaces.");
+    }
+    /**
      * Displays a error message by printing "Invalid input, please try again."
      */
     public void printInvalidInput() {

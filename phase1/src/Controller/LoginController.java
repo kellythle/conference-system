@@ -47,7 +47,20 @@ public class LoginController {
             lp.displayAccountCreateInfo(false);
             return;
         }
-        // below deals with any input other than null or speaker
+
+        // Two additional constraints to username and password: no spaces and case-sensitivity to duplicates
+        if (um.isDuplicate(userName)) {
+            lp.printDuplicateName();
+            lp.displayAccountCreateInfo(false);
+            return;
+        }
+        else if (userName.contains(" ") || password.contains(" ")) {
+            lp.printSpaceError();
+            lp.displayAccountCreateInfo(false);
+            return;
+        }
+
+        // below deals with any input other than the ones listed above
         try {
             this.um.createUser(userName, password, type);
             lp.displayAccountCreateInfo(true); // successfully created account
