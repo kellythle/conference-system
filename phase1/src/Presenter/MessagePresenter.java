@@ -30,7 +30,7 @@ public class MessagePresenter {
      *
      * @param messageManager -
      * @param messageID - key value of the wanted message in the hashmap
-     * @return
+     * @return a String of the information about this message
      */
     public String getMessageText(MessageManager messageManager, UUID messageID){
         String sender;
@@ -88,7 +88,7 @@ public class MessagePresenter {
     /**
      * Print list of users that logged in user has messages with.
      *
-     * @param messageManager
+     * @param messageManager - a MessageManager instance
      */
     public void viewConversations(MessageManager messageManager){
         System.out.println("You have conversations with these users: ");
@@ -100,8 +100,8 @@ public class MessagePresenter {
     /**
      *
      *
-     * @param messageManager
-     * @param userManager
+     * @param messageManager - a MessageManager instance
+     * @param userManager - an UserManager instance
      * @param recipientID - username of the user receiving the message
      */
     public void printSingleConversation(MessageManager messageManager, UserManager userManager, String recipientID){
@@ -121,9 +121,9 @@ public class MessagePresenter {
      * Prints options for Attendees and Speakers to continue browsing, reply to conversation, or return to
      * Message Menu.
      *
-     * @param messageManager
-     * @param userManager
-     * @param recipientID
+     * @param messageManager - a MessageManager instance
+     * @param userManager - an UserManager instance
+     * @param recipientID - username of the user receiving the message
      */
     public void viewSingleConversation(MessageManager messageManager, UserManager userManager, String recipientID) {
         printSingleConversation(messageManager, userManager, recipientID);
@@ -137,9 +137,9 @@ public class MessagePresenter {
      * Calls method to print single conversation between Organizer user and given recipient. Prints options
      * for Organizer to continue browsing or return to Message Menu.
      *
-     * @param messageManager
-     * @param userManager
-     * @param recipientID
+     * @param messageManager - a MessageManager instance
+     * @param userManager - an UserManager instance
+     * @param recipientID - username of the user receiving the message
      */
     public void viewOrganizerSingleConversation(MessageManager messageManager, UserManager userManager, String
             recipientID) {
@@ -152,9 +152,9 @@ public class MessagePresenter {
      * Calls method to print single conversation between Speaker user and given recipient. Prints options
      * for Organizer to continue browsing or return to Message Menu.
      *
-     * @param messageManager
-     * @param userManager
-     * @param recipientID
+     * @param messageManager - a MessageManager instance
+     * @param userManager - an UserManager instance
+     * @param recipientID - username of the user receiving the message
      */
     public void viewSpeakerSingleConversation(MessageManager messageManager, UserManager userManager, String
             recipientID) {
@@ -250,7 +250,7 @@ public class MessagePresenter {
 
     /**
      * Print list of Speakers in the conference.
-     * @param userManager
+     * @param userManager - an UserManager instance
      */
     public void printSpeakers(UserManager userManager){
         System.out.println("You can message the following Speakers:");
@@ -259,7 +259,7 @@ public class MessagePresenter {
 
     /**
      * Print list of Attendees in the conference.
-     * @param userManager
+     * @param userManager - an UserManager instance
      */
     public void printAttendees(UserManager userManager){
         System.out.println("You can message the following Attendees:");
@@ -272,7 +272,7 @@ public class MessagePresenter {
 
     /**
      * Print list of users attending the event
-     * @param eventManager
+     * @param eventManager - an EventManager instance
      */
     public void printAttendeesEvent(EventManager eventManager, String eventName){
         System.out.println("The users enrolled in " + eventName + " are:");
@@ -282,7 +282,7 @@ public class MessagePresenter {
 
     /**
      * Print list of all the events that Speaker is giving
-     * @param eventManager
+     * @param eventManager - an EventManager instance
      * @param username - username of the user
      */
     public void printEvent(EventManager eventManager, String username){
