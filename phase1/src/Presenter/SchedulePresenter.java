@@ -12,7 +12,6 @@ import java.util.ArrayList;
  *
  * @author Kelly Le
  */
-
 public class SchedulePresenter {
 
     private final EventManager eventManager;
@@ -24,6 +23,7 @@ public class SchedulePresenter {
     public SchedulePresenter(EventManager em){
         this.eventManager = em;
     }
+
     /**
      * Prints a menu for scheduling Events.
      */
@@ -47,11 +47,10 @@ public class SchedulePresenter {
 
     /**
      * Prints a string of speakers that are available and unavailable
-     * given the room and time chosen by the Organizer.
+     * given the time chosen by the Organizer.
      *
      * @param speakerList - the list of existing speakers
      * @param time - the chosen time
-     *
      */
     public void displaySpeakerList(ArrayList<String> speakerList, LocalDateTime time) {
         StringBuilder availableSpeakers = new StringBuilder("Available Speakers: ");
@@ -79,7 +78,7 @@ public class SchedulePresenter {
     }
 
     /**
-     * Prints a string of all the available start times for an event.
+     * Prints a string of all the available start times for the conference.
      */
     public void displayStartTimes () {
         StringBuilder availableTimes = new StringBuilder();
@@ -100,7 +99,7 @@ public class SchedulePresenter {
 
 
     /**
-     * Prints asking the Organizer to choose the date when creating an event.
+     * Prints asking the Organizer to choose the date in a specified format when creating an event.
      */
     public void printEnterDate(){
         System.out.println("Enter a date in format yyyy-mm-dd (ex. 2020-05-21): ");
@@ -126,8 +125,11 @@ public class SchedulePresenter {
     public void printInvalidDate(){
         System.out.println("Invalid Date.");
     }
+
     /**
-     * Prints a string of all the available and unavailable rooms for an event given the chosen time.
+     * Prints a string of all the available and unavailable rooms for an event
+     * given the chosen time and prompts the user to enter the room they wish
+     * to book for their event.
      *
      * @param time - the chosen time
      */
@@ -157,7 +159,8 @@ public class SchedulePresenter {
     }
 
     /**
-     * Prints whether or not creating an event was a success.
+     * Prints whether or not creating an event was a success. If it is a success, the
+     * event's information is also printed.
      *
      * @param creationSuccess - true if an event was created
      * @param name - name of the event
@@ -179,7 +182,7 @@ public class SchedulePresenter {
     }
 
     /**
-     * Prints asking the Organizer for a Speaker username
+     * Prints asking the Organizer for a Speaker username.
      */
     public void addSpeaker(){
         System.out.println("Please enter the username of who you would like to make a Speaker or 0 to return to " +

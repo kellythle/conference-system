@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
 import java.util.Scanner;
 
 /**
- * A controller class that calls EventManager to manage any
- * command related to adding events.
+ * A controller class that reads in user input related to adding events by
+ * calling EventManager. User input is prompted by calling SchedulePresenter
+ * which has printing methods that show and ask for information.
  *
  * @author An Yen, Kelly Le
  */
-
 public class ScheduleController {
     private final EventManager eventManager;
     private final UserManager userManager;
@@ -42,8 +42,9 @@ public class ScheduleController {
     }
 
     /**
-     * Calls SchedulePresenter to retrieve the name, time, room, and date and prints out the event details
-     * if successful.
+     * Calls SchedulePresenter to prompt the user to input
+     * the name, time, room, and date and prints out the
+     * event details if successful.
      */
     public void createEvent(){
         String name;
@@ -155,14 +156,15 @@ public class ScheduleController {
      *
      * @param speakerName - name of the speaker
      *
-     * @return true if this speaker name is not an existed username of this conference
+     * @return true if this speaker name is not an existing username of this conference
      */
     private boolean canCreateSpeaker(String speakerName){
         return !userManager.containsUser(speakerName);
     }
 
     /**
-     * Prints whether or not the new speaker account is added to this conference.
+     * Calls SchedulePresenter to prompt the User for the Speaker username and password.
+     * Prints if the new speaker account is added to this conference.
      */
     public void addNewSpeaker() {
         String speakerName;
@@ -206,7 +208,7 @@ public class ScheduleController {
     }
 
     /**
-     * Calls the addEvent() method of EventManager and prints
+     * Calls the addEvent() method of EventManager and calls SchedulePresenter to print
      * if a event is successfully created.
      *
      * @param name - name of the event wanted to be created (receive from UI)
