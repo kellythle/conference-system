@@ -150,17 +150,6 @@ public class SpeakerMessageController extends MessageController {
     }
 
     /**
-     * Creates single message.
-     *
-     * @param receiverID - username of user receiving the message
-     * @param messageContent - message of the content
-     * @return true if message created
-     */
-    public boolean sendSingleMessage(String receiverID, String messageContent){
-        return myMessageManager.createMessage(receiverID, messageContent);
-    }
-
-    /**
      * Displays single message history. Prompts the user to either reply to the conversation,
      * continue browsing conversations, or return to Message menu.
      *
@@ -189,23 +178,6 @@ public class SpeakerMessageController extends MessageController {
     }
 
     /**
-     * Prompts user for reply content and replies to conversation.
-     *
-     * @param conversationPartner - Partner who has been messaging with the user
-     */
-
-    public void replyToConversation(String conversationPartner){
-        messagePresenter.printContentPrompt();
-        Scanner scanner = new Scanner(System.in);
-        String content = scanner.nextLine();
-        if (sendSingleMessage(conversationPartner, content)) {
-            messagePresenter.printMessageSuccess();
-        } else {
-            messagePresenter.printMessageFailed();
-        }
-    }
-
-    /**
      * Calls MessagePresenter to print out the Message Menu.
      */
     public String getMessageMenu(){
@@ -213,11 +185,6 @@ public class SpeakerMessageController extends MessageController {
         messagePresenter.printSpeakerMessageMenu();
         return scan.nextLine();
     }
-
-    public void invalidInput(){
-        messagePresenter.printInvalidInput();
-    }
-
 
 }
 

@@ -21,25 +21,6 @@ public class OrganizerMessageController extends MessageController {
     }
 
     /**
-     * Prompts user for receiver ID and message content. Sends single message.
-     */
-    public void sendMessage(){
-        messagePresenter.printSpeakers(myUserManager);
-        messagePresenter.printAttendees(myUserManager);
-        Scanner scanner = new Scanner(System.in);
-        messagePresenter.printReceiverIDPrompt();
-        String receiver = scanner.nextLine();
-        messagePresenter.printContentPrompt();
-        String content = scanner.nextLine();
-        if (sendSingleMessage(receiver, content)){
-            messagePresenter.printMessageSuccess();
-        } else {
-            messagePresenter.printInvalidUsername();
-        }
-    }
-
-
-    /**
      *
      * Sends messages to all Speakers in the system.
      *
@@ -59,7 +40,7 @@ public class OrganizerMessageController extends MessageController {
     }
 
     /**
-     * Prompts user for receiver ID and message content. Sends messages to all Speakers.
+     * Prompts user for message content. Sends messages to all Speakers.
      */
     public void sendMessagesToSpeakers(){
         Scanner scanner = new Scanner(System.in);
@@ -142,10 +123,6 @@ public class OrganizerMessageController extends MessageController {
         if (input.equals("0")){
             viewConversations();
         }
-    }
-
-    public void invalidInput(){
-        messagePresenter.printInvalidInput();
     }
 
 

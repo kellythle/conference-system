@@ -108,8 +108,7 @@ public class MessageController {
     public String getMessageMenu(){
         Scanner scan = new Scanner(System.in);
         messagePresenter.printMessageMenu();
-        String input = scan.nextLine();
-        return input;
+        return scan.nextLine();
     }
 
     public void invalidInput(){
