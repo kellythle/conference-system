@@ -365,7 +365,7 @@ public class EventManager implements Serializable {
         ArrayList<String> events = new ArrayList<>();
         for (Event e: eventList) {
             if (e.getSpeaker().equals(username)) {
-                events.add(e.getSpeaker());
+                events.add(e.getName());
             }
         }
         return events;
