@@ -6,6 +6,7 @@ import UseCase.EventManager;
 import UseCase.MessageManager;
 import UseCase.UserManager;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class SpeakerMessageController extends MessageController {
@@ -27,13 +28,17 @@ public class SpeakerMessageController extends MessageController {
      * @return true if message created
      */
     public boolean sendAllMessageAllEvent(String messageContent) {
+        ArrayList<String> usernames = new ArrayList<>();
         for (Event event : myEventManager.getEventList()) {
             if (event.getSpeaker().equals(username)) {
                 if (event.getAttendees().isEmpty()) {
                     messagePresenter.printNoAttendees(event.getName());
                 }
                 for (String userName : event.getAttendees()) {
-                    myMessageManager.createMessage(userName, messageContent);
+                    if (!usernames.contains(userName)) {
+                        myMessageManager.createMessage(userName, messageContent);
+                        usernames.add(userName);
+                    }
                 }
             }
         }
