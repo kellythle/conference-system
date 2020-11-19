@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class Message implements Serializable, Comparable<Message> {
     private UUID id; // id of message
-    private String sender;// Stores the name of the sender
+    private final String sender;// Stores the name of the sender
     private String receiver;// Stores the name of the receiver
     private String content;// Stores the content of the message
     private final LocalDateTime time = LocalDateTime.now();// time when the message create
@@ -31,14 +31,6 @@ public class Message implements Serializable, Comparable<Message> {
      */
     public String getSender() {
         return sender;
-    }
-
-    /**
-     * Setter of sender
-     * @param sender- sender name
-     */
-    public void setSender(String sender) {
-        this.sender = sender;
     }
 
     /**
