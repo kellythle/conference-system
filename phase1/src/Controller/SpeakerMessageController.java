@@ -66,6 +66,9 @@ public class SpeakerMessageController extends MessageController {
      * @return true if message created
      */
     public boolean sendAllMessageAnEvent(String messageContent, String eventName) {
+        if (myEventManager.getEventList().isEmpty()) {
+            return false;
+        }
         for (Event event : myEventManager.getEventList()) {
             if (event.getName().equals(eventName)) {
                 if (event.getAttendees().isEmpty()){
@@ -82,7 +85,7 @@ public class SpeakerMessageController extends MessageController {
                 }
             }
         }
-        return !myUserManager.getSpeakerList().isEmpty();
+        return myEventManager.getEventList().contains(eventName);
     }
 
     /**
