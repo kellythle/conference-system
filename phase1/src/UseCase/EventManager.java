@@ -129,7 +129,7 @@ public class EventManager {
      * @return true if the event name exists
      */
     public boolean getEvent(String name){
-        if (this.getEventList().isEmpty()){
+        if (this.getEventList() == null || this.getEventList().isEmpty()){
             return false;
         }
 
@@ -171,7 +171,7 @@ public class EventManager {
     public void addEvent(String name, String speaker,
                          LocalDateTime time, Pair<Integer, Integer> room) {
         Event newEvent = createNewEvent(name, speaker, time, room);
-        if(eventList.isEmpty()) {
+        if(eventList == null || eventList.isEmpty()) {
             this.eventList = new ArrayList<>();
             this.eventList.add(newEvent);
         }
