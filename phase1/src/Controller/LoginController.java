@@ -52,11 +52,10 @@ public class LoginController {
             this.um.createUser(userName, password, type);
             lp.displayAccountCreateInfo(true); // successfully created account
         }
-        catch (IllegalArgumentException i) {
-            System.out.println(i.getMessage()); // for testing right now: prints the type of error if needed
+        catch (IllegalArgumentException ex) {
+            lp.printInputException(ex);
             lp.displayAccountCreateInfo(false); // unrecognized input or duplicate user
         }
-
     }
 
     /**
@@ -91,7 +90,6 @@ public class LoginController {
 
     /**
      * Overloaded login that takes in user input from scanner, to be used in ConferenceSystem
-
      */
     public void login() {
         lp.inputName();
@@ -102,7 +100,7 @@ public class LoginController {
     }
 
     /**
-     * Prints a list of options using LoginPresenter and takes in an option using a scanner
+     * Prints a list of options for the start menu and takes in an option using a scanner.
      * @return The option entered
      */
     public String getStartMenu() {
@@ -110,16 +108,28 @@ public class LoginController {
         return scanner.nextLine();
     }
 
+    /**
+     * Prints a list of options for the Organizer's main menu and takes in an option using a scanner.
+     * @return The option entered
+     */
     public String getOrganizerMenu(){
         lp.printOrganizerMenu();
         return scanner.nextLine();
     }
 
+    /**
+     * Prints a list of options for the Speaker's main menu and takes in an option using a scanner.
+     * @return The option entered
+     */
     public String getSpeakerMenu(){
         lp.printSpeakerMenu();
         return scanner.nextLine();
     }
 
+    /**
+     * Prints a list of options for the Attendee's main menu and takes in an option using a scanner.
+     * @return The option entered
+     */
     public String getAttendeeMenu(){
         lp.printAttendeeMenu();
         return scanner.nextLine();
@@ -141,16 +151,12 @@ public class LoginController {
     }
 
     /**
-     * Print the invalid option
+     * Prints a message indicating an invalid option
      */
     public void invalidOption() {
         lp.printInvalidInput();
     }
 
-    public String getEndMenu() {
-        lp.printEndMenu();
-        return scanner.nextLine();
-    }
 
     /**
      * Getter of user type by name
