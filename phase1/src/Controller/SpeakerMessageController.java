@@ -25,7 +25,6 @@ public class SpeakerMessageController extends MessageController {
 
 
     /**
-     *
      * Sends messages to all attendees enrolled in any Speaker's events.
      *
      * @param messageContent - message of the content
@@ -65,7 +64,6 @@ public class SpeakerMessageController extends MessageController {
     }
 
     /**
-     *
      * Sends messages to all attendees enrolled in chosen event.
      *
      * @param messageContent - message of the content

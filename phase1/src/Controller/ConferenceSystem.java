@@ -342,8 +342,8 @@ public class ConferenceSystem {
     }
 
     /**
-     * Helper method that allows Speakers to either send message to all attendees of their one event or all events,
-     * or reply to an attendee, or exit this menu by inputting  a specific number.
+     * Helper method that allows Attendees to either send a message to another Attendee or Speaker,
+     * or view conversation, or exit this menu by inputting  a specific number.
      */
     private void attendeeMessageHelper(){
         String attendeeMessageMenuOption;

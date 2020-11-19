@@ -19,7 +19,6 @@ public class OrganizerMessageController extends MessageController {
     }
 
     /**
-     *
      * Sends messages to all Speakers in the system.
      *
      * @param messageContent - content of the message
@@ -53,7 +52,6 @@ public class OrganizerMessageController extends MessageController {
 
 
     /**
-     *
      * Sends messages to all Attendees in the system.
      *
      * @param messageContent - content of the message
