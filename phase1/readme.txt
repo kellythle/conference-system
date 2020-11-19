@@ -12,8 +12,7 @@ the a speaker to a talk, and logout option.
 (b). For speaker you can only enter messaging system and logout.
 (c). For attendee you can access to sign up system and message system as well as an option to logout.
 (d). If you choose logout on any menu there is a logout menu to assure whether you want logout or still keep login. If
-you choose
-to logout you will logout successfully if the system tell you that.
+you choose to logout you will logout successfully if the system tell you that.
 (e). In any menu if you are too naughty to input something outside the options, our system will inform you to follow our
 instructions politely.
 
