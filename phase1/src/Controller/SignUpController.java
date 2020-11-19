@@ -138,10 +138,16 @@ public class SignUpController {
         //back to Sign Up System Menu
     }
 
+    /**
+     * Shows the message about ending the Sign Up System
+     */
     public void signUpSystemEnd(){
         sp.printEndSignUpSystem();
     }
 
+    /**
+     * Shows the message about getting invalid input
+     */
     public void InvalidInput(){
         sp.printInvalidInput();
     }
