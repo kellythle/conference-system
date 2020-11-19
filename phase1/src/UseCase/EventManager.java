@@ -214,24 +214,18 @@ public class EventManager {
     private boolean canAddUserToEvent(String username, String eventName){
         Event event = findEventByName(eventName);
         if (event.getSpeaker().equals(username)){
-            System.out.println("****speaker name");//delete
             return false;
         }
         if (event.getRoomCapacity().equals(event.getAttendees().size())) {
-            System.out.println("*****room");//delete
             return false;
         }
         for (Event e: eventList){
-            System.out.println("*****in for");//delete
             if(event.getTime().equals(e.getTime())) {
-                System.out.println("*****first if");//delete
                 if(e.getAttendees().contains(username)){
-                    System.out.println("*****second if");//delete
                     return false;
                 }
             }
         }
-        System.out.println("*****success");//delete
         return true;
     }
 
@@ -325,5 +319,41 @@ public class EventManager {
             }
         }
         return availableRooms;
+    }
+
+    /**
+     * Generates a display format of events.
+     *
+     * @param eventList - an arraylist of events
+     * @return a String object that is the display format of events.
+     */
+    public String eventListGenerator(ArrayList<Event> eventList){
+        String events = "";
+        if (eventList == null){
+            return events;
+        }
+        for (Event e: eventList){
+            int space = e.getRoomCapacity() - e.getAttendees().size();
+            String available = "Full";
+            if (space > 0){
+                available = "Available";
+            }
+            events += "Name: " + e.getName() +
+                    ", Time: " + e.getTime().toString() +
+                    ", Speaker: " + e.getSpeaker() +
+                    ", Room Number: " + e.getRoomNum().toString() + ", " +
+                    available + "\n";
+        }
+        return events;
+    }
+
+    public ArrayList<Event> getRegisteredEvents(ArrayList<String> registeredEventNames){
+        ArrayList<Event> registeredEvents = new ArrayList<>();
+        for (Event e : eventList) {
+            if (registeredEventNames.contains(e.getName())) {
+                registeredEvents.add(e);
+            }
+        }
+        return registeredEvents;
     }
 }
