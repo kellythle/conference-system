@@ -33,12 +33,7 @@ public class SpeakerMessageController extends MessageController {
                     messagePresenter.printNoAttendees(event.getName());
                 }
                 for (String userName : event.getAttendees()) {
-                    if (!myUserManager.canSend(this.username, userName)) {
-                        return false;
-                    }
-                    else {
-                        myMessageManager.createMessage(userName, messageContent);
-                    }
+                    myMessageManager.createMessage(userName, messageContent);
                 }
             }
         }
@@ -79,12 +74,7 @@ public class SpeakerMessageController extends MessageController {
                     return false;
                 }
                 for (String userName : event.getAttendees()) {
-                    if (!myUserManager.canSend(this.username, userName)) {
-                        return false;
-                    }
-                    else {
-                        myMessageManager.createMessage(userName, messageContent);
-                    }
+                    myMessageManager.createMessage(userName, messageContent);
                 }
             }
         }
