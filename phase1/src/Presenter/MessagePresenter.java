@@ -142,6 +142,24 @@ public class MessagePresenter {
     }
 
     /**
+     * Calls method to print single conversation between Speaker user and given recipient. Prints options
+     * for Organizer to continue browsing or return to Message Menu.
+     *
+     * @param messageManager
+     * @param userManager
+     * @param recipientID
+     */
+    public void viewSpeakerSingleConversation(MessageManager messageManager, UserManager userManager, String
+            recipientID) {
+        printSingleConversation(messageManager, userManager, recipientID);
+        System.out.println("Options:\n" +
+                "0: Return to previous menu\n" +
+                "1: Reply to this conversation\n" +
+                "2. Continue browsing conversations\n" +
+                "Enter 0, 1, or anything else to return to the Message Menu: ");
+    }
+
+    /**
      * Prints prompt for ID of message recipient.
      */
     public void printReceiverIDPrompt(){
@@ -181,6 +199,14 @@ public class MessagePresenter {
     }
 
     /**
+     * Print notification of message success.
+     */
+    public void printMessageSuccessSpeaker(){
+        System.out.println("Message successfully sent excluding events without attendees.");
+    }
+
+
+    /**
      * Print notification of message failure.
      */
     public void printMessageFailed(){
@@ -199,6 +225,13 @@ public class MessagePresenter {
      */
     public void printInvalidUsername(){
         System.out.println("This user does not exist, please try again.");
+    }
+
+    /**
+     * Print notification that no attendees are signed up
+     */
+    public void printNoAttendees(String eventName){
+        System.out.println("There are no attendees signed up in " + eventName);
     }
 
     /**

@@ -7,10 +7,10 @@ import UseCase.UserManager;
 import java.util.Scanner;
 
 public class MessageController {
-    private MessageManager myMessageManager;
-    public UserManager myUserManager;
-    private String username;
-    public MessagePresenter messagePresenter;
+    final MessageManager myMessageManager;
+    UserManager myUserManager;
+    final String username;
+    MessagePresenter messagePresenter;
 
     public MessageController(String username, UserManager myUserManager, MessageManager messageManager){
         myMessageManager = messageManager;

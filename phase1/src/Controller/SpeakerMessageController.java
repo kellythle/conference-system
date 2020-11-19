@@ -8,19 +8,14 @@ import UseCase.UserManager;
 
 import java.util.Scanner;
 
-public class SpeakerMessageController {
-    private final MessageManager myMessageManager;
-    private final UserManager myUserManager;
+public class SpeakerMessageController extends MessageController {
     private final EventManager myEventManager;
-    private final String username;
-    public MessagePresenter messagePresenter;
+
 
 
     public SpeakerMessageController(String username, MessageManager myMessageManager, UserManager myUserManager, EventManager myEventManager){
-        this.myMessageManager = myMessageManager;
-        this.myUserManager = myUserManager;
+        super(username, myUserManager, myMessageManager);
         this.myEventManager = myEventManager;
-        this.username = username;
         messagePresenter = new MessagePresenter(username);
     }
 
@@ -34,8 +29,11 @@ public class SpeakerMessageController {
     public boolean sendAllMessageAllEvent(String messageContent) {
         for (Event event : myEventManager.getEventList()) {
             if (event.getSpeaker().equals(username)) {
+                if (event.getAttendees().isEmpty()) {
+                    messagePresenter.printNoAttendees(event.getName());
+                }
                 for (String userName : event.getAttendees()) {
-                    if (myUserManager.canSend(this.username, userName)) {
+                    if (!myUserManager.canSend(this.username, userName)) {
                         return false;
                     }
                     else {
@@ -44,7 +42,7 @@ public class SpeakerMessageController {
                 }
             }
         }
-        return !myUserManager.getSpeakerList().isEmpty();
+        return !myEventManager.getEventList().isEmpty();
     }
 
     /**
@@ -55,7 +53,7 @@ public class SpeakerMessageController {
         messagePresenter.printContentPrompt();
         String content = scanner.nextLine();
         if (sendAllMessageAllEvent(content)){
-            messagePresenter.printMessageSuccess();
+            messagePresenter.printMessageSuccessSpeaker();
         } else {
             messagePresenter.printMessageFailed();
         }
@@ -70,8 +68,12 @@ public class SpeakerMessageController {
     public boolean sendAllMessageAnEvent(String messageContent, String eventName) {
         for (Event event : myEventManager.getEventList()) {
             if (event.getName().equals(eventName)) {
+                if (event.getAttendees().isEmpty()){
+                    messagePresenter.printNoAttendees(eventName);
+                    return false;
+                }
                 for (String userName : event.getAttendees()) {
-                    if (myUserManager.canSend(this.username, userName)) {
+                    if (!myUserManager.canSend(this.username, userName)) {
                         return false;
                     }
                     else {
@@ -103,18 +105,22 @@ public class SpeakerMessageController {
         Scanner scanner = new Scanner(System.in);
         messagePresenter.printSpeakerMessagePrompt();
         String input = scanner.nextLine();
+        boolean loop = false;
         do {
             switch (input) {
                 case "0":
+                    loop = true;
                     break;
                 case "1":
+                    loop = true;
                     sendMessagesToAttendeesOfATalk();
                     break;
                 case "2":
+                    loop = true;
                     sendMessagesToAttendeesOfAllTalks();
                     break;
             }
-        } while (!input.equals("0"));
+        } while (!loop);
     }
 
     /**
@@ -150,20 +156,24 @@ public class SpeakerMessageController {
      */
     public void viewSingleConversation(String conversationPartner){
         Scanner scanner = new Scanner(System.in);
-        messagePresenter.viewSingleConversation(myMessageManager, myUserManager, conversationPartner);
+        messagePresenter.viewSpeakerSingleConversation(myMessageManager, myUserManager, conversationPartner);
         String input = scanner.nextLine();
+        boolean loop = false;
         do {
             switch (input) {
                 case "0":
+                    loop = true;
                     break;
                 case "1":
+                    loop = true;
                     replyToConversation(conversationPartner);
                     break;
                 case "2":
+                    loop = true;
                     viewConversations();
                     break;
             }
-        } while (!input.equals("0"));
+        } while (!loop);
     }
 
     /**
@@ -182,7 +192,9 @@ public class SpeakerMessageController {
             } else {
                 messagePresenter.printMessageFailed();
             }
-        } else{messagePresenter.printCannotSend();}
+        } else{
+            messagePresenter.printCannotSend();
+            return;}
     }
 
     /**

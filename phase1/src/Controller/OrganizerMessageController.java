@@ -6,31 +6,12 @@ import UseCase.UserManager;
 
 import java.util.Scanner;
 
-public class OrganizerMessageController {
-    private final MessageManager myMessageManager;
-    public UserManager myUserManager;
-    private final String username;
-    public MessagePresenter messagePresenter;
+public class OrganizerMessageController extends MessageController {
 
     public OrganizerMessageController(String username, MessageManager myMessageManager, UserManager myUserManager){
-        this.myMessageManager = myMessageManager;
-        this.myUserManager = myUserManager;
-        this.username = username;
+        super(username, myUserManager, myMessageManager);
         messagePresenter = new MessagePresenter(username);
     }
-
-    /**
-     *
-     * @param receiverID - username of user receiving the message
-     * @param messageContent - content of the message
-     * @return true if message created
-     */
-    public boolean sendSingleMessage(String receiverID, String messageContent){
-        if (myUserManager.canSend(username, receiverID)){
-            return myMessageManager.createMessage(receiverID, messageContent);
-        } else {return false;}
-    }
-
 
     /**
      * Prompts user for receiver ID and message content. Sends single message.
@@ -134,7 +115,7 @@ public class OrganizerMessageController {
         messagePresenter.viewConversations(myMessageManager);
         String input = scanner.nextLine();
         if (myMessageManager.getSenderConversations().contains(input)){
-            viewOrganizerSingleConversation(input);
+            viewSingleConversation(input);
         }
     }
 
@@ -144,7 +125,7 @@ public class OrganizerMessageController {
      *
      * @param conversationPartner - Partner who has been messaging with the user
      */
-    public void viewOrganizerSingleConversation(String conversationPartner){
+    public void viewSingleConversation(String conversationPartner){
         Scanner scanner = new Scanner(System.in);
         messagePresenter.viewOrganizerSingleConversation(myMessageManager, myUserManager, conversationPartner);
         String input = scanner.nextLine();
