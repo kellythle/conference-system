@@ -67,15 +67,6 @@ public class EventManager implements Serializable {
         return eventList;
     }
 
-
-    /**
-     * Sets the list of events to a version from a read file
-     * @param readInList The version of eventList from a read file
-     */
-    public void setEventList(ArrayList<Event> readInList) {
-        this.eventList = readInList;
-    }
-
     /**
      * Returns the list of rooms.
      *
@@ -332,9 +323,9 @@ public class EventManager implements Serializable {
      * @return a String object that is the display format of events.
      */
     public String eventListGenerator(ArrayList<Event> eventList){
-        String events = "";
+        StringBuilder events = new StringBuilder();
         if (eventList == null){
-            return events;
+            return events.toString();
         }
         for (Event e: eventList){
             int space = e.getRoomCapacity() - e.getAttendees().size();
@@ -342,13 +333,12 @@ public class EventManager implements Serializable {
             if (space > 0){
                 available = "Available";
             }
-            events += "Name: " + e.getName() +
-                    ", Time: " + e.getTime().toString() +
-                    ", Speaker: " + e.getSpeaker() +
-                    ", Room Number: " + e.getRoomNum().toString() + ", " +
-                    available + "\n";
+            events.append("Name: ").append(e.getName())
+                    .append(", Time: ").append(e.getTime().toString())
+                    .append(", Speaker: ").append(e.getSpeaker()).append(", Room Number: ")
+                    .append(e.getRoomNum().toString()).append(", ").append(available).append("\n");
         }
-        return events;
+        return events.toString();
     }
 
     public ArrayList<Event> getRegisteredEvents(ArrayList<String> registeredEventNames){
