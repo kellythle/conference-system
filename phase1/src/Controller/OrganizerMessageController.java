@@ -1,6 +1,5 @@
 package Controller;
 
-import Presenter.MessagePresenter;
 import UseCase.MessageManager;
 import UseCase.UserManager;
 
@@ -17,7 +16,6 @@ public class OrganizerMessageController extends MessageController {
 
     public OrganizerMessageController(String username, MessageManager myMessageManager, UserManager myUserManager){
         super(username, myUserManager, myMessageManager);
-        messagePresenter = new MessagePresenter(username);
     }
 
     /**

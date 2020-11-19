@@ -6,12 +6,25 @@ import UseCase.UserManager;
 
 import java.util.Scanner;
 
+/**
+ * Controller that deals with viewing and sending messages for Attendees.
+ *
+ * @author Wenying Wu, Yu Jin Kim
+ */
 public class MessageController {
     final MessageManager myMessageManager;
     UserManager myUserManager;
     final String username;
     MessagePresenter messagePresenter;
 
+    /**
+     * Constructor for MessageController
+     * Creates a new instance of messagePresenter.
+     *
+     * @param username String username of current user
+     * @param myUserManager instance of UserManager
+     * @param messageManager instance of MessageManager
+     */
     public MessageController(String username, UserManager myUserManager, MessageManager messageManager){
         myMessageManager = messageManager;
         this.myUserManager = myUserManager;
@@ -22,8 +35,8 @@ public class MessageController {
     /**
      * Creates single message.
      *
-     * @param receiverID
-     * @param messageContent
+     * @param receiverID String username of the recipient of the message
+     * @param messageContent String content of the message
      * @return true if message created
      */
     public boolean sendSingleMessage(String receiverID, String messageContent){
@@ -42,8 +55,6 @@ public class MessageController {
         String input = scanner.nextLine();
         if (myMessageManager.getSenderConversations().contains(input)){
             viewSingleConversation(input);
-        } else {
-            return;
         }
     }
 
@@ -51,7 +62,7 @@ public class MessageController {
      * Displays single message history. Prompts the user to either reply to the conversation,
      * continue browsing conversations, or return to Message menu.
      *
-     * @param conversationPartner
+     * @param conversationPartner String username of the other participant in this conversation history.
      */
     public void viewSingleConversation(String conversationPartner){
         Scanner scanner = new Scanner(System.in);
@@ -61,15 +72,13 @@ public class MessageController {
             replyToConversation(conversationPartner);
         } else if (input.equals("1")){
             viewConversations();
-        } else {
-            return;
         }
     }
 
     /**
      * Prompts user for reply content and replies to conversation.
      *
-     * @param conversationPartner
+     * @param conversationPartner String username that the user is replying to.
      */
     public void replyToConversation(String conversationPartner){
         if (myUserManager.canSend(username, conversationPartner)) {
@@ -103,7 +112,9 @@ public class MessageController {
     }
 
     /**
-     * Calls MessagePresenter to print out the Message Menu.
+     * Calls MessagePresenter to print Attendee message menu. Prompts for a response to a list of menu options.
+     *
+     * @return the String input from the User.
      */
     public String getMessageMenu(){
         Scanner scan = new Scanner(System.in);
@@ -111,6 +122,9 @@ public class MessageController {
         return scan.nextLine();
     }
 
+    /**
+     * Calls MessagePresenter to print a notification of invalid input.
+     */
     public void invalidInput(){
         messagePresenter.printInvalidInput();
     }

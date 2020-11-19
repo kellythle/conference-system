@@ -24,25 +24,6 @@ public class MessageManager implements Serializable {
     private transient String senderID;
 
     /**
-     * Gets the HashMap of all messages.
-     *
-     * @return the systemMessages HashMap, with message IDs as keys and Message objects as values
-     */
-    public HashMap<UUID, Message> getSystemMessages() {
-        return systemMessages;
-    }
-
-    /**
-     * Sets the HashMap of all messages.
-     *
-     * @param systemMessages - Hashmap with message IDs as keys and Message objects as values
-     *
-     */
-    public void setSystemMessages(HashMap<UUID, Message> systemMessages) {
-        this.systemMessages = systemMessages;
-    }
-
-    /**
      * Sets sender ID.
      * @param senderID - message sender's ID
      */

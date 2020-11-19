@@ -1,7 +1,6 @@
 package Controller;
 
 import Entity.Event;
-import Presenter.MessagePresenter;
 import UseCase.EventManager;
 import UseCase.MessageManager;
 import UseCase.UserManager;
@@ -22,7 +21,6 @@ public class SpeakerMessageController extends MessageController {
     public SpeakerMessageController(String username, MessageManager myMessageManager, UserManager myUserManager, EventManager myEventManager){
         super(username, myUserManager, myMessageManager);
         this.myEventManager = myEventManager;
-        messagePresenter = new MessagePresenter(username);
     }
 
 

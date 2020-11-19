@@ -228,13 +228,6 @@ public class MessagePresenter {
     }
 
     /**
-     * Print notification that userID does not exist.
-     */
-    public void printInvalidUsername(){
-        System.out.println("This user does not exist, please try again.");
-    }
-
-    /**
      * Print notification that no attendees are signed up
      */
     public void printNoAttendees(String eventName){
@@ -264,9 +257,7 @@ public class MessagePresenter {
     public void printAttendees(UserManager userManager){
         System.out.println("You can message the following Attendees:");
         ArrayList<String> attendees = userManager.getAttendeeList();
-        if (attendees.contains(username)){
-            attendees.remove(username);
-        }
+        attendees.remove(username);
         System.out.println(attendees);
     }
 
