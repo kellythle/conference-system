@@ -1,6 +1,8 @@
 package UseCase;
 
 import Entity.UserAccount;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -8,9 +10,9 @@ import java.util.Set;
 /**
  * A Class that manages UserAccounts by creating new accounts and checking login information
  */
-public class UserManager {
+public class UserManager implements Serializable {
 
-    private HashMap<String, UserAccount> userMap;
+    private HashMap<String, UserAccount> userMap = new HashMap<>();
 
 
     /**

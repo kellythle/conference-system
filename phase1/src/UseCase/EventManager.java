@@ -3,6 +3,7 @@ package UseCase;
 import Entity.Event;
 import javafx.util.Pair;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -12,10 +13,10 @@ import java.util.ArrayList;
  *
  * @author Kelly Le, Filip Jovanovic, An Yen
  */
-public class EventManager {
+public class EventManager implements Serializable {
 
-    private ArrayList<Event> eventList;
-    private ArrayList<Pair<Integer, Integer>> roomList;
+    private ArrayList<Event> eventList = new ArrayList<>();
+    private ArrayList<Pair<Integer, Integer>> roomList = new ArrayList<>();
 
     /**
      * Returns the starting time of this conference

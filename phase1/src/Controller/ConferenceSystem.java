@@ -1,8 +1,5 @@
 package Controller;
 
-import Entity.Event;
-import Entity.Message;
-import Entity.UserAccount;
 import Gateway.ReadWriteGateway;
 import UseCase.EventManager;
 import UseCase.MessageManager;
@@ -12,8 +9,6 @@ import javafx.util.Pair;
 import java.io.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * This is the main controller class that contains all the instances of the Managers and Controllers
@@ -27,17 +22,17 @@ import java.util.UUID;
  */
 public class ConferenceSystem {
     // Use case class instances
-    private final EventManager eventManager = new EventManager();
-    private final UserManager userManager = new UserManager();
-    private final MessageManager messageManager = new MessageManager();
+    private EventManager eventManager = new EventManager();
+    private UserManager userManager = new UserManager();
+    private MessageManager messageManager = new MessageManager();
 
     // Gateway class instance
     private ReadWriteGateway readWriteGateway = new ReadWriteGateway();
 
     // Controller class instances
-    private final LoginController loginController = new LoginController(userManager);
-    private final SignUpController signUpController = new SignUpController(eventManager, userManager);
-    private final ScheduleController scheduleController = new ScheduleController(eventManager, userManager);
+    private LoginController loginController;
+    private SignUpController signUpController;
+    private ScheduleController scheduleController;
     private MessageController messageController;
     private OrganizerMessageController organizerMessageController;
     private SpeakerMessageController speakerMessageController;
@@ -46,7 +41,6 @@ public class ConferenceSystem {
     private final String usersPath = "./phase1/src/users.ser";
     private final String eventsPath = "./phase1/src/events.ser";
     private final String messagesPath = "./phase1/src/messages.ser";
-    private final String roomsPath = "./phase1/src/rooms.ser";
 
     // Variable for keeping track with user, should be initialized after login.
     String username;
@@ -54,16 +48,13 @@ public class ConferenceSystem {
     public ConferenceSystem() {username = null;}
 
     public void run() {
-        try {
-            boolean readSuccessful = readData();
-            if (readSuccessful)
-                System.out.println("Read successful."); // FOR TESTING
-            else
-                System.out.println("Read unsuccessful."); // FOR TESTING
-        } catch (ClassNotFoundException e) {
-            System.out.println("Class not found"); // FOR TESTING
-            return;
-        }
+        readData();
+
+        // After reading in Use Cases from file, instantiate controllers that do not require
+        // the username of the logged in person to be instantiated.
+        loginController = new LoginController(userManager);
+        signUpController = new SignUpController(eventManager, userManager);
+        scheduleController = new ScheduleController(eventManager, userManager);
 
         // add default rooms
         if (eventManager.getRoomList() == null || eventManager.getRoomList().isEmpty()) {
@@ -80,6 +71,7 @@ public class ConferenceSystem {
         //Menu for sign in or register
         initialLoginHelper();
         messageManager.setSenderID(username);
+
         //initialize all classes that need the username
         messageController = new MessageController(username, userManager, messageManager);
         organizerMessageController = new OrganizerMessageController(username, messageManager, userManager);
@@ -97,62 +89,36 @@ public class ConferenceSystem {
                 break;
         }
         //3. return if the user logout. Write out data to files.
-        boolean writeSuccessful = writeData();
-        if (writeSuccessful)
-            System.out.println("Write successful."); // FOR TESTING
-        else
-            System.out.println("Write unsuccessful."); // FOR TESTING
-        }
+        writeData();
+    }
 
     /**
      * Reads in all user, event, and message data from the files.
      *
      * @return Boolean indicating if reading was successful.
-     * @throws ClassNotFoundException if class type of data read in is not defined in program.
      */
-    public boolean readData() throws ClassNotFoundException {
+    public boolean readData() {
         try {
-            File users = new File(usersPath);
-            File events = new File(eventsPath);
-            File messages = new File(messagesPath);
-            File rooms = new File(roomsPath);
+            File um = new File(usersPath);
+            File em = new File(eventsPath);
+            File mm = new File(messagesPath);
 
-            users.createNewFile();
-            events.createNewFile();
-            messages.createNewFile();
-            rooms.createNewFile();
+            um.createNewFile();
+            em.createNewFile();
+            mm.createNewFile();
 
-            HashMap<String, UserAccount> userMap = new HashMap<>();
-            ArrayList<Event> eventList = new ArrayList<>();
-            HashMap<UUID, Message> messageMap = new HashMap<>();
-            ArrayList<Pair<Integer, Integer>> roomList = new ArrayList<>();
-
-            if (users.length() != 0) {
-                userMap = (HashMap<String, UserAccount>)
-                        readWriteGateway.readFromFile(usersPath);
+            if (um.length() != 0) {
+                userManager = (UserManager)readWriteGateway.readFromFile(usersPath);
             }
-            if (events.length() != 0) {
-                eventList = (ArrayList<Event>)
-                        readWriteGateway.readFromFile(eventsPath);
+            if (em.length() != 0) {
+                eventManager = (EventManager)readWriteGateway.readFromFile(eventsPath);
             }
-            if (messages.length() != 0) {
-                messageMap = (HashMap<UUID, Message>)
-                        readWriteGateway.readFromFile(messagesPath);
+            if (mm.length() != 0) {
+                messageManager = (MessageManager)readWriteGateway.readFromFile(messagesPath);
             }
-            if (rooms.length() != 0) {
-                roomList = (ArrayList<Pair<Integer, Integer>>)
-                        readWriteGateway.readFromFile(roomsPath);
-            }
-
-            userManager.setUserMap(userMap);
-            eventManager.setEventList(eventList);
-            messageManager.setSystemMessages(messageMap);
-            eventManager.setRoomList(roomList);
-
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             return false;
         }
-
         return true;
     }
 
@@ -163,16 +129,10 @@ public class ConferenceSystem {
      */
     private boolean writeData()
     {
-        HashMap<String, UserAccount> userMap = userManager.getUserMap();
-        ArrayList<Event> eventList = eventManager.getEventList();
-        HashMap<UUID, Message> messageMap = messageManager.getSystemMessages();
-        ArrayList<Pair<Integer, Integer>> roomList = eventManager.getRoomList();
-
         try {
-            readWriteGateway.saveToFile(usersPath, userMap);
-            readWriteGateway.saveToFile(eventsPath, eventList);
-            readWriteGateway.saveToFile(messagesPath, messageMap);
-            readWriteGateway.saveToFile(roomsPath, roomList);
+            readWriteGateway.saveToFile(usersPath, userManager);
+            readWriteGateway.saveToFile(eventsPath, eventManager);
+            readWriteGateway.saveToFile(messagesPath, messageManager);
         } catch (IOException e) {
             return false;
         }

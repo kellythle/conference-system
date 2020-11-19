@@ -1,5 +1,6 @@
 package UseCase;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -17,10 +18,10 @@ import Entity.Message;
  * @author Wenying Wu
  */
 
-public class MessageManager {
+public class MessageManager implements Serializable {
 
-    private HashMap<UUID, Message> systemMessages;
-    private String senderID;
+    private HashMap<UUID, Message> systemMessages = new HashMap<>();
+    private transient String senderID;
 
     /**
      * Gets the HashMap of all messages.
