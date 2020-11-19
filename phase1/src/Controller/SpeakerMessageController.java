@@ -144,9 +144,7 @@ public class SpeakerMessageController extends MessageController {
      * @return true if message created
      */
     public boolean sendSingleMessage(String receiverID, String messageContent){
-        if (myUserManager.canSend(username, receiverID)){
             return myMessageManager.createMessage(receiverID, messageContent);
-        } else {return false;}
     }
 
     /**
@@ -184,7 +182,6 @@ public class SpeakerMessageController extends MessageController {
      */
 
     public void replyToConversation(String conversationPartner){
-        if (myUserManager.canSend(username, conversationPartner)) {
             messagePresenter.printContentPrompt();
             Scanner scanner = new Scanner(System.in);
             String content = scanner.nextLine();
@@ -193,9 +190,6 @@ public class SpeakerMessageController extends MessageController {
             } else {
                 messagePresenter.printMessageFailed();
             }
-        } else{
-            messagePresenter.printCannotSend();
-            return;}
     }
 
     /**
