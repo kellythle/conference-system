@@ -15,11 +15,11 @@ import java.util.ArrayList;
 
 public class SchedulePresenter {
 
-    private EventManager eventManager;
+    private final EventManager eventManager;
 
     /**
      * Creates an instance of SchedulePresenter with parameter EventManager.
-     * @param em
+     * @param em - an EventManager instance
      */
     public SchedulePresenter(EventManager em){
         this.eventManager = em;
