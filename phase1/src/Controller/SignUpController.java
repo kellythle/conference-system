@@ -48,7 +48,7 @@ public class SignUpController {
      * Calls SignUpPresenter to print out all events.
      */
     public void getEventList(){
-        sp.displayEventList(eventManager.getEventList());
+        sp.displayEventList(eventManager.getEventList(), eventManager);
     }
 
     /**

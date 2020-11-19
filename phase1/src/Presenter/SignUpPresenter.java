@@ -29,39 +29,13 @@ public class SignUpPresenter {
     }
 
     /**
-     * Generates a display format of events.
-     *
-     * @param eventList - an arraylist of events
-     * @return a String object that is the display format of events.
-     */
-    private String EventListGenerator(ArrayList<Event> eventList){
-        String events = "";
-        if (eventList == null){
-            return events;
-        }
-        for (Event e: eventList){
-            int space = e.getRoomCapacity() - e.getAttendees().size();
-            String available = "Full";
-            if (space > 0){
-                available = "Available";
-            }
-            events += "Name: " + e.getName() +
-                    ", Time: " + e.getTime().toString() +
-                    ", Speaker: " + e.getSpeaker() +
-                    ", Room Number: " + e.getRoomNum().toString() + ", " +
-                    available + "\n";
-        }
-        return events;
-    }
-
-    /**
      * Prints all events. Each line represents one event and is in the
      * sequence: "Name, Time, Speaker, Room Number, Available/Full".
      *
      * @param eventList - an arraylist of events
      */
-    public void displayEventList(ArrayList<Event> eventList){
-        String events = this.EventListGenerator(eventList);
+    public void displayEventList(ArrayList<Event> eventList, EventManager em){
+        String events = em.eventListGenerator(eventList);
         if(events.equals("")){
             System.out.println("There are no available events yet...");
         }else {
@@ -88,16 +62,12 @@ public class SignUpPresenter {
      * @param em - an instance of EventManager
      */
     public void displayRegisteredEvents(ArrayList<String> registeredEventNames, EventManager em) {
-        ArrayList<Event> registeredEvents = new ArrayList<>();
+        ArrayList<Event> registeredEvents;
         if (registeredEventNames.isEmpty()){
             System.out.println("You didn't sign up for any events.");
         }else {
-            for (Event e : em.getEventList()) {
-                if (registeredEventNames.contains(e.getName())) {
-                    registeredEvents.add(e);
-                }
-            }
-            String events = this.EventListGenerator(registeredEvents);
+            registeredEvents = em.getRegisteredEvents(registeredEventNames);
+            String events = em.eventListGenerator(registeredEvents);
             System.out.println("Registered Events: ");
             System.out.println(events);
         }
