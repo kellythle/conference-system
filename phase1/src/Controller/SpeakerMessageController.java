@@ -70,9 +70,12 @@ public class SpeakerMessageController extends MessageController {
             return false;
         }
         for (Event event : myEventManager.getEventList()) {
-            if (event.getName().equals(eventName) && event.getSpeaker().equals(username)) {
+            if (event.getName().equals(eventName)) {
                 if (event.getAttendees().isEmpty()){
                     messagePresenter.printNoAttendees(eventName);
+                    return false;
+                }
+                if (!event.getSpeaker().equals(username)) {
                     return false;
                 }
                 for (String userName : event.getAttendees()) {
