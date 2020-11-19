@@ -83,7 +83,7 @@ public class SpeakerMessageController extends MessageController {
                 }
             }
         }
-        return myEventManager.getEventList().contains(eventName);
+        return myEventManager.getEvent(eventName);
     }
 
     /**
@@ -144,7 +144,7 @@ public class SpeakerMessageController extends MessageController {
      * @return true if message created
      */
     public boolean sendSingleMessage(String receiverID, String messageContent){
-            return myMessageManager.createMessage(receiverID, messageContent);
+        return myMessageManager.createMessage(receiverID, messageContent);
     }
 
     /**
@@ -182,14 +182,14 @@ public class SpeakerMessageController extends MessageController {
      */
 
     public void replyToConversation(String conversationPartner){
-            messagePresenter.printContentPrompt();
-            Scanner scanner = new Scanner(System.in);
-            String content = scanner.nextLine();
-            if (sendSingleMessage(conversationPartner, content)) {
-                messagePresenter.printMessageSuccess();
-            } else {
-                messagePresenter.printMessageFailed();
-            }
+        messagePresenter.printContentPrompt();
+        Scanner scanner = new Scanner(System.in);
+        String content = scanner.nextLine();
+        if (sendSingleMessage(conversationPartner, content)) {
+            messagePresenter.printMessageSuccess();
+        } else {
+            messagePresenter.printMessageFailed();
+        }
     }
 
     /**
