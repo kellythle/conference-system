@@ -112,7 +112,9 @@ public class ScheduleController {
             room = scan2.nextLine();
             try {
                 Integer intRoom = Integer.parseInt(room);
-                if (!eventManager.getAvailableRooms(eventTime).contains(intRoom)){
+                if (room.equals("0")) {
+                    return;
+                } else if (!eventManager.getAvailableRooms(eventTime).contains(intRoom)){
                     scheduleP.printFailRoom();
                     ValidRoom = false;
                 } else {
