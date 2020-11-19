@@ -12,7 +12,12 @@ import java.util.Scanner;
 public class SpeakerMessageController extends MessageController {
     private final EventManager myEventManager;
 
-
+    /**
+     * A controller class that calls MessageManager to manage any
+     * command related to Speaker's Messaging System
+     *
+     * @author Yu Jin Kim
+     */
 
     public SpeakerMessageController(String username, MessageManager myMessageManager, UserManager myUserManager, EventManager myEventManager){
         super(username, myUserManager, myMessageManager);
@@ -23,6 +28,7 @@ public class SpeakerMessageController extends MessageController {
 
     /**
      *
+     * Sends messages to all attendees enrolled in any Speaker's events.
      *
      * @param messageContent - message of the content
      * @return true if message created
@@ -50,6 +56,7 @@ public class SpeakerMessageController extends MessageController {
      */
     public void sendMessagesToAttendeesOfAllTalks(){
         Scanner scanner = new Scanner(System.in);
+        messagePresenter.printEvent(myEventManager, username);
         messagePresenter.printContentPrompt();
         String content = scanner.nextLine();
         if (sendAllMessageAllEvent(content)){
@@ -61,6 +68,7 @@ public class SpeakerMessageController extends MessageController {
 
     /**
      *
+     * Sends messages to all attendees enrolled in chosen event.
      *
      * @param messageContent - message of the content
      * @return true if message created
@@ -91,10 +99,12 @@ public class SpeakerMessageController extends MessageController {
      */
     public void sendMessagesToAttendeesOfATalk(){
         Scanner scanner = new Scanner(System.in);
-        messagePresenter.printContentPrompt();
-        String content = scanner.nextLine();
+        messagePresenter.printEvent(myEventManager, username);
         messagePresenter.printEventIDPrompt();
         String eventName = scanner.nextLine();
+        messagePresenter.printAttendeesEvent(myEventManager, eventName);
+        messagePresenter.printContentPrompt();
+        String content = scanner.nextLine();
         if (sendAllMessageAnEvent(content, eventName)) {
             messagePresenter.printMessageSuccess();
         } else {
@@ -102,6 +112,9 @@ public class SpeakerMessageController extends MessageController {
         }
     }
 
+    /**
+     * Prompts user for sending message to all of the events or a single event.
+     */
     public void sendMessage(){
         Scanner scanner = new Scanner(System.in);
         messagePresenter.printSpeakerMessagePrompt();

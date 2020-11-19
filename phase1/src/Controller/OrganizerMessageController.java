@@ -6,6 +6,13 @@ import UseCase.UserManager;
 
 import java.util.Scanner;
 
+/**
+ * A controller class that calls MessageManager to manage any
+ * command related to Organizer's Messaging System
+ *
+ * @author Yu Jin Kim
+ */
+
 public class OrganizerMessageController extends MessageController {
 
     public OrganizerMessageController(String username, MessageManager myMessageManager, UserManager myUserManager){
@@ -34,6 +41,7 @@ public class OrganizerMessageController extends MessageController {
 
     /**
      *
+     * Sends messages to all Speakers in the system.
      *
      * @param messageContent - content of the message
      * @return true if message created
@@ -51,7 +59,7 @@ public class OrganizerMessageController extends MessageController {
     }
 
     /**
-     * Prompts user for receiver ID and message content. Sends single message.
+     * Prompts user for receiver ID and message content. Sends messages to all Speakers.
      */
     public void sendMessagesToSpeakers(){
         Scanner scanner = new Scanner(System.in);
@@ -66,6 +74,8 @@ public class OrganizerMessageController extends MessageController {
 
 
     /**
+     *
+     * Sends messages to all Attendees in the system.
      *
      * @param messageContent - content of the message
      * @return true if message created
@@ -83,7 +93,7 @@ public class OrganizerMessageController extends MessageController {
     }
 
     /**
-     * Prompts user for receiver ID and message content. Sends single message.
+     * Prompts user for receiver ID and message content. Sends messages to all Attendees.
      */
     public void sendMessagesToAttendees(){
         Scanner scanner = new Scanner(System.in);

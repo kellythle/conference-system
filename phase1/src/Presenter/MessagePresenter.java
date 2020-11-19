@@ -2,16 +2,23 @@ package Presenter;
 
 import UseCase.MessageManager;
 import UseCase.UserManager;
+import UseCase.EventManager;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
+/**
+ * A presenter class that prints values that will be displayed in the UI
+ * for Messaging System.
+ *
+ * @author Wenying Wu, Yu Jin Kim
+ */
 public class MessagePresenter {
-    private String username;
+    private final String username;
 
     /**
      * Create MessagePresenter with given username.
-     * @param username
+     * @param username - username of the user
      */
     public MessagePresenter(String username){
         this.username = username;
@@ -21,8 +28,8 @@ public class MessagePresenter {
      * Generate string representation of a single message from given MessageManager and
      * message ID.
      *
-     * @param messageManager
-     * @param messageID
+     * @param messageManager -
+     * @param messageID - key value of the wanted message in the hashmap
      * @return
      */
     public String getMessageText(MessageManager messageManager, UUID messageID){
@@ -95,7 +102,7 @@ public class MessagePresenter {
      *
      * @param messageManager
      * @param userManager
-     * @param recipientID
+     * @param recipientID - username of the user receiving the message
      */
     public void printSingleConversation(MessageManager messageManager, UserManager userManager, String recipientID){
         String identity = "Attendee";
@@ -261,5 +268,26 @@ public class MessagePresenter {
             attendees.remove(username);
         }
         System.out.println(attendees);
+    }
+
+    /**
+     * Print list of users attending the event
+     * @param eventManager
+     */
+    public void printAttendeesEvent(EventManager eventManager, String eventName){
+        System.out.println("The users enrolled in " + eventName + " are:");
+        ArrayList<String> attendees = eventManager.getEventAttendees(eventName);
+        System.out.println(attendees);
+    }
+
+    /**
+     * Print list of all the events that Speaker is giving
+     * @param eventManager
+     * @param username - username of the user
+     */
+    public void printEvent(EventManager eventManager, String username){
+        System.out.println("You are hosting following events:");
+        ArrayList<String> events = eventManager.getEventListBySpeaker(username);
+        System.out.println(events);
     }
 }
