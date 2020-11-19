@@ -16,15 +16,15 @@ public class EventManager {
 
     private ArrayList<Event> eventList;
     private ArrayList<Pair<Integer, Integer>> roomList;
-    private int startTime = 9; // the opening time of this conference is 9 am.
-    private int endTime = 17; // the ending time of this conference is 5 pm.
+
     /**
      * Returns the starting time of this conference
      *
      * @return the startTime of this conference
      */
     public int getStartTime() {
-        return startTime;
+        // the opening time of this conference is 9 am.
+        return 9;
     }
 
     /**
@@ -33,7 +33,8 @@ public class EventManager {
      * @return the endTime of this conference
      */
     public int getEndTime() {
-        return endTime;
+        // the ending time of this conference is 5 pm.
+        return 17;
     }
 
     /**
@@ -213,6 +214,7 @@ public class EventManager {
      */
     private boolean canAddUserToEvent(String username, String eventName){
         Event event = findEventByName(eventName);
+        assert event != null;
         if (event.getSpeaker().equals(username)){
             return false;
         }
@@ -241,6 +243,7 @@ public class EventManager {
     public boolean addUserToEvent(String username, String eventName){
         Event event = findEventByName(eventName);
         if (canAddUserToEvent(username, eventName)){
+            assert event != null;
             event.addAttendee(username);
             return true;
         }

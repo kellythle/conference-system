@@ -14,8 +14,8 @@ public class Event implements Serializable {
     private String name; // name of event
     private String speaker; // name of speaker
     private LocalDateTime time; //time of the event
-    private ArrayList<String> attendees; // names of the attendees
-    private Pair<Integer, Integer> room; //<room number, capacity>
+    private final ArrayList<String> attendees; // names of the attendees
+    private final Pair<Integer, Integer> room; //<room number, capacity>
 
     /**
      * The name, ID, occurring time, occurring place, and speaker required to create an event.
@@ -76,11 +76,8 @@ public class Event implements Serializable {
      * This method sets the attendee list of this event.
      * @param attendeeName- the attendee's name
      */
-    public boolean addAttendee(String attendeeName) {
-        if (this.attendees.size() == 2)
-            return false;
+    public void addAttendee(String attendeeName) {
         this.attendees.add(attendeeName);
-        return true;
     }
 
     /**
@@ -94,15 +91,6 @@ public class Event implements Serializable {
      * @param name- the name of this event
      */
     public void setName(String name) {this.name = name; }
-
-    /**
-     * This method sets the room with its room number and room capacity of where
-     * this event will be held.
-     * @param room- Pair<room number, room capacity>
-     */
-    public void setRoom(Pair<Integer, Integer> room) {
-        this.room = room;
-    }
 
     /**
      * This method assign a speaker to this event by the speaker's name.

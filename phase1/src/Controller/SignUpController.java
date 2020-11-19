@@ -1,6 +1,5 @@
 package Controller;
 
-import Entity.Event;
 import Presenter.SignUpPresenter;
 import UseCase.EventManager;
 import UseCase.UserManager;
