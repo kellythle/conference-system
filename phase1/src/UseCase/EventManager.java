@@ -135,7 +135,7 @@ public class EventManager implements Serializable {
         }
 
         for (Event e: this.getEventList()) {
-            if (e.getName().equals(name)){
+            if (e.getName().toLowerCase().equals(name.toLowerCase())){
                 return true;
             }
         }
