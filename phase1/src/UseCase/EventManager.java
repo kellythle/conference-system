@@ -351,6 +351,12 @@ public class EventManager implements Serializable {
         return registeredEvents;
     }
 
+    /**
+     * Returns list of event names of given Speaker
+     *
+     * @param username - username of the Speaker
+     * @return an ArrayList of String that contains names of events that Speaker gives
+     */
     public ArrayList<String> getEventListBySpeaker(String username) {
         ArrayList<String> events = new ArrayList<>();
         for (Event e: eventList) {
@@ -361,6 +367,12 @@ public class EventManager implements Serializable {
         return events;
     }
 
+    /**
+     * Returns list of attendee usernames of Event, given Event name.
+     *
+     * @param eventName- name of the event
+     * @return an ArrayList of String that contains usernames of users attending the Event
+     */
     public ArrayList<String> getEventAttendees(String eventName) {
         ArrayList<String> users = new ArrayList<>();
         for (Event e : eventList) {
