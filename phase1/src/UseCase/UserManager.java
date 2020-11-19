@@ -200,20 +200,10 @@ public class UserManager {
      * @return true if the id is in the system and the password matches, false otherwise
      */
     public boolean canLogin(String userName, String password) { // login checker
-        if (!idChecker(userName)) {
+        if (!containsUser(userName)) {
             return false;
         }
         return getPassword(userName).equals(password);
-    }
-
-    /**
-     * This checks if an id is in the list of users or not
-     *
-     * @param id the userName / id to be checked
-     * @return true if this id is in the list
-     */
-    public boolean idChecker(String id) {
-        return containsUser(id);
     }
 
     /**
@@ -224,7 +214,7 @@ public class UserManager {
      * @return
      */
     public boolean canSend(String username, String receiver){
-        if (!idChecker(receiver)){
+        if (!containsUser(receiver)){
             return false;
         } else if (receiver.equals(username)){
             return false;
