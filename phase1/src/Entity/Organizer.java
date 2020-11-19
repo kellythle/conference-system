@@ -1,7 +1,5 @@
 package Entity;
 
-import Entity.UserAccount;
-
 public class Organizer extends UserAccount {
     /**
      * Create user account by given user name and password

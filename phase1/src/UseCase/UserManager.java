@@ -108,18 +108,6 @@ public class UserManager {
     }
 
     /**
-     * Sets the password of this user's account.
-     *
-     * @param username - the username of this user
-     * @param password - the password wanted to be set
-     */
-    public void setPassword(String username, String password)
-    {
-        UserAccount user = userMap.get(username);
-        user.setPassWord(password);
-    }
-
-    /**
      * Returns a arraylist of event names this user registered.
      *
      * @param username - the username of this user
@@ -219,11 +207,9 @@ public class UserManager {
         } else if (receiver.equals(username)){
             return false;
         } else if (isOrganizer(username)){
-            if (isOrganizer(receiver)) {return false;}
-            return true;
+            return !isOrganizer(receiver);
         } else if (isSpeaker(username)){
-            if (isOrganizer(receiver)||isSpeaker(receiver)) {return false;}
-            return true;
+            return !isOrganizer(receiver) && !isSpeaker(receiver);
         } else{
             return true;
         }

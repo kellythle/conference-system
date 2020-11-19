@@ -42,14 +42,6 @@ public class MessageManager {
     }
 
     /**
-     *
-     * @return ID of current user logged in
-     */
-    public String getSenderID(){
-        return senderID;
-    }
-
-    /**
      * Sets sender ID.
      * @param senderID - message sender's ID
      */
