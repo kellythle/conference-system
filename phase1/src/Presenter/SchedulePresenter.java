@@ -211,19 +211,20 @@ public class SchedulePresenter {
     }
 
     /**
-     * Prints "You cannot make a Speaker account with an empty username or you have
+     * Prints "You cannot make a Speaker account with an empty username or spaces, or you have
      * entered a username that already exists in the system."
      */
     public void failedUsername(){
-        System.out.println("You cannot make a Speaker account with an empty username or you have " +
+        System.out.println("You cannot make a Speaker account with an empty username or spaces, or you have " +
                 "entered a username that already exists in the system.");
     }
 
     /**
-     * Prints "You cannot make a Speaker account with an empty password."
+     * Prints "You cannot make a Speaker account with an empty password or with spaces."
      */
     public void failedPassword(){
-        System.out.println("You cannot make a Speaker account with an empty password.");
+        System.out.println("You cannot make a Speaker account with an empty password or " +
+                "with spaces.");
     }
 
     /**

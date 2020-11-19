@@ -177,8 +177,8 @@ public class ScheduleController {
             speakerName = scan.nextLine();
             if (speakerName.equals("0")) {
                 return;
-            } else if (speakerName.trim().isEmpty()
-                    || userManager.getSpeakerList().contains(speakerName)) {
+            } else if (speakerName.trim().isEmpty() || userManager.isDuplicate(speakerName)
+                    || speakerName.contains(" ")) {
                 scheduleP.failedUsername();
                 ValidName = false;
             } else {
@@ -190,7 +190,7 @@ public class ScheduleController {
             Scanner scan1 = new Scanner(System.in);
             scheduleP.addSpeakerPassword();
             password = scan1.nextLine();
-            if (password.trim().isEmpty()) {
+            if (password.trim().isEmpty() || password.contains(" ")) {
                 scheduleP.failedPassword();
                 ValidPassword = false;
             } else {
