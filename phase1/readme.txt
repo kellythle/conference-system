@@ -1,4 +1,12 @@
 Instructions:
+
+* Note for the first time using the program:
+If this is your first time running this program, you will see messages about "Unable to read in data from files".
+Ignore this message and enter "2" to continue without reading. Since there are no data to read in when no data
+are updated yet. After you Log Out for the first time, data would be read out successfully if you see the message
+"Successfully wrote data to the files." Then, the next time you run this program, you will not see the "Unable to read"
+message.
+
 [Login System]: The login system give user access to sign in an existed account or register a new account.
 1. Once you use the application, there is a start menu coming with 2 options: Sign in and register. You can choose either
 of them. If the user input unrelated strings, the system will notify the user to follow the instruction.
