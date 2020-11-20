@@ -1,10 +1,12 @@
 package Controller;
 
 import Gateway.ReadWriteGateway;
+import Presenter.ReadWritePresenter;
 import UseCase.EventManager;
 import UseCase.MessageManager;
 import UseCase.UserManager;
 import javafx.util.Pair;
+import java.util.Scanner;
 
 import java.io.*;
 
@@ -26,8 +28,14 @@ public class ConferenceSystem {
     private UserManager userManager = new UserManager();
     private MessageManager messageManager = new MessageManager();
 
-    // Gateway class instance
-    private ReadWriteGateway readWriteGateway = new ReadWriteGateway();
+    // Instance of ReadWriteGateway to allow for reading from and writing to files.
+    private final ReadWriteGateway readWriteGateway = new ReadWriteGateway();
+
+    // Instance of ReadWritePresenter to print messages related to file reading and writing.
+    private final ReadWritePresenter readWritePresenter = new ReadWritePresenter();
+
+    // Instance of ReadWriteScanner to read input related to file reading and writing.
+    private final Scanner readWriteScanner = new Scanner(System.in);
 
     // Controller class instances
     private LoginController loginController;
@@ -47,8 +55,17 @@ public class ConferenceSystem {
 
     public ConferenceSystem() {username = null;}
 
+    /**
+     * Runs the Conference system. Reads data files at the start, then prompts user to log in or
+     * sign up with a new account. Writes data files once the user decides to log out.
+     */
     public void run() {
-        readData();
+        boolean readSuccessful = readData();
+
+        if (readSuccessful)
+            readWritePresenter.printReadSuccess();
+        else
+            readExceptionChooseOption();
 
         // After reading in Use Cases from file, instantiate controllers that do not require
         // the username of the logged in person to be instantiated.
@@ -89,33 +106,26 @@ public class ConferenceSystem {
                 break;
         }
         //3. return if the user logout. Write out data to files.
-        writeData();
+        boolean writeSuccessful = writeData();
+
+        if (writeSuccessful)
+            readWritePresenter.printWriteSuccess();
+        else
+            writeExceptionChooseOption();
     }
 
     /**
      * Reads in all user, event, and message data from the files.
      *
-     * @return Boolean indicating if reading was successful.
+     * @return True if file was read from successful, false if file could not be opened or
+     * file contents were not valid.
      */
-    public boolean readData() {
+    private boolean readData() {
         try {
-            File um = new File(usersPath);
-            File em = new File(eventsPath);
-            File mm = new File(messagesPath);
+            userManager = (UserManager)readWriteGateway.readFromFile(usersPath);
+            eventManager = (EventManager)readWriteGateway.readFromFile(eventsPath);
+            messageManager = (MessageManager)readWriteGateway.readFromFile(messagesPath);
 
-            um.createNewFile();
-            em.createNewFile();
-            mm.createNewFile();
-
-            if (um.length() != 0) {
-                userManager = (UserManager)readWriteGateway.readFromFile(usersPath);
-            }
-            if (em.length() != 0) {
-                eventManager = (EventManager)readWriteGateway.readFromFile(eventsPath);
-            }
-            if (mm.length() != 0) {
-                messageManager = (MessageManager)readWriteGateway.readFromFile(messagesPath);
-            }
         } catch (IOException | ClassNotFoundException e) {
             return false;
         }
@@ -137,6 +147,66 @@ public class ConferenceSystem {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Based on user's input, performs appropriate action related to exceptions when reading from files.
+     * User can choose to attempt to read the files again, continue without reading the files, or exit the program.
+     */
+    private void readExceptionChooseOption() {
+        String option;
+        boolean managersInitialized;
+
+        do {
+            readWritePresenter.printReadError();
+            readWritePresenter.printReadErrorMenu();
+            option = readWriteScanner.nextLine();
+            managersInitialized = false;
+            switch (option) {
+                case "1": // Retry reading
+                    managersInitialized = readData();
+                    if (managersInitialized)
+                        readWritePresenter.printReadSuccess();
+                    break;
+                case "2": // Continue without reading
+                    userManager = new UserManager();
+                    eventManager = new EventManager();
+                    messageManager = new MessageManager();
+                    managersInitialized = true;
+                    break;
+                case "3": // Exit program
+                    System.exit(1);
+                default: // Invalid input
+                    readWritePresenter.printInvalidOption();
+            }
+        } while (!managersInitialized);
+    }
+
+    /**
+     * Based on user's input, performs appropriate action related to exceptions when writing to files.
+     * User can choose to attempt to write to the files again or exit the program.
+     */
+    private void writeExceptionChooseOption() {
+        String option;
+        boolean writeSuccessful;
+
+        do {
+            readWritePresenter.printWriteError();
+            readWritePresenter.printWriteErrorMenu();
+            option = readWriteScanner.nextLine();
+            writeSuccessful = false;
+            switch (option) {
+                case "1": // Retry writing
+                    writeSuccessful = writeData();
+                    if (writeSuccessful)
+                        readWritePresenter.printWriteSuccess();
+                    break;
+                case "2": // Exit program
+                    System.exit(1);
+                default: // Invalid input
+                    readWritePresenter.printInvalidOption();
+            }
+        } while (!writeSuccessful);
     }
 
     /**
@@ -363,7 +433,4 @@ public class ConferenceSystem {
             }
         } while (!attendeeMessageMenuOption.equals("0"));
     }
-
-
-
 }

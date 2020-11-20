@@ -16,17 +16,14 @@ public class ReadWriteGateway implements ReadWrite {
      *
      * @param filepath The filepath to the file to read from.
      * @return Object containing deserialized data, or null if the file could not be read.
-     * @throws ClassNotFoundException If class of read Object does not exist.
+     * @throws ClassNotFoundException - If class of read Object does not exist.
+     * @throws IOException - If an I/O error occurs while opening the file.
      */
     @Override
-    public Object readFromFile(String filepath) throws ClassNotFoundException {
-        try {
-            InputStream file = new FileInputStream(filepath);
-            ObjectInput input = new ObjectInputStream(file);
-            return input.readObject();
-        } catch (IOException e) {
-            return null;
-        }
+    public Object readFromFile(String filepath) throws ClassNotFoundException, IOException {
+        InputStream file = new FileInputStream(filepath);
+        ObjectInput input = new ObjectInputStream(file);
+        return input.readObject();
     }
 
     /**
@@ -35,7 +32,7 @@ public class ReadWriteGateway implements ReadWrite {
      *
      * @param filepath The file path to write to
      * @param data The object to serialize to the file
-     * @throws IOException Writing to file was unsuccessful
+     * @throws IOException - If an I/O error occurs while opening the file.
      */
     @Override
     public void saveToFile(String filepath, Object data) throws IOException {
