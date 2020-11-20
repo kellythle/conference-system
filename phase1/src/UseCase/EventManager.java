@@ -341,6 +341,13 @@ public class EventManager implements Serializable {
         return events.toString();
     }
 
+    /**
+     * Generates a list of registered events
+     *
+     * @param registeredEventNames - a list of the registered event names
+     *
+     * @return a list of Events that a User has registered to
+     */
     public ArrayList<Event> getRegisteredEvents(ArrayList<String> registeredEventNames){
         ArrayList<Event> registeredEvents = new ArrayList<>();
         for (Event e : eventList) {

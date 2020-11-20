@@ -1,7 +1,8 @@
 package Entity;
 
-
-
+/**
+ * A class that represents a Speaker.
+ */
 public class Speaker extends UserAccount {
     /**
      * Create user account by given user name and password

@@ -2,6 +2,9 @@ package Entity;
 
 import Entity.UserAccount;
 
+/**
+ * A class that represents an Attendee.
+ */
 public class Attendee extends UserAccount {
     /**
      * Create user account by given user name and password

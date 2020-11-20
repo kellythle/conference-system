@@ -8,16 +8,24 @@ import UseCase.UserManager;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * A controller class that calls MessageManager to manage any
+ * command related to Speaker's Messaging System
+ *
+ * @author Yu Jin Kim
+ */
 public class SpeakerMessageController extends MessageController {
     private final EventManager myEventManager;
 
     /**
-     * A controller class that calls MessageManager to manage any
-     * command related to Speaker's Messaging System
+     * Constructor for SpeakerMessageController
+     * Creates a new instance of messagePresenter.
      *
-     * @author Yu Jin Kim
+     * @param username String username of current user
+     * @param myUserManager instance of UserManager
+     * @param myMessageManager instance of MessageManager
+     * @param myEventManager instance of EventManager
      */
-
     public SpeakerMessageController(String username, MessageManager myMessageManager, UserManager myUserManager, EventManager myEventManager){
         super(username, myUserManager, myMessageManager);
         this.myEventManager = myEventManager;

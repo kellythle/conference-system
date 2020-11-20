@@ -217,9 +217,10 @@ public class UserManager implements Serializable {
     /**
      * This checks if a user has permission to send messages to a receiver.
      *
-     * @param username
-     * @param receiver
-     * @return
+     * @param username - username of user sending a message
+     * @param receiver - username of user receiving the message
+     *
+     * @return true if the user can send to the receiver, fails silently otherwise
      */
     public boolean canSend(String username, String receiver){
         if (!containsUser(receiver)){

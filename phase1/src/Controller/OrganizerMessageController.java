@@ -14,6 +14,14 @@ import java.util.Scanner;
 
 public class OrganizerMessageController extends MessageController {
 
+    /**
+     * Constructor for OrganizerMessageController
+     * Creates a new instance of messagePresenter.
+     *
+     * @param username String username of current user
+     * @param myUserManager instance of UserManager
+     * @param myMessageManager instance of MessageManager
+     */
     public OrganizerMessageController(String username, MessageManager myMessageManager, UserManager myUserManager){
         super(username, myUserManager, myMessageManager);
     }

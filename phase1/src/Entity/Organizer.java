@@ -1,5 +1,8 @@
 package Entity;
 
+/**
+ * A class that represents an Organizer.
+ */
 public class Organizer extends UserAccount {
     /**
      * Create user account by given user name and password
