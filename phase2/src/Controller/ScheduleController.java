@@ -1,6 +1,7 @@
 package Controller;
 
 import Presenter.SchedulePresenter;
+import Presenter.SignUpPresenter;
 import UseCase.EventManager;
 import UseCase.UserManager;
 import javafx.util.Pair;
@@ -20,6 +21,7 @@ public class ScheduleController {
     private final EventManager eventManager;
     private final UserManager userManager;
     private final SchedulePresenter scheduleP;
+    private final SignUpPresenter signUpP;
 
     /**
      * Creates a instance of ScheduleController with a ManagerFacade instance.
@@ -30,6 +32,7 @@ public class ScheduleController {
         this.eventManager = em;
         this.userManager = um;
         this.scheduleP  = new SchedulePresenter(eventManager);
+        this.signUpP = new SignUpPresenter();
     }
 
     /**
@@ -149,6 +152,41 @@ public class ScheduleController {
         this.callAddEvent(name.trim(), speaker, eventTime, eventManager.getRoom(intRoom));
     }
 
+
+    /**
+     * Calls SchedulePresenter to receive a list of events and
+     * prompt the user to input the desired event they wish to
+     * delete from this conference.
+     */
+    public void deleteEventFromConference() {
+        String inputEvent;
+        boolean ValidEvent = false;
+        do {
+            Scanner scan1 = new Scanner(System.in);
+            signUpP.displayEventList(eventManager.getEventList(), eventManager);
+            scheduleP.printDeletePrompt();
+            inputEvent = scan1.nextLine();
+            if (inputEvent.equals("0")){
+                return;
+            } else if (!eventManager.getEvent(inputEvent)) {
+                scheduleP.printNoEvent();
+                ValidEvent = false;
+            } else if (eventManager.getEvent(inputEvent) && !eventManager.getEventAttendees(inputEvent).isEmpty()) {
+                Scanner scan2 = new Scanner(System.in);
+                scheduleP.printAttendeesExist();
+                if (scan2.nextLine().equals("0")){
+                    return;
+                } else {
+                    ValidEvent = eventManager.deleteConferenceEvent(inputEvent);
+                    scheduleP.printDeletionSuccess();
+                }
+            } else {
+                ValidEvent = eventManager.deleteConferenceEvent(inputEvent);
+                scheduleP.printDeletionSuccess();
+            }
+        } while (!ValidEvent);
+
+    }
 
     /**
      * Checks if this username already exists. Returns true if

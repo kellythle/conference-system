@@ -344,15 +344,18 @@ public class ConferenceSystem {
                     scheduleController.createEvent();
                     break;
                 case "2":
-                    scheduleController.addNewSpeaker();
+                    scheduleController.deleteEventFromConference();
                     break;
                 case "3":
+                    scheduleController.addNewSpeaker();
+                    break;
+                case "4":
                     scheduleController.endScheduling();
                     break;
                 default:
                     scheduleController.failScheduleMenu();
             }
-        } while (!scheduleMenuOption.equals("3"));
+        } while (!scheduleMenuOption.equals("4"));
     }
 
     /**

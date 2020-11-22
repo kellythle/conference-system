@@ -428,4 +428,20 @@ public class EventManager implements Serializable {
         }
         return eventsAtTime;
     }
+
+    /**
+     * Returns true if the Event was successfully deleted and deletes all attendees from the event.
+     *
+     * @param eventName - name of event that wants to be deleted
+     *
+     * @return true if the Event was removed from the event list, false otherwise
+     */
+    public boolean deleteConferenceEvent(String eventName){
+        for (Event e: this.eventList){
+            if (e.getName().equals(eventName)) {
+                return this.eventList.remove(e);
+            }
+        }
+        return false;
+    }
 }

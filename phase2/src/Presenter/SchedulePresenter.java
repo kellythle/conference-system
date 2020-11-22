@@ -31,9 +31,10 @@ public class SchedulePresenter {
         System.out.println("Welcome to the Scheduling Menu!\n" +
                 "Options:\n" +
                 "1. Schedule an Event\n" +
-                "2. Create a Speaker\n" +
-                "3. Exit Scheduling Menu\n" +
-                "Enter 1, 2, or 3: ");
+                "2. Delete an Event\n" +
+                "3. Create a Speaker\n" +
+                "4. Exit Scheduling Menu\n" +
+                "Enter 1, 2, 3 or 4: ");
     }
 
     /**
@@ -249,4 +250,33 @@ public class SchedulePresenter {
         System.out.println("You have exited the Scheduling System.");
     }
 
+    /**
+     * Prints a prompt for the Organizer to enter the event they would like to delete.
+     */
+    public void printDeletePrompt() {
+        System.out.println("What Event would you like to delete? Enter the desired Event " +
+                "name or 0 to return to the Scheduling Menu: ");
+    }
+
+    /**
+     * Prints "You have entered an Event Name that does not exist."
+     */
+    public void printNoEvent() {
+        System.out.println("You have entered an Event Name that does not exist.");
+    }
+
+    /**
+     * Prints a prompt for the Organizer to confirm their deletion of an event which contains attendees.
+     */
+    public void printAttendeesExist() {
+        System.out.println("There are attendees that are registered for this event. Do you still wish to delete " +
+                "this event?\nEnter 0 to keep the event and return to the Scheduling menu or 1 to delete the event.");
+    }
+
+    /**
+     * Prints "You have successfully deleted this event."
+     */
+    public void printDeletionSuccess(){
+        System.out.println("You have successfully deleted this event.");
+    }
 }
