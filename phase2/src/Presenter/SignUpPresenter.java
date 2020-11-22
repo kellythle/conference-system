@@ -2,7 +2,9 @@ package Presenter;
 
 import Entity.Event;
 import UseCase.EventManager;
+import UseCase.UserManager;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
@@ -22,10 +24,9 @@ public class SignUpPresenter {
                 "Options:\n" +
                 "1. Sign up for an event\n" +
                 "2. Delete a registered event\n" +
-                "3. See all events\n" +
-                "4. See registered events\n" +
-                "5. Exit Sign Up Menu\n" +
-                "Enter 1, 2, 3, 4, or 5: ");
+                "3. See events\n" +
+                "4. Exit Sign Up Menu\n" +
+                "Enter 1, 2, 3, or 4: ");
     }
 
     /**
@@ -69,6 +70,42 @@ public class SignUpPresenter {
             registeredEvents = em.getRegisteredEvents(registeredEventNames);
             String events = em.eventListGenerator(registeredEvents);
             System.out.println("Registered Events: ");
+            System.out.println(events);
+        }
+    }
+
+    public void displayEventsByDate(EventManager em, LocalDateTime date){
+        String events = em.eventListGenerator(em.getEventByDate(date));
+        if (events.isEmpty()){
+            System.out.println("There are no events on "
+                    + date.getYear() + "-"
+                    + date.getMonthValue() + "-"
+                    + date.getDayOfMonth() + ".");
+        } else {
+            System.out.println("Events on "
+                    + date.getYear() + "-"
+                    + date.getMonthValue() + "-"
+                    + date.getDayOfMonth() + ":");
+            System.out.println(events);
+        }
+    }
+
+    public void displayEventsBySpeakers(EventManager em, String speakerName) {
+        String events = em.eventListGenerator(em.getEventBySpeaker(speakerName));
+        if (events.isEmpty()){
+            System.out.println("Speaker " + speakerName + " has no events yet.");
+        } else {
+            System.out.println("Events of speaker " + speakerName + ":");
+            System.out.println(events);
+        }
+    }
+
+    public void displayEventsByTime(EventManager em, String time){
+        String events = em.eventListGenerator(em.getEventByTime(time));
+        if (events.isEmpty()){
+            System.out.println("There are no events on time " + time);
+        } else {
+            System.out.println("Events on time " + time + ":");
             System.out.println(events);
         }
     }
@@ -135,5 +172,66 @@ public class SignUpPresenter {
      */
     public void printInvalidInput(){
         System.out.println("Invalid input, please try again.");
+    }
+
+    public void printEnterDatePrompt(){
+        System.out.println("Enter a date in the format yyyy-mm-dd or enter 0 to exist\n" +
+                "ex. 2020-05-30");
+    }
+
+    public void printTimePastPrompt() {
+        System.out.println("The date you entered has past. Please try again.");
+    }
+
+    public void printInvalidDateFormat() {
+        System.out.println("Invalid date format.Please try again.");
+    }
+
+    public void printSeeEventMenu() {
+        System.out.println("Options:\n" +
+                "1. See all events\n" +
+                "2. See registered events\n" +
+                "3. See events of one day\n" +
+                "4. See events of a Speaker\n" +
+                "5. See events of a starting time on all days\n" +
+                "6. Back to Sign Up Menu\n" +
+                "Enter 1, 2, 3, 4, 5, or 6: ");
+    }
+
+    public void printAvailableSpeakers(UserManager um) {
+        if (um.getSpeakerList().isEmpty()){
+            System.out.println("There are no speakers yet.");
+        } else{
+            System.out.println("All speakers:");
+            System.out.println(um.getSpeakerList());
+        }
+
+    }
+
+    public void printEnterSpeakerPrompt() {
+        System.out.println("Which speaker's events do you want to see?\n" +
+                " (Enter a speaker's name or 0 to exist)");
+    }
+
+    public void printInvalidSpeakerName() {
+        System.out.println("The speaker you entered doesn't exist. Please try again.");
+    }
+
+    public void printAvailableTimes(EventManager em) {
+        System.out.println("Available times: ");
+        int i = 0;
+        for (String s: em.getStartTimes()){
+            System.out.print(s);
+            i++;
+            if (em.getStartTimes().size() != i){
+                System.out.print(", ");
+            }
+        }
+        System.out.println();
+    }
+
+    public void printEnterTimePrompt() {
+        System.out.println("Enter an available time or enter 00 to exist\n" +
+                "ex. 09 for 9AM, 12 for noon, 16 for 4PM");
     }
 }

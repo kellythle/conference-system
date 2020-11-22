@@ -4,6 +4,8 @@ import Presenter.SignUpPresenter;
 import UseCase.EventManager;
 import UseCase.UserManager;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 /**
@@ -42,6 +44,35 @@ public class SignUpController {
         return scan.nextLine();
     }
 
+    public void seeEventMenu(String username){
+        String option;
+        do {
+            Scanner scan = new Scanner(System.in);
+            sp.printSeeEventMenu();
+            option = scan.nextLine();
+            switch (option) {
+                case "1":
+                    this.getEventList();
+                    break;
+                case "2":
+                    this.getRegisteredEventList(username);
+                    break;
+                case "3":
+                    this.getEventListByDate();
+                    break;
+                case "4":
+                    this.getEventListBySpeaker();
+                    break;
+                case "5":
+                    this.getEventByStartTime();
+                    break;
+                case "6":
+                    break;
+                default:
+                    sp.printInvalidInput();
+            }
+        }while (!option.equals("6"));
+    }
 
     /**
      * Calls SignUpPresenter to print out all events.
@@ -57,6 +88,76 @@ public class SignUpController {
      */
     public void getRegisteredEventList(String username){
         sp.displayRegisteredEvents(userManager.getRegisteredEvents(username), eventManager);
+    }
+
+    public void getEventListByDate(){
+        boolean validDate = false;
+        String inputDate;
+        do {
+            Scanner scan1 = new Scanner(System.in);
+            sp.printEnterDatePrompt();
+            inputDate = scan1.nextLine();
+            if (inputDate.equals("0")){
+                return;
+            }
+            LocalDate localDate;
+            try{
+                localDate = LocalDate.parse(inputDate);
+                if (localDate.compareTo(LocalDate.now()) < 0) {
+                    sp.printTimePastPrompt();
+                    validDate = false;
+                }else {
+                    validDate = true;
+                }
+            }catch (Exception e){
+                sp.printInvalidDateFormat();
+            }
+        }while (!validDate);
+        LocalDateTime date = LocalDateTime.parse(inputDate + "T" +"00:00:00");
+        sp.displayEventsByDate(eventManager, date);
+    }
+
+
+    public void getEventListBySpeaker(){
+        boolean validSpeakerName;
+        String name;
+        do{
+            Scanner scan = new Scanner(System.in);
+            sp.printAvailableSpeakers(userManager);
+            sp.printEnterSpeakerPrompt();
+            name = scan.nextLine();
+            if(name.equals("0")){
+                return;
+            }
+            if (!userManager.getSpeakerList().contains(name)){
+                sp.printInvalidSpeakerName();
+                validSpeakerName = false;
+            } else{
+                sp.displayEventsBySpeakers(eventManager, name);
+                validSpeakerName = true;
+            }
+        } while (!validSpeakerName);
+    }
+
+    private void getEventByStartTime(){
+        boolean validTime;
+        String inputTime;
+        do{
+            Scanner scan = new Scanner(System.in);
+            sp.printAvailableTimes(eventManager);
+            sp.printEnterTimePrompt();
+            inputTime = scan.nextLine();
+            if(inputTime.equals("00")){
+                return;
+            }
+            if(!eventManager.getStartTimes().contains(inputTime)){
+                sp.printInvalidInput();
+                validTime = false;
+            }else{
+                sp.displayEventsByTime(eventManager, inputTime);
+                validTime = true;
+            }
+        } while(!validTime);
     }
 
     /**

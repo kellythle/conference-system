@@ -389,4 +389,43 @@ public class EventManager implements Serializable {
         }
         return users;
     }
+
+    public ArrayList<Event> getEventByDate (LocalDateTime date){
+        ArrayList<Event> sameDayEvents = new ArrayList<>();
+        for (Event e: eventList){
+            if(e.getTime().getYear() == date.getYear()
+                    && e.getTime().getMonthValue() == date.getMonthValue()
+                    && e.getTime().getDayOfMonth() == date.getDayOfMonth()){
+                sameDayEvents.add(e);
+            }
+        }
+        return sameDayEvents;
+    }
+
+    public ArrayList<Event> getEventBySpeaker(String speakerName){
+        ArrayList<Event> sameSpeakerEvents = new ArrayList<>();
+        for (Event e: eventList){
+            if (e.getSpeaker().equals(speakerName)){
+                sameSpeakerEvents.add(e);
+            }
+        }
+        return sameSpeakerEvents;
+    }
+
+    public ArrayList<Event> getEventByTime(String time){
+        ArrayList<Event> eventsAtTime = new ArrayList<>();
+        for(Event e: eventList){
+            String eventTime;
+            int hour = e.getTime().getHour();
+            if(hour < 10){
+                eventTime = "0" + hour;
+            }else{
+                eventTime = "" + hour;
+            }
+            if(eventTime.equals(time)){
+                eventsAtTime.add(e);
+            }
+        }
+        return eventsAtTime;
+    }
 }

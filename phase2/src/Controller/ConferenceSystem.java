@@ -45,9 +45,9 @@ public class ConferenceSystem {
     private SpeakerMessageController speakerMessageController;
 
     // File paths
-    private final String usersPath = "./phase1/src/users.ser";
-    private final String eventsPath = "./phase1/src/events.ser";
-    private final String messagesPath = "./phase1/src/messages.ser";
+    private final String usersPath = "./src/users.ser";
+    private final String eventsPath = "./src/events.ser";
+    private final String messagesPath = "./src/messages.ser";
 
     // Variable for keeping track with user, should be initialized after login.
     String username;
@@ -320,18 +320,15 @@ public class ConferenceSystem {
                     signUpController.deleteEvent(username);
                     break;
                 case "3":
-                    signUpController.getEventList();
+                    signUpController.seeEventMenu(username);
                     break;
                 case "4":
-                    signUpController.getRegisteredEventList(username);
-                    break;
-                case "5":
                     signUpController.signUpSystemEnd();
                     break;
                 default:
                     signUpController.InvalidInput();
             }
-        } while (!menuOption.equals("5"));
+        } while (!menuOption.equals("4"));
     }
 
     /**
