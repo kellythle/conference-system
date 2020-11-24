@@ -103,14 +103,15 @@ public class EventManager implements Serializable {
      * Returns an event that is created.
      *
      * @param name - the name of this event
-     * @param speaker - the speaker's name
+     * @param speaker - the name(s) of the speaker(s)
      * @param time - the occurring time of this event
      * @param room - the occurring room of this event
+     * @param duration - the duration of this event
      * @return the Event that is created
      */
-    private Event createNewEvent(String name, String speaker,
-                                 LocalDateTime time, Pair<Integer, Integer> room) {
-        return new Event(name, speaker, time, room);
+    private Event createNewEvent(String name, ArrayList<String> speaker,
+                                 LocalDateTime time, Pair<Integer, Integer> room, int duration) {
+        return new Event(name, speaker, time, room, duration);
     }
 
     /**
@@ -156,13 +157,14 @@ public class EventManager implements Serializable {
      * at the same time, and if the event name already exists.
      *
      * @param name - the name of this event
-     * @param speaker - the speaker's name
+     * @param speaker - the name(s) of the speaker(s)
      * @param time - the occurring time of this event
      * @param room - the occurring room of this event
+     * @param duration - the duration of this event
      */
-    public void addEvent(String name, String speaker,
-                         LocalDateTime time, Pair<Integer, Integer> room) {
-        Event newEvent = createNewEvent(name, speaker, time, room);
+    public void addEvent(String name, ArrayList<String> speaker,
+                         LocalDateTime time, Pair<Integer, Integer> room, int duration) {
+        Event newEvent = createNewEvent(name, speaker, time, room, duration);
         if(eventList == null || eventList.isEmpty()) {
             this.eventList = new ArrayList<>();
             this.eventList.add(newEvent);
@@ -207,7 +209,7 @@ public class EventManager implements Serializable {
     private boolean canAddUserToEvent(String username, String eventName){
         Event event = findEventByName(eventName);
         assert event != null;
-        if (event.getSpeaker().equals(username)){
+        if (event.getSpeaker().contains(username)){
             return false;
         }
         if (event.getRoomCapacity().equals(event.getAttendees().size())) {
@@ -263,21 +265,56 @@ public class EventManager implements Serializable {
     }
 
     /**
+     * Returns true if an event has a time conflict with the given starting time and
+     * the given duration. Returns false if there are no time conflict.
+     * Two events will have time conflict when occurs on the same day and
+     * (1) They have the same starting time.
+     * or
+     * (2) One starts while another hasn't ended yet.
+     *
+     * @param e - an Event instance
+     * @param time - a starting time of an event that we want to compare
+     * @param duration - the duration of an event in hours
+     *
+     * @return - true if there is a time conflict, and false when there's no time conflict
+     */
+    private boolean hasTimeConflict(Event e, LocalDateTime time, int duration){
+        if (e.getTime().getYear() == time.getYear() &&
+                e.getTime().getMonthValue() == time.getMonthValue() &&
+                e.getTime().getDayOfMonth() == time.getDayOfMonth()){
+            int startHour = time.getHour();
+            int endHour = time.getHour() + duration;
+            int eStartHour = e.getTime().getHour();
+            int eEndHour = e.getTime().getHour() + e.getDuration();
+            if (eStartHour == startHour){
+                return true;
+            }
+            else if((eStartHour < startHour && startHour < eEndHour)){
+                return true;
+            }
+            else if((startHour < eStartHour && eStartHour < endHour)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Return a list of Speakers available at the given time.
      *
      * @param speakerList - the list of existing speakers
      * @param time - the chosen time
-     *
+     * @param duration - the duration time in hours of an event
      *
      * @return a list of available Speakers
      */
-    public ArrayList<String> getAvailableSpeakers(ArrayList<String> speakerList, LocalDateTime time) {
+    public ArrayList<String> getAvailableSpeakers(ArrayList<String> speakerList, LocalDateTime time, int duration) {
         ArrayList<String> availableList = new ArrayList<>();
         ArrayList<String> unavailableList = new ArrayList<>();
         if (this.eventList != null) {
             for (Event e : this.eventList) {
-                if (e.getTime().compareTo(time) == 0) {
-                    unavailableList.add(e.getSpeaker());
+                if(hasTimeConflict(e, time, duration)){
+                    unavailableList.addAll(e.getSpeaker());
                 }
             }
         }
@@ -294,15 +331,16 @@ public class EventManager implements Serializable {
      * Returns a list of available rooms.
      *
      * @param time - time for Event
+     * @param duration - the duration of an event in hours
      *
      * @return a list of available rooms
      */
-    public ArrayList<Integer> getAvailableRooms (LocalDateTime time) {
+    public ArrayList<Integer> getAvailableRooms (LocalDateTime time, int duration) {
         ArrayList<Integer> availableRooms = new ArrayList<>();
         ArrayList<Integer> unavailableRooms = new ArrayList<>();
         if (this.eventList != null) {
             for (Event e : this.eventList) {
-                if (e.getTime().compareTo(time) == 0) {
+                if (this.hasTimeConflict(e, time, duration)){
                     unavailableRooms.add(e.getRoomNum());
                 }
             }
@@ -333,9 +371,16 @@ public class EventManager implements Serializable {
             if (space > 0){
                 available = "Available";
             }
+            String speakerString;
+            if (e.getSpeaker().isEmpty()){
+                speakerString = "No Speakers";
+            }else{
+                speakerString = e.getSpeaker().toString();
+            }
             events.append("Name: ").append(e.getName())
                     .append(", Time: ").append(e.getTime().toString())
-                    .append(", Speaker: ").append(e.getSpeaker()).append(", Room Number: ")
+                    .append(", Duration: ").append(e.getDuration()).append(" hours")
+                    .append(", Speaker: ").append(speakerString).append(", Room Number: ")
                     .append(e.getRoomNum().toString()).append(", ").append(available).append("\n");
         }
         return events.toString();
@@ -367,7 +412,7 @@ public class EventManager implements Serializable {
     public ArrayList<String> getEventListBySpeaker(String username) {
         ArrayList<String> events = new ArrayList<>();
         for (Event e: eventList) {
-            if (e.getSpeaker().equals(username)) {
+            if (e.getSpeaker().contains(username)) {
                 events.add(e.getName());
             }
         }
@@ -405,7 +450,7 @@ public class EventManager implements Serializable {
     public ArrayList<Event> getEventBySpeaker(String speakerName){
         ArrayList<Event> sameSpeakerEvents = new ArrayList<>();
         for (Event e: eventList){
-            if (e.getSpeaker().equals(speakerName)){
+            if (e.getSpeaker().contains(speakerName)){
                 sameSpeakerEvents.add(e);
             }
         }

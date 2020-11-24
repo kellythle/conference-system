@@ -12,24 +12,27 @@ import java.util.ArrayList;
  */
 public class Event implements Serializable {
     private String name; // name of event
-    private String speaker; // name of speaker
+    private ArrayList<String> speaker; // an arraylist of name(s) of speaker(s)
     private LocalDateTime time; //time of the event
     private final ArrayList<String> attendees; // names of the attendees
     private final Pair<Integer, Integer> room; //<room number, capacity>
+    private int duration;// the duration of this event
 
     /**
      * The name, ID, occurring time, occurring place, and speaker required to create an event.
      * @param name- the name of this event
-     * @param speaker- the speaker's name
+     * @param speaker- the name(s) of the speaker(s)
      * @param time- the occurring time of this event
      * @param room- the occurring room number of this event
+     * @param duration - the duration of this event
      */
-    public Event (String name, String speaker, LocalDateTime time, Pair<Integer, Integer> room) {
+    public Event (String name, ArrayList<String> speaker, LocalDateTime time, Pair<Integer, Integer> room, int duration) {
         this.name = name;
         this.speaker = speaker;
         this.time = time;
         this.room = room;
         this.attendees = new ArrayList<>();
+        this.duration = duration;
     }
 
     /**
@@ -41,10 +44,10 @@ public class Event implements Serializable {
     }
 
     /**
-     Return the speaker's name of this event.
-     * @return the Speaker's name of this Event
+     Return the name(s) of the speaker(s) of this event.
+     * @return the name(s) of the Speaker(s) of this Event
      */
-    public String getSpeaker() {
+    public ArrayList<String> getSpeaker() {
         return speaker;
     }
 
@@ -73,6 +76,14 @@ public class Event implements Serializable {
     }
 
     /**
+     * Returns the duration in hours of this event
+     * @return the duration of this event
+     */
+    public int getDuration() {
+        return duration;
+    }
+
+    /**
      * This method sets the attendee list of this event.
      * @param attendeeName- the attendee's name
      */
@@ -94,9 +105,9 @@ public class Event implements Serializable {
 
     /**
      * This method assign a speaker to this event by the speaker's name.
-     * @param speaker- the name of the speaker
+     * @param speaker- the arraylist of the name(s) of the speaker(s)
      */
-    public void setSpeaker(String speaker) {
+    public void setSpeaker(ArrayList<String> speaker) {
         this.speaker = speaker;
     }
 

@@ -8,6 +8,7 @@ import javafx.util.Pair;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -45,11 +46,41 @@ public class ScheduleController {
     }
 
     /**
+     * Allows Organizers to create different kinds of events or exit this menu by inputting
+     * a specific number.
+     */
+    public void getEventTypeMenu(){
+        String option;
+        do {
+            Scanner scan = new Scanner(System.in);
+            scheduleP.printEventTypeMenu();
+            option = scan.nextLine();
+            switch (option) {
+                case "1":
+                    this.createEvent(1);
+                    break;
+                case "2":
+                    this.createEvent(2);
+                    break;
+                case "3":
+                    this.createEvent(0);
+                    break;
+                case "4":
+                    break;
+                default:
+                    signUpP.printInvalidInput();
+            }
+        }while (!option.equals("4"));
+    }
+
+    /**
      * Calls SchedulePresenter to prompt the user to input
      * the name, time, room, and date and prints out the
      * event details if successful.
+     *
+     * @param numberOfSpeakers - the number of speakers required for this event
      */
-    public void createEvent(){
+    public void createEvent(int numberOfSpeakers){
         String name;
         boolean ValidName;
         do {
@@ -108,17 +139,34 @@ public class ScheduleController {
         //combine the date and time into one LocalDateTime instance
         LocalDateTime eventTime = LocalDateTime.parse(inputDate + "T" + inputTime + ":00:00");
 
+        //enter duration
+        String inputDuration;
+        int intDuration;
+        boolean ValidDuration;
+        do{
+            Scanner scanD = new Scanner(System.in);
+            scheduleP.printEnterDurationPrompt();
+            inputDuration = scanD.nextLine();
+            intDuration = Integer.parseInt(inputDuration);
+            if (intDuration < 1 || intDuration > 3) {
+                scheduleP.printInvalidDuration();
+                ValidDuration = false;
+            }else {
+                ValidDuration = true;
+            }
+        }while(!ValidDuration);
+
         String room;
         boolean ValidRoom = false;
         do {
             Scanner scan2 = new Scanner(System.in);
-            scheduleP.displayRoomList(eventTime);
+            scheduleP.displayRoomList(eventTime, intDuration);
             room = scan2.nextLine();
             try {
                 Integer intRoom = Integer.parseInt(room);
                 if (room.equals("0")) {
                     return;
-                } else if (!eventManager.getAvailableRooms(eventTime).contains(intRoom)){
+                } else if (!eventManager.getAvailableRooms(eventTime, intDuration).contains(intRoom)){
                     scheduleP.printFailRoom();
                     ValidRoom = false;
                 } else {
@@ -131,25 +179,41 @@ public class ScheduleController {
         } while (!ValidRoom);
 
 
-
-        String speaker;
-        boolean ValidSpeaker;
-        do {
-            Scanner scanS = new Scanner(System.in);
-            scheduleP.displaySpeakerList(userManager.getSpeakerList(), eventTime);
-            speaker = scanS.nextLine();
-            if (speaker.equals("0")){
-                return;
-            } else if (!eventManager.getAvailableSpeakers(userManager.getSpeakerList(), eventTime).contains(speaker)) {
-                scheduleP.printFailSpeaker();
-                ValidSpeaker = false;
-            } else {
-                ValidSpeaker = true;
-            }
-        } while (!ValidSpeaker);
+        int i = 1;
+        ArrayList<String> speakers = new ArrayList<>();
+        while(i <= numberOfSpeakers) {
+            String speaker;
+            boolean ValidSpeaker;
+            do {
+                Scanner scanS = new Scanner(System.in);
+                scheduleP.displaySpeakerList(userManager.getSpeakerList(), eventTime, intDuration, speakers);
+                if(numberOfSpeakers == 2){
+                    switch (i){
+                        case 1:
+                            scheduleP.printFirstSpeakerPrompt();
+                            break;
+                        case 2:
+                            scheduleP.printSecondSpeakerPrompt();
+                            break;
+                    }
+                }
+                speaker = scanS.nextLine();
+                if (speaker.equals("0")) {
+                    return;
+                } else if (!eventManager.getAvailableSpeakers(userManager.getSpeakerList(), eventTime, intDuration).contains(speaker)
+                        || speakers.contains(speaker)) {
+                    scheduleP.printFailSpeaker();
+                    ValidSpeaker = false;
+                } else {
+                    ValidSpeaker = true;
+                    speakers.add(speaker);
+                    i++;
+                }
+            } while (!ValidSpeaker);
+        }
 
         Integer intRoom = Integer.parseInt(room);
-        this.callAddEvent(name.trim(), speaker, eventTime, eventManager.getRoom(intRoom));
+        this.callAddEvent(name.trim(), speakers, eventTime, eventManager.getRoom(intRoom), intDuration);
     }
 
 
@@ -160,7 +224,7 @@ public class ScheduleController {
      */
     public void deleteEventFromConference() {
         String inputEvent;
-        boolean ValidEvent = false;
+        boolean ValidEvent;
         do {
             Scanner scan1 = new Scanner(System.in);
             signUpP.displayEventList(eventManager.getEventList(), eventManager);
@@ -250,18 +314,22 @@ public class ScheduleController {
      * if a event is successfully created.
      *
      * @param name - name of the event wanted to be created (receive from UI)
-     * @param speaker - name of the speaker of the event wanted to be created (receive from UI)
+     * @param speakers - name(s) of the speaker(s) of the event wanted to be created (receive from UI)
      * @param time - the occurring time of the event wanted to be created (receive from UI)
      * @param room - the occurring room of the event wanted to be created (receive from UI)
+     * @param duration - the duration of the event wanted to be created (receive from UI)
      */
-    public void callAddEvent(String name, String speaker,
-                             LocalDateTime time, Pair<Integer, Integer> room){
+    public void callAddEvent(String name, ArrayList<String> speakers,
+                             LocalDateTime time, Pair<Integer, Integer> room, int duration){
         // create a speaker account if this speaker haven't have an account yet.
-        if(!userManager.isSpeaker(speaker)){
-            scheduleP.createEventResult(false, name, speaker, time, room);
+        for (String s: speakers) {
+            if (!userManager.isSpeaker(s)) {
+                scheduleP.createEventResult(false, name, speakers, time, room, duration);
+                return;
+            }
         }
-        eventManager.addEvent(name, speaker, time, room);
-        scheduleP.createEventResult(true, name, speaker, time, room);
+        eventManager.addEvent(name, speakers, time, room, duration);
+        scheduleP.createEventResult(true, name, speakers, time, room, duration);
     }
 
     /**

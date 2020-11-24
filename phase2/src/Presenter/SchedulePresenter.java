@@ -38,6 +38,18 @@ public class SchedulePresenter {
     }
 
     /**
+     * Prints a menu for choosing what kind of event to create.
+     */
+    public void printEventTypeMenu(){
+        System.out.println("Options:\n" +
+                "1. Schedule a normal event (1 speaker required)\n" +
+                "2. Schedule a panel (2 speakers required)\n" +
+                "3. Schedule a party (0 speakers required)\n" +
+                "4. Back to Schedule Menu\n" +
+                "Enter 1, 2, 3 or 4");
+    }
+
+    /**
      * Prints "Input invalid, please try again."
      */
     public void printFailScheduleMenu(){
@@ -52,13 +64,18 @@ public class SchedulePresenter {
      *
      * @param speakerList - the list of existing speakers
      * @param time - the chosen time
+     * @param duration - the duration of an event
+     * @param enteredSpeaker - the speaker name(s) that has been selected for
+     *                       an event wanted to be create.
      */
-    public void displaySpeakerList(ArrayList<String> speakerList, LocalDateTime time) {
+    public void displaySpeakerList(ArrayList<String> speakerList, LocalDateTime time,
+                                   int duration, ArrayList<String> enteredSpeaker) {
         StringBuilder availableSpeakers = new StringBuilder("Available Speakers: ");
         StringBuilder unavailableSpeakers = new StringBuilder("Unavailable Speakers: ");
 
         for (String s : speakerList) {
-            if (eventManager.getAvailableSpeakers(speakerList, time).contains(s)) {
+            if (eventManager.getAvailableSpeakers(speakerList, time, duration).contains(s)
+                    && !enteredSpeaker.contains(s)) {
                 availableSpeakers.append(s).append(", ");
             } else {
                 unavailableSpeakers.append(s).append(", ");
@@ -133,12 +150,13 @@ public class SchedulePresenter {
      * to book for their event.
      *
      * @param time - the chosen time
+     * @param duration - the duration of an event
      */
-    public void displayRoomList (LocalDateTime time) {
+    public void displayRoomList (LocalDateTime time, int duration) {
         StringBuilder availableRooms = new StringBuilder("Available Rooms: ");
         StringBuilder unavailableRooms = new StringBuilder("Unavailable Rooms: ");
         for (Pair<Integer, Integer> r: eventManager.getRoomList()) {
-            if (!eventManager.getAvailableRooms(time).contains(r.getKey())) {
+            if (!eventManager.getAvailableRooms(time, duration).contains(r.getKey())) {
                 unavailableRooms.append(r.getKey().toString()).append(", ");
             } else {
                 availableRooms.append(r.getKey().toString()).append(", ");
@@ -165,17 +183,25 @@ public class SchedulePresenter {
      *
      * @param creationSuccess - true if an event was created
      * @param name - name of the event
-     * @param speaker - speaker of the event
+     * @param speaker - speaker(s) of the event
      * @param time - time of the event
      * @param room - room the event takes place in
+     * @param duration - the duration of the event
      */
-    public void createEventResult(boolean creationSuccess, String name, String speaker, LocalDateTime time,
-                                  Pair<Integer, Integer> room) {
+    public void createEventResult(boolean creationSuccess, String name, ArrayList<String> speaker, LocalDateTime time,
+                                  Pair<Integer, Integer> room, int duration) {
+        String speakerString;
+        if (speaker.isEmpty()){
+            speakerString = "No speakers";
+        }else{
+                speakerString = speaker.toString();
+        }
         if (creationSuccess) {
             System.out.println("Event Creation Successful!" +
                     "\n" + "Name: " + name +
                     "\n" + "Time: " + time.toString() +
-                    "\n" + "Speaker: " + speaker +
+                    "\n" + "Duration: " + duration + " hours" +
+                    "\n" + "Speaker: " + speakerString +
                     "\n" + "Room Number: " + room.getKey().toString());
         } else{
             System.out.println("Event Creation Failed.");
@@ -278,5 +304,35 @@ public class SchedulePresenter {
      */
     public void printDeletionSuccess(){
         System.out.println("You have successfully deleted this event.");
+    }
+
+    /**
+     * Prints message that requires user to enter the duration of the event.
+     */
+    public void printEnterDurationPrompt() {
+        System.out.println("Enter the duration of your event in hours.\n" +
+                "Enter 1, 2 or 3\n" +
+                "(Each event must be at least 1 hour long and at most 3 hours long.)");
+    }
+
+    /**
+     * Prints "Invalid event duration. Please try again."
+     */
+    public void printInvalidDuration() {
+        System.out.println("Invalid event duration. Please try again.");
+    }
+
+    /**
+     * Prints "First speaker:"
+     */
+    public void printFirstSpeakerPrompt() {
+        System.out.print("First speaker: ");
+    }
+
+    /**
+     * Prints "Second speaker:"
+     */
+    public void printSecondSpeakerPrompt() {
+        System.out.print("Second speaker: ");
     }
 }

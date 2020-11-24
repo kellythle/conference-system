@@ -302,7 +302,8 @@ public class ConferenceSystem {
     }
 
     /**
-     * Helper method that deals with signing up, deleting events.
+     * Helper method that deals with signing up events,showing events
+     * and deleting registered events.
      * First, it shows a menu of Sign Up System.
      * User can input a number to do either signing up for event,
      * deleting registered event, see events, see registered events,
@@ -341,7 +342,7 @@ public class ConferenceSystem {
             scheduleMenuOption = scheduleController.getScheduleMenu();
             switch (scheduleMenuOption) {
                 case "1":
-                    scheduleController.createEvent();
+                    scheduleController.getEventTypeMenu();
                     break;
                 case "2":
                     scheduleController.deleteEventFromConference();
