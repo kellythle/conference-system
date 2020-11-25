@@ -438,6 +438,13 @@ public class EventManager implements Serializable {
         return users;
     }
 
+    /**
+     * Returns an arraylist of all events that occurs on the given date.
+     *
+     * @param date - given date
+     *
+     * @return - ArrayList<Event> that occurs on the given date
+     */
     public ArrayList<Event> getEventByDate (LocalDateTime date){
         ArrayList<Event> sameDayEvents = new ArrayList<>();
         for (Event e: eventList){
@@ -450,6 +457,12 @@ public class EventManager implements Serializable {
         return sameDayEvents;
     }
 
+    /**
+     * Returns an arraylist of all events of a given speaker.
+     *
+     * @param speakerName - the name of the speaker
+     * @return - ArrayList<Event> of an speaker
+     */
     public ArrayList<Event> getEventBySpeaker(String speakerName){
         ArrayList<Event> sameSpeakerEvents = new ArrayList<>();
         for (Event e: eventList){
@@ -460,6 +473,13 @@ public class EventManager implements Serializable {
         return sameSpeakerEvents;
     }
 
+    /**
+     * Returns an arraylist of all events that occurs on the given time of all days.
+     *
+     * @param time - given time in hour
+     *
+     * @return - ArrayList<Event> that occurs on the given time
+     */
     public ArrayList<Event> getEventByTime(String time){
         ArrayList<Event> eventsAtTime = new ArrayList<>();
         for(Event e: eventList){
