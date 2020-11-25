@@ -358,6 +358,19 @@ public class EventManager implements Serializable {
     }
 
     /**
+     * Remove the past events from the eventlist.
+     */
+    public void removePastEvents(){
+        ArrayList<Event> updatedEventList = new ArrayList<>();
+        for (Event e: this.eventList){
+            if (e.getTime().compareTo(LocalDateTime.now()) > 0){
+                updatedEventList.add(e);
+            }
+        }
+        this.eventList = updatedEventList;
+    }
+
+    /**
      * Generates a display format of events.
      *
      * @param eventList - an arraylist of events

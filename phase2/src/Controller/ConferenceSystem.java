@@ -86,6 +86,7 @@ public class ConferenceSystem {
 
         //Menu for sign in or register
         initialLoginHelper();
+        signUpController.callRemovePastEvents();
         messageManager.setSenderID(username);
 
         //initialize all classes that need the username

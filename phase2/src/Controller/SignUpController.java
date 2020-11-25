@@ -180,6 +180,13 @@ public class SignUpController {
     }
 
     /**
+     * Calls EventManager to remove the past events.
+     */
+    public void callRemovePastEvents(){
+        eventManager.removePastEvents();
+    }
+
+    /**
      * Calls SignUpPresenter to print out all events, then asks the user
      * to enter the name of the event he/she wanted to sign up for,
      * or enter 0 if don't want to sign up any event.
