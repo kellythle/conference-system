@@ -6,6 +6,7 @@ import javafx.util.Pair;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * This class stores a list of existing events, legal starting
@@ -382,7 +383,7 @@ public class EventManager implements Serializable {
             events.append("Name: ").append(e.getName())
                     .append(", Time: ").append(e.getTime().toString())
                     .append(", Duration: ").append(e.getDuration()).append(" hours")
-                    .append(", Speaker: ").append(speakerString)
+                    .append(", Speaker(s): ").append(speakerString)
                     .append(", Room Number: ").append(e.getRoomNum().toString())
                     .append(", Capacity: ").append(e.getCapacity()).append(", ").append(available).append("\n");
         }
@@ -557,7 +558,7 @@ public class EventManager implements Serializable {
      * @return the event's capacity
      */
     public int getCapacityByEvent(String event){
-        return findEventByName(event).getCapacity();
+        return Objects.requireNonNull(findEventByName(event)).getCapacity();
     }
 
     /**
@@ -568,7 +569,7 @@ public class EventManager implements Serializable {
      * @return the event's room number
      */
     public Integer getRoomByEvent(String event){
-        return findEventByName(event).getRoomNum();
+        return Objects.requireNonNull(findEventByName(event)).getRoomNum();
     }
 
     /**
@@ -579,6 +580,7 @@ public class EventManager implements Serializable {
      */
     public void changeCapacity(String event, int capacity){
         Event e = findEventByName(event);
+        assert e != null;
         Pair<Integer, Integer> room = new Pair<>(e.getRoomNum(), e.getRoomCapacity());
         Event newEvent = new Event(e.getName(), e.getSpeaker(), e.getTime(), room, e.getDuration(), capacity);
         for (String user: getEventAttendees(event)) {
