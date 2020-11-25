@@ -74,6 +74,12 @@ public class SignUpPresenter {
         }
     }
 
+    /**
+     * Prints the events that occurs on the given date.
+     *
+     * @param em - an EventManager instance
+     * @param date - given date
+     */
     public void displayEventsByDate(EventManager em, LocalDateTime date){
         String events = em.eventListGenerator(em.getEventByDate(date));
         if (events.isEmpty()){
@@ -90,6 +96,12 @@ public class SignUpPresenter {
         }
     }
 
+    /**
+     * Prints the events of the given speaker.
+     *
+     * @param em - an EventManager instance
+     * @param speakerName - the given speaker's name
+     */
     public void displayEventsBySpeakers(EventManager em, String speakerName) {
         String events = em.eventListGenerator(em.getEventBySpeaker(speakerName));
         if (events.isEmpty()){
@@ -100,6 +112,12 @@ public class SignUpPresenter {
         }
     }
 
+    /**
+     * Prints the events that starts on the given time.
+     *
+     * @param em - an EventManager instance
+     * @param time - the given time in hour
+     */
     public void displayEventsByTime(EventManager em, String time){
         String events = em.eventListGenerator(em.getEventByTime(time));
         if (events.isEmpty()){
@@ -174,19 +192,31 @@ public class SignUpPresenter {
         System.out.println("Invalid input, please try again.");
     }
 
+    /**
+     * Prints message that tells the user to enter a date.
+     */
     public void printEnterDatePrompt(){
         System.out.println("Enter a date in the format yyyy-mm-dd or enter 0 to exist\n" +
                 "ex. 2020-05-30");
     }
 
+    /**
+     * Prints "The date you entered has past. Please try again."
+     */
     public void printTimePastPrompt() {
         System.out.println("The date you entered has past. Please try again.");
     }
 
+    /**
+     * Prints "Invalid date format.Please try again."
+     */
     public void printInvalidDateFormat() {
         System.out.println("Invalid date format.Please try again.");
     }
 
+    /**
+     * Prints the options of ways to see events.
+     */
     public void printSeeEventMenu() {
         System.out.println("Options:\n" +
                 "1. See all events\n" +
@@ -198,6 +228,11 @@ public class SignUpPresenter {
                 "Enter 1, 2, 3, 4, 5, or 6: ");
     }
 
+    /**
+     * Prints all existing speakers.
+     *
+     * @param um - an UserManager instance
+     */
     public void printAvailableSpeakers(UserManager um) {
         if (um.getSpeakerList().isEmpty()){
             System.out.println("There are no speakers yet.");
@@ -208,15 +243,26 @@ public class SignUpPresenter {
 
     }
 
+    /**
+     * Prints message that tells the user to enter a speaker name.
+     */
     public void printEnterSpeakerPrompt() {
         System.out.println("Which speaker's events do you want to see?\n" +
                 " (Enter a speaker's name or 0 to exist)");
     }
 
+    /**
+     * Prints "The speaker you entered doesn't exist. Please try again."
+     */
     public void printInvalidSpeakerName() {
         System.out.println("The speaker you entered doesn't exist. Please try again.");
     }
 
+    /**
+     * Prints all times that is available for events to start.
+     *
+     * @param em - an EventManager instance
+     */
     public void printAvailableTimes(EventManager em) {
         System.out.println("Available times: ");
         int i = 0;
@@ -230,6 +276,9 @@ public class SignUpPresenter {
         System.out.println();
     }
 
+    /**
+     * Prints message that tells the user to enter a time.
+     */
     public void printEnterTimePrompt() {
         System.out.println("Enter an available time or enter 00 to exist\n" +
                 "ex. 09 for 9AM, 12 for noon, 16 for 4PM");

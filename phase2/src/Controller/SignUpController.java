@@ -44,6 +44,13 @@ public class SignUpController {
         return scan.nextLine();
     }
 
+    /**
+     * Allows user to see events in different ways. Including:
+     * see all events, see registered events, see events of a date,
+     * see events of a speaker, and see events that start on a time.
+     *
+     * @param username - the username of the user
+     */
     public void seeEventMenu(String username){
         String option;
         do {
@@ -90,6 +97,10 @@ public class SignUpController {
         sp.displayRegisteredEvents(userManager.getRegisteredEvents(username), eventManager);
     }
 
+    /**
+     * Receive input date from the user, check if the date is valid, and
+     * calls SignUpPresenter to print out the events of the given date.
+     */
     public void getEventListByDate(){
         boolean validDate = false;
         String inputDate;
@@ -118,6 +129,10 @@ public class SignUpController {
     }
 
 
+    /**
+     * Receive input speaker name from the user, check if the speaker is valid, and
+     * calls SignUpPresenter to print out the events of the given speaker.
+     */
     public void getEventListBySpeaker(){
         boolean validSpeakerName;
         String name;
@@ -139,6 +154,10 @@ public class SignUpController {
         } while (!validSpeakerName);
     }
 
+    /**
+     * Receive input time from the user, check if the time is valid, and
+     * calls SignUpPresenter to print out the events of the given speaker.
+     */
     private void getEventByStartTime(){
         boolean validTime;
         String inputTime;

@@ -372,7 +372,7 @@ public class SchedulePresenter {
     public void printChangeCapacity(String event, Integer room){
         System.out.println(event + "'s current Capacity is " + eventManager.getCapacityByEvent(event) + " and its " +
                 "Room's Capacity is " + eventManager.getRoom(room).getValue() + ".\nEnter the new " +
-                "Room Capacity (must be greater than " + eventManager.getRoom(room).getValue() +
+                "Room Capacity (must not be greater than " + eventManager.getRoom(room).getValue() +
                 ") you would like or enter 0 to return to the Scheduling Menu: ");
     }
 

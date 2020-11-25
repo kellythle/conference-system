@@ -17,7 +17,7 @@ public class Event implements Serializable {
     private final ArrayList<String> attendees; // names of the attendees
     private final Pair<Integer, Integer> room; //<room number, capacity>
     private final int duration; // the duration of this event
-    private int capacity; // the capacity of this event
+    private final int capacity; // the capacity of this event
 
     /**
      * The name, ID, occurring time, occurring place, and speaker required to create an event.
