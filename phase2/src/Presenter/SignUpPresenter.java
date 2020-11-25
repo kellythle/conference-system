@@ -31,7 +31,7 @@ public class SignUpPresenter {
 
     /**
      * Prints all events. Each line represents one event and is in the
-     * sequence: "Name, Time, Speaker, Room Number, Available/Full".
+     * sequence: "Name, Time, Speaker, Room Number, Capacity, Available/Full".
      *
      * @param eventList - an arraylist of events
      */
@@ -57,7 +57,7 @@ public class SignUpPresenter {
     /**
      * Prints the events whose name are in the given arraylist
      * Each line represents one event and is in the sequence:
-     * "Name, Time, Speaker, Room Number, Available/Full".
+     * "Name, Time, Speaker, Room Number, Capacity, Available/Full".
      *
      * @param registeredEventNames - an arraylist of event names
      * @param em - an instance of EventManager

@@ -32,9 +32,10 @@ public class SchedulePresenter {
                 "Options:\n" +
                 "1. Schedule an Event\n" +
                 "2. Delete an Event\n" +
-                "3. Create a Speaker\n" +
-                "4. Exit Scheduling Menu\n" +
-                "Enter 1, 2, 3 or 4: ");
+                "3. Change an Event's Capacity\n" +
+                "4. Create a Speaker\n" +
+                "5. Exit Scheduling Menu\n" +
+                "Enter 1, 2, 3, 4, or 5: ");
     }
 
     /**
@@ -145,6 +146,22 @@ public class SchedulePresenter {
     }
 
     /**
+     * Prints a prompt for the Organizer to choose a capacity for their event.
+     */
+    public void printCapacityPrompt(String room){
+        System.out.println("Enter the maximum capacity of people for this event " + "(0 < capacity <= " +
+                eventManager.getRoom(Integer.parseInt(room)).getValue() +"): ");
+    }
+
+    /**
+     *
+     */
+    public void printInvalidCapacity(){
+        System.out.println("That capacity is below or equal to the current capacity, " +
+                "over the room capacity, or not a correct format.");
+    }
+
+    /**
      * Prints a string of all the available and unavailable rooms for an event
      * given the chosen time and prompts the user to enter the room they wish
      * to book for their event.
@@ -187,9 +204,10 @@ public class SchedulePresenter {
      * @param time - time of the event
      * @param room - room the event takes place in
      * @param duration - the duration of the event
+     * @param capacity - the capacity of the event
      */
     public void createEventResult(boolean creationSuccess, String name, ArrayList<String> speaker, LocalDateTime time,
-                                  Pair<Integer, Integer> room, int duration) {
+                                  Pair<Integer, Integer> room, int duration, int capacity) {
         String speakerString;
         if (speaker.isEmpty()){
             speakerString = "No speakers";
@@ -201,8 +219,9 @@ public class SchedulePresenter {
                     "\n" + "Name: " + name +
                     "\n" + "Time: " + time.toString() +
                     "\n" + "Duration: " + duration + " hours" +
-                    "\n" + "Speaker: " + speakerString +
-                    "\n" + "Room Number: " + room.getKey().toString());
+                    "\n" + "Speaker(s): " + speakerString +
+                    "\n" + "Room Number: " + room.getKey().toString() +
+                    "\n" + "Capacity: " + capacity + " people");
         } else{
             System.out.println("Event Creation Failed.");
         }
@@ -312,7 +331,7 @@ public class SchedulePresenter {
     public void printEnterDurationPrompt() {
         System.out.println("Enter the duration of your event in hours.\n" +
                 "Enter 1, 2 or 3\n" +
-                "(Each event must be at least 1 hour long and at most 3 hours long.)");
+                "(Each event must be at least 1 hour long and at most 3 hours long.): ");
     }
 
     /**
@@ -334,5 +353,47 @@ public class SchedulePresenter {
      */
     public void printSecondSpeakerPrompt() {
         System.out.print("Second speaker: ");
+    }
+
+    /**
+     * Prints a prompt for the Organizer to change the chosen event capacity.
+     */
+    public void printChangeCapacityEvent() {
+        System.out.println("Enter the Event of which you would like to change the capacity or 0 to return to " +
+                "the Scheduling Menu: ");
+    }
+
+    /**
+     * Prints the capacity of the event and what the Organizer would like to change it to.
+     *
+     * @param event - the event that is chosen
+     * @param room - the room number of the event
+     */
+    public void printChangeCapacity(String event, Integer room){
+        System.out.println(event + "'s current Capacity is " + eventManager.getCapacityByEvent(event) + " and its " +
+                "Room's Capacity is " + eventManager.getRoom(room).getValue() + ".\nEnter the new " +
+                "Room Capacity (must be greater than " + eventManager.getRoom(room).getValue() +
+                ") you would like or enter 0 to return to the Scheduling Menu: ");
+    }
+
+    /**
+     * Print "Your Event's Capacity is already equal to the Room's Capacity."
+     */
+    public void printEventEqualRoom() {
+        System.out.println("Your Event's Capacity is already equal to the Room's Capacity.");
+    }
+
+    /**
+     * Print "Capacity Change Success!"
+     */
+    public void printChangeSuccess(){
+        System.out.println("Capacity Change Success!");
+    }
+
+    /**
+     * Print "Your input is already this Event's current capacity."
+     */
+    public void printCapacityMatch(){
+        System.out.println("Your input is already this Event's current capacity.");
     }
 }

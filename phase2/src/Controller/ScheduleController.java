@@ -178,6 +178,26 @@ public class ScheduleController {
 
         } while (!ValidRoom);
 
+        String capacity;
+        boolean ValidCapacity = false;
+        do {
+            Scanner scanC = new Scanner(System.in);
+            scheduleP.printCapacityPrompt(room);
+            capacity = scanC.nextLine();
+            try {
+                int intCapacity = Integer.parseInt(capacity);
+                if (eventManager.hasCapacityConflict(intCapacity, eventManager.getRoom(Integer.parseInt(room)))){
+                    scheduleP.printInvalidCapacity();
+                    ValidCapacity = false;
+                } else {
+                    ValidCapacity = true;
+                }
+            } catch (Exception e){
+                scheduleP.printInvalidCapacity();
+            }
+
+        } while (!ValidCapacity);
+
 
         int i = 1;
         ArrayList<String> speakers = new ArrayList<>();
@@ -200,7 +220,8 @@ public class ScheduleController {
                 speaker = scanS.nextLine();
                 if (speaker.equals("0")) {
                     return;
-                } else if (!eventManager.getAvailableSpeakers(userManager.getSpeakerList(), eventTime, intDuration).contains(speaker)
+                } else if (!eventManager.getAvailableSpeakers(userManager.getSpeakerList(), eventTime,
+                        intDuration).contains(speaker)
                         || speakers.contains(speaker)) {
                     scheduleP.printFailSpeaker();
                     ValidSpeaker = false;
@@ -213,9 +234,67 @@ public class ScheduleController {
         }
 
         Integer intRoom = Integer.parseInt(room);
-        this.callAddEvent(name.trim(), speakers, eventTime, eventManager.getRoom(intRoom), intDuration);
+        this.callAddEvent(name.trim(), speakers, eventTime, eventManager.getRoom(intRoom), intDuration,
+                Integer.parseInt(capacity));
     }
 
+    /**
+     * Calls SchedulePresenter to prompt the Organizer to change the Event's capacity.
+     */
+    public void changeEventCapacity() {
+        String inputEvent;
+        boolean ValidEvent;
+        if (eventManager.getEventList().isEmpty()) {
+            signUpP.displayEventList(eventManager.getEventList(), eventManager);
+            return;
+        }
+        do {
+            Scanner scan1 = new Scanner(System.in);
+            signUpP.displayEventList(eventManager.getEventList(), eventManager);
+            scheduleP.printChangeCapacityEvent();
+            inputEvent = scan1.nextLine();
+            if (inputEvent.equals("0")){
+                return;
+            } else if (!eventManager.getEvent(inputEvent)) {
+                scheduleP.printNoEvent();
+                ValidEvent = false;
+            } else {
+                ValidEvent = true;
+            }
+        } while (!ValidEvent);
+
+        if (eventManager.isEqualToRoomCapacity(inputEvent)) {
+            scheduleP.printEventEqualRoom();
+            return;
+        }
+
+        String inputCapacity;
+        boolean ValidCapacity = false;
+        do {
+            Scanner scan2 = new Scanner(System.in);
+            scheduleP.printChangeCapacity(inputEvent, eventManager.getRoomByEvent(inputEvent));
+            inputCapacity = scan2.nextLine();
+            try {
+                int intCapacity = Integer.parseInt(inputCapacity);
+                if (inputCapacity.equals("0")) {
+                    return;
+                } else if (intCapacity == eventManager.getCapacityByEvent(inputEvent)){
+                    scheduleP.printCapacityMatch();
+                } else if (eventManager.hasCapacityConflict(intCapacity,
+                        eventManager.getRoom(eventManager.getRoomByEvent(inputEvent))) ||
+                        eventManager.isBelowCurrentCapacity(inputEvent, intCapacity)) {
+                    scheduleP.printInvalidCapacity();
+                    ValidCapacity = false;
+                } else {
+                    eventManager.changeCapacity(inputEvent, intCapacity);
+                    ValidCapacity = true;
+                }
+            } catch (Exception e) {
+                scheduleP.printInvalidCapacity();
+            }
+        } while (!ValidCapacity);
+        scheduleP.printChangeSuccess();
+    }
 
     /**
      * Calls SchedulePresenter to receive a list of events and
@@ -318,18 +397,19 @@ public class ScheduleController {
      * @param time - the occurring time of the event wanted to be created (receive from UI)
      * @param room - the occurring room of the event wanted to be created (receive from UI)
      * @param duration - the duration of the event wanted to be created (receive from UI)
+     * @param capacity - the capacity of the event wanted to be created (receive from UI)
      */
     public void callAddEvent(String name, ArrayList<String> speakers,
-                             LocalDateTime time, Pair<Integer, Integer> room, int duration){
+                             LocalDateTime time, Pair<Integer, Integer> room, int duration, int capacity){
         // create a speaker account if this speaker haven't have an account yet.
         for (String s: speakers) {
             if (!userManager.isSpeaker(s)) {
-                scheduleP.createEventResult(false, name, speakers, time, room, duration);
+                scheduleP.createEventResult(false, name, speakers, time, room, duration, capacity);
                 return;
             }
         }
-        eventManager.addEvent(name, speakers, time, room, duration);
-        scheduleP.createEventResult(true, name, speakers, time, room, duration);
+        eventManager.addEvent(name, speakers, time, room, duration, capacity);
+        scheduleP.createEventResult(true, name, speakers, time, room, duration, capacity);
     }
 
     /**

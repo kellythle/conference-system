@@ -107,11 +107,12 @@ public class EventManager implements Serializable {
      * @param time - the occurring time of this event
      * @param room - the occurring room of this event
      * @param duration - the duration of this event
+     * @param capacity - the capacity of this event
      * @return the Event that is created
      */
     private Event createNewEvent(String name, ArrayList<String> speaker,
-                                 LocalDateTime time, Pair<Integer, Integer> room, int duration) {
-        return new Event(name, speaker, time, room, duration);
+                                 LocalDateTime time, Pair<Integer, Integer> room, int duration, int capacity) {
+        return new Event(name, speaker, time, room, duration, capacity);
     }
 
     /**
@@ -161,10 +162,11 @@ public class EventManager implements Serializable {
      * @param time - the occurring time of this event
      * @param room - the occurring room of this event
      * @param duration - the duration of this event
+     * @param capacity - the capacity of this event
      */
     public void addEvent(String name, ArrayList<String> speaker,
-                         LocalDateTime time, Pair<Integer, Integer> room, int duration) {
-        Event newEvent = createNewEvent(name, speaker, time, room, duration);
+                         LocalDateTime time, Pair<Integer, Integer> room, int duration, int capacity) {
+        Event newEvent = createNewEvent(name, speaker, time, room, duration, capacity);
         if(eventList == null || eventList.isEmpty()) {
             this.eventList = new ArrayList<>();
             this.eventList.add(newEvent);
@@ -212,7 +214,7 @@ public class EventManager implements Serializable {
         if (event.getSpeaker().contains(username)){
             return false;
         }
-        if (event.getRoomCapacity().equals(event.getAttendees().size())) {
+        if (event.getCapacity() == (event.getAttendees().size())) {
             return false;
         }
         for (Event e: eventList){
@@ -366,7 +368,7 @@ public class EventManager implements Serializable {
             return events.toString();
         }
         for (Event e: eventList){
-            int space = e.getRoomCapacity() - e.getAttendees().size();
+            int space = e.getCapacity() - e.getAttendees().size();
             String available = "Full";
             if (space > 0){
                 available = "Available";
@@ -380,8 +382,9 @@ public class EventManager implements Serializable {
             events.append("Name: ").append(e.getName())
                     .append(", Time: ").append(e.getTime().toString())
                     .append(", Duration: ").append(e.getDuration()).append(" hours")
-                    .append(", Speaker: ").append(speakerString).append(", Room Number: ")
-                    .append(e.getRoomNum().toString()).append(", ").append(available).append("\n");
+                    .append(", Speaker: ").append(speakerString)
+                    .append(", Room Number: ").append(e.getRoomNum().toString())
+                    .append(", Capacity: ").append(e.getCapacity()).append(", ").append(available).append("\n");
         }
         return events.toString();
     }
@@ -488,5 +491,81 @@ public class EventManager implements Serializable {
             }
         }
         return false;
+    }
+
+    /**
+     * Returns true if the capacity cannot be used for this event.
+     *
+     * @param capacity - the entered capacity
+     * @param room - the room that the event is chosen in
+     *
+     * @return true if the capacity is not valid, false otherwise.
+     */
+    public boolean hasCapacityConflict(int capacity, Pair<Integer, Integer> room){
+        return capacity <= 0 || capacity > room.getValue();
+    }
+
+    /**
+     * Returns true if the capacity is less than the event's current capacity
+     *
+     * @param event - the event name
+     * @param capacity - the capacity the Organizer wishes to change the event's capacity to
+     *
+     * @return true if the capacity is less than the event's capacity
+     */
+    public boolean isBelowCurrentCapacity(String event, int capacity){
+        return capacity <=  getCapacityByEvent(event);
+    }
+
+    /**
+     * Returns true if capacity is equal to the room's capacity
+     *
+     * @param event - the event name
+     *
+     * @return true if the capacity if equal to the event room's capacity
+     */
+    public boolean isEqualToRoomCapacity(String event){
+        return getCapacityByEvent(event) == getRoom(getRoomByEvent(event)).getValue();
+    }
+
+
+    /**
+     * Returns the capacity of an event given the event's name.
+     *
+     * @param event - the name of the event
+     *
+     * @return the event's capacity
+     */
+    public int getCapacityByEvent(String event){
+        return findEventByName(event).getCapacity();
+    }
+
+    /**
+     * Returns the room's number given the event's name.
+     *
+     * @param event - the name of the event
+     *
+     * @return the event's room number
+     */
+    public Integer getRoomByEvent(String event){
+        return findEventByName(event).getRoomNum();
+    }
+
+    /**
+     * Changes the capacity of an Event.
+     *
+     * @param event - event name
+     * @param capacity - the new capacity
+     */
+    public void changeCapacity(String event, int capacity){
+        Event e = findEventByName(event);
+        Pair<Integer, Integer> room = new Pair<>(e.getRoomNum(), e.getRoomCapacity());
+        Event newEvent = new Event(e.getName(), e.getSpeaker(), e.getTime(), room, e.getDuration(), capacity);
+        for (String user: getEventAttendees(event)) {
+            addUserToEvent(user, newEvent.getName());
+        }
+        deleteConferenceEvent(e.getName());
+        addEvent(newEvent.getName(), newEvent.getSpeaker(), newEvent.getTime(), room, newEvent.getDuration(),
+                newEvent.getCapacity());
     }
 }

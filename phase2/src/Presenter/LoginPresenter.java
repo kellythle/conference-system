@@ -112,7 +112,7 @@ public class LoginPresenter {
         System.out.println("Welcome to the Organizer Menu! \n" +
                 "Options:\n" +
                 "1. Sign up\n" +
-                "2. Create a New Event/Speaker\n" +
+                "2. Manage Events or Speakers\n" +
                 "3. Send a message\n"+
                 "4. Log out\n"+
                 "Enter 1, 2, 3, or 4: ");

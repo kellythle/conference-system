@@ -16,7 +16,8 @@ public class Event implements Serializable {
     private LocalDateTime time; //time of the event
     private final ArrayList<String> attendees; // names of the attendees
     private final Pair<Integer, Integer> room; //<room number, capacity>
-    private int duration;// the duration of this event
+    private final int duration; // the duration of this event
+    private int capacity; // the capacity of this event
 
     /**
      * The name, ID, occurring time, occurring place, and speaker required to create an event.
@@ -25,14 +26,17 @@ public class Event implements Serializable {
      * @param time- the occurring time of this event
      * @param room- the occurring room number of this event
      * @param duration - the duration of this event
+     * @param capacity - the capacity of this event
      */
-    public Event (String name, ArrayList<String> speaker, LocalDateTime time, Pair<Integer, Integer> room, int duration) {
+    public Event (String name, ArrayList<String> speaker, LocalDateTime time, Pair<Integer, Integer> room,
+                  int duration, int capacity) {
         this.name = name;
         this.speaker = speaker;
         this.time = time;
         this.room = room;
         this.attendees = new ArrayList<>();
         this.duration = duration;
+        this.capacity = capacity;
     }
 
     /**
@@ -82,6 +86,11 @@ public class Event implements Serializable {
     public int getDuration() {
         return duration;
     }
+
+    /**
+     * Returns the maximum capacity of people for this event.
+     */
+    public int getCapacity() { return capacity; }
 
     /**
      * This method sets the attendee list of this event.
