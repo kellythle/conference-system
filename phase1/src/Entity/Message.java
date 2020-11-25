@@ -13,6 +13,12 @@ public class Message implements Serializable, Comparable<Message> {
     private String receiver;// Stores the name of the receiver
     private String content;// Stores the content of the message
     private final LocalDateTime time = LocalDateTime.now();// time when the message create
+    private boolean readStatus = false; // Stores if the message has been read by the receiver
+    private boolean archivedBySender = false; // Stores if the message has been archived by the sender
+    private boolean archivedByReceiver = false; // Stores if the message has been archived by the receiver
+    private boolean deletedBySender = false; // Stores if the message has been deleted by the sender
+    private boolean deletedByReceiver = false; // Stores if the message has been deleted by the receiver
+
 
     /**
      * Create new message
@@ -85,5 +91,90 @@ public class Message implements Serializable, Comparable<Message> {
 
     public int compareTo(Message msg) {
         return this.time.compareTo(msg.time);
+    }
+
+    /**
+     * Getter for read status of the message.
+     *
+     * @return true if message has been read, false if not.
+     */
+    public boolean isReadStatus() { return readStatus;}
+
+    /**
+     * Getter for sender archive status of message.
+     *
+     * @return true if message archived by sender, false if not.
+     */
+    public boolean isArchivedBySender() { return archivedBySender;}
+
+    /**
+     * Getter for receiver archive status of message.
+     *
+     * @return true if message archived by receiver, false if not.
+     */
+    public boolean isArchivedByReceiver() {return archivedByReceiver;}
+
+    /**
+     * Getter for sender delete status of message.
+     *
+     * @return true if message deleted by sender, false if not.
+     */
+    public boolean isDeletedBySender() {return deletedBySender;}
+
+    /**
+     * Getter for receiver delete status of message.
+     *
+     * @return true if message deleted by receiver, false if not.
+     */
+    public boolean isDeletedByReceiver() {return deletedByReceiver;}
+
+    /**
+     * Marks message as read (by receiver). Sets value of readStatus to true.
+     */
+    public void markAsRead() { readStatus = true;}
+
+    /**
+     * Marks message as unread (by receiver). Sets value of readStatus to false.
+     */
+    public void markAsUnread() {readStatus = false;}
+
+    /**
+     * Sets value of sender archive status to true.
+     */
+    public void markAsSenderArchive() { archivedBySender = true;}
+
+    /**
+     * Sets value of sender archive status to false.
+     */
+    public void unMarkAsSenderArchive() { archivedBySender = false;}
+
+    /**
+     * Sets value of receiver archive status to true.
+     */
+    public void markAsReceiverArchive() { archivedByReceiver = true;}
+
+    /**
+     * Sets value of receiver archive status to false.
+     */
+    public void unMarkAsReceiverArchive() { archivedByReceiver = false;}
+
+    /**
+     * Sets value of sender delete status to true. Irreversible action.
+     * Sender archive status will be set as false, because message cannot be deleted
+     * and archived by the sender at the same time.
+     */
+    public void markAsSenderDeleted() {
+        deletedBySender = true;
+        archivedBySender = false;
+    }
+
+    /**
+     * Sets value of receiver delete status to true. Irreversible action.
+     * Sender archive status will be set as false, because message cannot be deleted
+     * and archived by the receiver at the same time.
+     */
+    public void markAsReceiverDeleted() {
+        deletedByReceiver = true;
+        archivedByReceiver = false;
     }
 }
