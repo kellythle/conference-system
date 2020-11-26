@@ -241,21 +241,47 @@ public class ConferenceSystem {
             menuOption = loginController.getOrganizerMenu();
             switch (menuOption) {
                 case "1":
-                    signUpHelper();
+                    createOtherUser();
                     break;
                 case "2":
-                    scheduleHelper();
+                    signUpHelper();
                     break;
                 case "3":
-                    organizerMessageHelper();
+                    scheduleHelper();
                     break;
                 case "4":
+                    organizerMessageHelper();
+                    break;
+                case "5":
                     loginController.logout();
                     break;
                 default:
                     loginController.invalidOption();
             }
         } while (!menuOption.equals("4"));
+    }
+
+    /**
+     * Organizer can create other types of user
+     */
+    private void createOtherUser(){
+        String menuOption;
+        do{
+            //Organizer create other types of user
+            menuOption = loginController.getOrganizerCreateUserMenu();
+            switch (menuOption){
+                case "1":
+                    loginController.createAccount("Speaker");
+                    break;
+                case "2":
+                    loginController.createAccount("Attendee");
+                    break;
+                case "3":
+                    loginController.getOrganizerMenu();
+                default:
+                    loginController.invalidOption();
+            }
+        }while (!menuOption.equals("3"));
     }
 
     /**

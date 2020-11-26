@@ -81,7 +81,6 @@ public class LoginPresenter {
      * @param value- boolean value got from login controller
      */
     public void displayLoginInfo(boolean value){
-
         if (value){
             System.out.println("Correct Password.");
         }
@@ -111,11 +110,12 @@ public class LoginPresenter {
     public void printOrganizerMenu(){
         System.out.println("Welcome to the Organizer Menu! \n" +
                 "Options:\n" +
-                "1. Sign up\n" +
-                "2. Manage Events or Speakers\n" +
-                "3. Send a message\n"+
-                "4. Log out\n"+
-                "Enter 1, 2, 3, or 4: ");
+                "1. Create account\n"+
+                "2. Sign up\n" +
+                "3. Manage Events or Speakers\n" +
+                "4. Send a message\n"+
+                "5. Log out\n"+
+                "Enter 1, 2, 3, 4 or 5: ");
     }
 
     /**
@@ -138,6 +138,18 @@ public class LoginPresenter {
                 "1. Sign up\n" +
                 "2. Send a message\n"+
                 "3. Log out\n"+
+                "Enter 1, 2, or 3: ");
+    }
+
+    /**
+     * Print the menu where organizer can create other types of user.
+     */
+    public void printOrganizerCreateUserMenu(){
+        System.out.println("What type of user do you want to create:\n"+
+                "Options:\n" +
+                "1. Speaker\n"+
+                "2. Attendee\n"+
+                "3. Go back to Organizer menu\n"+
                 "Enter 1, 2, or 3: ");
     }
 }

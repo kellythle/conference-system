@@ -1,5 +1,6 @@
 package UseCase;
 
+
 import Entity.UserAccount;
 
 import java.io.Serializable;
@@ -99,7 +100,6 @@ public class UserManager implements Serializable {
      * @return the user type
      */
     public String getUserType(String username){
-
         if (this.getUserByName(username).isOrganizer()){return "Organizer";}
         else if (this.getUserByName(username).isSpeaker()){return "Speaker";}
         else{return "Attendee";}

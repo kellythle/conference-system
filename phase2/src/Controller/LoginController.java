@@ -43,11 +43,15 @@ public class LoginController {
             lp.displayAccountCreateInfo(false);
             return;
         }
-        // Since UserManager's create user can make Speakers, we need to exclude this edge case:
-        else if (type.equals("Speaker")) {
-            lp.displayAccountCreateInfo(false);
-            return;
-        }
+
+        /**
+         *
+         * Exclude in p2
+            else if (type.equals("Speaker")) {
+                lp.displayAccountCreateInfo(false);
+                return;
+            }
+         */
 
         // Two additional constraints to username and password: no spaces and case-sensitivity to duplicates
         if (um.isDuplicate(userName)) {
@@ -73,7 +77,7 @@ public class LoginController {
     }
 
     /**
-     * Overloaded createAccount to use in initial account creation, should NOT allow speakers
+     * Overload createAccount to use in initial account creation, should NOT allow speakers
      */
     public void createAccount() {
         lp.inputName();
@@ -82,6 +86,18 @@ public class LoginController {
         String password = scanner.nextLine();
         lp.inputUserType();
         String type = scanner.nextLine();
+        createAccount(userName, password, type);
+    }
+
+    /**
+     * Overload createAccount to
+     * @param type- string representing the user type that he/she want
+     */
+    public void createAccount(String type){
+        lp.inputName();
+        String userName = scanner.nextLine();
+        lp.inputPassword();
+        String password = scanner.nextLine();
         createAccount(userName, password, type);
     }
 
@@ -148,6 +164,7 @@ public class LoginController {
         lp.printAttendeeMenu();
         return scanner.nextLine();
     }
+
     /**
      * Logs out any existing user
      */
@@ -179,5 +196,14 @@ public class LoginController {
      */
     public String getUserType(String username){
         return um.getUserType(username);
+    }
+
+    /**
+     * Prints a list of options for organizers to create the user account they want
+     * @return the option entered
+     */
+    public String getOrganizerCreateUserMenu(){
+        lp.printOrganizerCreateUserMenu();
+        return scanner.nextLine();
     }
 }

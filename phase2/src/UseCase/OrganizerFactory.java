@@ -3,6 +3,7 @@ package UseCase;
 import Entity.Organizer;
 import Entity.UserAccount;
 
+
 /**
  * A helper class that manages Organizer accounts
  */
