@@ -123,9 +123,7 @@ public class MessagePresenter {
      * @param recipientID - username of the user receiving the message
      */
     public void printSingleConversation(MessageManager messageManager, UserManager userManager, String recipientID){
-        String identity = "Attendee";
-        if (userManager.isOrganizer(recipientID)) {identity = "Organizer";}
-        else if (userManager.isSpeaker(recipientID)) {identity = "Speaker";}
+        String identity = userManager.getUserType(username);
         System.out.println("Your conversation with " + identity + " " + recipientID + ": ");
         ArrayList<UUID> singleConversation = messageManager.getSingleConversationByReceiver(recipientID);
         int conversationLength = singleConversation.size();
