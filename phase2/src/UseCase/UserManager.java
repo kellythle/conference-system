@@ -43,6 +43,9 @@ public class UserManager implements Serializable {
             case "Organizer":
                 userMap.put(userName, new OrganizerFactory().createAccount(userName, password));
                 break;
+            case "VIP":
+                userMap.put(userName, new VIPFactory().createAccount(userName, password));
+                break;
             default:
                 throw new IllegalArgumentException("Invalid input: unknown type");
         }
