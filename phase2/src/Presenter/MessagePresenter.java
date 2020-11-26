@@ -1,8 +1,8 @@
 package Presenter;
 
-import UseCase.EventManager;
 import UseCase.MessageManager;
 import UseCase.UserManager;
+import UseCase.EventManager;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -28,9 +28,9 @@ public class MessagePresenter {
      * Generate string representation of a single message from given MessageManager and
      * message ID.
      *
-     * @param messageManager -
+     * @param messageManager - current messageManager
      * @param messageID - key value of the wanted message in the hashmap
-     * @return a String of the information about this message
+     * @return a basic String representation of this message
      */
     public String getMessageText(MessageManager messageManager, UUID messageID){
         String sender;
@@ -47,6 +47,24 @@ public class MessagePresenter {
     }
 
     /**
+     * Generate string representation of single message that includes which message number it is out of all
+     * the messages in its conversation.
+     *
+     *
+     * @param messageManager - current messageManager
+     * @param messageID - key value of the wanted message in the hashmap
+     * @param messageNumber - numerical location of message in its conversation
+     * @param conversationLength - size of its conversation
+     * @return - a String representation of this message, contextualized by its numerical place in its
+     * conversation.
+     */
+    public String getMessageTextWithMessageNumber(MessageManager messageManager, UUID messageID, int messageNumber,
+                                                  int conversationLength){
+        String messageText = getMessageText(messageManager, messageID);
+        return messageText + "\n           (" + messageNumber + " out of " + conversationLength + " messages)";
+    }
+
+    /**
      * Print Message Menu for Attendees.
      */
     public void printMessageMenu(){
@@ -56,7 +74,7 @@ public class MessagePresenter {
                 "1. View conversations and reply to messages\n" +
                 "2. Send a message:\n"+
                 "Enter 0, 1, or 2: ");
-        }
+    }
 
     /**
      * Print Message Menu for Organizers.
@@ -110,8 +128,12 @@ public class MessagePresenter {
         else if (userManager.isSpeaker(recipientID)) {identity = "Speaker";}
         System.out.println("Your conversation with " + identity + " " + recipientID + ": ");
         ArrayList<UUID> singleConversation = messageManager.getSingleConversationByReceiver(recipientID);
-        for (UUID i: singleConversation){
-            String messageText = getMessageText(messageManager, i);
+        int conversationLength = singleConversation.size();
+        System.out.println("(This conversation has " + conversationLength + " messages.)");
+        for (int i = 0; i < conversationLength; i++){
+            String messageText;
+            messageText = getMessageTextWithMessageNumber(messageManager, singleConversation.get(i),
+                    i+1, conversationLength);
             System.out.println(messageText);
         }
     }
@@ -144,8 +166,10 @@ public class MessagePresenter {
     public void viewOrganizerSingleConversation(MessageManager messageManager, UserManager userManager, String
             recipientID) {
         printSingleConversation(messageManager, userManager, recipientID);
-        System.out.println("Enter 0 to continue browsing conversations or enter anything else to return " +
-                "to the Message Menu: ");
+        System.out.println("Options:\n" +
+                "0: Continue browsing conversations\n" +
+                "Delete a message\n" +
+                "Enter 0 or anything else to return to the Message Menu: ");
     }
 
     /**
