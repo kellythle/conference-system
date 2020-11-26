@@ -235,5 +235,36 @@ public class UserManager implements Serializable {
             return true;
         }
     }
+
+    public boolean isFriendRequestSent(String username, String receiver) {
+        return getUserByName(username).getFriendRequest().contains(receiver);
+    }
+
+    public boolean isFriend(String username, String receiver) {
+        return getUserByName(username).getFriendlist().contains(receiver);
+    }
+
+    public boolean addFriendRequest(String username, String receiver){
+        if (!isFriend(username, receiver) && !isFriendRequestSent(username, receiver)){
+            getUserByName(username).addFriendRequest(receiver);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public boolean addFriend(String username, String receiver, boolean response) {
+        if (response) {
+            getUserByName(username).addFriend(receiver);
+            getUserByName(username).removeFriend(receiver);
+            return true;
+        }
+        else {
+            getUserByName(username).removeFriendRequest(receiver);
+            return false;
+        }
+    }
+
 }
 

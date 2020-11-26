@@ -11,6 +11,8 @@ public abstract class UserAccount implements Serializable {
     private String userName;
     private String passWord;
     private ArrayList<String> registeredEvents; // Stores the list of events that the user have registered
+    private ArrayList<String> friendList; //Stores the list of usernames that user can message
+    private ArrayList<String> friendRequest; //Stores the list of usernames that wants to be friends with user
     protected boolean isOrganizer; // Check if the user is an organizer
     protected boolean isSpeaker; // Check if the user is a speaker
 
@@ -26,6 +28,8 @@ public abstract class UserAccount implements Serializable {
         this.userName = userName;
         this.passWord = passWord;
         this.registeredEvents = new ArrayList<>();
+        this.friendList = new ArrayList<>();
+        this.friendRequest = new ArrayList<>();
         this.isOrganizer = false;
         this.isSpeaker = false;
     }
@@ -83,4 +87,27 @@ public abstract class UserAccount implements Serializable {
      */
     public boolean isSpeaker() {return isSpeaker;}
 
+    public ArrayList<String> getFriendlist() {
+        return friendList;
+    }
+
+    public void addFriend(String friendID) {
+        friendList.add(friendID);
+    }
+
+    public void removeFriend(String friendID) {
+        friendList.remove(friendID);
+    }
+
+    public ArrayList<String> getFriendRequest() {
+        return friendRequest;
+    }
+
+    public void addFriendRequest(String friendID) {
+        friendRequest.add(friendID);
+    }
+
+    public void removeFriendRequest(String friendID) {
+        friendRequest.remove(friendID);
+    }
 }
