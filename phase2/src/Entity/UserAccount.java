@@ -13,8 +13,7 @@ public abstract class UserAccount implements Serializable {
     private ArrayList<String> registeredEvents; // Stores the list of events that the user have registered
     private ArrayList<String> friendList; //Stores the list of usernames that user can message
     private ArrayList<String> friendRequest; //Stores the list of usernames that wants to be friends with user
-    protected boolean isOrganizer; // Check if the user is an organizer
-    protected boolean isSpeaker; // Check if the user is a speaker
+    protected String userType; // The type of user created, should match exactly with the subclasses filename (no .java)
 
     public UserAccount() {}
 
@@ -30,8 +29,6 @@ public abstract class UserAccount implements Serializable {
         this.registeredEvents = new ArrayList<>();
         this.friendList = new ArrayList<>();
         this.friendRequest = new ArrayList<>();
-        this.isOrganizer = false;
-        this.isSpeaker = false;
     }
 
     /**
@@ -62,6 +59,15 @@ public abstract class UserAccount implements Serializable {
     public void setPassWord(String passWord) {this.passWord = passWord;}
 
     /**
+     * Getter of userType
+     *
+     * @return the type of this current user
+     */
+    public String getUserType() {
+        return this.userType;
+    }
+
+    /**
      * Return the list of registered events
      * @return the list of registered events
      */
@@ -72,20 +78,6 @@ public abstract class UserAccount implements Serializable {
      * @param eventName- registered event name
      */
     public void registerEvent(String eventName) {this.registeredEvents.add(eventName);}
-
-    /**
-     * Identify the user whether is an organizer or not
-     *
-     * @return boolean value
-     */
-    public boolean isOrganizer() {return isOrganizer;}
-
-    /**
-     * Identify the user whether is a speaker or not
-     *
-     * @return boolean value
-     */
-    public boolean isSpeaker() {return isSpeaker;}
 
     public ArrayList<String> getFriendlist() {
         return friendList;

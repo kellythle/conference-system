@@ -95,14 +95,24 @@ public class UserManager implements Serializable {
     }
 
     /**
+     *  Gets the type of the user as a String
      *
      * @param username - name of the user
      * @return the user type
      */
     public String getUserType(String username){
-        if (this.getUserByName(username).isOrganizer()){return "Organizer";}
-        else if (this.getUserByName(username).isSpeaker()){return "Speaker";}
-        else{return "Attendee";}
+        return getUserByName(username).getUserType();
+    }
+
+    /**
+     * Checks if a user matches a given type
+     *
+     * @param username The username of the user to be checked
+     * @param wantedType The type of user to compare with
+     * @return true iff the user is of the given type
+     */
+    public boolean isOfType(String username, String wantedType){
+        return getUserType(username).equals(wantedType);
     }
 
     /**
@@ -151,28 +161,6 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Returns true if this user is an organizer.
-     *
-     * @param username - the username of this user
-     * @return true if this user is an Organizer
-     */
-    public boolean isOrganizer(String username)
-    {
-        return userMap.get(username).isOrganizer();
-    }
-
-    /**
-     * Returns true if this user is a speaker.
-     *
-     * @param username - the username of this user
-     * @return true if this user is a Speaker
-     */
-    public boolean isSpeaker(String username)
-    {
-        return userMap.get(username).isSpeaker();
-    }
-
-    /**
      * Return a list of speakers' usernames.
      *
      * @return an ArrayList of String representing the usernames of speakers
@@ -181,7 +169,7 @@ public class UserManager implements Serializable {
         Set<String> usernames = userMap.keySet();
         ArrayList<String> speakers = new ArrayList<>();
         for(int i = 0; i < usernames.size(); i++){
-            if (userMap.get(usernames.toArray()[i]).isSpeaker())
+            if (isOfType((String)usernames.toArray()[i], "Speaker"))
             speakers.add((String)usernames.toArray()[i]);
         }
         return speakers;
@@ -195,7 +183,7 @@ public class UserManager implements Serializable {
         Set<String> usernames = userMap.keySet();
         ArrayList<String> attendees = new ArrayList<>();
         for(int i = 0; i < usernames.size(); i++){
-            if (!userMap.get(usernames.toArray()[i]).isSpeaker() && !userMap.get(usernames.toArray()[i]).isOrganizer())
+            if (isOfType((String)usernames.toArray()[i], ("Attendee")))
                 attendees.add((String)usernames.toArray()[i]);
         }
         return attendees;
@@ -223,14 +211,14 @@ public class UserManager implements Serializable {
      * @return true if the user can send to the receiver, fails silently otherwise
      */
     public boolean canSend(String username, String receiver){
-        if (!containsUser(receiver)){
+        if (!containsUser(receiver)){ // receiver not found
             return false;
-        } else if (receiver.equals(username)){
+        } else if (receiver.equals(username)){ // send to self
             return false;
-        } else if (isOrganizer(username)){
-            return !isOrganizer(receiver);
-        } else if (isSpeaker(username)){
-            return !isOrganizer(receiver) && !isSpeaker(receiver);
+        } else if (isOfType(username, "Organizer")){ // organizers can send to any non organizers
+            return !isOfType(receiver, "Organizer");
+        } else if (isOfType(username, "Speaker")){ // speakers can send to attendees
+            return isOfType(receiver, "Attendee");
         } else{
             return true;
         }

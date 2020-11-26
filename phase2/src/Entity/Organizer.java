@@ -11,6 +11,6 @@ public class Organizer extends UserAccount {
      */
     public Organizer(String userName, String passWord){
         super(userName, passWord);
-        this.isOrganizer = true;
+        this.userType = "Organizer";
     }
 }

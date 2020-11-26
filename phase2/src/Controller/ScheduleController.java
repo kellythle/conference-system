@@ -403,7 +403,7 @@ public class ScheduleController {
                              LocalDateTime time, Pair<Integer, Integer> room, int duration, int capacity){
         // create a speaker account if this speaker haven't have an account yet.
         for (String s: speakers) {
-            if (!userManager.isSpeaker(s)) {
+            if (!userManager.isOfType(s, "Speaker")) {
                 scheduleP.createEventResult(false, name, speakers, time, room, duration, capacity);
                 return;
             }

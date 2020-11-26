@@ -11,6 +11,7 @@ public class Attendee extends UserAccount {
      */
     public Attendee(String userName, String passWord){
         super(userName, passWord);
+        this.userType = "Attendee";
     }
 
 }

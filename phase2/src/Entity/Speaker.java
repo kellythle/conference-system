@@ -11,6 +11,6 @@ public class Speaker extends UserAccount {
      */
     public Speaker(String userName, String passWord){
         super(userName, passWord);
-        this.isSpeaker = true;
+        this.userType = "Speaker";
     }
 }
