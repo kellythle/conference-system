@@ -258,7 +258,7 @@ public class ConferenceSystem {
                 default:
                     loginController.invalidOption();
             }
-        } while (!menuOption.equals("4"));
+        } while (!menuOption.equals("5"));
     }
 
     /**
@@ -378,15 +378,12 @@ public class ConferenceSystem {
                     scheduleController.changeEventCapacity();
                     break;
                 case "4":
-                    scheduleController.addNewSpeaker();
-                    break;
-                case "5":
                     scheduleController.endScheduling();
                     break;
                 default:
                     scheduleController.failScheduleMenu();
             }
-        } while (!scheduleMenuOption.equals("5"));
+        } while (!scheduleMenuOption.equals("4"));
     }
 
     /**

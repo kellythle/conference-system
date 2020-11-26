@@ -358,7 +358,7 @@ public class EventManager implements Serializable {
     }
 
     /**
-     * Remove the past events from the eventlist.
+     * Remove the past events from the event list.
      */
     public void removePastEvents(){
         ArrayList<Event> updatedEventList = new ArrayList<>();

@@ -27,6 +27,36 @@ public class LoginController {
         lp = new LoginPresenter();
     }
 
+    /**
+     * Check if the password is in the wanted format.
+     *
+     * @param password - the input password
+     * @return true if the password is in the correct format, otherwise return false
+     */
+    private boolean validPassword(String password){
+        //Check the length of the password, at least 4 characters, at most 8 characters
+        if (password.length() < 4){
+            lp.printPasswordTooShort();
+            return false;
+        } else if (password.length() > 8) {
+            lp.printPasswordTooLong();
+            return false;
+        }
+        //Checks if the password has same characters in a role more than 2 (case sensitive)
+        int sameChar = 1;
+        for (int i = 0; i < password.length() - 1; i++){
+            if(password.charAt(i) == password.charAt(i + 1)){
+                sameChar++;
+                if(sameChar == 3){
+                    lp.printPasswordTooManyDuplicate();
+                    return false;
+                }
+            }else{
+                sameChar = 1;
+            }
+        }
+        return true;
+    }
 
     /**
      * Creates a new user, given the type of user and account information.
@@ -44,15 +74,6 @@ public class LoginController {
             return;
         }
 
-        /**
-         *
-         * Exclude in p2
-            else if (type.equals("Speaker")) {
-                lp.displayAccountCreateInfo(false);
-                return;
-            }
-         */
-
         // Two additional constraints to username and password: no spaces and case-sensitivity to duplicates
         if (um.isDuplicate(userName)) {
             lp.printDuplicateName();
@@ -64,7 +85,6 @@ public class LoginController {
             lp.displayAccountCreateInfo(false);
             return;
         }
-
         // below deals with any input other than the ones listed above
         try {
             this.um.createUser(userName, password, type);
@@ -82,8 +102,15 @@ public class LoginController {
     public void createAccount() {
         lp.inputName();
         String userName = scanner.nextLine();
-        lp.inputPassword();
-        String password = scanner.nextLine();
+        boolean validPW;
+        String password;
+        do {
+            lp.inputPassword();
+            lp.passwordInstruction();
+            password = scanner.nextLine();
+            // check if the password matches the requested format
+            validPW = this.validPassword(password);
+        }while(!validPW);
         lp.inputUserType();
         String type = scanner.nextLine();
         createAccount(userName, password, type);
@@ -94,10 +121,20 @@ public class LoginController {
      * @param type- string representing the user type that he/she want
      */
     public void createAccount(String type){
-        lp.inputName();
+        lp.inputNameOfType(type);
         String userName = scanner.nextLine();
-        lp.inputPassword();
-        String password = scanner.nextLine();
+        if(userName.equals("0")){
+            return;
+        }
+        boolean validPW;
+        String password;
+        do {
+            lp.inputPasswordOfType(type);
+            lp.passwordInstruction();
+            password = scanner.nextLine();
+            // check if the password matches the requested format
+            validPW = this.validPassword(password);
+        }while(!validPW);
         createAccount(userName, password, type);
     }
 

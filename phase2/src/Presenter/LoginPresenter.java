@@ -112,7 +112,7 @@ public class LoginPresenter {
                 "Options:\n" +
                 "1. Create account\n"+
                 "2. Sign up\n" +
-                "3. Manage Events or Speakers\n" +
+                "3. Manage Events\n" +
                 "4. Send a message\n"+
                 "5. Log out\n"+
                 "Enter 1, 2, 3, 4 or 5: ");
@@ -151,6 +151,57 @@ public class LoginPresenter {
                 "2. Attendee\n"+
                 "3. Go back to Organizer menu\n"+
                 "Enter 1, 2, or 3: ");
+    }
+
+    /**
+     * Prints message about password being too short.
+     */
+    public void printPasswordTooShort() {
+        System.out.println("Password too short. Password should contain at least 4 characters.");
+    }
+
+    /**
+     * Prints message about password being too long.
+     */
+    public void printPasswordTooLong() {
+        System.out.println("Password too long. Password should contain at most 8 characters.");
+    }
+
+    /**
+     * Prints message about password contains more than 2 same characters in a role.
+     */
+    public void printPasswordTooManyDuplicate() {
+        System.out.println("Password cannot contain more than 2 same characters in a role.");
+    }
+
+    /**
+     * Prints the password instructions.
+     */
+    public void passwordInstruction() {
+        System.out.println("*** Password Instructions ***\n" +
+                "(a) At least 4 characters, at most 8 characters\n" +
+                "(b) Cannot contain more than 2 same character in a role (Ex. abbbc, helloooo, are invalid)");
+    }
+
+    /**
+     * Prints message that tells the organizer to enter
+     * the name of the type of user wanted to be create
+     *
+     * @param type - the type of the user wanted to be create
+     */
+    public void inputNameOfType(String type) {
+        System.out.println("Please enter the username of who you would like to make a(n) "+ type +" or 0 to return to " +
+                "the Organizer Menu: ");
+    }
+
+    /**
+     * Prints message that tells the organizer to enter
+     * the password of the type of user wanted to be create
+     *
+     * @param type - the type of the user wanted to be create
+     */
+    public void inputPasswordOfType(String type) {
+        System.out.println("Please enter the password you want this "+ type +" to have: ");
     }
 }
 

@@ -33,8 +33,7 @@ public class SchedulePresenter {
                 "1. Schedule an Event\n" +
                 "2. Delete an Event\n" +
                 "3. Change an Event's Capacity\n" +
-                "4. Create a Speaker\n" +
-                "5. Exit Scheduling Menu\n" +
+                "4. Exit Scheduling Menu\n" +
                 "Enter 1, 2, 3, 4, or 5: ");
     }
 
@@ -225,52 +224,6 @@ public class SchedulePresenter {
         } else{
             System.out.println("Event Creation Failed.");
         }
-    }
-
-    /**
-     * Prints asking the Organizer for a Speaker username.
-     */
-    public void addSpeaker(){
-        System.out.println("Please enter the username of who you would like to make a Speaker or 0 to return to " +
-                "the Scheduling Menu: ");
-    }
-
-    /**
-     * Prints asking the Organizer for a Speaker password.
-     */
-    public void addSpeakerPassword(){
-        System.out.println("Please enter the password you want this Speaker to have: ");
-    }
-
-    /**
-     * Prints "Speaker successfully created!"
-     */
-    public void successSpeaker(){
-        System.out.println("Speaker successfully created!");
-    }
-
-    /**
-     * Prints "Speaker creation failed."
-     */
-    public void failedSpeaker(){
-        System.out.println("Speaker creation failed.");
-    }
-
-    /**
-     * Prints "You cannot make a Speaker account with an empty username or spaces, or you have
-     * entered a username that already exists in the system."
-     */
-    public void failedUsername(){
-        System.out.println("You cannot make a Speaker account with an empty username or spaces, or you have " +
-                "entered a username that already exists in the system.");
-    }
-
-    /**
-     * Prints "You cannot make a Speaker account with an empty password or with spaces."
-     */
-    public void failedPassword(){
-        System.out.println("You cannot make a Speaker account with an empty password or " +
-                "with spaces.");
     }
 
     /**

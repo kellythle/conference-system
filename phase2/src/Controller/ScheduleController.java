@@ -328,64 +328,6 @@ public class ScheduleController {
                 scheduleP.printDeletionSuccess();
             }
         } while (!ValidEvent);
-
-    }
-
-    /**
-     * Checks if this username already exists. Returns true if
-     * this username is not an existing username of this conference.
-     *
-     * @param speakerName - name of the speaker
-     *
-     * @return true if this speaker name is not an existing username of this conference
-     */
-    private boolean canCreateSpeaker(String speakerName){
-        return !userManager.containsUser(speakerName);
-    }
-
-    /**
-     * Calls SchedulePresenter to prompt the User for the Speaker username and password.
-     * Prints if the new speaker account is added to this conference.
-     */
-    public void addNewSpeaker() {
-        String speakerName;
-        String password;
-        boolean ValidName;
-        boolean ValidPassword;
-        do {
-            Scanner scan = new Scanner(System.in);
-            scheduleP.addSpeaker();
-            speakerName = scan.nextLine();
-            if (speakerName.equals("0")) {
-                return;
-            } else if (speakerName.trim().isEmpty() || userManager.isDuplicate(speakerName)
-                    || speakerName.contains(" ")) {
-                scheduleP.failedUsername();
-                ValidName = false;
-            } else {
-                ValidName = true;
-            }
-        } while (!ValidName);
-
-        do {
-            Scanner scan1 = new Scanner(System.in);
-            scheduleP.addSpeakerPassword();
-            password = scan1.nextLine();
-            if (password.trim().isEmpty() || password.contains(" ")) {
-                scheduleP.failedPassword();
-                ValidPassword = false;
-            } else {
-                ValidPassword = true;
-            }
-        } while (!ValidPassword);
-
-
-        if(canCreateSpeaker(speakerName)) {
-            userManager.createUser(speakerName, password, "Speaker");
-            scheduleP.successSpeaker();
-        } else {
-            scheduleP.failedSpeaker();
-        }
     }
 
     /**
