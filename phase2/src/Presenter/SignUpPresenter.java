@@ -102,12 +102,25 @@ public class SignUpPresenter {
      * @param em - an EventManager instance
      * @param speakerName - the given speaker's name
      */
-    public void displayEventsBySpeakers(EventManager em, String speakerName) {
+    public void displayEventsBySpeakers(EventManager em, String speakerName, String isMyself) {
         String events = em.eventListGenerator(em.getEventBySpeaker(speakerName));
         if (events.isEmpty()){
-            System.out.println("Speaker " + speakerName + " has no events yet.");
+            switch (isMyself) {
+                case "no":
+                    System.out.println("Speaker " + speakerName + " has no events yet.");
+                    break;
+                case "yes":
+                    System.out.println("You have no events yet.");
+                    break;
+            }
         } else {
-            System.out.println("Events of speaker " + speakerName + ":");
+            switch (isMyself){
+                case "no":
+                    System.out.println("Events of speaker " + speakerName + ":");
+                    break;
+                case "yes":
+                    System.out.println("Your events: ");
+            }
             System.out.println(events);
         }
     }
@@ -224,8 +237,9 @@ public class SignUpPresenter {
                 "3. See events of one day\n" +
                 "4. See events of a Speaker\n" +
                 "5. See events of a starting time on all days\n" +
-                "6. Back to Sign Up Menu\n" +
-                "Enter 1, 2, 3, 4, 5, or 6: ");
+                "6. See my events (only for Speakers)\n" +
+                "7. Back to Sign Up Menu\n" +
+                "Enter 1, 2, 3, 4, 5, 6 or 7: ");
     }
 
     /**
@@ -282,5 +296,20 @@ public class SignUpPresenter {
     public void printEnterTimePrompt() {
         System.out.println("Enter an available time or enter 00 to exist\n" +
                 "ex. 09 for 9AM, 12 for noon, 16 for 4PM");
+    }
+
+    /**
+     * Prints message that shows the speaker user not to sign up
+     * for its own event.
+     */
+    public void printYouAreTheSpeaker() {
+        System.out.println("You cannot sign up for your own event. Please select other events.");
+    }
+
+    /**
+     * Prints "You are not a speaker."
+     */
+    public void youAreNotASpeaker() {
+        System.out.println("You are not a speaker.");
     }
 }

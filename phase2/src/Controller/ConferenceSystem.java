@@ -293,15 +293,18 @@ public class ConferenceSystem {
             menuOption = loginController.getSpeakerMenu();
             switch (menuOption) {
                 case "1":
-                    speakerMessageHelper();
+                    signUpHelper();
                     break;
                 case "2":
+                    speakerMessageHelper();
+                    break;
+                case "3":
                     loginController.logout();
                     break;
                 default:
                     loginController.invalidOption();
             }
-        } while (!menuOption.equals("2"));
+        } while (!menuOption.equals("3"));
     }
 
     /**

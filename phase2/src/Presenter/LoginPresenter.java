@@ -124,9 +124,10 @@ public class LoginPresenter {
     public void printSpeakerMenu(){
         System.out.println("Welcome to the Speaker Menu! \n" +
                 "Options:\n" +
-                "1. Send a message\n"+
-                "2. Log out\n"+
-                "Enter 1 or 2: ");
+                "1. Sign up\n" +
+                "2. Send a message\n"+
+                "3. Log out\n"+
+                "Enter 1, 2 or 3: ");
     }
 
     /**
@@ -180,7 +181,7 @@ public class LoginPresenter {
     public void passwordInstruction() {
         System.out.println("*** Password Instructions ***\n" +
                 "(a) At least 4 characters, at most 8 characters\n" +
-                "(b) Cannot contain more than 2 same character in a role (Ex. abbbc, helloooo, are invalid)");
+                "(b) Cannot contain more than 2 same character in a role (Ex. 10003, helloooo, are invalid)");
     }
 
     /**

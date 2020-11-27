@@ -74,11 +74,13 @@ public class SignUpController {
                     this.getEventByStartTime();
                     break;
                 case "6":
+                    this.getMyEvents(username);
+                case "7":
                     break;
                 default:
                     sp.printInvalidInput();
             }
-        }while (!option.equals("6"));
+        }while (!option.equals("7"));
     }
 
     /**
@@ -148,10 +150,25 @@ public class SignUpController {
                 sp.printInvalidSpeakerName();
                 validSpeakerName = false;
             } else{
-                sp.displayEventsBySpeakers(eventManager, name);
+                sp.displayEventsBySpeakers(eventManager, name, "no");
                 validSpeakerName = true;
             }
         } while (!validSpeakerName);
+    }
+
+    /**
+     * Calls SignUpPresenter to print out the events of the user if the
+     * user is a speaker. Otherwise calls SignUpPresenter to show invalid
+     * messages.
+     *
+     * @param userName - the name of the user
+     */
+    public void getMyEvents(String userName){
+        if (userManager.getSpeakerList().contains(userName)) {
+            sp.displayEventsBySpeakers(eventManager, userName, "yes");
+        }else{
+            sp.youAreNotASpeaker();
+        }
     }
 
     /**
@@ -198,6 +215,7 @@ public class SignUpController {
     public void signUpEvent(String username){
         boolean validEventName = false;
         String eventName;
+        boolean isSpeaker = userManager.getSpeakerList().contains(username);
         do {
             do {
                 Scanner scan1 = new Scanner(System.in);
@@ -210,6 +228,8 @@ public class SignUpController {
                     return; //back to Sign Up System Menu
                 if (!eventManager.getEvent(eventName)) {
                     sp.printInvalidEventName(); //invalid event name
+                } else if (isSpeaker && eventManager.getEventListBySpeaker(username).contains(eventName)){
+                    sp.printYouAreTheSpeaker();
                 } else {
                     validEventName = true;
                 }
