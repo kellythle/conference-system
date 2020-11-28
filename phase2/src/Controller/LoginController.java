@@ -100,8 +100,18 @@ public class LoginController {
      * Overload createAccount to use in initial account creation, should NOT allow speakers
      */
     public void createAccount() {
-        lp.inputName();
-        String userName = scanner.nextLine();
+        boolean nameIsZero;
+        String userName;
+        do {
+            lp.inputName();
+            userName = scanner.nextLine();
+            if(userName.equals("0")){
+                lp.printInvalidUserName();
+                nameIsZero = true;
+            }else{
+                nameIsZero = false;
+            }
+        }while(nameIsZero);
         boolean validPW;
         String password;
         do {

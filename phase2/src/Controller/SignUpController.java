@@ -183,7 +183,7 @@ public class SignUpController {
             sp.printAvailableTimes(eventManager);
             sp.printEnterTimePrompt();
             inputTime = scan.nextLine();
-            if(inputTime.equals("00")){
+            if(inputTime.equals("0")){
                 return;
             }
             if(!eventManager.getStartTimes().contains(inputTime)){

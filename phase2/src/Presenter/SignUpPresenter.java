@@ -294,7 +294,7 @@ public class SignUpPresenter {
      * Prints message that tells the user to enter a time.
      */
     public void printEnterTimePrompt() {
-        System.out.println("Enter an available time or enter 00 to exist\n" +
+        System.out.println("Enter an available time or enter 0 to exist\n" +
                 "ex. 09 for 9AM, 12 for noon, 16 for 4PM");
     }
 

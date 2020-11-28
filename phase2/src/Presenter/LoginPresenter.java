@@ -19,7 +19,8 @@ public class LoginPresenter {
      * Prompts the client to enter a username.
      */
     public void inputName(){
-        System.out.println("Enter your unique username: ");
+        System.out.println("Enter your unique username: \n" +
+                "(Please do not use 0 as your username)");
     }
 
     /**
@@ -203,6 +204,13 @@ public class LoginPresenter {
      */
     public void inputPasswordOfType(String type) {
         System.out.println("Please enter the password you want this "+ type +" to have: ");
+    }
+
+    /**
+     * Prints message about invalid username.
+     */
+    public void printInvalidUserName() {
+        System.out.println("0 is not a valid username.");
     }
 }
 
