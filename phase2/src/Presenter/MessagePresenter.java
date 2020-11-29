@@ -74,7 +74,8 @@ public class MessagePresenter {
                 "1. View conversations and reply to messages\n" +
                 "2. Send a message\n"+
                 "3. View archived conversations:\n" +
-                "Enter 0, 1, 2, or 3: ");
+                "4. Manage Friend List:\n" +
+                "Enter 0, 1, 2, 3, or 4: ");
     }
 
     /**
@@ -150,6 +151,7 @@ public class MessagePresenter {
                 "1. Delete all archived conversations \n" +
                 "Enter a username, 1, or anything else to return to Message Menu: ");
     }
+
 
     /**
      * Prints conversation with single user, marks the conversation as read.
@@ -492,5 +494,84 @@ public class MessagePresenter {
 
     public void printConversationDoesNotExist(){
         System.out.println("This conversation does not exist.");
+    }
+
+    /**
+     * Print list of friends
+     * @param userManager - an UserManager
+     * @param username - username of the user
+     */
+    public void printFriendList(UserManager userManager, String username){
+        System.out.println("Friend list of " + username + ":");
+        ArrayList<String> friends = userManager.getFriendList(username);
+        System.out.println(friends);
+    }
+
+    /**
+     * Print list of friend requests
+     * @param userManager - an UserManager
+     * @param username - username of the user
+     */
+    public void printFriendRequestList(UserManager userManager, String username){
+        System.out.println("You have received friend requests from following users:");
+        ArrayList<String> friends = userManager.getFriendRequest(username);
+        System.out.println(friends);
+    }
+
+    public void printSendFriendRequest() {
+        System.out.println("Enter the username of the user you want to send friend request:");
+    }
+
+    public void printAcceptFriendRequest() {
+        System.out.println("Enter the username of the user you want to accept friend request:");
+    }
+
+    public void printAcceptFriendRequestSuccess(String receiver) {
+        System.out.println("You and " + receiver + " are now friends!");
+    }
+
+    public void printNotInFriendRequest(String receiver) {
+        System.out.println(receiver + "is not in your friend request.");
+    }
+
+    public void printDeclineFriendRequest() {
+        System.out.println("Enter the username of the user you want to decline friend request:");
+    }
+
+    public void printDeclineFriendRequestSuccess(String receiver) {
+        System.out.println("You declined friend request from " + receiver + ":(");
+    }
+
+
+    public void printNotFriend(String receiverID) {
+        System.out.println(receiverID + " is not in your friend :(");
+    }
+
+    public void printCannotBeFriend(){
+        System.out.println("You cannot add Speaker and Organizer as friend");
+    }
+
+    /**
+     * Print Friend List Menu for Organizers.
+     */
+    public void printFriendListMenu(){
+        System.out.println("Options:\n" +
+                "0. Return to previous menu\n" +
+                "1. View/manage received friend requests\n" +
+                "2. Send friend requests\n" +
+                "3. View your friend list\n" +
+                "Enter 0, 1, 2, or 3: ");
+    }
+
+    public void printFriendRequestMenu(){
+        System.out.println("Options:\n" +
+                "0. Return to previous menu\n" +
+                "1. Accept friend request\n" +
+                "2. Decline friend requests\n" +
+                "Enter 0, 1, or 2: ");
+    }
+
+    public void printWrongUsername(String receiver){
+        System.out.println("There is no user with username " + receiver);
     }
 }
