@@ -440,7 +440,7 @@ public class ConferenceSystem {
                 case "3":
                     speakerMessageController.viewArchivedConversations();
                 case "4":
-
+                    speakerMessageController.manageFriendList();
                 default:
                     speakerMessageController.invalidInput();
             }

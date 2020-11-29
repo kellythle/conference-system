@@ -520,7 +520,7 @@ public class MessagePresenter {
 
 
     public void printNotFriend(String receiverID) {
-        System.out.println(receiverID + " is not in your friend :(");
+        System.out.println(receiverID + " is not in your friend list:(");
     }
 
     public void printCannotBeFriend(){
