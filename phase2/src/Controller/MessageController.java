@@ -43,6 +43,15 @@ public class MessageController {
      */
     public boolean sendSingleMessage(String receiverID, String messageContent){
         if (myUserManager.canSend(username, receiverID)){
+            if (myUserManager.getUserType(receiverID).equals("Attendee")) {
+                if (myUserManager.isFriend(username, receiverID)) {
+                    return myMessageManager.createMessage(receiverID, messageContent);
+                }
+                else {
+                    messagePresenter.printNotFriend(receiverID);
+                    return false;
+                }
+            }
             return myMessageManager.createMessage(receiverID, messageContent);
         } else {return false;}
     }
@@ -174,7 +183,7 @@ public class MessageController {
      * Prompts user for receiver ID and message content. Sends single message.
      */
     public void sendMessage(){
-        messagePresenter.printAttendees(myUserManager);
+        messagePresenter.printFriendList(myUserManager, username);
         messagePresenter.printSpeakers(myUserManager);
         Scanner scanner = new Scanner(System.in);
         messagePresenter.printReceiverIDPrompt();
@@ -275,4 +284,106 @@ public class MessageController {
             messagePresenter.printArchiveDeletion();
         }
     }
+
+    public void sendingFriendRequest(String receiver) {
+        if (myUserManager.containsUser(receiver)) {
+            if (myUserManager.getUserType(receiver).equals("Attendee")) {
+                myUserManager.addFriendRequest(username, receiver);
+            } else {
+                messagePresenter.printCannotBeFriend();
+            }
+        }
+        else {
+            messagePresenter.printWrongUsername(receiver);
+        }
+    }
+
+    public void sendFriendRequest() {
+        Scanner scan = new Scanner(System.in);
+        messagePresenter.printSendFriendRequest();
+        String input = scan.nextLine();
+        sendingFriendRequest(input);
+    }
+
+    public void acceptFriendRequest() {
+        Scanner scan = new Scanner(System.in);
+        messagePresenter.printAcceptFriendRequest();
+        String input = scan.nextLine();
+        if (myUserManager.getFriendRequest(username).contains(input)) {
+            myUserManager.addFriend(username, input, true);
+            messagePresenter.printAcceptFriendRequestSuccess(input);
+        }
+        else {
+            messagePresenter.printNotInFriendRequest(input);
+        }
+    }
+
+    public void declineFriendRequest() {
+        Scanner scan = new Scanner(System.in);
+        messagePresenter.printDeclineFriendRequest();
+        String input = scan.nextLine();
+        if (myUserManager.getFriendRequest(username).contains(input)) {
+            myUserManager.addFriend(username, input, false);
+            messagePresenter.printDeclineFriendRequestSuccess(input);
+        }
+        else {
+            messagePresenter.printNotInFriendRequest(input);
+        }
+    }
+
+    public void viewFriendRequest() {
+        Scanner scan = new Scanner(System.in);
+        messagePresenter.printFriendRequestList(myUserManager, username);
+        messagePresenter.printFriendRequestMenu();
+        String input = scan.nextLine();
+        boolean loop = false;
+        do {
+            switch (input) {
+                case "0":
+                    loop = true;
+                    break;
+                case "1":
+                    loop = true;
+                    acceptFriendRequest();
+                    break;
+                case "2":
+                    loop = true;
+                    declineFriendRequest();
+                    break;
+            }
+        } while (!loop);
+    }
+
+    public void viewFriendList() {
+        messagePresenter.printFriendList(myUserManager, username);
+    }
+
+    public void manageFriendList() {
+        Scanner scan = new Scanner(System.in);
+        messagePresenter.printFriendRequestList(myUserManager, username);
+        messagePresenter.printFriendListMenu();
+        String input = scan.nextLine();
+        boolean loop = false;
+        do {
+            switch (input) {
+                case "0":
+                    loop = true;
+                    break;
+                case "1":
+                    loop = true;
+                    viewFriendRequest();
+                    break;
+                case "2":
+                    loop = true;
+                    sendFriendRequest();
+                    break;
+                case "3":
+                    loop = true;
+                    viewFriendList();
+                    break;
+            }
+        } while (!loop);
+    }
+
+
 }
