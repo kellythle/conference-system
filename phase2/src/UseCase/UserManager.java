@@ -192,6 +192,20 @@ public class UserManager implements Serializable {
         return attendees;
     }
     /**
+     * Return a list of VIPs' usernames.
+     *
+     * @return an ArrayList of String representing the usernames of VIP's
+     */
+    public ArrayList<String> getVIPList(){
+        Set<String> usernames = userMap.keySet();
+        ArrayList<String> attendees = new ArrayList<>();
+        for(int i = 0; i < usernames.size(); i++){
+            if (isOfType((String)usernames.toArray()[i], ("VIP")))
+                attendees.add((String)usernames.toArray()[i]);
+        }
+        return attendees;
+    }
+    /**
      * Checks whether or not a person can login with given account information.
      *
      * @param userName The userName id of the user
@@ -222,6 +236,8 @@ public class UserManager implements Serializable {
             return !isOfType(receiver, "Organizer");
         } else if (isOfType(username, "Speaker")){ // speakers can send to attendees
             return isOfType(receiver, "Attendee");
+        } else if (isOfType(username, "VIP")) {
+            return true;
         } else{
             return true;
         }

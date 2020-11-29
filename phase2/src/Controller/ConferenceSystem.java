@@ -43,6 +43,7 @@ public class ConferenceSystem {
     private MessageController messageController;
     private OrganizerMessageController organizerMessageController;
     private SpeakerMessageController speakerMessageController;
+    private VIPMessageController myVIPMessageController;
 
     // File paths
     private final String usersPath = "./src/users.ser";
@@ -93,6 +94,7 @@ public class ConferenceSystem {
         messageController = new MessageController(username, userManager, messageManager);
         organizerMessageController = new OrganizerMessageController(username, messageManager, userManager);
         speakerMessageController = new SpeakerMessageController(username, messageManager, userManager, eventManager);
+        myVIPMessageController = new VIPMessageController(username, userManager, messageManager);
         //2. shows Main menu for each user
         switch (loginController.getUserType(username)){
             case "Organizer":
@@ -103,6 +105,9 @@ public class ConferenceSystem {
                 break;
             case "Attendee":
                 attendeeHelper();
+                break;
+            case "VIP":
+                VIPMenu();
                 break;
         }
         //3. return if the user logout. Write out data to files.
@@ -331,6 +336,27 @@ public class ConferenceSystem {
         } while (!menuOption.equals("3"));
     }
 
+    private void VIPMenu(){
+        String menuOption;
+        do{
+            // Attendee start menu
+            menuOption = loginController.getVIPMenu();
+            switch (menuOption) {
+                case "1":
+                    signUpHelper();
+                    break;
+                case "2":
+                    VIPMessageHelper();
+                    break;
+                case "3":
+                    loginController.logout();
+                    break;
+                default:
+                    loginController.invalidOption();
+            }
+        } while (!menuOption.equals("3"));
+    }
+
     /**
      * Helper method that deals with signing up events,showing events
      * and deleting registered events.
@@ -468,6 +494,29 @@ public class ConferenceSystem {
                     messageController.viewArchivedConversations();
                 default:
                     messageController.invalidInput();
+            }
+        } while (!attendeeMessageMenuOption.equals("0"));
+    }
+
+    /**
+     * Helper method that allows VIP to either send a message to other users,
+     * or view conversation, or exit this menu by inputting a specific number.
+     */
+    private void VIPMessageHelper(){
+        String attendeeMessageMenuOption;
+        do{
+            attendeeMessageMenuOption = myVIPMessageController.getVIPMessageMenu();
+            switch (attendeeMessageMenuOption){
+                case "0":
+                    break;
+                case "1":
+                    myVIPMessageController.viewConversations();
+                    break;
+                case "2":
+                    myVIPMessageController.sendMessage();
+                    break;
+                default:
+                    myVIPMessageController.invalidInput();
             }
         } while (!attendeeMessageMenuOption.equals("0"));
     }

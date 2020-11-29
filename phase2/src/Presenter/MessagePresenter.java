@@ -108,6 +108,19 @@ public class MessagePresenter {
     }
 
     /**
+     * Print Message Menu for VIP's.
+     */
+    public void printVIPMessageMenu(){
+        System.out.println("Welcome to the VIP Message Menu\n" +
+                "Options:\n" +
+                "0. Exit Message Menu\n" +
+                "1. View conversations and reply to messages\n" +
+                "2. Send a message\n"+
+                "3. View archived conversations:\n" +
+                "Enter 0, 1, 2, or 3: ");
+    }
+
+    /**
      * Print list of users that logged in user has messages with.
      *
      * @param messageManager - a MessageManager instance
@@ -369,6 +382,17 @@ public class MessagePresenter {
         ArrayList<String> attendees = userManager.getAttendeeList();
         attendees.remove(username);
         System.out.println(attendees);
+    }
+
+    /**
+     * Print list of Attendees in the conference.
+     * @param userManager - an UserManager instance
+     */
+    public void printVIPs(UserManager userManager){
+        System.out.println("You can message the following VIP's:");
+        ArrayList<String> vips = userManager.getVIPList();
+        vips.remove(username);
+        System.out.println(vips);
     }
 
     /**

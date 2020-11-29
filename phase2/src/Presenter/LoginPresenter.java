@@ -144,6 +144,18 @@ public class LoginPresenter {
     }
 
     /**
+     * Prints out the main menu for the VIP. This contains all the actions that a VIP can take.
+     */
+    public void printVIPMenu(){
+        System.out.println("Welcome to the VIP Menu! \n" +
+                "Options:\n" +
+                "1. Sign up\n" +
+                "2. Send a message\n"+
+                "3. Log out\n"+
+                "Enter 1, 2, or 3: ");
+    }
+
+    /**
      * Print the menu where organizer can create other types of user.
      */
     public void printOrganizerCreateUserMenu(){
@@ -170,10 +182,10 @@ public class LoginPresenter {
     }
 
     /**
-     * Prints message about password contains more than 2 same characters in a role.
+     * Prints message about password contains more than 2 same characters in a row.
      */
     public void printPasswordTooManyDuplicate() {
-        System.out.println("Password cannot contain more than 2 same characters in a role.");
+        System.out.println("Password cannot contain more than 2 same characters in a row.");
     }
 
     /**
@@ -182,7 +194,7 @@ public class LoginPresenter {
     public void passwordInstruction() {
         System.out.println("*** Password Instructions ***\n" +
                 "(a) At least 4 characters, at most 8 characters\n" +
-                "(b) Cannot contain more than 2 same character in a role (Ex. 10003, helloooo, are invalid)");
+                "(b) Cannot contain more than 2 same character in a row (Ex. 10003, helloooo, are invalid)");
     }
 
     /**

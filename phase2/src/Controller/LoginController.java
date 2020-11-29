@@ -213,6 +213,15 @@ public class LoginController {
     }
 
     /**
+     * Prints a list of options for the VIP's main menu and takes in an option using a scanner.
+     * @return The option entered
+     */
+    public String getVIPMenu(){
+        lp.printVIPMenu();
+        return scanner.nextLine();
+    }
+
+    /**
      * Logs out any existing user
      */
     public void logout() {
