@@ -492,6 +492,10 @@ public class ConferenceSystem {
                     break;
                 case "3":
                     messageController.viewArchivedConversations();
+                    break;
+                case "4":
+                    messageController.manageFriendList();
+                    break;
                 default:
                     messageController.invalidInput();
             }
