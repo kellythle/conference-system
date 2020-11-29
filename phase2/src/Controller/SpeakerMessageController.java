@@ -142,46 +142,6 @@ public class SpeakerMessageController extends MessageController {
     }
 
     /**
-     * Displays all conversations of user. Prompts the user to view a specific message history.
-     */
-    public void viewConversations(){
-        Scanner scanner = new Scanner(System.in);
-        messagePresenter.viewConversations(myMessageManager);
-        String input = scanner.nextLine();
-        if (myMessageManager.getSenderConversations().contains(input)){
-            viewSingleConversation(input);
-        }
-    }
-
-    /**
-     * Displays single message history. Prompts the user to either reply to the conversation,
-     * continue browsing conversations, or return to Message menu.
-     *
-     * @param conversationPartner - Partner who has been messaging with the user
-     */
-    public void viewSingleConversation(String conversationPartner){
-        Scanner scanner = new Scanner(System.in);
-        messagePresenter.viewSpeakerSingleConversation(myMessageManager, myUserManager, conversationPartner);
-        String input = scanner.nextLine();
-        boolean loop = false;
-        do {
-            switch (input) {
-                case "0":
-                    loop = true;
-                    break;
-                case "1":
-                    loop = true;
-                    replyToConversation(conversationPartner);
-                    break;
-                case "2":
-                    loop = true;
-                    viewConversations();
-                    break;
-            }
-        } while (!loop);
-    }
-
-    /**
      * Calls MessagePresenter to print out the Message Menu.
      */
     public String getMessageMenu(){

@@ -72,8 +72,9 @@ public class MessagePresenter {
                 "Options:\n" +
                 "0. Exit Message Menu\n" +
                 "1. View conversations and reply to messages\n" +
-                "2. Send a message:\n"+
-                "Enter 0, 1, or 2: ");
+                "2. Send a message\n"+
+                "3. View archived conversations:\n" +
+                "Enter 0, 1, 2, or 3: ");
     }
 
     /**
@@ -87,7 +88,8 @@ public class MessagePresenter {
                 "2. Send a message to a single user\n" +
                 "3. Send a message to all Speakers\n" +
                 "4. Send a message to all Attendees:\n" +
-                "Enter 0, 1, 2, 3, or 4: ");
+                "5. View archived conversations:\n" +
+                "Enter 0, 1, 2, 3, 4, or 5: ");
     }
 
 
@@ -100,7 +102,8 @@ public class MessagePresenter {
                 "0. Exit Message Menu\n" +
                 "1. View conversations and reply to messages\n" +
                 "2. Send a message to Attendees of your Talks:\n" +
-                "Enter 0, 1, or 2: ");
+                "3. View archived conversations:\n" +
+                "Enter 0, 1, 2, or 3: ");
     }
 
     /**
@@ -111,12 +114,32 @@ public class MessagePresenter {
     public void viewConversations(MessageManager messageManager){
         System.out.println("You have conversations with these users: ");
         System.out.println(messageManager.getSenderConversations());
-        System.out.println("Enter a username to see your message history or enter anything else to return " +
-                "to the Message Menu: ");
+        ArrayList<String> unread = messageManager.getSenderUnreadConversations();
+        System.out.println("You have unread messages from " + unread.size() + "users: ");
+        System.out.println(unread);
+        System.out.println("Options:\n" +
+                "Enter a username to see your message history \n" +
+                "1. Mark conversation as read \n" +
+                "2. Mark conversation as unread\n" +
+                "(Note: you can only mark a conversation as unread if you have received messages in it)\n" +
+                "Enter a username, 1, 2, or anything else to return to Message Menu:");
     }
 
     /**
+     * Prints list of users that logged in user has archived messages with.
      *
+     * @param messageManager - a MessageManager instance
+     */
+    public void viewArchivedConversations(MessageManager messageManager){
+        System.out.println("You have archived conversations with these users: ");
+        System.out.println(messageManager.getSenderArchivedConversations());
+        System.out.println("Enter a username to see your message history \n" +
+                "1. Delete all archived conversations \n" +
+                "Enter a username, 1, or anything else to return to Message Menu: ");
+    }
+
+    /**
+     * Prints conversation with single user, marks the conversation as read.
      *
      * @param messageManager - a MessageManager instance
      * @param userManager - an UserManager instance
@@ -134,12 +157,56 @@ public class MessagePresenter {
                     i+1, conversationLength);
             System.out.println(messageText);
         }
+        messageManager.markConversationAsRead(recipientID);
+    }
+
+    public void printArchivedConversation(MessageManager messageManager, UserManager userManager, String recipientID){
+        String identity = userManager.getUserType(username);
+        System.out.println("Your archived conversation with " + identity + " " + recipientID + ": " );
+        ArrayList<UUID> singleConversation = messageManager.getArchivedConversationByReceiver(recipientID);
+        int conversationLength = singleConversation.size();
+        System.out.println("(This conversation has " + conversationLength + " messages.)");
+        for (int i = 0; i < conversationLength; i++){
+            String messageText;
+            messageText = getMessageTextWithMessageNumber(messageManager, singleConversation.get(i),
+                    i+1, conversationLength);
+            System.out.println(messageText);
+        }
+    }
+
+
+    /**
+     * Prints options for Attendees and Speakers to continue browsing, reply to conversation, delete or archive
+     * the conversation or individual messages, or return to Message Menu.
+     */
+    public void printViewSingleConversationPrompt(){
+        System.out.println("Options:\n" +
+                "0: Reply to this conversation\n" +
+                "1. Archive a single message\n" +
+                "2. Archive entire conversation\n" +
+                "3. Delete a single message (only from your inbox)\n" +
+                "4. Delete conversation (only from your inbox)\n" +
+                "5. Continue browsing conversations\n" +
+                "Enter 0, 1, 2, 3, 4, 5, or anything else to return to the Message Menu: ");
+    }
+
+    /**
+     * Prints options for Organizers to continue browsing, delete or archive the conversation or individual messages,
+     * or return to Message Menu.
+     */
+    public void printOrganizerViewSingleConversationPrompt(){
+        System.out.println("Options:\n" +
+                "0: Archive a single message\n" +
+                "1. Archive entire conversation\n" +
+                "2. Delete a single message\n" +
+                "3. Delete entire conversation\n" +
+                "4. Continue browsing conversations\n" +
+                "Enter 0, 1, 2, 3, 4, or anything else to return to the Message Menu: ");
     }
 
     /**
      * Calls method to print single conversation between Attendee or Speaker user and a given recipient.
-     * Prints options for Attendees and Speakers to continue browsing, reply to conversation, or return to
-     * Message Menu.
+     * Calls method to print subsequent options of Attendees and Speakers.
      *
      * @param messageManager - a MessageManager instance
      * @param userManager - an UserManager instance
@@ -147,10 +214,7 @@ public class MessagePresenter {
      */
     public void viewSingleConversation(MessageManager messageManager, UserManager userManager, String recipientID) {
         printSingleConversation(messageManager, userManager, recipientID);
-        System.out.println("Options:\n" +
-                "0: Reply to this conversation\n" +
-                "1. Continue browsing conversations\n" +
-                "Enter 0, 1, or anything else to return to the Message Menu: ");
+        printViewSingleConversationPrompt();
     }
 
     /**
@@ -164,15 +228,12 @@ public class MessagePresenter {
     public void viewOrganizerSingleConversation(MessageManager messageManager, UserManager userManager, String
             recipientID) {
         printSingleConversation(messageManager, userManager, recipientID);
-        System.out.println("Options:\n" +
-                "0: Continue browsing conversations\n" +
-                "Delete a message\n" +
-                "Enter 0 or anything else to return to the Message Menu: ");
+        printOrganizerViewSingleConversationPrompt();
     }
 
     /**
      * Calls method to print single conversation between Speaker user and given recipient. Prints options
-     * for Organizer to continue browsing or return to Message Menu.
+     * for Speaker to continue browsing or return to Message Menu.
      *
      * @param messageManager - a MessageManager instance
      * @param userManager - an UserManager instance
@@ -181,11 +242,29 @@ public class MessagePresenter {
     public void viewSpeakerSingleConversation(MessageManager messageManager, UserManager userManager, String
             recipientID) {
         printSingleConversation(messageManager, userManager, recipientID);
-        System.out.println("Options:\n" +
-                "0: Return to previous menu\n" +
-                "1: Reply to this conversation\n" +
-                "2. Continue browsing conversations\n" +
-                "Enter 0, 1, or anything else to return to the Message Menu: ");
+        printViewSingleConversationPrompt();
+    }
+
+    public void printArchiveOptions(){
+        System.out.println("Options: " +
+                "0: Unarchive this conversation\n" +
+                "1. Delete this conversation\n" +
+                "2. Continue browsing archived conversations\n" +
+                "Enter 0, 1, 2, or anything else to return to Message Menu:");
+    }
+
+    /**
+     * Calls method to print single archived conversation. Prints options for user to continue browsing, delete or
+     * unarchive the conversation, or return to Message Menu.
+     *
+     * @param messageManager
+     * @param userManager
+     * @param recipientID
+     */
+    public void viewArchivedSingleConversation(MessageManager messageManager, UserManager userManager,
+                                               String recipientID) {
+        printArchivedConversation(messageManager, userManager, recipientID);
+        printArchiveOptions();
     }
 
     /**
@@ -200,6 +279,13 @@ public class MessagePresenter {
      */
     public void printEventIDPrompt(){
         System.out.println("Enter the name of the event whose attendees you wish to message: ");
+    }
+
+    /**
+     * Print prompt for ID of conversation partner
+     */
+    public void printConversationPrompt(){
+        System.out.println("Enter the username of the conversation: ");
     }
 
     /**
@@ -302,5 +388,85 @@ public class MessagePresenter {
         System.out.println("You are hosting following events:");
         ArrayList<String> events = eventManager.getEventListBySpeaker(username);
         System.out.println(events);
+    }
+
+    /**
+     * Print notification of message archival.
+     */
+    public void printMessageArchived(){
+        System.out.println("Message successfully archived.");
+    }
+
+    /**
+     * Print conversation archival notification.
+     */
+    public void printConversationArchived(){
+        System.out.println("Conversation successfully archived.");
+    }
+
+    /**
+     * Print notification of message unarchived.
+     */
+    public void printMessageUnarchived(){
+        System.out.println("Message successfully unarchived.");
+    }
+
+    /**
+     * Print message deletion notification.
+     */
+    public void printMessageDeleted(){
+        System.out.println("Message successfully deleted.");
+    }
+
+    /**
+     * Print conversation deletion notification.
+     */
+    public void printConversationDeleted(){
+        System.out.println("Conversation successfully deleted.");
+    }
+
+    /**
+     * Print all archived conversations deletion notification
+     */
+    public void printArchiveDeletion(){
+        System.out.println("All archived conversations successfully deleted.");
+    }
+
+    /**
+     * Print message deletion from user and receiver inboxes notification.
+     */
+    public void printMessageUserReceiverDelete(){
+        System.out.println("Message deleted from both inboxes.");
+    }
+
+    /**
+     * Print conversation deletion from user and receiver inboxes notification.
+     */
+    public void printConversationUserReceiverDelete(){
+        System.out.println("Conversation deleted from both inboxes.");
+    }
+
+    public void printConfirmationPrompt(){
+        System.out.println("Enter Y to confirm this decision. It cannot be reversed. ");
+    }
+
+    public void printMessageNumberPrompt(){
+        System.out.println("Enter the number of this message in the conversation:");
+    }
+
+    public void printMessageDoesNotExist(){
+        System.out.println("This message does not exist.");
+    }
+
+    public void printMarkedAsRead(){
+        System.out.println("Conversation marked as read.");
+    }
+
+    public void printMarkedAsUnread(){
+        System.out.println("Conversation marked as unread.");
+    }
+
+    public void printConversationDoesNotExist(){
+        System.out.println("This conversation does not exist.");
     }
 }

@@ -183,7 +183,7 @@ public class MessageManager implements Serializable {
         ArrayList<UUID> unarchivedMessages = getVisibleSenderMessages();
         ArrayList<UUID> unreadMessages = new ArrayList<>();
         for (UUID i : unarchivedMessages){
-            if (!getMessageReadStatus(i)){
+            if (!getMessageReadStatus(i)&&isReceiver(i)){
                 unreadMessages.add(i);
             }
         }

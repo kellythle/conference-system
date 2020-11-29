@@ -4,7 +4,9 @@ import Presenter.MessagePresenter;
 import UseCase.MessageManager;
 import UseCase.UserManager;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.UUID;
 
 /**
  * Controller that deals with viewing and sending messages for Attendees.
@@ -45,7 +47,6 @@ public class MessageController {
         } else {return false;}
     }
 
-
     /**
      * Displays all conversations of user. Prompts the user to view a specific message history.
      */
@@ -53,8 +54,60 @@ public class MessageController {
         Scanner scanner = new Scanner(System.in);
         messagePresenter.viewConversations(myMessageManager);
         String input = scanner.nextLine();
-        if (myMessageManager.getSenderConversations().contains(input)){
+        if (input.equals("1")){
+            markAsRead();
+        } else if (input.equals("2")){
+            markAsUnread();
+        } else if (myMessageManager.getSenderConversations().contains(input)){
             viewSingleConversation(input);
+        }
+    }
+
+    /**
+     * Prompts for username, marks conversation as read.
+     */
+    public void markAsRead(){
+        messagePresenter.printConversationPrompt();
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        if (myMessageManager.getSenderConversations().contains(input)){
+            if (myMessageManager.getUnreadSenderMessages().contains(input)){
+                myMessageManager.markConversationAsRead(input);
+            } messagePresenter.printMarkedAsRead();
+        } else {
+            messagePresenter.printConversationDoesNotExist();
+        }
+    }
+
+    /**
+     * Prompts for username, marks conversation as unread.
+     */
+    public void markAsUnread(){
+        messagePresenter.printConversationPrompt();
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        if (myMessageManager.getSenderConversations().contains(input)){
+            if (!myMessageManager.getUnreadSenderMessages().contains(input)){
+                myMessageManager.markConversationAsUnread(input);
+            } messagePresenter.printMarkedAsUnread();
+        } else {
+            messagePresenter.printConversationDoesNotExist();
+        }
+    }
+
+    /**
+     * Displays all archived conversations of user. Prompts the user to view a specific message history.
+     * Or delete all conversations in the archive.
+     */
+
+    public void viewArchivedConversations(){
+        Scanner scanner = new Scanner(System.in);
+        messagePresenter.viewArchivedConversations(myMessageManager);
+        String input = scanner.nextLine();
+        if (input.equals("1")){
+            deleteAllArchivedConversations();
+        } else if (myMessageManager.getSenderArchivedConversations().contains(input)){
+            viewSingleArchiveConversation(input);
         }
     }
 
@@ -71,7 +124,31 @@ public class MessageController {
         if (input.equals("0")){
             replyToConversation(conversationPartner);
         } else if (input.equals("1")){
+            archiveSingleMessage(conversationPartner);
+        } else if (input.equals("2")){
+            archiveConversation(conversationPartner);
+        } else if (input.equals("3")){
+            deleteSingleMessage(conversationPartner);
+        } else if (input.equals("4")){
+            deleteConversation(conversationPartner);
+        } else if (input.equals("5")){
             viewConversations();
+        }
+    }
+
+    /**
+     * Displays single archived message history.
+     *
+     * @param conversationPartner - username of other participant in conversation history.
+     */
+    public void viewSingleArchiveConversation(String conversationPartner){
+        messagePresenter.viewArchivedSingleConversation(myMessageManager, myUserManager, conversationPartner);
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        if (input.equals("0")){
+            unarchiveConversation(conversationPartner);
+        } else if (input.equals("1")){
+            deleteArchivedConversation(conversationPartner);
         }
     }
 
@@ -127,5 +204,75 @@ public class MessageController {
      */
     public void invalidInput(){
         messagePresenter.printInvalidInput();
+    }
+
+    public void deleteSingleMessage(String conversationPartner) {
+        messagePresenter.printMessageNumberPrompt();
+        ArrayList<UUID> conversation = myMessageManager.getSingleConversationByReceiver(conversationPartner);
+        Scanner scan = new Scanner(System.in);
+        int next = scan.nextInt();
+        if (next > conversation.size()){
+            messagePresenter.printMessageDoesNotExist();
+        } else {
+            messagePresenter.printConfirmationPrompt();
+            String confirm = scan.nextLine();
+            if (confirm.equals("Y")) {
+                myMessageManager.deleteSingleMessage(conversation.get(next-1));
+                messagePresenter.printMessageDeleted();
+            }
+        }
+    }
+
+    public void deleteConversation(String conversationPartner){
+        Scanner scan = new Scanner(System.in);
+        messagePresenter.printConfirmationPrompt();
+        String confirm = scan.nextLine();
+        if (confirm.equals("Y")){
+            myMessageManager.deleteConversation(conversationPartner);
+            messagePresenter.printConversationDeleted();
+        }
+    }
+
+    public void archiveSingleMessage(String conversationPartner){
+        messagePresenter.printMessageNumberPrompt();
+        ArrayList<UUID> conversation = myMessageManager.getSingleConversationByReceiver(conversationPartner);
+        Scanner scan = new Scanner(System.in);
+        int next = scan.nextInt();
+        if (next > conversation.size()){
+            messagePresenter.printMessageDoesNotExist();
+            return;
+        }
+        myMessageManager.archiveSingleMessage(conversation.get(next-1));
+        messagePresenter.printMessageArchived();
+    }
+
+    public void archiveConversation(String conversationPartner){
+        myMessageManager.archiveConversation(conversationPartner);
+        messagePresenter.printConversationArchived();
+    }
+
+    public void unarchiveConversation(String conversationPartner){
+        myMessageManager.unArchiveConversation(conversationPartner);
+        messagePresenter.printMessageUnarchived();
+    }
+
+    public void deleteArchivedConversation(String conversationPartner){
+        Scanner scan = new Scanner(System.in);
+        messagePresenter.printConfirmationPrompt();
+        String confirm = scan.nextLine();
+        if (confirm.equals("Y")){
+            myMessageManager.deleteArchivedConversation(conversationPartner);
+            messagePresenter.printConversationDeleted();
+        }
+    }
+
+    public void deleteAllArchivedConversations(){
+        Scanner scan = new Scanner(System.in);
+        messagePresenter.printConfirmationPrompt();
+        String confirm = scan.nextLine();
+        if (confirm.equals("Y")){
+            myMessageManager.deleteAllArchivedConversations();
+            messagePresenter.printArchiveDeletion();
+        }
     }
 }

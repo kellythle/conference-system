@@ -91,8 +91,6 @@ public class OrganizerMessageController extends MessageController {
         }
     }
 
-
-
     /**
      * Calls MessagePresenter to print out the Message Menu.
      */
@@ -102,17 +100,6 @@ public class OrganizerMessageController extends MessageController {
         return scan.nextLine();
     }
 
-    /**
-     * Displays all conversations of user. Prompts the user to view a specific message history.
-     */
-    public void viewConversations(){
-        Scanner scanner = new Scanner(System.in);
-        messagePresenter.viewConversations(myMessageManager);
-        String input = scanner.nextLine();
-        if (myMessageManager.getSenderConversations().contains(input)){
-            viewSingleConversation(input);
-        }
-    }
 
     /**
      * Displays single message history.
@@ -125,6 +112,14 @@ public class OrganizerMessageController extends MessageController {
         messagePresenter.viewOrganizerSingleConversation(myMessageManager, myUserManager, conversationPartner);
         String input = scanner.nextLine();
         if (input.equals("0")){
+            archiveSingleMessage(conversationPartner);
+        } else if (input.equals("1")){
+            archiveConversation(conversationPartner);
+        } else if (input.equals("2")){
+            deleteSingleMessage(conversationPartner);
+        } else if (input.equals("3")){
+            deleteConversation(conversationPartner);
+        } else if (input.equals("4")){
             viewConversations();
         }
     }

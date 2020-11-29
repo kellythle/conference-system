@@ -412,6 +412,8 @@ public class ConferenceSystem {
                 case "4":
                     organizerMessageController.sendMessagesToAttendees();
                     break;
+                case "5":
+                    organizerMessageController.viewArchivedConversations();
                 default:
                     organizerMessageController.invalidInput();
             }
@@ -435,6 +437,8 @@ public class ConferenceSystem {
                 case "2":
                     speakerMessageController.sendMessage();
                     break;
+                case "3":
+                    speakerMessageController.viewArchivedConversations();
                 default:
                     speakerMessageController.invalidInput();
             }
@@ -458,6 +462,8 @@ public class ConferenceSystem {
                 case "2":
                     messageController.sendMessage();
                     break;
+                case "3":
+                    messageController.viewArchivedConversations();
                 default:
                     messageController.invalidInput();
             }
