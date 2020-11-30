@@ -60,10 +60,10 @@ any restrictions on username and password so you input anything as well as it is
 warn you not leaving it empty.
 3. For existed user, choosing 'sign in ', logging in and you will see the main menu if it is a successful login.Try again
  if you input anything wrong. For different type of user you can different stuff.
-(a). For organizer you can access to sign up system, schedule system where you can either create a new talk or assign
-the a speaker to a talk, and logout option.
-(b). For speaker you can only enter messaging system and logout.
-(c). For attendee you can access to sign up system and message system as well as an option to logout.
+(a). For organizer you can create other users, access to sign up system, schedule system, messaging system, play math games
+and logout option.
+(b). For speaker you can only access to sign up system, messaging system, play math games and logout.
+(c). For attendee you can access to sign up system and message system, play math games as well as an option to logout.
 (d). If you choose logout on any menu there is a logout menu to assure whether you want logout or still keep login. If
 you choose to logout you will logout successfully if the system tell you that.
 (e). In any menu if you are too naughty to input something outside the options, our system will inform you to follow our
@@ -137,3 +137,23 @@ For example, if a Speaker enters 2, they will be prompted to choose between mess
 Attendees of a specific talk. If they choose a specific talk, then they will be prompted to enter the ID of the event
 as well as the content of the message.
 5. Entering 0 for any type of User will return you to the main menu.
+
+
+
+======== [Math Game System] ========
+This system allows you to play some math games. Including summation, subtraction, multiplication, and division.
+When you first enter the Math Game System, you will have to select a level.
+    1. Easy
+    2. Normal
+    3. Hard
+    4. Exist Game
+If you entered 4, you will exist the Game System. Otherwise, you will see the game mode menu.
+    1. Summation
+    2. Subtraction
+    3. Multiplication
+    4. Division
+    5. Exist Game
+If you entered 5, you will exist the Game System. Otherwise your game will start!
+Each game contains 5 questions. After each question, the system will tell you
+whether you get the correct answer or not. When the game ends, you are also able
+to see your final result.

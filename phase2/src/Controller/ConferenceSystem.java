@@ -26,6 +26,7 @@ public class ConferenceSystem {
     private EventManager eventManager = new EventManager();
     private UserManager userManager = new UserManager();
     private MessageManager messageManager = new MessageManager();
+    private GameController gameController = new GameController();
 
     // Instance of ReadWriteGateway to allow for reading from and writing to files.
     private final ReadWriteGateway readWriteGateway = new ReadWriteGateway();
@@ -258,12 +259,15 @@ public class ConferenceSystem {
                     organizerMessageHelper();
                     break;
                 case "5":
+                    gameHelper();
+                    break;
+                case "6":
                     loginController.logout();
                     break;
                 default:
                     loginController.invalidOption();
             }
-        } while (!menuOption.equals("5"));
+        } while (!menuOption.equals("6"));
     }
 
     /**
@@ -304,12 +308,15 @@ public class ConferenceSystem {
                     speakerMessageHelper();
                     break;
                 case "3":
+                    gameHelper();
+                    break;
+                case "4":
                     loginController.logout();
                     break;
                 default:
                     loginController.invalidOption();
             }
-        } while (!menuOption.equals("3"));
+        } while (!menuOption.equals("4"));
     }
 
     /**
@@ -328,14 +335,20 @@ public class ConferenceSystem {
                     attendeeMessageHelper();
                     break;
                 case "3":
+                    gameHelper();
+                    break;
+                case "4":
                     loginController.logout();
                     break;
                 default:
                     loginController.invalidOption();
             }
-        } while (!menuOption.equals("3"));
+        } while (!menuOption.equals("4"));
     }
 
+    /**
+     * VIP menu helper class
+     */
     private void VIPMenu(){
         String menuOption;
         do{
@@ -349,12 +362,15 @@ public class ConferenceSystem {
                     VIPMessageHelper();
                     break;
                 case "3":
+                    gameHelper();
+                    break;
+                case "4":
                     loginController.logout();
                     break;
                 default:
                     loginController.invalidOption();
             }
-        } while (!menuOption.equals("3"));
+        } while (!menuOption.equals("4"));
     }
 
     /**
@@ -519,5 +535,40 @@ public class ConferenceSystem {
                     myVIPMessageController.invalidInput();
             }
         } while (!attendeeMessageMenuOption.equals("0"));
+    }
+
+    /**
+     * Helper methods that allow users to play math games. They can select
+     * a level and a type (+, -, *, /) by entering corresponding input.
+     */
+    private void gameHelper(){
+        int level = gameController.setLevel();
+        if (level == 0){
+            return;
+        }
+        String choice;
+        do {
+            Scanner scan2 = new Scanner(System.in);
+            gameController.getGameMenu();
+            choice = scan2.nextLine();
+            switch (choice) {
+                case "1":
+                    gameController.gameMode(1, level);
+                    break;
+                case "2":
+                    gameController.gameMode(2, level);
+                    break;
+                case "3":
+                    gameController.gameMode(3, level);
+                    break;
+                case "4":
+                    gameController.gameMode(4, level);
+                    break;
+                case "5":
+                    break;
+                default:
+                    gameController.InvalidInput();
+            }
+        }while(!choice.equals("5"));
     }
 }
