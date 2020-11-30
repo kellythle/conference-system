@@ -115,8 +115,9 @@ public class LoginPresenter {
                 "2. Sign up\n" +
                 "3. Manage Events\n" +
                 "4. Send a message\n"+
-                "5. Log out\n"+
-                "Enter 1, 2, 3, 4 or 5: ");
+                "5. Play Math Game\n" +
+                "6. Log out\n"+
+                "Enter 1, 2, 3, 4 , 5 or 6: ");
     }
 
     /**
@@ -127,8 +128,9 @@ public class LoginPresenter {
                 "Options:\n" +
                 "1. Sign up\n" +
                 "2. Send a message\n"+
-                "3. Log out\n"+
-                "Enter 1, 2 or 3: ");
+                "3. Play Math Game\n" +
+                "4. Log out\n"+
+                "Enter 1, 2 , 3 or 4: ");
     }
 
     /**
@@ -139,8 +141,9 @@ public class LoginPresenter {
                 "Options:\n" +
                 "1. Sign up\n" +
                 "2. Send a message\n"+
-                "3. Log out\n"+
-                "Enter 1, 2, or 3: ");
+                "3. Play Math Game\n" +
+                "4. Log out\n"+
+                "Enter 1, 2, 3 or 4: ");
     }
 
     /**
@@ -151,8 +154,9 @@ public class LoginPresenter {
                 "Options:\n" +
                 "1. Sign up\n" +
                 "2. Send a message\n"+
-                "3. Log out\n"+
-                "Enter 1, 2, or 3: ");
+                "3. Play Math Game\n" +
+                "4. Log out\n"+
+                "Enter 1, 2, 3 or 4: ");
     }
 
     /**
