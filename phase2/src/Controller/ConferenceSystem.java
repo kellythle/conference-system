@@ -310,8 +310,12 @@ public class ConferenceSystem {
                     loginController.createAccount("Attendee");
                     break;
                 case "3":
+                    loginController.createAccount("VIP");
+                    break;
+                case "4":
                     loginController.getOrganizerMenu();
-                default:
+                    break;
+                    default:
                     loginController.invalidOption();
             }
         }while (!menuOption.equals("3"));

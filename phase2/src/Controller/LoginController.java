@@ -88,6 +88,17 @@ public class LoginController {
         }
         // below deals with any input other than the ones listed above
         try {
+            // checks activation code for VIP requests
+            if(type.equals("VIP")) {
+                lp.promptInvCode();
+                if(um.checkInvitationCode(scanner.nextLine())) {
+                    lp.printValidInvCode();
+                }
+                else {
+                    lp.printInvalidInvCode();
+                    return; // makes sure the account does not get created
+                }
+            }
             this.um.createUser(userName, password, type);
             lp.displayAccountCreateInfo(true); // successfully created account
         }
@@ -125,17 +136,7 @@ public class LoginController {
             validPW = this.validPassword(password);
         }while(!validPW);
 
-        // checks activation code for VIP requests
-        if(type.equals("VIP")) {
-            lp.promptInvCode();
-            if(um.checkInvitationCode(scanner.nextLine())) {
-                lp.printValidInvCode();
-            }
-            else {
-                lp.printInvalidInvCode();
-                return; // makes sure the account does not get created
-            }
-        }
+
         createAccount(userName, password, type);
     }
 
