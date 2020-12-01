@@ -183,7 +183,7 @@ public class MessageManager implements Serializable {
         ArrayList<UUID> unarchivedMessages = getVisibleSenderMessages();
         ArrayList<UUID> unreadMessages = new ArrayList<>();
         for (UUID i : unarchivedMessages){
-            if (!getMessageReadStatus(i)&&isReceiver(i)){
+            if ((!getMessageReadStatus(i))&&isReceiver(i)){
                 unreadMessages.add(i);
             }
         }
@@ -351,12 +351,34 @@ public class MessageManager implements Serializable {
         } else if (isReceiver(messageID)) {
             toBeDeleted.markAsReceiverDeleted();
         }
+        sendToDeletedBin(toBeDeleted);
 
+    }
+
+    /**
+     * Checks if both users have deleted a message. If so, move message from
+     * system messages (active messages) to deleted messages.
+     *
+     * @param toBeDeleted - Message to be checked for full deletion.
+     */
+    public void sendToDeletedBin(Message toBeDeleted){
         if (toBeDeleted.isDeletedBySender()&&toBeDeleted.isDeletedByReceiver()) {
             UUID fullyDeletedID = toBeDeleted.getId();
             Message fullyDeleted = systemMessages.remove(fullyDeletedID);
             deletedMessages.put(fullyDeletedID, fullyDeleted);
         }
+    }
+
+    /**
+     * Marks message as deleted for both users.
+     *
+     * @param messageID - ID of the message to be deleted
+     */
+    public void deleteSingleMessageBothSides(UUID messageID){
+        Message toBeDeleted = getMessage(messageID);
+        toBeDeleted.markAsSenderDeleted();
+        toBeDeleted.markAsReceiverDeleted();
+        sendToDeletedBin(toBeDeleted);
     }
 
     /**
@@ -371,6 +393,17 @@ public class MessageManager implements Serializable {
     }
 
     /**
+     * Mass mark messages from given list of UUIDs as deleted by both users.
+     *
+     * @param conversation - list of UUID of messages
+     */
+    public void massDeleteMessagesBothSides(ArrayList<UUID> conversation){
+        for (UUID messageID: conversation){
+            deleteSingleMessageBothSides(messageID);
+        }
+    }
+
+    /**
      * Mark an entire unarchived conversation as deleted.
      *
      * @param otherID - the username of the conversation partner.
@@ -378,6 +411,16 @@ public class MessageManager implements Serializable {
     public void deleteConversation(String otherID){
         ArrayList<UUID> conversation = getSingleConversationByReceiver(otherID);
         massDeleteMessages(conversation);
+    }
+
+    /**
+     * Mark an entire unarchived conversation as deleted by both users.
+     *
+     * @param otherID - the username of the conversation partner
+     */
+    public void deleteConversationBothSides(String otherID){
+        ArrayList<UUID> conversation = getSingleConversationByReceiver(otherID);
+        massDeleteMessagesBothSides(conversation);
     }
 
     /**
@@ -391,11 +434,29 @@ public class MessageManager implements Serializable {
     }
 
     /**
+     * Mark an entire archived conversation as deleted by both sides.
+     *
+     * @param otherID - username of the conversation partner.
+     */
+    public void deleteArchivedConversationBothSides(String otherID){
+        ArrayList<UUID> conversation = getArchivedConversationByReceiver(otherID);
+        massDeleteMessagesBothSides(conversation);
+    }
+
+    /**
      * Mark all archived conversations as deleted.
      */
     public void deleteAllArchivedConversations(){
         ArrayList<UUID> history = getArchivedSenderMessages();
         massDeleteMessages(history);
+    }
+
+    /**
+     * Mark all archived conversations as deleted.
+     */
+    public void deleteAllArchivedConversationsBothSides(){
+        ArrayList<UUID> history = getArchivedSenderMessages();
+        massDeleteMessagesBothSides(history);
     }
 
     /**
