@@ -61,13 +61,14 @@ public class LoginController {
     /**
      * Creates a new user, given the type of user and account information.
      *
-     * ***This should only create Attendees and Organizers
+     * ***This can create any type of user
+     * * also, since this is private, this acts as a helper for the other overloaded createAccount(String Name)
      *
      * @param userName The new user's username, *cannot be a duplicate within the system
      * @param password The new user's password
      * @param type The type of user added, can only be 2 strings: "Attendee" or "Organizer"
      */
-    public void createAccount(String userName, String password, String type) {
+    private void createAccount(String userName, String password, String type) {
         //null edge case
         if (type == null) {
             lp.displayAccountCreateInfo(false);
@@ -97,45 +98,23 @@ public class LoginController {
     }
 
     /**
-     * Overload createAccount to use in initial account creation, should NOT allow speakers
+     * Overload createAccount that takes in user input
+     * @param type- string representing the user type that he/she want
      */
-    public void createAccount() {
+    public void createAccount(String type){
+        lp.inputNameOfType(type);
         boolean nameIsZero;
         String userName;
         do {
             lp.inputName();
             userName = scanner.nextLine();
-            if(userName.equals("0")){
+            if (userName.equals("0")) {
                 lp.printInvalidUserName();
                 nameIsZero = true;
-            }else{
+            } else {
                 nameIsZero = false;
             }
         }while(nameIsZero);
-        boolean validPW;
-        String password;
-        do {
-            lp.inputPassword();
-            lp.passwordInstruction();
-            password = scanner.nextLine();
-            // check if the password matches the requested format
-            validPW = this.validPassword(password);
-        }while(!validPW);
-        lp.inputUserType();
-        String type = scanner.nextLine();
-        createAccount(userName, password, type);
-    }
-
-    /**
-     * Overload createAccount to
-     * @param type- string representing the user type that he/she want
-     */
-    public void createAccount(String type){
-        lp.inputNameOfType(type);
-        String userName = scanner.nextLine();
-        if(userName.equals("0")){
-            return;
-        }
         boolean validPW;
         String password;
         do {
@@ -145,6 +124,18 @@ public class LoginController {
             // check if the password matches the requested format
             validPW = this.validPassword(password);
         }while(!validPW);
+
+        // checks activation code for VIP requests
+        if(type.equals("VIP")) {
+            lp.promptInvCode();
+            if(um.checkInvitationCode(scanner.nextLine())) {
+                lp.printValidInvCode();
+            }
+            else {
+                lp.printInvalidInvCode();
+                return; // makes sure the account does not get created
+            }
+        }
         createAccount(userName, password, type);
     }
 
@@ -254,6 +245,14 @@ public class LoginController {
         return um.getUserType(username);
     }
 
+    /**
+     * Prints a list of options to create the user account they want available to the initial menu
+     * @return the option entered
+     */
+    public String getInitialAccountCreation() {
+        lp.printInitialAccountCreationMenu();
+        return scanner.nextLine();
+    }
     /**
      * Prints a list of options for organizers to create the user account they want
      * @return the option entered

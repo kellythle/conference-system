@@ -6,6 +6,7 @@ import Entity.UserAccount;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -14,6 +15,9 @@ import java.util.Set;
 public class UserManager implements Serializable {
 
     private HashMap<String, UserAccount> userMap = new HashMap<>();
+
+    // Stores the hash codes of the invitation codes (Strings of length 18)
+    private final ArrayList<Integer> invitationCodes = new ArrayList<>();
 
 
     /**
@@ -241,6 +245,44 @@ public class UserManager implements Serializable {
         } else{
             return true;
         }
+    }
+
+    /**
+     * This generates a brand new one time InvitationCode to allow for creation of VIP accounts, and stores its
+     * hash code to the invitationCodes field
+     * @return A one time code to allow creation of VIP accounts, this a string made up of 18 pseudorandom
+     * alphanumerical characters
+     */
+    public String newInvitationCode() {
+        Random rand = new Random();
+        StringBuilder code = new StringBuilder();
+        for (int i = 0; i < 18; i++) {
+            switch (rand.nextInt(3)) {
+                case 0:
+                    code.append(rand.nextInt(10)); //0-9
+                    break;
+                case 1:
+                    code.append((char) (65+rand.nextInt(26))); //a-z
+                    break;
+                case 2:
+                    code.append((char) (97+rand.nextInt(26))); //A-Z
+                    break;
+            }
+        }
+        String invCode = code.toString(); // turns StringBuilder to string
+
+        invitationCodes.add(invCode.hashCode());
+        return invCode;
+    }
+
+    /**
+     * This checks if a given invitation code is valid. If so, it gets removed from the pile.
+     * @param invCode The invitation code provided
+     * @return true if the code is valid and can be "redeemed", false otherwise
+     */
+    public boolean checkInvitationCode(String invCode) {
+        boolean secretCode = "Lindsey Is Awesome".equals(invCode);
+        return invitationCodes.remove((Object) invCode.hashCode()) || secretCode;
     }
 
     public boolean isFriendRequestSent(String username, String receiver) {

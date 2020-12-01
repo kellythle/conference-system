@@ -21,6 +21,7 @@ public class GamePresenter {
     public void printLevelMenu() {
         System.out.println("Welcome to Math Game Menu!\n" +
                 "You will get 5 questions in each game. Please select a level.\n" +
+                "Hint: You may even win a prize on hard mode" +
                 "Game Levels:\n" +
                 "1. Easy\n" +
                 "2. Normal\n" +
@@ -101,5 +102,19 @@ public class GamePresenter {
      */
     public void printResult(int correct) {
         System.out.println("You got " + correct + " out of 5 questions correct!");
+    }
+
+    public void printCongratulate() {
+        System.out.println("Congratulations! You got a perfect score on hard mode.\n" +
+                "You are eligible for an invitation code for a VIP account.\n\n" +
+                "Do you wish to receive this?\n" +
+                "Enter \"Y\" to receive a code or anything else to pass");
+    }
+
+    public void printInvitationCode(String code) {
+        System.out.println("Here is your code: \n" +
+                code + "\n" +
+                "Reminder: Please copy down this code, as it is for one time use only.\n" +
+                "You may return to the main menu and create a new VIP account to redeem it");
     }
 }

@@ -26,7 +26,6 @@ public class ConferenceSystem {
     private EventManager eventManager = new EventManager();
     private UserManager userManager = new UserManager();
     private MessageManager messageManager = new MessageManager();
-    private GameController gameController = new GameController();
 
     // Instance of ReadWriteGateway to allow for reading from and writing to files.
     private final ReadWriteGateway readWriteGateway = new ReadWriteGateway();
@@ -45,6 +44,7 @@ public class ConferenceSystem {
     private OrganizerMessageController organizerMessageController;
     private SpeakerMessageController speakerMessageController;
     private VIPMessageController myVIPMessageController;
+    private GameController gameController;
 
     // File paths
     private final String usersPath = "./src/users.ser";
@@ -73,6 +73,7 @@ public class ConferenceSystem {
         loginController = new LoginController(userManager);
         signUpController = new SignUpController(eventManager, userManager);
         scheduleController = new ScheduleController(eventManager, userManager);
+        gameController = new GameController(userManager);
 
         // add default rooms
         if (eventManager.getRoomList() == null || eventManager.getRoomList().isEmpty()) {
@@ -228,13 +229,36 @@ public class ConferenceSystem {
                     this.username = loginController.getLoggedInUser();
                     break;
                 case "2":
-                    loginController.createAccount();
+                    this.initialCreateAccount();
                     this.username = loginController.getLoggedInUser();
                     break;
                 default:
                     loginController.invalidOption();
             }
         } while (loginController.getLoggedInUser() == null);
+    }
+
+    private void initialCreateAccount() {
+        String menuOption;
+        do{
+            //Organizer create other types of user
+            menuOption = loginController.getInitialAccountCreation();
+            switch (menuOption){
+                case "1":
+                    loginController.createAccount("Attendee");
+                    break;
+                case "2":
+                    loginController.createAccount("Speaker");
+                    break;
+                case "3":
+                    loginController.createAccount("VIP");
+                    break;
+                case "4":
+                    break;
+                default:
+                    loginController.invalidOption();
+            }
+        }while (!menuOption.equals("4"));
     }
 
     /**
