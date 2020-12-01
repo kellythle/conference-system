@@ -288,7 +288,9 @@ public class MessageController {
     public void sendingFriendRequest(String receiver) {
         if (myUserManager.containsUser(receiver)) {
             if (myUserManager.getUserType(receiver).equals("Attendee")) {
-                myUserManager.addFriendRequest(username, receiver);
+                if (!myUserManager.addFriendRequest(username, receiver)) {
+                    messagePresenter.printAlreadySent();
+                }
             } else {
                 messagePresenter.printCannotBeFriend();
             }

@@ -253,7 +253,7 @@ public class UserManager implements Serializable {
 
     public boolean addFriendRequest(String username, String receiver){
         if (!isFriend(username, receiver) && !isFriendRequestSent(username, receiver)){
-            getUserByName(username).addFriendRequest(receiver);
+            getUserByName(receiver).addFriendRequest(username);
             return true;
         }
         else {
@@ -262,9 +262,13 @@ public class UserManager implements Serializable {
     }
 
     public void addFriend(String username, String receiver, boolean response) {
+        if (isFriend(username, receiver)) {
+            return;
+        }
         if (response) {
+            getUserByName(receiver).addFriend(username);
             getUserByName(username).addFriend(receiver);
-            getUserByName(username).removeFriend(receiver);
+            getUserByName(username).removeFriendRequest(receiver);
         }
         else {
             getUserByName(username).removeFriendRequest(receiver);

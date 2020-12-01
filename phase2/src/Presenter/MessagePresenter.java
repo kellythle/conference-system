@@ -574,4 +574,8 @@ public class MessagePresenter {
     public void printWrongUsername(String receiver){
         System.out.println("There is no user with username " + receiver);
     }
+
+    public void printAlreadySent(){
+        System.out.println("You already sent this user a request or you are already friends!");
+    }
 }
