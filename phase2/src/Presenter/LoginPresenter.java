@@ -173,8 +173,9 @@ public class LoginPresenter {
                 "Options:\n" +
                 "1. Speaker\n"+
                 "2. Attendee\n"+
-                "3. Go back to Organizer menu\n"+
-                "Enter 1, 2, or 3: ");
+                "3. VIP\n"+
+                "4. Go back to Organizer menu\n"+
+                "Enter 1, 2, 3, or 4: ");
     }
 
     /**

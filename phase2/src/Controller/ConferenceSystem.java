@@ -245,13 +245,13 @@ public class ConferenceSystem {
             menuOption = loginController.getInitialAccountCreation();
             switch (menuOption){
                 case "1":
-                    loginController.createAccount("Attendee");
+                    loginController.createAccount("Attendee", true);
                     break;
                 case "2":
-                    loginController.createAccount("Organizer");
+                    loginController.createAccount("Organizer", true);
                     break;
                 case "3":
-                    loginController.createAccount("VIP");
+                    loginController.createAccount("VIP", true);
                     break;
                 case "4":
                     break;
@@ -304,21 +304,20 @@ public class ConferenceSystem {
             menuOption = loginController.getOrganizerCreateUserMenu();
             switch (menuOption){
                 case "1":
-                    loginController.createAccount("Speaker");
+                    loginController.createAccount("Speaker", false);
                     break;
                 case "2":
-                    loginController.createAccount("Attendee");
+                    loginController.createAccount("Attendee", false);
                     break;
                 case "3":
-                    loginController.createAccount("VIP");
+                    loginController.createAccount("VIP",false);
                     break;
                 case "4":
-                    loginController.getOrganizerMenu();
                     break;
-                    default:
+                default:
                     loginController.invalidOption();
             }
-        }while (!menuOption.equals("3"));
+        }while (!menuOption.equals("4"));
     }
 
     /**
