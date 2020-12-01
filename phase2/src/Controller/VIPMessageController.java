@@ -32,12 +32,14 @@ public class VIPMessageController extends MessageController{
 
     /**
      * Prompts user for receiver ID and message content. Sends single message.
+     * Can message any speaker/organizer/VIP, or attendee in your friend list
      */
     @Override
     public void sendMessage(){
         messagePresenter.printAttendees(myUserManager);
         messagePresenter.printSpeakers(myUserManager);
         messagePresenter.printVIPs(myUserManager);
+        messagePresenter.printOrganizers(myUserManager);
         Scanner scanner = new Scanner(System.in);
         messagePresenter.printReceiverIDPrompt();
         String receiver = scanner.nextLine();

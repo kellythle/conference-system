@@ -385,12 +385,23 @@ public class MessagePresenter {
     }
 
     /**
-     * Print list of Attendees in the conference.
+     * Print list of VIP's in the conference.
      * @param userManager - an UserManager instance
      */
     public void printVIPs(UserManager userManager){
         System.out.println("You can message the following VIP's:");
         ArrayList<String> vips = userManager.getVIPList();
+        vips.remove(username);
+        System.out.println(vips);
+    }
+
+    /**
+     * Print list of Organizers in the conference.
+     * @param userManager - an UserManager instance
+     */
+    public void printOrganizers(UserManager userManager){
+        System.out.println("You can message the following Organizers:");
+        ArrayList<String> vips = userManager.getOrganizerList();
         vips.remove(username);
         System.out.println(vips);
     }

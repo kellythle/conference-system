@@ -209,6 +209,22 @@ public class UserManager implements Serializable {
         }
         return attendees;
     }
+
+    /**
+     * Return a list of Organizers' usernames.
+     *
+     * @return an ArrayList of String representing the usernames of organizers
+     */
+    public ArrayList<String> getOrganizerList(){
+        Set<String> usernames = userMap.keySet();
+        ArrayList<String> attendees = new ArrayList<>();
+        for(int i = 0; i < usernames.size(); i++){
+            if (isOfType((String)usernames.toArray()[i], ("Organizer")))
+                attendees.add((String)usernames.toArray()[i]);
+        }
+        return attendees;
+    }
+
     /**
      * Checks whether or not a person can login with given account information.
      *

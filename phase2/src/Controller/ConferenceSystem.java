@@ -248,7 +248,7 @@ public class ConferenceSystem {
                     loginController.createAccount("Attendee");
                     break;
                 case "2":
-                    loginController.createAccount("Speaker");
+                    loginController.createAccount("Organizer");
                     break;
                 case "3":
                     loginController.createAccount("VIP");
