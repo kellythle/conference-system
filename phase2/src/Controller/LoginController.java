@@ -74,31 +74,30 @@ public class LoginController {
             lp.displayAccountCreateInfo(false);
             return;
         }
-
         // Two additional constraints to username and password: no spaces and case-sensitivity to duplicates
         if (um.isDuplicate(userName)) {
             lp.printDuplicateName();
             lp.displayAccountCreateInfo(false);
             return;
         }
-        else if (userName.contains(" ") || password.contains(" ")) {
+        if (userName.contains(" ") || password.contains(" ")) {
             lp.printSpaceError();
             lp.displayAccountCreateInfo(false);
             return;
         }
+        // checks activation code for VIP requests
+        if(type.equals("VIP")) {
+            lp.promptInvCode();
+            if(um.checkInvitationCode(scanner.nextLine())) {
+                lp.printValidInvCode();
+            }
+            else {
+                lp.printInvalidInvCode();
+                return; // makes sure the account does not get created
+            }
+        }
         // below deals with any input other than the ones listed above
         try {
-            // checks activation code for VIP requests
-            if(type.equals("VIP")) {
-                lp.promptInvCode();
-                if(um.checkInvitationCode(scanner.nextLine())) {
-                    lp.printValidInvCode();
-                }
-                else {
-                    lp.printInvalidInvCode();
-                    return; // makes sure the account does not get created
-                }
-            }
             this.um.createUser(userName, password, type);
             lp.displayAccountCreateInfo(true); // successfully created account
         }
