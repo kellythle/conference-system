@@ -325,7 +325,8 @@ public class ConferenceSystem {
      */
     private void speakerHelper(){
         String menuOption;
-        do{//Speaker start menu
+        do{
+            //Speaker start menu
             menuOption = loginController.getSpeakerMenu();
             switch (menuOption) {
                 case "1":
