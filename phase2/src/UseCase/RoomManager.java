@@ -4,27 +4,47 @@ import Entity.Room;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RoomManager implements Serializable {
     private HashMap<Integer, Room> roomMap = new HashMap<>();
 
-    public HashMap<Integer, Room> getRoomMap() {
-        return roomMap;
+    public boolean doesRoomExist(int roomNumber) {
+        return roomMap.containsKey(roomNumber);
     }
 
-    public void setRoomMap(HashMap<Integer, Room> roomMap) {
-        this.roomMap = roomMap;
+    public int getRoomCapacity(int roomNumber) {
+        Room room = roomMap.get(roomNumber);
+        return room.getCapacity();
     }
 
-    public Room getRoom(int roomNumber) {
-        return roomMap.getOrDefault(roomNumber, null);
+    public HashMap<LocalDateTime, String> getRoomSchedule(int roomNumber) {
+        Room room = roomMap.get(roomNumber);
+        return room.getSchedule();
     }
 
-    public ArrayList<Integer> getAvailableRooms(LocalDateTime time) {
-        // TODO: Finish this
-        return null;
+    public int getRoomBathrooms(int roomNumber) {
+        Room room = roomMap.get(roomNumber);
+        return room.getBathrooms();
     }
 
+    public boolean roomHasStage(int roomNumber) {
+        Room room = roomMap.get(roomNumber);
+        return room.hasStage();
+    }
+
+    public boolean roomHasTables(int roomNumber) {
+        Room room = roomMap.get(roomNumber);
+        return room.hasTables();
+    }
+
+    public boolean roomHasBar(int roomNumber) {
+        Room room = roomMap.get(roomNumber);
+        return room.hasBar();
+    }
+
+    public void addRoom(RoomBuilder roomBuilder)
+    {
+        Room room = roomBuilder.build();
+    }
 }
