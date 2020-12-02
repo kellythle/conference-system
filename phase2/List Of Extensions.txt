@@ -1,0 +1,26 @@
+===[List of Extensions]===
+
+# Note: Our group has only 7 members. Though it shows we have 8 members on MarkUs, there is one member that never
+show up. So we chose 3 optional extensions.
+
+1. Mandatory extensions
+    (a) Multiple types of events: Includes normal event (1 speaker), panel (2 speakers), and party (no speakers).
+    (b) Events can be canceled by at least one organizer.
+    (c) VIP user:
+        - special code required to create VIP accounts
+        - can message any organizer/speaker/VIP, or attendee if they're friends
+        - custom UI (slightly nicer)
+        - show friend request at top
+    (d) Organizers can create other users including: Attendee, Speaker, and VIP.
+    (e) Events and Rooms have maximum capacity.
+2. Optional extensions
+    (a) Enhance the user's messaging experience by allowing them to "mark as unread",
+    delete, or archive messages after reading them.
+    (b) Allows user to request events by a specific day, time or speaker,and requested events. For speakers,
+    they can also see events that they speaks.
+    (c) Separate Room as an Entity from Event. So room now has more features other than capacity and room number.
+3. Our own extensions
+    (a) Advance password restrictions.
+    (b) Allow speakers to sign up for events (except the events they are speaking).
+    (c) Friend list system.
+    (d) Game System. Allows user to play some math games.
