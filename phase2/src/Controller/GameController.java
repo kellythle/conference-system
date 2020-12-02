@@ -1,13 +1,18 @@
 package Controller;
 
 import Presenter.GamePresenter;
+import UseCase.UserManager;
 
 import java.util.Random;
 import java.util.Scanner;
 
 public class GameController {
     private final GamePresenter gp = new GamePresenter();
+    private final UserManager um;
 
+    public GameController(UserManager um) {
+        this.um = um;
+    }
     /**
      * Calls GamePresenter to print the game mode menu.
      */
@@ -95,17 +100,24 @@ public class GameController {
             Scanner scan = new Scanner(System.in);
             gp.printQuestion(count, num1, num2, "+");
             String answer = scan.nextLine();
-            int ans = Integer.parseInt(answer);
-            if (ans == num1 + num2) {
-                gp.printCorrect();
-                correct++;
-            } else {
+            int ans;
+            try{
+                ans = Integer.parseInt(answer.trim());
+                if (ans == num1 + num2) {
+                    gp.printCorrect();
+                    correct++;
+                } else {
+                    gp.printWrong();
+                    gp.printAnswer(num1, num2, "+");
+                }
+            }catch (NumberFormatException e){
                 gp.printWrong();
                 gp.printAnswer(num1, num2, "+");
             }
             count++;
         }while(count != 5);
         gp.printResult(correct);
+        reward(level, correct);
     }
 
     /**
@@ -125,17 +137,24 @@ public class GameController {
             Scanner scan = new Scanner(System.in);
             gp.printQuestion(count, num1, num2, "-");
             String answer = scan.nextLine();
-            int ans = Integer.parseInt(answer);
-            if (ans == num1 - num2) {
-                gp.printCorrect();
-                correct++;
-            } else {
+            int ans;
+            try{
+                ans = Integer.parseInt(answer.trim());
+                if (ans == num1 - num2) {
+                    gp.printCorrect();
+                    correct++;
+                } else {
+                    gp.printWrong();
+                    gp.printAnswer(num1, num2, "-");
+                }
+            }catch (NumberFormatException e){
                 gp.printWrong();
                 gp.printAnswer(num1, num2, "-");
             }
             count++;
         }while(count != 5);
         gp.printResult(correct);
+        reward(level, correct);
     }
 
     /**
@@ -155,17 +174,24 @@ public class GameController {
             Scanner scan = new Scanner(System.in);
             gp.printQuestion(count, num1, num2, "*");
             String answer = scan.nextLine();
-            int ans = Integer.parseInt(answer);
-            if (ans == num1 * num2) {
-                gp.printCorrect();
-                correct++;
-            } else {
+            int ans;
+            try{
+                ans = Integer.parseInt(answer.trim());
+                if (ans == num1 * num2) {
+                    gp.printCorrect();
+                    correct++;
+                } else {
+                    gp.printWrong();
+                    gp.printAnswer(num1, num2, "*");
+                }
+            }catch (NumberFormatException e){
                 gp.printWrong();
                 gp.printAnswer(num1, num2, "*");
             }
             count++;
         }while(count != 5);
         gp.printResult(correct);
+        reward(level, correct);
     }
 
     /**
@@ -191,17 +217,43 @@ public class GameController {
             Scanner scan = new Scanner(System.in);
             gp.printQuestion(count, num1, num2, "/");
             String answer = scan.nextLine();
-            int ans = Integer.parseInt(answer);
-            if (ans == Math.floorDiv(num1, num2)) {
-                gp.printCorrect();
-                correct++;
-            } else {
+            int ans;
+            try{
+                ans = Integer.parseInt(answer.trim());
+                if (ans == Math.floorDiv(num1, num2)) {
+                    gp.printCorrect();
+                    correct++;
+                } else {
+                    gp.printWrong();
+                    gp.printAnswer(num1, num2, "/");
+                }
+            }catch (NumberFormatException e){
                 gp.printWrong();
                 gp.printAnswer(num1, num2, "/");
             }
             count++;
         }while(count != 5);
         gp.printResult(correct);
+        reward(level, correct);
+    }
+
+    /**
+     * If the user achieves a perfect score on hard mode, they are offered a chance to get an invitation code to a VIP
+     * account.
+     *
+     * Acts as a private helper to add to the end of each type of game
+     * @param level The difficulty level, 100 indicates hard mode
+     * @param numCorrect the number of correct answers, up to a maximum of 5
+     */
+    private void reward(int level,int numCorrect) {
+        Scanner scanner = new Scanner(System.in);
+        if(level >= 100 && numCorrect >= 5) { // perfect score on hard mode
+            gp.printCongratulate();
+            String response = scanner.nextLine();
+            if(response.equals("Y")) {
+                gp.printInvitationCode(um.newInvitationCode());
+            }
+        }
     }
 
     public void InvalidInput() {

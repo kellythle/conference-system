@@ -31,13 +31,6 @@ public class LoginPresenter {
     }
 
     /**
-     * Prompts the client to enter a type of user. (Should only be Attendee or Organizer)
-     */
-    public void inputUserType(){
-        System.out.println("Enter the type of user you wish to create (Attendee or Organizer): ");
-    }
-
-    /**
      * Prints the error message: "Sorry this username is already taken."
      */
     public void printDuplicateName() {
@@ -150,13 +143,26 @@ public class LoginPresenter {
      * Prints out the main menu for the VIP. This contains all the actions that a VIP can take.
      */
     public void printVIPMenu(){
-        System.out.println("Welcome to the VIP Menu! \n" +
-                "Options:\n" +
+        System.out.println("\nWelcome to the premium VIP Menu! \n\n" +
+                "Here are the options you can choose:\n" +
                 "1. Sign up\n" +
                 "2. Send a message\n"+
                 "3. Play Math Game\n" +
                 "4. Log out\n"+
-                "Enter 1, 2, 3 or 4: ");
+                "Please enter 1, 2, 3 or 4: ");
+    }
+
+    /**
+     * Prints the initial Account Creation menu
+     * ***** can only have attendee, organizer, or VIP if they have an invitation code
+     */
+    public void printInitialAccountCreationMenu() {
+        System.out.println("What type of user do you want to create:\n"+
+                "1. Attendee\n"+
+                "2. Organizer\n"+
+                "3. VIP (only if you have a special invitation code)\n"+
+                "4. Exit this menu\n"+
+                "Enter 1, 2, 3, or 4: ");
     }
 
     /**
@@ -167,8 +173,9 @@ public class LoginPresenter {
                 "Options:\n" +
                 "1. Speaker\n"+
                 "2. Attendee\n"+
-                "3. Go back to Organizer menu\n"+
-                "Enter 1, 2, or 3: ");
+                "3. VIP\n"+
+                "4. Go back to Organizer menu\n"+
+                "Enter 1, 2, 3, or 4: ");
     }
 
     /**
@@ -208,8 +215,7 @@ public class LoginPresenter {
      * @param type - the type of the user wanted to be create
      */
     public void inputNameOfType(String type) {
-        System.out.println("Please enter the username of who you would like to make a(n) "+ type +" or 0 to return to " +
-                "the Organizer Menu: ");
+        System.out.println("Please enter the username of who you would like to make a(n) "+ type);
     }
 
     /**
@@ -227,6 +233,26 @@ public class LoginPresenter {
      */
     public void printInvalidUserName() {
         System.out.println("0 is not a valid username.");
+    }
+
+    /**
+     * Asks the client for an invitation code to make VIP accounts
+     */
+    public void promptInvCode() {
+        System.out.println("Please enter a valid invitation code below:");
+    }
+    /**
+     * Prints that the invitation code is correct
+     */
+    public void printValidInvCode() {
+        System.out.println("Fantastic, your invitation code has been redeemed!");
+    }
+
+    /**
+     * Prints that the invitation code given is not valid
+     */
+    public void printInvalidInvCode() {
+        System.out.println("Sorry, the code is invalid or has expired");
     }
 }
 
