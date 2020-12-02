@@ -146,13 +146,13 @@ When you first enter the Math Game System, you will have to select a level.
     1. Easy
     2. Normal
     3. Hard
-    4. Exist Game
+    4. Exit Game
 If you entered 4, you will exist the Game System. Otherwise, you will see the game mode menu.
     1. Summation
     2. Subtraction
     3. Multiplication
     4. Division
-    5. Exist Game
+    5. Exit Game
 If you entered 5, you will exist the Game System. Otherwise your game will start!
 Each game contains 5 questions. After each question, the system will tell you
 whether you get the correct answer or not. When the game ends, you are also able

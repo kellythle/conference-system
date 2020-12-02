@@ -11,7 +11,7 @@ public class GamePresenter {
                 "2. Subtraction (-)\n" +
                 "3. Multiplication (*)\n" +
                 "4. Division (/)\n" +
-                "5. Exist Game\n"+
+                "5. Exit Game\n"+
                 "Please enter 1, 2, 3, 4 or 5");
     }
 
@@ -26,7 +26,7 @@ public class GamePresenter {
                 "1. Easy\n" +
                 "2. Normal\n" +
                 "3. Hard\n" +
-                "4. Exist Game\n" +
+                "4. Exit Game\n" +
                 "Please enter 1, 2, 3 or 4");
     }
 

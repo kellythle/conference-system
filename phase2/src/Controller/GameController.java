@@ -100,11 +100,17 @@ public class GameController {
             Scanner scan = new Scanner(System.in);
             gp.printQuestion(count, num1, num2, "+");
             String answer = scan.nextLine();
-            int ans = Integer.parseInt(answer);
-            if (ans == num1 + num2) {
-                gp.printCorrect();
-                correct++;
-            } else {
+            int ans;
+            try{
+                ans = Integer.parseInt(answer.trim());
+                if (ans == num1 + num2) {
+                    gp.printCorrect();
+                    correct++;
+                } else {
+                    gp.printWrong();
+                    gp.printAnswer(num1, num2, "+");
+                }
+            }catch (NumberFormatException e){
                 gp.printWrong();
                 gp.printAnswer(num1, num2, "+");
             }
@@ -131,11 +137,17 @@ public class GameController {
             Scanner scan = new Scanner(System.in);
             gp.printQuestion(count, num1, num2, "-");
             String answer = scan.nextLine();
-            int ans = Integer.parseInt(answer);
-            if (ans == num1 - num2) {
-                gp.printCorrect();
-                correct++;
-            } else {
+            int ans;
+            try{
+                ans = Integer.parseInt(answer.trim());
+                if (ans == num1 - num2) {
+                    gp.printCorrect();
+                    correct++;
+                } else {
+                    gp.printWrong();
+                    gp.printAnswer(num1, num2, "-");
+                }
+            }catch (NumberFormatException e){
                 gp.printWrong();
                 gp.printAnswer(num1, num2, "-");
             }
@@ -162,11 +174,17 @@ public class GameController {
             Scanner scan = new Scanner(System.in);
             gp.printQuestion(count, num1, num2, "*");
             String answer = scan.nextLine();
-            int ans = Integer.parseInt(answer);
-            if (ans == num1 * num2) {
-                gp.printCorrect();
-                correct++;
-            } else {
+            int ans;
+            try{
+                ans = Integer.parseInt(answer.trim());
+                if (ans == num1 * num2) {
+                    gp.printCorrect();
+                    correct++;
+                } else {
+                    gp.printWrong();
+                    gp.printAnswer(num1, num2, "*");
+                }
+            }catch (NumberFormatException e){
                 gp.printWrong();
                 gp.printAnswer(num1, num2, "*");
             }
@@ -199,11 +217,17 @@ public class GameController {
             Scanner scan = new Scanner(System.in);
             gp.printQuestion(count, num1, num2, "/");
             String answer = scan.nextLine();
-            int ans = Integer.parseInt(answer);
-            if (ans == Math.floorDiv(num1, num2)) {
-                gp.printCorrect();
-                correct++;
-            } else {
+            int ans;
+            try{
+                ans = Integer.parseInt(answer.trim());
+                if (ans == Math.floorDiv(num1, num2)) {
+                    gp.printCorrect();
+                    correct++;
+                } else {
+                    gp.printWrong();
+                    gp.printAnswer(num1, num2, "/");
+                }
+            }catch (NumberFormatException e){
                 gp.printWrong();
                 gp.printAnswer(num1, num2, "/");
             }
