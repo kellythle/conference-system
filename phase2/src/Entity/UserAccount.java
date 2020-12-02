@@ -87,9 +87,6 @@ public abstract class UserAccount implements Serializable {
         friendList.add(friendID);
     }
 
-    public void removeFriend(String friendID) {
-        friendList.remove(friendID);
-    }
 
     public ArrayList<String> getFriendRequest() {
         return friendRequest;
@@ -97,6 +94,10 @@ public abstract class UserAccount implements Serializable {
 
     public void addFriendRequest(String friendID) {
         friendRequest.add(friendID);
+    }
+
+    public void addVIPFriendRequest(String friendID) {
+        friendRequest.add(0, friendID);
     }
 
     public void removeFriendRequest(String friendID) {

@@ -117,7 +117,8 @@ public class MessagePresenter {
                 "1. View conversations and reply to messages\n" +
                 "2. Send a message\n"+
                 "3. View archived conversations:\n" +
-                "Enter 0, 1, 2, or 3: ");
+                "4. Manage Friend List:\n" +
+                "Enter 0, 1, 2, 3, or 4: ");
     }
 
     /**
@@ -567,7 +568,7 @@ public class MessagePresenter {
      */
     public void printFriendListMenu(){
         System.out.println("Options:\n" +
-                "0. Return to previous menu\n" +
+                "0. Return to menu\n" +
                 "1. View/manage received friend requests\n" +
                 "2. Send friend requests\n" +
                 "3. View your friend list\n" +
@@ -576,7 +577,7 @@ public class MessagePresenter {
 
     public void printFriendRequestMenu(){
         System.out.println("Options:\n" +
-                "0. Return to previous menu\n" +
+                "0. Return to menu\n" +
                 "1. Accept friend request\n" +
                 "2. Decline friend requests\n" +
                 "Enter 0, 1, or 2: ");

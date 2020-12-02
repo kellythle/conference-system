@@ -254,8 +254,8 @@ public class UserManager implements Serializable {
             return false;
         } else if (isOfType(username, "Organizer")){ // organizers can send to any non organizers
             return !isOfType(receiver, "Organizer");
-        } else if (isOfType(username, "Speaker")){ // speakers can send to attendees
-            return isOfType(receiver, "Attendee");
+        } else if (isOfType(username, "Speaker")){ // speakers can send to attendees and VIPs
+            return isOfType(receiver, "Attendee") | isOfType(receiver, "VIP");
         } else if (isOfType(username, "VIP")) {
             return true;
         } else{
@@ -311,6 +311,10 @@ public class UserManager implements Serializable {
 
     public boolean addFriendRequest(String username, String receiver){
         if (!isFriend(username, receiver) && !isFriendRequestSent(username, receiver)){
+            if (getUserType(receiver).equals("VIP")) {
+                getUserByName(receiver).addVIPFriendRequest(username);
+                return true;
+            }
             getUserByName(receiver).addFriendRequest(username);
             return true;
         }

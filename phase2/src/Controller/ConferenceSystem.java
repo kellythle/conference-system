@@ -563,6 +563,8 @@ public class ConferenceSystem {
                 case "2":
                     myVIPMessageController.sendMessage();
                     break;
+                case "4":
+                    myVIPMessageController.manageFriendList();
                 default:
                     myVIPMessageController.invalidInput();
             }
