@@ -31,6 +31,12 @@ public class SpeakerMessageController extends MessageController {
         this.myEventManager = myEventManager;
     }
 
+    public boolean sendSingleMessage(String receiverID, String messageContent){
+        if (myUserManager.canSend(username, receiverID)){
+            return myMessageManager.createMessage(receiverID, messageContent);
+        } else {return false;}
+    }
+
 
     /**
      * Sends messages to all attendees enrolled in any Speaker's events.

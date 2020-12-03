@@ -28,6 +28,12 @@ public class OrganizerMessageController extends MessageController {
         super(username, myUserManager, myMessageManager);
     }
 
+    public boolean sendSingleMessage(String receiverID, String messageContent){
+        if (myUserManager.canSend(username, receiverID)){
+            return myMessageManager.createMessage(receiverID, messageContent);
+        } else {return false;}
+    }
+
     /**
      * Sends messages to all Speakers in the system.
      *
