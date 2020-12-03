@@ -215,20 +215,38 @@ public class MessageController {
         messagePresenter.printInvalidInput();
     }
 
-    public void deleteSingleMessage(String conversationPartner) {
+    /**
+     * Prompts user for information to delete a single message (message number and confirmation of deletion).
+     *
+
+     * @param conversation - list of message ids in the conversation the user wants to delete from
+     * @return int position of the message to be deleted, or -1 if there exists no such message.
+     */
+    public int checkDeleteSingleMessage(ArrayList<UUID> conversation) {
         messagePresenter.printMessageNumberPrompt();
-        ArrayList<UUID> conversation = myMessageManager.getSingleConversationByReceiver(conversationPartner);
         Scanner scan = new Scanner(System.in);
         int next = scan.nextInt();
+        messagePresenter.printConfirmationPrompt();
+        String confirm = scan.nextLine();
         if (next > conversation.size()){
             messagePresenter.printMessageDoesNotExist();
+            return -1;
         } else {
-            messagePresenter.printConfirmationPrompt();
-            String confirm = scan.nextLine();
             if (confirm.equals("Y")) {
-                myMessageManager.deleteSingleMessage(conversation.get(next-1));
-                messagePresenter.printMessageDeleted();
+                return (next-1);
+            } else {
+                return -1;
             }
+        }
+    }
+
+
+    public void deleteSingleMessage(String conversationPartner){
+        ArrayList<UUID> conversation = myMessageManager.getSingleConversationByReceiver(conversationPartner);
+        int toBeDeleted = checkDeleteSingleMessage(conversation);
+        if (toBeDeleted > -1){
+            myMessageManager.deleteSingleMessage(conversation.get(toBeDeleted));
+            messagePresenter.printMessageDeleted();
         }
     }
 

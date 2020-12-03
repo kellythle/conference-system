@@ -200,8 +200,8 @@ public class MessagePresenter {
                 "0: Reply to this conversation\n" +
                 "1. Archive a single message\n" +
                 "2. Archive entire conversation\n" +
-                "3. Delete a single message (only from your inbox)\n" +
-                "4. Delete conversation (only from your inbox)\n" +
+                "3. Delete a single message (only from your inbox, unless you have VIP status)\n" +
+                "4. Delete conversation (only from your inbox, unless you have VIP status)\n" +
                 "5. Continue browsing conversations\n" +
                 "Enter 0, 1, 2, 3, 4, 5, or anything else to return to the Message Menu: ");
     }
@@ -273,9 +273,9 @@ public class MessagePresenter {
      * Calls method to print single archived conversation. Prints options for user to continue browsing, delete or
      * unarchive the conversation, or return to Message Menu.
      *
-     * @param messageManager
-     * @param userManager
-     * @param recipientID
+     * @param messageManager - this session's instance of MessageManager
+     * @param userManager - this session's instance of UserManager
+     * @param recipientID - the username of the conversation partner
      */
     public void viewArchivedSingleConversation(MessageManager messageManager, UserManager userManager,
                                                String recipientID) {

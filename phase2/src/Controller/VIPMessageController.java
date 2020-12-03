@@ -3,7 +3,9 @@ package Controller;
 import UseCase.MessageManager;
 import UseCase.UserManager;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class VIPMessageController extends MessageController{
 
@@ -49,6 +51,37 @@ public class VIPMessageController extends MessageController{
             messagePresenter.printMessageSuccess();
         } else {
             messagePresenter.printMessageFailed();
+        }
+    }
+
+    /**
+     * Deletes a single message of a conversation, for VIP and conversation partner both.
+     *
+     * @param conversationPartner - username of the conversation to delete a single message from.
+     */
+    @Override
+    public void deleteSingleMessage(String conversationPartner){
+        ArrayList<UUID> conversation = myMessageManager.getSingleConversationByReceiver(conversationPartner);
+        int toBeDeleted = checkDeleteSingleMessage(conversation);
+        if (toBeDeleted > -1){
+            myMessageManager.deleteSingleMessageBothSides(conversation.get(toBeDeleted));
+            messagePresenter.printMessageUserReceiverDelete();
+        }
+    }
+
+    /**
+     * Deletes entire conversation, for VIP and conversation partner both.
+     *
+     * @param conversationPartner - username partner of the conversation to be deleted.
+     */
+    @Override
+    public void deleteConversation(String conversationPartner){
+        Scanner scan = new Scanner(System.in);
+        messagePresenter.printConfirmationPrompt();
+        String confirm = scan.nextLine();
+        if (confirm.equals("Y")){
+            myMessageManager.deleteConversationBothSides(conversationPartner);
+            messagePresenter.printConversationUserReceiverDelete();
         }
     }
 }

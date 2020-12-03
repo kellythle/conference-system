@@ -3,7 +3,9 @@ package Controller;
 import UseCase.MessageManager;
 import UseCase.UserManager;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.UUID;
 
 /**
  * A controller class that calls MessageManager to manage any
@@ -111,18 +113,53 @@ public class OrganizerMessageController extends MessageController {
         Scanner scanner = new Scanner(System.in);
         messagePresenter.viewOrganizerSingleConversation(myMessageManager, myUserManager, conversationPartner);
         String input = scanner.nextLine();
-        if (input.equals("0")){
-            archiveSingleMessage(conversationPartner);
-        } else if (input.equals("1")){
-            archiveConversation(conversationPartner);
-        } else if (input.equals("2")){
-            deleteSingleMessage(conversationPartner);
-        } else if (input.equals("3")){
-            deleteConversation(conversationPartner);
-        } else if (input.equals("4")){
-            viewConversations();
+        switch (input) {
+            case "0":
+                archiveSingleMessage(conversationPartner);
+                break;
+            case "1":
+                archiveConversation(conversationPartner);
+                break;
+            case "2":
+                deleteSingleMessage(conversationPartner);
+                break;
+            case "3":
+                deleteConversation(conversationPartner);
+                break;
+            case "4":
+                viewConversations();
+                break;
         }
     }
 
+    /**
+     * Deletes a single message of a conversation, for organizer and conversation partner both.
+     *
+     * @param conversationPartner - username of the conversation to delete a single message from.
+     */
+    @Override
+    public void deleteSingleMessage(String conversationPartner){
+        ArrayList<UUID> conversation = myMessageManager.getSingleConversationByReceiver(conversationPartner);
+        int toBeDeleted = checkDeleteSingleMessage(conversation);
+        if (toBeDeleted > -1){
+            myMessageManager.deleteSingleMessageBothSides(conversation.get(toBeDeleted));
+            messagePresenter.printMessageUserReceiverDelete();
+        }
+    }
 
+    /**
+     * Deletes entire conversation, for organizer and conversation partner both.
+     *
+     * @param conversationPartner - username partner of the conversation to be deleted.
+     */
+    @Override
+    public void deleteConversation(String conversationPartner){
+        Scanner scan = new Scanner(System.in);
+        messagePresenter.printConfirmationPrompt();
+        String confirm = scan.nextLine();
+        if (confirm.equals("Y")){
+            myMessageManager.deleteConversationBothSides(conversationPartner);
+            messagePresenter.printConversationUserReceiverDelete();
+        }
+    }
 }
