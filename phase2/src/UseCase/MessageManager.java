@@ -50,7 +50,9 @@ public class MessageManager implements Serializable {
      * @return the message object that corresponds to the messageID
      */
     private Message getMessage(UUID messageID){
-        return systemMessages.get(messageID);
+        if (systemMessages.get(messageID)==null){
+            return deletedMessages.get(messageID);
+        } return systemMessages.get(messageID);
     }
 
     /**
@@ -58,13 +60,6 @@ public class MessageManager implements Serializable {
      * @return true if message is marked as read, false if not.
      */
     private boolean getMessageReadStatus(UUID messageID) { return getMessage(messageID).isReadStatus();}
-
-    /**
-     * @return list of UUIDs of all messages marked as deleted by both sender and receiver
-     */
-    public ArrayList<UUID> getDeletedMessages() {
-        return new ArrayList<>(deletedMessages.keySet());
-    }
 
     /**
      * @param messageID - ID of the message.
@@ -523,5 +518,48 @@ public class MessageManager implements Serializable {
         return true;
     }
 
+    /**
+     * Given a list of messages, generates a list of all of the senders and receivers of the messages in that list.
+     *
+     * @param messages - list of message IDs
+     * @return unrepeated list of string usernames of the senders of the messages in the list
+     */
+    private ArrayList<String> getListOfMessageSenderReceivers(ArrayList<UUID> messages){
+        ArrayList<String> conversations = new ArrayList<>();
+        for (UUID i: messages){
+            conversations.add(getMessage(i).getSender());
+            conversations.add(getMessage(i).getReceiver());
+        }
+        LinkedHashSet<String> hashSet = new LinkedHashSet<>(conversations);
+        return new ArrayList<>(hashSet);
+    }
+
+    /**
+     * Gets a list of usernames of users whose messages have been fully deleted from both
+     * the sender and the receiver inboxes.
+     *
+     * @return list of string usernames
+     */
+    public ArrayList<String> getDeletedMessagesSenderReceivers(){
+        ArrayList<UUID> messageList = new ArrayList<>(deletedMessages.keySet());
+        return getListOfMessageSenderReceivers(messageList);
+    }
+
+    /**
+     * Given a username, gets list of messages from fully deleted messages that have said user as receiver or sender.
+     *
+     * @param messenger username of User
+     * @return UUID list of fully deleted messages that involve given messenger, unsorted.
+     */
+    public ArrayList<UUID> getFullyDeletedMessagesByUser(String messenger){
+        ArrayList<UUID> messageList = new ArrayList<>();
+        for (UUID i: deletedMessages.keySet()){
+            Message m = deletedMessages.get(i);
+            if (m.getSender().equals(messenger)||m.getReceiver().equals(messenger)){
+                messageList.add(i);
+            }
+        }
+        return messageList;
+    }
 
 }

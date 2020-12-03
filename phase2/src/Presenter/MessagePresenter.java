@@ -88,9 +88,10 @@ public class MessagePresenter {
                 "1. View conversations\n" +
                 "2. Send a message to a single user\n" +
                 "3. Send a message to all Speakers\n" +
-                "4. Send a message to all Attendees:\n" +
-                "5. View archived conversations:\n" +
-                "Enter 0, 1, 2, 3, 4, or 5: ");
+                "4. Send a message to all Attendees\n" +
+                "5. View archived conversations\n" +
+                "6. View system message trash bin\n" +
+                "Enter 0, 1, 2, 3, 4, 5, or 6: ");
     }
 
 
@@ -130,7 +131,7 @@ public class MessagePresenter {
         System.out.println("You have conversations with these users: ");
         System.out.println(messageManager.getSenderConversations());
         ArrayList<String> unread = messageManager.getSenderUnreadConversations();
-        System.out.println("You have unread messages from " + unread.size() + "users: ");
+        System.out.println("You have unread messages from " + unread.size() + " users: ");
         System.out.println(unread);
         System.out.println("Options:\n" +
                 "Enter a username to see your message history \n" +
@@ -589,5 +590,26 @@ public class MessagePresenter {
 
     public void printAlreadySent(){
         System.out.println("You already sent this user a request or you are already friends!");
+    }
+
+    public void viewFullyDeletedMessages(MessageManager messageManager){
+        System.out.println("Welcome to the garbage bin, of unloved messages unwanted by all...");
+        System.out.println("Here are all messages deleted from the inboxes of both sender and receiver.");
+        System.out.println("There are fully deleted messages involving these users: ");
+        System.out.println(messageManager.getDeletedMessagesSenderReceivers());
+        System.out.println("Enter a username to view the associated messages, " +
+                "or anything else to return to Message Menu");
+    }
+
+    public void viewUserFullyDeletedMessage(MessageManager messageManager, String username){
+        ArrayList<UUID> messages = messageManager.getFullyDeletedMessagesByUser(username);
+        for (UUID i: messages){
+            String messageContent = messageManager.getMessageSender(i) + " sent to "
+                    + messageManager.getMessageReceiver(i) + ":\n" + messageManager.getMessageContent(i) +
+                    "\n           at " + messageManager.getMessageTime(i);
+            System.out.println(messageContent);
+        }
+        System.out.println("Enter 0 to continue browsing the Message Bin, or anything " +
+                "else to return to Message Menu.");
     }
 }

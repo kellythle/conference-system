@@ -484,6 +484,8 @@ public class ConferenceSystem {
                     break;
                 case "5":
                     organizerMessageController.viewArchivedConversations();
+                case "6":
+                    organizerMessageController.viewDeletedMessagesBin();
                 default:
                     organizerMessageController.invalidInput();
             }

@@ -168,4 +168,25 @@ public class OrganizerMessageController extends MessageController {
             messagePresenter.printConversationUserReceiverDelete();
         }
     }
+
+    /**
+     * Displays messages deleted from the inbox of both sender and receiver.
+     */
+    public void viewDeletedMessagesBin(){
+        messagePresenter.viewFullyDeletedMessages(myMessageManager);
+        Scanner scan = new Scanner(System.in);
+        String input = scan.nextLine();
+        if (myMessageManager.getDeletedMessagesSenderReceivers().contains(input)){
+            viewUserDeletedMessagesBin(username);
+        }
+    }
+
+    private void viewUserDeletedMessagesBin(String username){
+        messagePresenter.viewUserFullyDeletedMessage(myMessageManager,username);
+        Scanner scan = new Scanner(System.in);
+        String input = scan.nextLine();
+        if (input.equals("0")){
+            viewDeletedMessagesBin();
+        }
+    }
 }
