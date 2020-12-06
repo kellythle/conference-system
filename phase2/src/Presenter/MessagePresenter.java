@@ -248,19 +248,6 @@ public class MessagePresenter {
         printOrganizerViewSingleConversationPrompt();
     }
 
-    /**
-     * Calls method to print single conversation between Speaker user and given recipient. Prints options
-     * for Speaker to continue browsing or return to Message Menu.
-     *
-     * @param messageManager - a MessageManager instance
-     * @param userManager - an UserManager instance
-     * @param recipientID - username of the user receiving the message
-     */
-    public void viewSpeakerSingleConversation(MessageManager messageManager, UserManager userManager, String
-            recipientID) {
-        printSingleConversation(messageManager, userManager, recipientID);
-        printViewSingleConversationPrompt();
-    }
 
     public void printArchiveOptions(){
         System.out.println("Options: " +
@@ -472,6 +459,13 @@ public class MessagePresenter {
     }
 
     /**
+     * Print all archived conversations deletion from user and receiver inboxes notification
+     */
+    public void printArchiveUserReceiverDeletion(){
+        System.out.println("All archived conversations successfully deleted from both inboxes.");
+    }
+
+    /**
      * Print message deletion from user and receiver inboxes notification.
      */
     public void printMessageUserReceiverDelete(){
@@ -485,29 +479,57 @@ public class MessagePresenter {
         System.out.println("Conversation deleted from both inboxes.");
     }
 
+    /**
+     * Print prompt for confirmation of user decision.
+     */
     public void printConfirmationPrompt(){
         System.out.println("Enter Y to confirm this decision. It cannot be reversed. ");
     }
 
+    /**
+     * Print prompt for the number of a message in a conversation.
+     */
     public void printMessageNumberPrompt(){
         System.out.println("Enter the number of this message in the conversation:");
     }
 
+    /**
+     * Print notification that the message the user chose does not exist.
+     */
     public void printMessageDoesNotExist(){
         System.out.println("This message does not exist.");
     }
 
+    /**
+     * Prints conversation successfully marked as read.
+     */
     public void printMarkedAsRead(){
         System.out.println("Conversation marked as read.");
     }
 
+    /**
+     * Prints conversation successfully marked as unread.
+     */
     public void printMarkedAsUnread(){
         System.out.println("Conversation marked as unread.");
     }
 
+    /**
+     * Prints conversation does not exist.
+     */
     public void printConversationDoesNotExist(){
         System.out.println("This conversation does not exist.");
     }
+
+    /**
+     * Print conversation cannot be marked as unread.
+     */
+    public void printCannotMarkUnread(){ System.out.println("This conversation cannot be marked as unread");}
+
+    /**
+     * Print message garbage bin successfully cleared.
+     */
+    public void printMessageBinCleared() { System.out.println("The message garbage bin has been successfully cleared.");}
 
     /**
      * Print list of friends
@@ -592,15 +614,27 @@ public class MessagePresenter {
         System.out.println("You already sent this user a request or you are already friends!");
     }
 
+    /**
+     * Displays menu for viewing messages fully deleted from the system (by both sender and receiver)
+     * Displays a list of users with fully deleted messages.
+     *
+     * @param messageManager -
+     */
     public void viewFullyDeletedMessages(MessageManager messageManager){
         System.out.println("Welcome to the garbage bin, of unloved messages unwanted by all...");
         System.out.println("Here are all messages deleted from the inboxes of both sender and receiver.");
         System.out.println("There are fully deleted messages involving these users: ");
         System.out.println(messageManager.getDeletedMessagesSenderReceivers());
-        System.out.println("Enter a username to view the associated messages, " +
+        System.out.println("Enter a username to view the associated messages, 0 to clear the message bin, " +
                 "or anything else to return to Message Menu");
     }
 
+    /**
+     * Display the fully deleted messages by a given user.
+     *
+     * @param messageManager - an instance of MessageManager
+     * @param username - the username of the user whose deleted messages you wish to view
+     */
     public void viewUserFullyDeletedMessage(MessageManager messageManager, String username){
         ArrayList<UUID> messages = messageManager.getFullyDeletedMessagesByUser(username);
         for (UUID i: messages){

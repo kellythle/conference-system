@@ -325,16 +325,6 @@ public class MessageManager implements Serializable {
     }
 
     /**
-     * Archive all of current user's messages.
-     */
-    public void archiveAllUserMessages(){
-        ArrayList<UUID> conversation = getVisibleSenderMessages();
-        for (UUID messageID: conversation){
-            archiveSingleMessage(messageID);
-        }
-    }
-
-    /**
      * Mark single message as deleted.
      *
      * @param messageID - UUID of the message to be deleted.

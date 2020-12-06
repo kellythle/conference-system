@@ -84,4 +84,34 @@ public class VIPMessageController extends MessageController{
             messagePresenter.printConversationUserReceiverDelete();
         }
     }
+
+    /**
+     * Deletes all archived messages, for VIP and conversation partner both.
+     */
+    @Override
+    public void deleteAllArchivedConversations() {
+        Scanner scan = new Scanner(System.in);
+        messagePresenter.printConfirmationPrompt();
+        String confirm = scan.nextLine();
+        if (confirm.equals("Y")) {
+            myMessageManager.deleteAllArchivedConversationsBothSides();
+            messagePresenter.printArchiveUserReceiverDeletion();
+        }
+    }
+
+    /**
+     * Deletes archived messages with a given conversation partner, for VIP and conversation partner both.
+     *
+     * @param conversationPartner - username of conversation partner
+     */
+    @Override
+    public void deleteArchivedConversation(String conversationPartner){
+        Scanner scan = new Scanner(System.in);
+        messagePresenter.printConfirmationPrompt();
+        String confirm = scan.nextLine();
+        if (confirm.equals("Y")){
+            myMessageManager.deleteArchivedConversationBothSides(conversationPartner);
+            messagePresenter.printConversationUserReceiverDelete();
+        }
+    }
 }

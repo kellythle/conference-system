@@ -28,6 +28,7 @@ public class OrganizerMessageController extends MessageController {
         super(username, myUserManager, myMessageManager);
     }
 
+
     public boolean sendSingleMessage(String receiverID, String messageContent){
         if (myUserManager.canSend(username, receiverID)){
             return myMessageManager.createMessage(receiverID, messageContent);
@@ -170,17 +171,68 @@ public class OrganizerMessageController extends MessageController {
     }
 
     /**
+     * Deletes all archived messages, for organizer and conversation partner both.
+     */
+    @Override
+    public void deleteAllArchivedConversations() {
+        Scanner scan = new Scanner(System.in);
+        messagePresenter.printConfirmationPrompt();
+        String confirm = scan.nextLine();
+        if (confirm.equals("Y")) {
+            myMessageManager.deleteAllArchivedConversationsBothSides();
+            messagePresenter.printArchiveUserReceiverDeletion();
+        }
+    }
+
+    /**
+     * Deletes archived messages with a given conversation partner, for organizer and conversation partner both.
+     *
+     * @param conversationPartner - username of the conversation partner
+     */
+    @Override
+    public void deleteArchivedConversation(String conversationPartner){
+        Scanner scan = new Scanner(System.in);
+        messagePresenter.printConfirmationPrompt();
+        String confirm = scan.nextLine();
+        if (confirm.equals("Y")){
+            myMessageManager.deleteArchivedConversationBothSides(conversationPartner);
+            messagePresenter.printConversationUserReceiverDelete();
+        }
+    }
+
+    /**
      * Displays messages deleted from the inbox of both sender and receiver.
      */
     public void viewDeletedMessagesBin(){
         messagePresenter.viewFullyDeletedMessages(myMessageManager);
         Scanner scan = new Scanner(System.in);
         String input = scan.nextLine();
-        if (myMessageManager.getDeletedMessagesSenderReceivers().contains(input)){
+        if (input.equals("0")){
+            clearDeletedMessagesBin();
+        }
+        else if (myMessageManager.getDeletedMessagesSenderReceivers().contains(input)){
             viewUserDeletedMessagesBin(username);
         }
     }
 
+    /**
+     * Clears the system storage of all fully deleted messages.
+     */
+    public void clearDeletedMessagesBin(){
+        Scanner scan = new Scanner(System.in);
+        messagePresenter.printConfirmationPrompt();
+        String input = scan.nextLine();
+        if (input.equals("Y")){
+            myMessageManager.emptyDeletedMessages();
+            messagePresenter.printMessageBinCleared();
+        }
+    }
+
+    /**
+     * Displays messages fully deleted that belong to a specific user, given a username.
+     *
+     * @param username - username of the user whose deleted messages are displayed.
+     */
     private void viewUserDeletedMessagesBin(String username){
         messagePresenter.viewUserFullyDeletedMessage(myMessageManager,username);
         Scanner scan = new Scanner(System.in);

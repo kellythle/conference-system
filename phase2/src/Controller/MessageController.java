@@ -80,9 +80,10 @@ public class MessageController {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         if (myMessageManager.getSenderConversations().contains(input)){
-            if (myMessageManager.getUnreadSenderMessages().contains(input)){
+            if (myMessageManager.getSenderUnreadConversations().contains(input)){
                 myMessageManager.markConversationAsRead(input);
-            } messagePresenter.printMarkedAsRead();
+                messagePresenter.printMarkedAsRead();
+            }
         } else {
             messagePresenter.printConversationDoesNotExist();
         }
@@ -96,9 +97,13 @@ public class MessageController {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         if (myMessageManager.getSenderConversations().contains(input)){
-            if (!myMessageManager.getUnreadSenderMessages().contains(input)){
-                myMessageManager.markConversationAsUnread(input);
-            } messagePresenter.printMarkedAsUnread();
+            if (!myMessageManager.getSenderUnreadConversations().contains(input)){
+                if (myMessageManager.markConversationAsUnread(input)){
+                    messagePresenter.printMarkedAsUnread();
+                } else {
+                    messagePresenter.printCannotMarkUnread();
+                }
+            }
         } else {
             messagePresenter.printConversationDoesNotExist();
         }
@@ -130,18 +135,25 @@ public class MessageController {
         Scanner scanner = new Scanner(System.in);
         messagePresenter.viewSingleConversation(myMessageManager, myUserManager, conversationPartner);
         String input = scanner.nextLine();
-        if (input.equals("0")){
-            replyToConversation(conversationPartner);
-        } else if (input.equals("1")){
-            archiveSingleMessage(conversationPartner);
-        } else if (input.equals("2")){
-            archiveConversation(conversationPartner);
-        } else if (input.equals("3")){
-            deleteSingleMessage(conversationPartner);
-        } else if (input.equals("4")){
-            deleteConversation(conversationPartner);
-        } else if (input.equals("5")){
-            viewConversations();
+        switch (input) {
+            case "0":
+                replyToConversation(conversationPartner);
+                break;
+            case "1":
+                archiveSingleMessage(conversationPartner);
+                break;
+            case "2":
+                archiveConversation(conversationPartner);
+                break;
+            case "3":
+                deleteSingleMessage(conversationPartner);
+                break;
+            case "4":
+                deleteConversation(conversationPartner);
+                break;
+            case "5":
+                viewConversations();
+                break;
         }
     }
 
@@ -240,7 +252,12 @@ public class MessageController {
         }
     }
 
-
+    /**
+     * Deletes single message from a conversation given the conversation partner. Prompts for the message number
+     * of the message the user wishes to delete.
+     *
+     * @param conversationPartner - the username of the conversation partner the message is with.
+     */
     public void deleteSingleMessage(String conversationPartner){
         ArrayList<UUID> conversation = myMessageManager.getSingleConversationByReceiver(conversationPartner);
         int toBeDeleted = checkDeleteSingleMessage(conversation);
@@ -250,6 +267,11 @@ public class MessageController {
         }
     }
 
+    /**
+     * Deletes an entire conversation with a given chat partner.
+     *
+     * @param conversationPartner - username of the conversation partner
+     */
     public void deleteConversation(String conversationPartner){
         Scanner scan = new Scanner(System.in);
         messagePresenter.printConfirmationPrompt();
@@ -260,6 +282,12 @@ public class MessageController {
         }
     }
 
+    /**
+     * Archives a single message from a given conversation. Prompts the user for the number of the message
+     * to be archived.
+     *
+     * @param conversationPartner - username of the conversation partner that this message is with.
+     */
     public void archiveSingleMessage(String conversationPartner){
         messagePresenter.printMessageNumberPrompt();
         ArrayList<UUID> conversation = myMessageManager.getSingleConversationByReceiver(conversationPartner);
@@ -273,16 +301,31 @@ public class MessageController {
         messagePresenter.printMessageArchived();
     }
 
+    /**
+     * Archives entire conversation with given conversation partner.
+     *
+     * @param conversationPartner - username of the conversation partner
+     */
     public void archiveConversation(String conversationPartner){
         myMessageManager.archiveConversation(conversationPartner);
         messagePresenter.printConversationArchived();
     }
 
+    /**
+     * Un-archives archived messages with a given conversation partner.
+     *
+     * @param conversationPartner - username of the conversation partner.
+     */
     public void unarchiveConversation(String conversationPartner){
         myMessageManager.unArchiveConversation(conversationPartner);
         messagePresenter.printMessageUnarchived();
     }
 
+    /**
+     * Deletes archived messages with a given conversation partner.
+     *
+     * @param conversationPartner - username of conversation partner
+     */
     public void deleteArchivedConversation(String conversationPartner){
         Scanner scan = new Scanner(System.in);
         messagePresenter.printConfirmationPrompt();
@@ -293,6 +336,9 @@ public class MessageController {
         }
     }
 
+    /**
+     * Deletes all archived messages.
+     */
     public void deleteAllArchivedConversations(){
         Scanner scan = new Scanner(System.in);
         messagePresenter.printConfirmationPrompt();
