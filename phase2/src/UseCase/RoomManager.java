@@ -5,6 +5,7 @@ import Entity.Room;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -91,8 +92,8 @@ public class RoomManager implements Serializable {
         roomMap.remove(roomNumber);
     }
 
-    private boolean timeConflictExists(Room room, LocalDateTime checkStartTime, int duration) {
-        TreeMap<LocalDateTime, LocalDateTime> schedule = room.getSchedule();
+    public boolean hasTimeConflict(int room, LocalDateTime checkStartTime, int duration) {
+        TreeMap<LocalDateTime, LocalDateTime> schedule = getRoomSchedule(room);
         LocalDateTime checkEndTime = checkStartTime.plusHours(duration);
 
         for (Map.Entry<LocalDateTime, LocalDateTime> otherTimeInterval : schedule.entrySet()) {
@@ -110,11 +111,10 @@ public class RoomManager implements Serializable {
         ArrayList<Integer> availableRooms = new ArrayList<>();
 
         for (Map.Entry<Integer, Room> rooms : roomMap.entrySet()) {
-            Room room = rooms.getValue();
-            boolean conflictExist = this.timeConflictExists(room, newStartTime, duration);
+            int roomNumber = rooms.getKey();
+            boolean conflictExist = this.hasTimeConflict(roomNumber, newStartTime, duration);
 
             if (!conflictExist) {
-                int roomNumber = room.getRoomNumber();
                 availableRooms.add(roomNumber);
             }
         }
@@ -130,6 +130,21 @@ public class RoomManager implements Serializable {
     public void removeScheduleTime(int roomNumber, LocalDateTime startTime) {
         Room room = roomMap.get(roomNumber);
         room.removeFromSchedule(startTime);
+    }
+
+    public boolean hasCapacityConflict(int roomNumber, int capacity) {
+        return capacity > getRoomCapacity(roomNumber);
+    }
+
+    public void removePastTimes(int roomNumber) {
+        Room room = roomMap.get(roomNumber);
+        TreeMap<LocalDateTime, LocalDateTime> schedule = room.getSchedule();
+
+        for (LocalDateTime startDateTime : schedule.keySet()) {
+            if (startDateTime.isBefore(LocalDateTime.now())) {
+                room.removeFromSchedule(startDateTime);
+            }
+        }
     }
 }
 

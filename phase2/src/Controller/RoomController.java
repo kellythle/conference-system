@@ -104,6 +104,13 @@ public class RoomController {
         return input;
     }
 
+    /**
+     * Gets an int input from the user for a new room's number.
+     * If the user enters a number of a room that already exists,
+     * will prompt the user to enter another number.
+     *
+     * @return an integer greater than or equal to 0
+     */
     private int getNewRoomNumber() {
         int roomNumber = 0;
         boolean validNumber = false;
@@ -122,60 +129,109 @@ public class RoomController {
         return roomNumber;
     }
 
+    /**
+     * Gets an int input from the user for a new room's capacity.
+     *
+     * @return an integer greater than or equal to 2.
+     */
     private int getNewRoomCapacity() {
         roomPresenter.printEnterCapacity();
 
-        return getIntGreaterOrEqual(2);
+        return getIntGreaterOrEqual(3);
     }
 
+    /**
+     * Gets an int input from the user for a new room's square footage.
+     *
+     * @return an integer greater than or equal to 1.
+     */
     private int getNewRoomSquareFeet() {
         roomPresenter.printEnterSquareFeet();
 
         return getIntGreaterOrEqual(1);
     }
 
+    /**
+     * Gets an int input from the user for a new room's number of screens.
+     *
+     * @return an integer greater than or equal to 2.
+     */
     private int getNewRoomScreens() {
         roomPresenter.printEnterScreens();
 
         return getIntGreaterOrEqual(0);
     }
 
+    /**
+     * Gets a string input from the user indicating if the new room has a sound system.
+     *
+     * @return true if user entered "yes", false if user entered "no".
+     */
     private boolean getNewRoomSoundSystem() {
         roomPresenter.printEnterSoundSystem();
 
         return getStringForBoolean();
     }
 
+    /**
+     * Gets a string input from the user indicating if the new room has a stage.
+     *
+     * @return true if user entered "yes", false if user entered "no".
+     */
     private boolean getNewRoomStage() {
         roomPresenter.printEnterStage();
 
         return getStringForBoolean();
     }
 
+    /**
+     * Gets a string input from the user indicating if the new room has accessibility features.
+     *
+     * @return true if user entered "yes", false if user entered "no".
+     */
     private boolean getNewRoomAccessible() {
         roomPresenter.printEnterAccessible();
 
         return getStringForBoolean();
     }
 
+    /**
+     * Gets a string input from the user indicating if the new room has WiFi.
+     *
+     * @return true if user entered "yes", false if user entered "no".
+     */
     private boolean getNewRoomWifi() {
         roomPresenter.printEnterWifi();
 
         return getStringForBoolean();
     }
 
+    /**
+     * Gets a string input from the user for the new room's special features.
+     *
+     * @return String containing the special features.
+     */
     private String getNewRoomSpecialFeatures() {
         roomPresenter.printEnterSpecialFeatures();
 
         return scanner.nextLine();
     }
 
+    /**
+     * Gets a string input from the user for the new room's description.
+     *
+     * @return String containing the description.
+     */
     private String getNewRoomDescription() {
         roomPresenter.printEnterDescription();
 
         return getNonEmptyString();
     }
 
+    /**
+     * Prompts the user to input details about the new room, creates the room,
+     * and adds it to the list of rooms.
+     */
     public void createNewRoom() {
         int roomNumber = getNewRoomNumber();
         int capacity = getNewRoomCapacity();
@@ -204,6 +260,13 @@ public class RoomController {
         roomPresenter.printRoomAddSuccessful();
     }
 
+    /**
+     * Gets an int input from the user for a room that already exists.
+     * If the user enters a number of a room that does not exist,
+     * will prompt the user to enter another number.
+     *
+     * @return the int that the user entered.
+     */
     private int getRoomNumber() {
         int roomNumber = 0;
         boolean validNumber = false;
@@ -220,6 +283,11 @@ public class RoomController {
         return roomNumber;
     }
 
+    /**
+     * Displays a list of all rooms, showing basic information about each room,
+     * and then prompts the user to enter an existing room number for full information.
+     * If the room list is empty, will return to the menu of room options.
+     */
     public void displayRooms() {
         if (roomManager.isRoomMapEmpty()) {
             roomPresenter.printNoRooms();
@@ -239,6 +307,9 @@ public class RoomController {
         roomPresenter.printRoomFull(displayRoomNumber, roomManager);
     }
 
+    /**
+     * Deletes an existing room if there are no scheduled times in the room after the current date and time.
+     */
     public void deleteRoom() {
         if (roomManager.isRoomMapEmpty()) {
             roomPresenter.printNoRooms();
@@ -248,6 +319,8 @@ public class RoomController {
         roomPresenter.printSelectRoomForDeletion();
 
         int roomNumber = getRoomNumber();
+
+        roomManager.removePastTimes(roomNumber);
 
         if (roomManager.canDeleteRoom(roomNumber)) {
             roomManager.deleteRoom(roomNumber);

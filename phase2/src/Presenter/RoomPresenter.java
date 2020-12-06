@@ -2,13 +2,16 @@ package Presenter;
 
 import UseCase.RoomManager;
 
+import java.util.ArrayList;
+
 public class RoomPresenter {
 
     public void printRoomMenu() {
-        System.out.print("Welcome to the Room Menu! Please select one of the following options:\n" +
+        System.out.print("Welcome to the room menu! Please select one of the following options:\n" +
                 "1. Add a new room.\n" +
                 "2. View list of rooms.\n" +
-                "3. Delete a room.\n");
+                "3. Delete a room.\n" +
+                "4. Exit room menu.\n");
     }
 
     public void printEnterNumberEqualOrGreater(int number) {
@@ -32,7 +35,7 @@ public class RoomPresenter {
     }
 
     public void printEnterCapacity() {
-        System.out.print("Please enter the room's capacity: ");
+        System.out.print("Please enter the room's capacity (minimum capacity is 3): ");
     }
 
     public void printEnterSquareFeet() {
@@ -172,5 +175,28 @@ public class RoomPresenter {
 
     public void printRoomDeletionFailure() {
         System.out.println("Room could not be deleted as it has events scheduled for future times.");
+    }
+
+    public void printAvailableRoomNumbers(ArrayList<Integer> availableRooms) {
+        System.out.print("Available Rooms: ");
+        if (availableRooms.isEmpty()) {
+            System.out.println("None");
+        } else {
+            for (int roomNumber : availableRooms)
+                System.out.print(roomNumber + " ");
+            System.out.print("\n");
+        }
+    }
+
+    public void printChooseAvailableRoom() {
+        System.out.println("Select an available room number for the event, or enter 0 to cancel event creation: ");
+    }
+
+    public void printRoomNotAvailable() {
+        System.out.println("That room is not an available room.");
+    }
+
+    public void printAboveRoomCapacity() {
+        System.out.println("Capacity entered is greater than the room capacity.");
     }
 }
