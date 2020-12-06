@@ -96,17 +96,28 @@ Events of a Speaker, and My events[only for Speakers])
 ======== [Schedule System] ========
 This system helps create events or speaker accounts.
 1. Schedule System is accessible for only Organizers.
-2. On the Schedule System menu, there are 3 options:
-    1. Create an event
-    2. Create a Speaker
-    3. Exit Schedule System
+2. On the Schedule System menu, there are 4 options:
+    1. Schedule an Event
+    2. Delete an Event
+    3. Change an Event's Capacity
+    4. Exit Schedule System
 Enter the number you want to process. For example, enter 1 to create an event.
-3. If you entered 1, you will need to enter various information about the event you are trying
-to create when prompted. First, you need to enter an event name. Second, you must enter a valid
-date. Third you must enter a valid time. Fourth, you must enter a valid room. Fifth, you must
-assign a valid speaker for your event.
-4. If you entered 2, you will create a speaker by entering their username and then password when prompted.
-5. If you entered 3, you will jump back to the Main Menu.
+3. If you entered 1, you must first choose what kind of event you wish to create. There are four options in this menu:
+    1. A Normal Event (requires only 1 speaker)
+    2. A Panel (requires 2 speakers)
+    3. A Party (requires 0 speakers)
+    4. Back to the Schedule Menu
+After you choose your type of event (if you did not choose 4), you will need to enter various details
+about the event you are trying to create when prompted. First, you need to enter an event name. Second, you
+must enter a valid date. Third you must enter a valid time. Fourth, you must enter the event's duration. Fifth,
+you must enter a valid room. Sixth, you must enter the maximum capacity of people for this event. Lastly, depending
+on what type of event you created, you will need to enter 1 or 2 speaker usernames. This prompt will be skipped
+if you are creating a party.
+4. If you entered 2, you will delete an event by entering the event name. If this event has attendees already
+signed up, it will notify you of so and prompt you again to delete the event (if you wish to do so).
+5. If you entered 3, you will change an event's capacity by entering the event name. Next, you will
+be prompted to enter a new capacity.
+6. If you entered 4, you will exit the Scheduling Menu.
 
 
 
