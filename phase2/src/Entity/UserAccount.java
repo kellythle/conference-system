@@ -78,28 +78,53 @@ public abstract class UserAccount implements Serializable {
      * @param eventName- registered event name
      */
     public void registerEvent(String eventName) {this.registeredEvents.add(eventName);}
-
-    public ArrayList<String> getFriendlist() {
+    /**
+     * Getter of friendList
+     *
+     * @return friendList
+     */
+    public ArrayList<String> getFriendList() {
         return friendList;
     }
-
+    /**
+     * Add friendID to friendList
+     *
+     * @param friendID - username of the wanted user
+     */
     public void addFriend(String friendID) {
         friendList.add(friendID);
     }
 
-
+    /**
+     * Getter of friendRequest
+     *
+     * @return friendRequest
+     */
     public ArrayList<String> getFriendRequest() {
         return friendRequest;
     }
 
+    /**
+     * Add friendID to friendRequest
+     *
+     * @param friendID - username of the wanted user
+     */
     public void addFriendRequest(String friendID) {
         friendRequest.add(friendID);
     }
-
+    /**
+     * Add friendID to friendRequest as first of the friendRequest
+     *
+     * @param friendID - username of the wanted user
+     */
     public void addVIPFriendRequest(String friendID) {
         friendRequest.add(0, friendID);
     }
-
+    /**
+     * Remover friendID from friendRequest
+     *
+     * @param friendID - username of the wanted user
+     */
     public void removeFriendRequest(String friendID) {
         friendRequest.remove(friendID);
     }

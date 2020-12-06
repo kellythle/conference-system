@@ -301,14 +301,33 @@ public class UserManager implements Serializable {
         return invitationCodes.remove((Object) invCode.hashCode()) || secretCode;
     }
 
+    /**
+     * Checks if a receiver is in username's friend request list
+     * @param username username of the sender
+     * @param receiver username of the receiver
+     * @return true if receiver is in username's friend request list, false otherwise
+     */
     public boolean isFriendRequestSent(String username, String receiver) {
         return getUserByName(username).getFriendRequest().contains(receiver);
     }
 
+    /**
+     * Checks if a receiver is in username's friend list
+     * @param username username of the sender
+     * @param receiver username of the receiver
+     * @return true if receiver is in username's friend list, false otherwise
+     */
     public boolean isFriend(String username, String receiver) {
-        return getUserByName(username).getFriendlist().contains(receiver);
+        return getUserByName(username).getFriendList().contains(receiver);
     }
-
+    /**
+     * Adds receiver to username's friend request list if receiver is not already in username's friend list or friend
+     * request list, if the type of username is VIP added first of the friend request list of reciever
+     *
+     * @param username username of the sender
+     * @param receiver username of the receiver
+     * @return true if receiver is added to username's friend request list, false otherwise
+     */
     public boolean addFriendRequest(String username, String receiver){
         if (!isFriend(username, receiver) && !isFriendRequestSent(username, receiver)){
             if (getUserType(receiver).equals("VIP")) {
@@ -323,6 +342,13 @@ public class UserManager implements Serializable {
         }
     }
 
+    /**
+     * Adds receiver to username's friend list if response is true
+     *
+     * @param username username of the sender
+     * @param receiver username of the receiver
+     * @param response user's input, accept of decline friend request
+     */
     public void addFriend(String username, String receiver, boolean response) {
         if (isFriend(username, receiver)) {
             return;
@@ -330,17 +356,25 @@ public class UserManager implements Serializable {
         if (response) {
             getUserByName(receiver).addFriend(username);
             getUserByName(username).addFriend(receiver);
-            getUserByName(username).removeFriendRequest(receiver);
         }
-        else {
-            getUserByName(username).removeFriendRequest(receiver);
-        }
+        getUserByName(username).removeFriendRequest(receiver);
     }
-
+    /**
+     * Gets the friend list of username
+     *
+     * @param username username of the sender
+     * @return  friend list of username
+     */
     public ArrayList<String> getFriendList(String username) {
-        return getUserByName(username).getFriendlist();
+        return getUserByName(username).getFriendList();
     }
 
+    /**
+     * Gets the friend list of username
+     *
+     * @param username username of the sender
+     * @return  friend list of username
+     */
     public ArrayList<String> getFriendRequest(String username) {
         return getUserByName(username).getFriendRequest();
     }
