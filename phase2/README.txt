@@ -115,28 +115,41 @@ This system helps view or send messages.
 1. Message System is accessible for all Users, but menu options will be generated for different types
 of users.
 2. On the Message System menu, there are these options:
-    For Attendees:  0. Exit Message Menu.
-                    1. View conversations and reply to messages.
+    For Attendees   0. Exit Message Menu.
+           & VIPS:  1. View conversations and reply to messages.
                     2. Send a message to a single user.
+                    3. View archived messages.
+                    4. Manage friend list.
     For Speakers:   0. Exit Message Menu.
                     1. View conversations and reply to messages.
                     2. Send a message to Attendees of your Talks.
+                    3. View archived conversations.
+                    4. Manage friend list.
     For Organizers: 0. Exit Message Menu.
                     1. View conversations.
                     2. Send a message to a single user.
                     3. Send a message to all Speakers.
                     4. Send a message to all Attendees.
+                    5. View archived messages.
+                    6. View trash bin (system messages deleted by both its sender and receiver).
     To access each of these options, enter the number corresponding to the option.
 3. For all users, if you entered 1, you will first view a list of all users with whom you have conversation
 histories. Enter the username of the user whose conversation you wish to view. Speakers will be able to respond
 to a conversations with Attendees, and Attendees will be able to respond to conversations with Attendees and
 Speakers. Organizers do not need the option to respond to conversations, because other Users cannot message
-Organizers.
-4. For other options, the user will be prompted for which individual username or subset of users they wish to message.
+Organizers. All users will be able to archive or delete conversations or individual messages. For Speakers and
+Attendees, the deletion will only occur in their own inbox. For Organizers and VIPs, the message will also be
+deleted from their conversation partner's inbox.
+4. For messaging options, the user will be prompted for which individual username or subset of users they wish to message.
 For example, if a Speaker enters 2, they will be prompted to choose between messaging Attendees of all their talks, or
 Attendees of a specific talk. If they choose a specific talk, then they will be prompted to enter the ID of the event
 as well as the content of the message.
-5. Entering 0 for any type of User will return you to the main menu.
+5. All users can view their archived messages, and delete archived conversations or unarchive conversations. Organizers
+can also view the system's message trash bin, view messages that have been fully deleted by both its sender and receiver
+(or by an Organizer or VIP), and clear the system's storage of fully deleted messages.
+6. Speakers, Attendees, and VIPs can manage their friend requests. Organizers can message anyone, so they don't have
+friend lists.
+7. Entering 0 for any type of User will return you to the main menu.
 
 
 

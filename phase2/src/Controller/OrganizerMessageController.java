@@ -36,6 +36,14 @@ public class OrganizerMessageController extends MessageController {
     }
 
     /**
+     * Prints list of attendee and list of speakers.
+     */
+    public void displayPossibleContacts(){
+        messagePresenter.printAttendees(myUserManager);
+        messagePresenter.printSpeakers(myUserManager);
+    }
+
+    /**
      * Sends messages to all Speakers in the system.
      *
      * @param messageContent - content of the message

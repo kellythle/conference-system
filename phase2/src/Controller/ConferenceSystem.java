@@ -484,8 +484,10 @@ public class ConferenceSystem {
                     break;
                 case "5":
                     organizerMessageController.viewArchivedConversations();
+                    break;
                 case "6":
                     organizerMessageController.viewDeletedMessagesBin();
+                    break;
                 default:
                     organizerMessageController.invalidInput();
             }
@@ -511,8 +513,10 @@ public class ConferenceSystem {
                     break;
                 case "3":
                     speakerMessageController.viewArchivedConversations();
+                    break;
                 case "4":
                     speakerMessageController.manageFriendList();
+                    break;
                 default:
                     speakerMessageController.invalidInput();
             }
@@ -567,6 +571,7 @@ public class ConferenceSystem {
                     break;
                 case "4":
                     myVIPMessageController.manageFriendList();
+                    break;
                 default:
                     myVIPMessageController.invalidInput();
             }

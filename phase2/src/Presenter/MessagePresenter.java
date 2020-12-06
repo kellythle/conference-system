@@ -250,7 +250,7 @@ public class MessagePresenter {
 
 
     public void printArchiveOptions(){
-        System.out.println("Options: " +
+        System.out.println("Options: \n" +
                 "0: Unarchive this conversation\n" +
                 "1. Delete this conversation\n" +
                 "2. Continue browsing archived conversations\n" +

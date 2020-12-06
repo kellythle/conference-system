@@ -192,11 +192,18 @@ public class MessageController {
     }
 
     /**
+     * Prints friend list of user and list of speakers.
+     */
+    public void displayPossibleContacts(){
+        messagePresenter.printFriendList(myUserManager, username);
+        messagePresenter.printSpeakers(myUserManager);
+    }
+
+    /**
      * Prompts user for receiver ID and message content. Sends single message.
      */
     public void sendMessage(){
-        messagePresenter.printFriendList(myUserManager, username);
-        messagePresenter.printSpeakers(myUserManager);
+        displayPossibleContacts();
         Scanner scanner = new Scanner(System.in);
         messagePresenter.printReceiverIDPrompt();
         String receiver = scanner.nextLine();
@@ -238,12 +245,13 @@ public class MessageController {
         messagePresenter.printMessageNumberPrompt();
         Scanner scan = new Scanner(System.in);
         int next = scan.nextInt();
-        messagePresenter.printConfirmationPrompt();
-        String confirm = scan.nextLine();
         if (next > conversation.size()){
             messagePresenter.printMessageDoesNotExist();
             return -1;
         } else {
+            messagePresenter.printConfirmationPrompt();
+            scan = new Scanner(System.in);
+            String confirm = scan.nextLine();
             if (confirm.equals("Y")) {
                 return (next-1);
             } else {
