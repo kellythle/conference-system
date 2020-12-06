@@ -1,4 +1,12 @@
 ===[Design Patterns in our Project]===
-1. Factory
+1. Factory:
+In our code, we use factory design pattern to create the user account. As you can see, we create a interface named
+AccountFactory in the use case level, coming with subclasses which can create the exact user account we want.
+
+OrganizerFactory -> generate Organizer
+SpeakerFactory -> generate Speaker
+AttendeeFactory -> generate Attendee
+VIPFactory -> generate VIP
+
 2. Builder
 3. Dependency injection

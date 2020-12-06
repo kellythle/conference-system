@@ -96,17 +96,28 @@ Events of a Speaker, and My events[only for Speakers])
 ======== [Schedule System] ========
 This system helps create events or speaker accounts.
 1. Schedule System is accessible for only Organizers.
-2. On the Schedule System menu, there are 3 options:
-    1. Create an event
-    2. Create a Speaker
-    3. Exit Schedule System
+2. On the Schedule System menu, there are 4 options:
+    1. Schedule an Event
+    2. Delete an Event
+    3. Change an Event's Capacity
+    4. Exit Schedule System
 Enter the number you want to process. For example, enter 1 to create an event.
-3. If you entered 1, you will need to enter various information about the event you are trying
-to create when prompted. First, you need to enter an event name. Second, you must enter a valid
-date. Third you must enter a valid time. Fourth, you must enter a valid room. Fifth, you must
-assign a valid speaker for your event.
-4. If you entered 2, you will create a speaker by entering their username and then password when prompted.
-5. If you entered 3, you will jump back to the Main Menu.
+3. If you entered 1, you must first choose what kind of event you wish to create. There are four options in this menu:
+    1. A Normal Event (requires only 1 speaker)
+    2. A Panel (requires 2 speakers)
+    3. A Party (requires 0 speakers)
+    4. Back to the Schedule Menu
+After you choose your type of event (if you did not choose 4), you will need to enter various details
+about the event you are trying to create when prompted. First, you need to enter an event name. Second, you
+must enter a valid date. Third you must enter a valid time. Fourth, you must enter the event's duration. Fifth,
+you must enter a valid room. Sixth, you must enter the maximum capacity of people for this event. Lastly, depending
+on what type of event you created, you will need to enter 1 or 2 speaker usernames. This prompt will be skipped
+if you are creating a party.
+4. If you entered 2, you will delete an event by entering the event name. If this event has attendees already
+signed up, it will notify you of so and prompt you again to delete the event (if you wish to do so).
+5. If you entered 3, you will change an event's capacity by entering the event name. Next, you will
+be prompted to enter a new capacity.
+6. If you entered 4, you will exit the Scheduling Menu.
 
 
 
@@ -115,28 +126,41 @@ This system helps view or send messages.
 1. Message System is accessible for all Users, but menu options will be generated for different types
 of users.
 2. On the Message System menu, there are these options:
-    For Attendees:  0. Exit Message Menu.
-                    1. View conversations and reply to messages.
+    For Attendees   0. Exit Message Menu.
+           & VIPS:  1. View conversations and reply to messages.
                     2. Send a message to a single user.
+                    3. View archived messages.
+                    4. Manage friend list.
     For Speakers:   0. Exit Message Menu.
                     1. View conversations and reply to messages.
                     2. Send a message to Attendees of your Talks.
+                    3. View archived conversations.
+                    4. Manage friend list.
     For Organizers: 0. Exit Message Menu.
                     1. View conversations.
                     2. Send a message to a single user.
                     3. Send a message to all Speakers.
                     4. Send a message to all Attendees.
+                    5. View archived messages.
+                    6. View trash bin (system messages deleted by both its sender and receiver).
     To access each of these options, enter the number corresponding to the option.
 3. For all users, if you entered 1, you will first view a list of all users with whom you have conversation
 histories. Enter the username of the user whose conversation you wish to view. Speakers will be able to respond
 to a conversations with Attendees, and Attendees will be able to respond to conversations with Attendees and
 Speakers. Organizers do not need the option to respond to conversations, because other Users cannot message
-Organizers.
-4. For other options, the user will be prompted for which individual username or subset of users they wish to message.
+Organizers. All users will be able to archive or delete conversations or individual messages. For Speakers and
+Attendees, the deletion will only occur in their own inbox. For Organizers and VIPs, the message will also be
+deleted from their conversation partner's inbox.
+4. For messaging options, the user will be prompted for which individual username or subset of users they wish to message.
 For example, if a Speaker enters 2, they will be prompted to choose between messaging Attendees of all their talks, or
 Attendees of a specific talk. If they choose a specific talk, then they will be prompted to enter the ID of the event
 as well as the content of the message.
-5. Entering 0 for any type of User will return you to the main menu.
+5. All users can view their archived messages, and delete archived conversations or unarchive conversations. Organizers
+can also view the system's message trash bin, view messages that have been fully deleted by both its sender and receiver
+(or by an Organizer or VIP), and clear the system's storage of fully deleted messages.
+6. Speakers, Attendees, and VIPs can manage their friend requests. Organizers can message anyone, so they don't have
+friend lists.
+7. Entering 0 for any type of User will return you to the main menu.
 
 
 

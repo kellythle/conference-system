@@ -250,7 +250,7 @@ public class MessagePresenter {
 
 
     public void printArchiveOptions(){
-        System.out.println("Options: " +
+        System.out.println("Options: \n" +
                 "0: Unarchive this conversation\n" +
                 "1. Delete this conversation\n" +
                 "2. Continue browsing archived conversations\n" +
@@ -383,6 +383,22 @@ public class MessagePresenter {
         vips.remove(username);
         System.out.println(vips);
     }
+
+    /**
+     * Print list of VIP's in the conference.
+     * @param userManager - an UserManager instance
+     */
+    public void printAttendeesAndVIPs(UserManager userManager){
+        System.out.println("You can send friend request the following Attendees:");
+        ArrayList<String> attendees = userManager.getAttendeeList();
+        attendees.remove(username);
+        System.out.println(attendees);
+        System.out.println("You can send friend request to the following VIP's:");
+        ArrayList<String> vips = userManager.getVIPList();
+        vips.remove(username);
+        System.out.println(vips);
+    }
+
 
     /**
      * Print list of Organizers in the conference.
@@ -553,41 +569,62 @@ public class MessagePresenter {
         System.out.println(friends);
     }
 
+    /**
+     * Print prompt for username of user to send friend request to
+     */
     public void printSendFriendRequest() {
         System.out.println("Enter the username of the user you want to send friend request:");
     }
 
+    /**
+     * Print prompt for username of user to accept friend request
+     */
     public void printAcceptFriendRequest() {
         System.out.println("Enter the username of the user you want to accept friend request:");
     }
 
+    /**
+     * Print notification that wanted user has been successfully added to friend list
+     */
     public void printAcceptFriendRequestSuccess(String receiver) {
         System.out.println("You and " + receiver + " are now friends!");
     }
-
+    /**
+     * Print notification that wanted user has been failed added to friend list
+     */
     public void printNotInFriendRequest(String receiver) {
         System.out.println(receiver + "is not in your friend request.");
     }
-
+    /**
+     * Print prompt for username of user to decline friend request
+     */
     public void printDeclineFriendRequest() {
         System.out.println("Enter the username of the user you want to decline friend request:");
     }
 
+    /**
+     * Print notification that wanted user has been successfully declined
+     */
     public void printDeclineFriendRequestSuccess(String receiver) {
         System.out.println("You declined friend request from " + receiver + ":(");
     }
 
-
+    /**
+     * Print notification that wanted user is not in friend list
+     */
     public void printNotFriend(String receiverID) {
         System.out.println(receiverID + " is not in your friend list:(");
     }
 
+    /**
+     * Print notification that Speaker and Organizer cannot be friends
+     */
     public void printCannotBeFriend(){
         System.out.println("You cannot add Speaker and Organizer as friend");
     }
 
     /**
-     * Print Friend List Menu for Organizers.
+     * Print Friend List Menu
      */
     public void printFriendListMenu(){
         System.out.println("Options:\n" +
@@ -598,6 +635,9 @@ public class MessagePresenter {
                 "Enter 0, 1, 2, or 3: ");
     }
 
+    /**
+     * Print Friend Request Menu
+     */
     public void printFriendRequestMenu(){
         System.out.println("Options:\n" +
                 "0. Return to menu\n" +
@@ -606,10 +646,15 @@ public class MessagePresenter {
                 "Enter 0, 1, or 2: ");
     }
 
+    /**
+     * Print that no username is in the system
+     */
     public void printWrongUsername(String receiver){
         System.out.println("There is no user with username " + receiver);
     }
-
+    /**
+     * Print notification that wanted user is already in friend list or friend request list
+     */
     public void printAlreadySent(){
         System.out.println("You already sent this user a request or you are already friends!");
     }

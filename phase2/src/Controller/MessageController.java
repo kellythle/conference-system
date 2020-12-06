@@ -43,7 +43,7 @@ public class MessageController {
      */
     public boolean sendSingleMessage(String receiverID, String messageContent){
         if (myUserManager.canSend(username, receiverID)){
-            if (myUserManager.getUserType(receiverID).equals("Attendee")) {
+            if (myUserManager.getUserType(receiverID).equals("Attendee") || myUserManager.getUserType(receiverID).equals("VIP")) {
                 if (myUserManager.isFriend(username, receiverID)) {
                     return myMessageManager.createMessage(receiverID, messageContent);
                 }
@@ -192,11 +192,18 @@ public class MessageController {
     }
 
     /**
+     * Prints friend list of user and list of speakers.
+     */
+    public void displayPossibleContacts(){
+        messagePresenter.printFriendList(myUserManager, username);
+        messagePresenter.printSpeakers(myUserManager);
+    }
+
+    /**
      * Prompts user for receiver ID and message content. Sends single message.
      */
     public void sendMessage(){
-        messagePresenter.printFriendList(myUserManager, username);
-        messagePresenter.printSpeakers(myUserManager);
+        displayPossibleContacts();
         Scanner scanner = new Scanner(System.in);
         messagePresenter.printReceiverIDPrompt();
         String receiver = scanner.nextLine();
@@ -238,12 +245,13 @@ public class MessageController {
         messagePresenter.printMessageNumberPrompt();
         Scanner scan = new Scanner(System.in);
         int next = scan.nextInt();
-        messagePresenter.printConfirmationPrompt();
-        String confirm = scan.nextLine();
         if (next > conversation.size()){
             messagePresenter.printMessageDoesNotExist();
             return -1;
         } else {
+            messagePresenter.printConfirmationPrompt();
+            scan = new Scanner(System.in);
+            String confirm = scan.nextLine();
             if (confirm.equals("Y")) {
                 return (next-1);
             } else {
@@ -348,7 +356,11 @@ public class MessageController {
             messagePresenter.printArchiveDeletion();
         }
     }
-
+    /**
+     * Sends friends request to receiver
+     *
+     * @param receiver - username of user receiving the friend request
+     */
     public void sendingFriendRequest(String receiver) {
         if (myUserManager.containsUser(receiver)) {
             if (myUserManager.getUserType(receiver).equals("Attendee")) {
@@ -364,13 +376,20 @@ public class MessageController {
         }
     }
 
+    /**
+     * Prompts user to send friend request, and sends friend request to given input
+     */
     public void sendFriendRequest() {
         Scanner scan = new Scanner(System.in);
+        messagePresenter.printAttendeesAndVIPs(myUserManager);
         messagePresenter.printSendFriendRequest();
         String input = scan.nextLine();
         sendingFriendRequest(input);
     }
 
+    /**
+     * Adds given username in friend request to friend list if user accepts and deletes the username in friend request
+     */
     public void acceptFriendRequest() {
         Scanner scan = new Scanner(System.in);
         messagePresenter.printAcceptFriendRequest();
@@ -384,6 +403,9 @@ public class MessageController {
         }
     }
 
+    /**
+     * Deletes given username in friend request
+     */
     public void declineFriendRequest() {
         Scanner scan = new Scanner(System.in);
         messagePresenter.printDeclineFriendRequest();
@@ -397,6 +419,9 @@ public class MessageController {
         }
     }
 
+    /**
+     * Displays the user friend request menu
+     */
     public void viewFriendRequest() {
         Scanner scan = new Scanner(System.in);
         messagePresenter.printFriendRequestList(myUserManager, username);
@@ -420,10 +445,16 @@ public class MessageController {
         } while (!loop);
     }
 
+    /**
+     * Displays the user friend list
+     */
     public void viewFriendList() {
         messagePresenter.printFriendList(myUserManager, username);
     }
 
+    /**
+     * Displays menu for methods related friend list system
+     */
     public void manageFriendList() {
         Scanner scan = new Scanner(System.in);
         messagePresenter.printFriendRequestList(myUserManager, username);
