@@ -1,6 +1,5 @@
 package Controller;
 
-import Presenter.InputPresenter;
 import Presenter.RoomPresenter;
 import UseCase.RoomBuilder;
 import UseCase.RoomManager;
@@ -15,7 +14,6 @@ public class RoomController {
     private final InputValidator inputValidator = new InputValidator();
 
     private final RoomPresenter roomPresenter = new RoomPresenter();
-    private final InputPresenter inputPresenter = new InputPresenter();
 
     private final Scanner scanner = new Scanner(System.in);
 
