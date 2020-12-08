@@ -10,3 +10,10 @@ VIPFactory -> generate VIP
 
 2. Builder
 3. Dependency injection
+In our project, there are many methods that use the dependency injection design pattern. Methods can often
+have hardcoded variables, though this may not be the best design. As a notable example, many of our controllers need to
+contain use cases. Unfortunately, the manager use cases contain field variables that need to be uniform across the
+controllers. If each controller has a hardcoded new copy of the use cases, it would be messy and difficult to keep the
+variables like userMap or eventList the same without making them static. Our solution then, is to keep a single copy of
+each use case in a general controller (ConferenceSystem) and pass them as parameters to the constructors of the
+individual controllers so we can keep the same use cases across all controllers that need them.

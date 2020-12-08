@@ -88,7 +88,7 @@ public class ConferenceSystem {
         }
 
         //Menu for sign in or register
-        initialLoginHelper();
+        initialLoginMenu();
         signUpController.callRemovePastEvents();
         messageManager.setSenderID(username);
 
@@ -100,13 +100,13 @@ public class ConferenceSystem {
         //2. shows Main menu for each user
         switch (loginController.getUserType(username)){
             case "Organizer":
-                organizerHelper();
+                organizerMenu();
                 break;
             case "Speaker":
-                speakerHelper();
+                speakerMenu();
                 break;
             case "Attendee":
-                attendeeHelper();
+                attendeeMenu();
                 break;
             case "VIP":
                 VIPMenu();
@@ -219,7 +219,7 @@ public class ConferenceSystem {
     /**
      * Helper method at the start that deals with login and account creation
      */
-    private void initialLoginHelper() {
+    private void initialLoginMenu() {
         String loginMenuOption;
         do {
             loginMenuOption = loginController.getStartMenu();
@@ -245,13 +245,13 @@ public class ConferenceSystem {
             menuOption = loginController.getInitialAccountCreation();
             switch (menuOption){
                 case "1":
-                    loginController.createAccount("Attendee", true);
+                    loginController.createAccount("Attendee", false);
                     break;
                 case "2":
-                    loginController.createAccount("Organizer", true);
+                    loginController.createAccount("Organizer", false);
                     break;
                 case "3":
-                    loginController.createAccount("VIP", true);
+                    loginController.createAccount("VIP", false);
                     break;
                 case "4":
                     break;
@@ -264,7 +264,7 @@ public class ConferenceSystem {
     /**
      * organizer menu helper class
      */
-    private void organizerHelper(){
+    private void organizerMenu(){
         String menuOption;
         do{
             // Organizer start menu
@@ -274,16 +274,16 @@ public class ConferenceSystem {
                     createOtherUser();
                     break;
                 case "2":
-                    signUpHelper();
+                    signUpMenu();
                     break;
                 case "3":
-                    scheduleHelper();
+                    scheduleMenu();
                     break;
                 case "4":
-                    organizerMessageHelper();
+                    organizerMessageMenu();
                     break;
                 case "5":
-                    gameHelper();
+                    gameMenu();
                     break;
                 case "6":
                     loginController.logout();
@@ -323,20 +323,20 @@ public class ConferenceSystem {
     /**
      * Speaker menu helper class
      */
-    private void speakerHelper(){
+    private void speakerMenu(){
         String menuOption;
         do{
             //Speaker start menu
             menuOption = loginController.getSpeakerMenu();
             switch (menuOption) {
                 case "1":
-                    signUpHelper();
+                    signUpMenu();
                     break;
                 case "2":
-                    speakerMessageHelper();
+                    speakerMessageMenu();
                     break;
                 case "3":
-                    gameHelper();
+                    gameMenu();
                     break;
                 case "4":
                     loginController.logout();
@@ -350,20 +350,20 @@ public class ConferenceSystem {
     /**
      * Attendee menu helper class
      */
-    private void attendeeHelper(){
+    private void attendeeMenu(){
         String menuOption;
         do{
             // Attendee start menu
             menuOption = loginController.getAttendeeMenu();
             switch (menuOption) {
                 case "1":
-                    signUpHelper();
+                    signUpMenu();
                     break;
                 case "2":
-                    attendeeMessageHelper();
+                    attendeeMessageMenu();
                     break;
                 case "3":
-                    gameHelper();
+                    gameMenu();
                     break;
                 case "4":
                     loginController.logout();
@@ -384,13 +384,13 @@ public class ConferenceSystem {
             menuOption = loginController.getVIPMenu();
             switch (menuOption) {
                 case "1":
-                    signUpHelper();
+                    signUpMenu();
                     break;
                 case "2":
-                    VIPMessageHelper();
+                    VIPMessageMenu();
                     break;
                 case "3":
-                    gameHelper();
+                    gameMenu();
                     break;
                 case "4":
                     loginController.logout();
@@ -409,7 +409,7 @@ public class ConferenceSystem {
      * deleting registered event, see events, see registered events,
      * and exist Sign Up System to main menu.
      */
-    private void signUpHelper(){
+    private void signUpMenu(){
         String menuOption;
         do{// Sign Up System Menu
             menuOption = signUpController.getMenu();
@@ -436,7 +436,7 @@ public class ConferenceSystem {
      * Helper method that allows Organizers to either create events, create speakers, or exit this menu by inputting
      * a specific number.
      */
-    private void scheduleHelper(){
+    private void scheduleMenu(){
         String scheduleMenuOption;
         do{
             scheduleMenuOption = scheduleController.getScheduleMenu();
@@ -463,7 +463,7 @@ public class ConferenceSystem {
      * Helper method that allows Organizers to either send message to a single attendee or speaker, or all speakers,
      * or all attendees, or exit this menu by inputting  a specific number.
      */
-    private void organizerMessageHelper() {
+    private void organizerMessageMenu() {
         String organizerMessageMenuOption;
         do {
             organizerMessageMenuOption = organizerMessageController.getMessageMenu();
@@ -498,7 +498,7 @@ public class ConferenceSystem {
      * Helper method that allows Speakers to either send message to all attendees of their one event or all events,
      * or reply to an attendee, or exit this menu by inputting  a specific number.
      */
-    private void speakerMessageHelper(){
+    private void speakerMessageMenu(){
         String speakerMessageMenuOption;
         do{
             speakerMessageMenuOption = speakerMessageController.getMessageMenu();
@@ -527,7 +527,7 @@ public class ConferenceSystem {
      * Helper method that allows Attendees to either send a message to another Attendee or Speaker,
      * or view conversation, or exit this menu by inputting  a specific number.
      */
-    private void attendeeMessageHelper(){
+    private void attendeeMessageMenu(){
         String attendeeMessageMenuOption;
         do{
             attendeeMessageMenuOption = messageController.getMessageMenu();
@@ -556,7 +556,7 @@ public class ConferenceSystem {
      * Helper method that allows VIP to either send a message to other users,
      * or view conversation, or exit this menu by inputting a specific number.
      */
-    private void VIPMessageHelper(){
+    private void VIPMessageMenu(){
         String attendeeMessageMenuOption;
         do{
             attendeeMessageMenuOption = myVIPMessageController.getVIPMessageMenu();
@@ -582,7 +582,7 @@ public class ConferenceSystem {
      * Helper methods that allow users to play math games. They can select
      * a level and a type (+, -, *, /) by entering corresponding input.
      */
-    private void gameHelper(){
+    private void gameMenu(){
         int level = gameController.setLevel();
         if (level == 0){
             return;
