@@ -1,5 +1,6 @@
 package Controller;
 
+import UseCase.EventManager;
 import UseCase.MessageManager;
 import UseCase.UserManager;
 
@@ -17,8 +18,8 @@ public class VIPMessageController extends MessageController{
      * @param myUserManager  instance of UserManager
      * @param messageManager instance of MessageManager
      */
-    public VIPMessageController(String username, UserManager myUserManager, MessageManager messageManager) {
-        super(username, myUserManager, messageManager);
+    public VIPMessageController(String username, UserManager myUserManager, MessageManager messageManager, EventManager eventManager) {
+        super(username, myUserManager, messageManager, eventManager);
     }
 
     /**
@@ -39,7 +40,7 @@ public class VIPMessageController extends MessageController{
     @Override
     public void sendMessage(){
         messagePresenter.printAttendees(myUserManager);
-        messagePresenter.printSpeakers(myUserManager);
+        messagePresenter.printEnrolledSpeakers(myUserManager, myEventManager, username);
         messagePresenter.printVIPs(myUserManager);
         messagePresenter.printOrganizers(myUserManager);
         Scanner scanner = new Scanner(System.in);

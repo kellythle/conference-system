@@ -1,6 +1,7 @@
 package Controller;
 
 import Presenter.MessagePresenter;
+import UseCase.EventManager;
 import UseCase.MessageManager;
 import UseCase.UserManager;
 
@@ -16,6 +17,7 @@ import java.util.UUID;
 public class MessageController {
     final MessageManager myMessageManager;
     UserManager myUserManager;
+    EventManager myEventManager;
     final String username;
     MessagePresenter messagePresenter;
 
@@ -27,9 +29,10 @@ public class MessageController {
      * @param myUserManager instance of UserManager
      * @param messageManager instance of MessageManager
      */
-    public MessageController(String username, UserManager myUserManager, MessageManager messageManager){
+    public MessageController(String username, UserManager myUserManager, MessageManager messageManager, EventManager eventManager){
         myMessageManager = messageManager;
         this.myUserManager = myUserManager;
+        this.myEventManager = eventManager;
         this.username = username;
         messagePresenter = new MessagePresenter(username);
     }
@@ -54,6 +57,22 @@ public class MessageController {
             }
             return myMessageManager.createMessage(receiverID, messageContent);
         } else {return false;}
+    }
+
+    /**
+     * Creates single message for reply.
+     *
+     * @param receiverID String username of the recipient of the message
+     * @param messageContent String content of the message
+     * @return true if message created
+     */
+    public boolean sendSingleReply(String receiverID, String messageContent){
+        if (myMessageManager.getSenderConversations().contains(receiverID)){
+            return myMessageManager.createMessage(receiverID, messageContent);
+            }
+        else {
+            messagePresenter.printReplyCannotSend();
+            return false;}
     }
 
     /**
@@ -179,16 +198,14 @@ public class MessageController {
      * @param conversationPartner String username that the user is replying to.
      */
     public void replyToConversation(String conversationPartner){
-        if (myUserManager.canSend(username, conversationPartner)) {
-            messagePresenter.printContentPrompt();
-            Scanner scanner = new Scanner(System.in);
-            String content = scanner.nextLine();
-            if (sendSingleMessage(conversationPartner, content)) {
-                messagePresenter.printMessageSuccess();
-            } else {
-                messagePresenter.printMessageFailed();
-            }
-        } else{messagePresenter.printCannotSend();}
+        messagePresenter.printContentPrompt();
+        Scanner scanner = new Scanner(System.in);
+        String content = scanner.nextLine();
+        if (sendSingleReply(conversationPartner, content)) {
+            messagePresenter.printMessageSuccess();
+        } else {
+            messagePresenter.printMessageFailed();
+        }
     }
 
     /**
@@ -196,7 +213,7 @@ public class MessageController {
      */
     public void displayPossibleContacts(){
         messagePresenter.printFriendList(myUserManager, username);
-        messagePresenter.printSpeakers(myUserManager);
+        messagePresenter.printEnrolledSpeakers(myUserManager, myEventManager, username);
     }
 
     /**
@@ -423,26 +440,25 @@ public class MessageController {
      * Displays the user friend request menu
      */
     public void viewFriendRequest() {
-        Scanner scan = new Scanner(System.in);
-        messagePresenter.printFriendRequestList(myUserManager, username);
-        messagePresenter.printFriendRequestMenu();
-        String input = scan.nextLine();
-        boolean loop = false;
+        String input;
         do {
+            Scanner scan = new Scanner(System.in);
+            messagePresenter.printFriendRequestList(myUserManager, username);
+            messagePresenter.printFriendRequestMenu();
+            input = scan.nextLine();
             switch (input) {
                 case "0":
-                    loop = true;
                     break;
                 case "1":
-                    loop = true;
                     acceptFriendRequest();
                     break;
                 case "2":
-                    loop = true;
                     declineFriendRequest();
                     break;
+                default:
+                    messagePresenter.printInvalidInput();
             }
-        } while (!loop);
+        } while (!input.equals("0"));
     }
 
     /**
@@ -456,30 +472,28 @@ public class MessageController {
      * Displays menu for methods related friend list system
      */
     public void manageFriendList() {
-        Scanner scan = new Scanner(System.in);
-        messagePresenter.printFriendRequestList(myUserManager, username);
-        messagePresenter.printFriendListMenu();
-        String input = scan.nextLine();
-        boolean loop = false;
+        String input;
         do {
+            Scanner scan = new Scanner(System.in);
+            messagePresenter.printFriendRequestList(myUserManager, username);
+            messagePresenter.printFriendListMenu();
+            input = scan.nextLine();
             switch (input) {
                 case "0":
-                    loop = true;
                     break;
                 case "1":
-                    loop = true;
                     viewFriendRequest();
                     break;
                 case "2":
-                    loop = true;
                     sendFriendRequest();
                     break;
                 case "3":
-                    loop = true;
                     viewFriendList();
                     break;
+                default:
+                    messagePresenter.printInvalidInput();
             }
-        } while (!loop);
+        } while (!input.equals("0"));
     }
 
 

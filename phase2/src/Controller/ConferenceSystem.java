@@ -51,10 +51,10 @@ public class ConferenceSystem {
     private GameController gameController;
 
     // File paths
-    private final String usersPath = "./phase2/src/users.ser";
-    private final String eventsPath = "./phase2/src/events.ser";
-    private final String messagesPath = "./phase2/src/messages.ser";
-    private final String roomsPath = "./phase2/src/rooms.ser";
+    private final String usersPath = ".../src/users.ser";
+    private final String eventsPath = ".../src/events.ser";
+    private final String messagesPath = ".../src/messages.ser";
+    private final String roomsPath = ".../src/rooms.ser";
 
     // Variable for keeping track with user, should be initialized after login.
     String username;
@@ -87,10 +87,10 @@ public class ConferenceSystem {
         messageManager.setSenderID(username);
 
         //initialize all classes that need the username
-        messageController = new MessageController(username, userManager, messageManager);
-        organizerMessageController = new OrganizerMessageController(username, messageManager, userManager);
+        messageController = new MessageController(username, userManager, messageManager, eventManager);
+        organizerMessageController = new OrganizerMessageController(username, messageManager, userManager, eventManager);
         speakerMessageController = new SpeakerMessageController(username, messageManager, userManager, eventManager);
-        myVIPMessageController = new VIPMessageController(username, userManager, messageManager);
+        myVIPMessageController = new VIPMessageController(username, userManager, messageManager, eventManager);
         //2. shows Main menu for each user
         switch (loginController.getUserType(username)){
             case "Organizer":
@@ -488,7 +488,7 @@ public class ConferenceSystem {
                     organizerMessageController.sendMessagesToSpeakers();
                     break;
                 case "4":
-                    organizerMessageController.sendMessagesToAttendees();
+                    organizerMessageController.sendMessagesToAttendeesVIPs();
                     break;
                 case "5":
                     organizerMessageController.viewArchivedConversations();
@@ -521,9 +521,6 @@ public class ConferenceSystem {
                     break;
                 case "3":
                     speakerMessageController.viewArchivedConversations();
-                    break;
-                case "4":
-                    speakerMessageController.manageFriendList();
                     break;
                 default:
                     speakerMessageController.invalidInput();

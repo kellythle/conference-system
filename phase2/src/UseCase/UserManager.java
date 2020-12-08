@@ -252,14 +252,14 @@ public class UserManager implements Serializable {
             return false;
         } else if (receiver.equals(username)){ // send to self
             return false;
-        } else if (isOfType(username, "Organizer")){ // organizers can send to any non organizers
-            return !isOfType(receiver, "Organizer");
-        } else if (isOfType(username, "Speaker")){ // speakers can send to attendees and VIPs
-            return isOfType(receiver, "Attendee") | isOfType(receiver, "VIP");
+        } else if (isOfType(username, "Organizer")){ // organizers can send to all users
+            return true;
+        } else if (isOfType(username, "Speaker")){ // speakers can send to all users who are enrolled in their events
+            return true;
         } else if (isOfType(username, "VIP")) {
             return true;
         } else{
-            return true;
+            return !isOfType(receiver, "Organizer");
         }
     }
 

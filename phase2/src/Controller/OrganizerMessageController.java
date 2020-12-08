@@ -1,5 +1,6 @@
 package Controller;
 
+import UseCase.EventManager;
 import UseCase.MessageManager;
 import UseCase.UserManager;
 
@@ -24,8 +25,8 @@ public class OrganizerMessageController extends MessageController {
      * @param myUserManager instance of UserManager
      * @param myMessageManager instance of MessageManager
      */
-    public OrganizerMessageController(String username, MessageManager myMessageManager, UserManager myUserManager){
-        super(username, myUserManager, myMessageManager);
+    public OrganizerMessageController(String username, MessageManager myMessageManager, UserManager myUserManager, EventManager eventManager){
+        super(username, myUserManager, myMessageManager, eventManager);
     }
 
 
@@ -41,6 +42,8 @@ public class OrganizerMessageController extends MessageController {
     public void displayPossibleContacts(){
         messagePresenter.printAttendees(myUserManager);
         messagePresenter.printSpeakers(myUserManager);
+        messagePresenter.printVIPs(myUserManager);
+        messagePresenter.printOrganizers(myUserManager);
     }
 
     /**
@@ -82,26 +85,25 @@ public class OrganizerMessageController extends MessageController {
      * @param messageContent - content of the message
      * @return true if message created
      */
-    public boolean sendAllAttendeesMessage(String messageContent){
+    public boolean sendAllAttendeesVIPsMessage(String messageContent){
         for (String userName: myUserManager.getAttendeeList()) {
-            if (!myUserManager.canSend(this.username, userName)) {
-                return false;
-            }
-            else {
-                myMessageManager.createMessage(userName, messageContent);
-            }
+            myMessageManager.createMessage(userName, messageContent);
         }
-        return !myUserManager.getAttendeeList().isEmpty();
+
+        for (String userName: myUserManager.getVIPList()) {
+            myMessageManager.createMessage(userName, messageContent);
+        }
+        return !myUserManager.getAttendeeList().isEmpty() || !myUserManager.getVIPList().isEmpty();
     }
 
     /**
      * Prompts user for receiver ID and message content. Sends messages to all Attendees.
      */
-    public void sendMessagesToAttendees(){
+    public void sendMessagesToAttendeesVIPs(){
         Scanner scanner = new Scanner(System.in);
         messagePresenter.printContentPrompt();
         String content = scanner.nextLine();
-        if (sendAllAttendeesMessage(content)){
+        if (sendAllAttendeesVIPsMessage(content)){
             messagePresenter.printMessageSuccess();
         } else {
             messagePresenter.printMessageFailed();

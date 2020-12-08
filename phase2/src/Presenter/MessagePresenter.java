@@ -88,7 +88,7 @@ public class MessagePresenter {
                 "1. View conversations\n" +
                 "2. Send a message to a single user\n" +
                 "3. Send a message to all Speakers\n" +
-                "4. Send a message to all Attendees\n" +
+                "4. Send a message to all Attendees and VIPs\n" +
                 "5. View archived conversations\n" +
                 "6. View system message trash bin\n" +
                 "Enter 0, 1, 2, 3, 4, 5, or 6: ");
@@ -354,12 +354,38 @@ public class MessagePresenter {
     }
 
     /**
+     * Print notification that current user does not have conversation with the wanted user.
+     */
+    public void printReplyCannotSend(){
+        System.out.println("You do not have existing conversation with this user.");
+    }
+
+    /**
      * Print list of Speakers in the conference.
      * @param userManager - an UserManager instance
      */
     public void printSpeakers(UserManager userManager){
         System.out.println("You can message the following Speakers:");
         System.out.println(userManager.getSpeakerList());
+    }
+
+    /**
+     * Print list of Speakers of the events user has enrolled given user
+     * @param userManager - an UserManager instance
+     * @param eventManager - an EventManager instance
+     * @param username - username of the user
+     */
+    public void printEnrolledSpeakers(UserManager userManager, EventManager eventManager, String username){
+        ArrayList<String> speakers = new ArrayList<String>();
+        for (String event: userManager.getRegisteredEvents(username)) {
+            for (String speaker: eventManager.getEventSpeakers(event)){
+                if (!speakers.contains(speaker)) {
+                    speakers.add(speaker);
+                }
+            }
+        }
+        System.out.println("You can message the following Speakers:");
+        System.out.println(speakers);
     }
 
     /**

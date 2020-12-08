@@ -533,4 +533,15 @@ public class EventManager implements Serializable {
             dateTime = e.getTime();
         return dateTime;
     }
+
+    /**
+     * Returns an arraylist of all speakers of given event namr.
+     *
+     * @param event - given username of event
+     *
+     * @return - ArrayList<Event> that contains username of speakers
+     */
+    public ArrayList<String> getEventSpeakers(String event){
+        return findEventByName(event).getSpeaker();
+    }
 }
