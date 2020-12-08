@@ -10,14 +10,14 @@ import java.util.Scanner;
 
 public class RoomController {
     private final RoomManager roomManager;
-    private RoomBuilder roomBuilder = new RoomBuilder();
+    private final RoomBuilder roomBuilder = new RoomBuilder();
 
     private final InputValidator inputValidator = new InputValidator();
 
     private final RoomPresenter roomPresenter = new RoomPresenter();
     private final InputPresenter inputPresenter = new InputPresenter();
 
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     public RoomController(RoomManager roomManager)
     {
