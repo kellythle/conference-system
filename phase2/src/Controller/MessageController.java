@@ -99,10 +99,11 @@ public class MessageController {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         if (myMessageManager.getSenderConversations().contains(input)){
-            if (myMessageManager.getSenderUnreadConversations().contains(input)){
+            if (myMessageManager.getSenderUnreadConversations().contains(input)) {
                 myMessageManager.markConversationAsRead(input);
                 messagePresenter.printMarkedAsRead();
-            }
+                return;
+            } messagePresenter.printConversationAlreadyRead();
         } else {
             messagePresenter.printConversationDoesNotExist();
         }
@@ -116,8 +117,8 @@ public class MessageController {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         if (myMessageManager.getSenderConversations().contains(input)){
-            if (!myMessageManager.getSenderUnreadConversations().contains(input)){
-                if (myMessageManager.markConversationAsUnread(input)){
+            if (!myMessageManager.getSenderUnreadConversations().contains(input)) {
+                if (myMessageManager.markConversationAsUnread(input)) {
                     messagePresenter.printMarkedAsUnread();
                 } else {
                     messagePresenter.printCannotMarkUnread();

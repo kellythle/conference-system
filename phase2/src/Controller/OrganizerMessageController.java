@@ -119,36 +119,6 @@ public class OrganizerMessageController extends MessageController {
         return scan.nextLine();
     }
 
-
-    /**
-     * Displays single message history.
-     * continue browsing conversations, or return to Message menu.
-     *
-     * @param conversationPartner - Partner who has been messaging with the user
-     */
-    public void viewSingleConversation(String conversationPartner){
-        Scanner scanner = new Scanner(System.in);
-        messagePresenter.viewOrganizerSingleConversation(myMessageManager, myUserManager, conversationPartner);
-        String input = scanner.nextLine();
-        switch (input) {
-            case "0":
-                archiveSingleMessage(conversationPartner);
-                break;
-            case "1":
-                archiveConversation(conversationPartner);
-                break;
-            case "2":
-                deleteSingleMessage(conversationPartner);
-                break;
-            case "3":
-                deleteConversation(conversationPartner);
-                break;
-            case "4":
-                viewConversations();
-                break;
-        }
-    }
-
     /**
      * Deletes a single message of a conversation, for organizer and conversation partner both.
      *
