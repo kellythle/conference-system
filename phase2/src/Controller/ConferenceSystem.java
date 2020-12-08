@@ -270,7 +270,7 @@ public class ConferenceSystem {
             menuOption = loginController.getOrganizerMenu();
             switch (menuOption) {
                 case "1":
-                    createOtherUser();
+                    createOtherUserMenu();
                     break;
                 case "2":
                     signUpMenu();
@@ -299,7 +299,7 @@ public class ConferenceSystem {
     /**
      * Organizer can create other types of user
      */
-    private void createOtherUser(){
+    private void createOtherUserMenu(){
         String menuOption;
         do{
             //Organizer create other types of user
