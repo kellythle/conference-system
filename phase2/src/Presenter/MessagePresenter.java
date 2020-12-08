@@ -88,7 +88,7 @@ public class MessagePresenter {
                 "1. View conversations\n" +
                 "2. Send a message to a single user\n" +
                 "3. Send a message to all Speakers\n" +
-                "4. Send a message to all Attendees\n" +
+                "4. Send a message to all Attendees and VIPs\n" +
                 "5. View archived conversations\n" +
                 "6. View system message trash bin\n" +
                 "Enter 0, 1, 2, 3, 4, 5, or 6: ");
@@ -208,20 +208,6 @@ public class MessagePresenter {
     }
 
     /**
-     * Prints options for Organizers to continue browsing, delete or archive the conversation or individual messages,
-     * or return to Message Menu.
-     */
-    public void printOrganizerViewSingleConversationPrompt(){
-        System.out.println("Options:\n" +
-                "0: Archive a single message\n" +
-                "1. Archive entire conversation\n" +
-                "2. Delete a single message\n" +
-                "3. Delete entire conversation\n" +
-                "4. Continue browsing conversations\n" +
-                "Enter 0, 1, 2, 3, 4, or anything else to return to the Message Menu: ");
-    }
-
-    /**
      * Calls method to print single conversation between Attendee or Speaker user and a given recipient.
      * Calls method to print subsequent options of Attendees and Speakers.
      *
@@ -233,21 +219,6 @@ public class MessagePresenter {
         printSingleConversation(messageManager, userManager, recipientID);
         printViewSingleConversationPrompt();
     }
-
-    /**
-     * Calls method to print single conversation between Organizer user and given recipient. Prints options
-     * for Organizer to continue browsing or return to Message Menu.
-     *
-     * @param messageManager - a MessageManager instance
-     * @param userManager - an UserManager instance
-     * @param recipientID - username of the user receiving the message
-     */
-    public void viewOrganizerSingleConversation(MessageManager messageManager, UserManager userManager, String
-            recipientID) {
-        printSingleConversation(messageManager, userManager, recipientID);
-        printOrganizerViewSingleConversationPrompt();
-    }
-
 
     public void printArchiveOptions(){
         System.out.println("Options: \n" +
@@ -354,12 +325,38 @@ public class MessagePresenter {
     }
 
     /**
+     * Print notification that current user does not have conversation with the wanted user.
+     */
+    public void printReplyCannotSend(){
+        System.out.println("You do not have existing conversation with this user.");
+    }
+
+    /**
      * Print list of Speakers in the conference.
      * @param userManager - an UserManager instance
      */
     public void printSpeakers(UserManager userManager){
         System.out.println("You can message the following Speakers:");
         System.out.println(userManager.getSpeakerList());
+    }
+
+    /**
+     * Print list of Speakers of the events user has enrolled given user
+     * @param userManager - an UserManager instance
+     * @param eventManager - an EventManager instance
+     * @param username - username of the user
+     */
+    public void printEnrolledSpeakers(UserManager userManager, EventManager eventManager, String username){
+        ArrayList<String> speakers = new ArrayList<String>();
+        for (String event: userManager.getRegisteredEvents(username)) {
+            for (String speaker: eventManager.getEventSpeakers(event)){
+                if (!speakers.contains(speaker)) {
+                    speakers.add(speaker);
+                }
+            }
+        }
+        System.out.println("You can message the following Speakers:");
+        System.out.println(speakers);
     }
 
     /**
@@ -541,6 +538,13 @@ public class MessagePresenter {
      * Print conversation cannot be marked as unread.
      */
     public void printCannotMarkUnread(){ System.out.println("This conversation cannot be marked as unread");}
+
+    /**
+     * Prints notification that conversation is already marked as read.
+     */
+    public void printConversationAlreadyRead() {System.out.println("This message is already marked as read.");}
+
+
 
     /**
      * Print message garbage bin successfully cleared.

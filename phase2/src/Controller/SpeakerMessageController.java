@@ -15,8 +15,6 @@ import java.util.Scanner;
  * @author Yu Jin Kim
  */
 public class SpeakerMessageController extends MessageController {
-    private final EventManager myEventManager;
-
     /**
      * Constructor for SpeakerMessageController
      * Creates a new instance of messagePresenter.
@@ -27,8 +25,7 @@ public class SpeakerMessageController extends MessageController {
      * @param myEventManager instance of EventManager
      */
     public SpeakerMessageController(String username, MessageManager myMessageManager, UserManager myUserManager, EventManager myEventManager){
-        super(username, myUserManager, myMessageManager);
-        this.myEventManager = myEventManager;
+        super(username, myUserManager, myMessageManager, myEventManager);
     }
 
     public boolean sendSingleMessage(String receiverID, String messageContent){

@@ -1,8 +1,10 @@
 package Controller;
 
+import Presenter.RoomPresenter;
 import Presenter.SchedulePresenter;
 import Presenter.SignUpPresenter;
 import UseCase.EventManager;
+import UseCase.RoomManager;
 import UseCase.UserManager;
 import javafx.util.Pair;
 
@@ -20,8 +22,10 @@ import java.util.Scanner;
  */
 public class ScheduleController {
     private final EventManager eventManager;
+    private final RoomManager roomManager;
     private final UserManager userManager;
     private final SchedulePresenter scheduleP;
+    private final RoomPresenter roomP;
     private final SignUpPresenter signUpP;
 
     /**
@@ -29,11 +33,13 @@ public class ScheduleController {
      * @param em - an EventManager instance
      * @param um - an UserManager instance
      */
-    public ScheduleController(EventManager em, UserManager um){
-        this.eventManager = em;
-        this.userManager = um;
-        this.scheduleP  = new SchedulePresenter(eventManager);
-        this.signUpP = new SignUpPresenter();
+    public ScheduleController(EventManager em, RoomManager rm, UserManager um){
+        eventManager = em;
+        roomManager = rm;
+        userManager = um;
+        scheduleP  = new SchedulePresenter(eventManager);
+        roomP = new RoomPresenter();
+        signUpP = new SignUpPresenter();
     }
 
     /**
@@ -156,37 +162,44 @@ public class ScheduleController {
             }
         }while(!ValidDuration);
 
-        String room;
+        String roomInput;
+        int room = 0;
         boolean ValidRoom = false;
         do {
             Scanner scan2 = new Scanner(System.in);
-            scheduleP.displayRoomList(eventTime, intDuration);
-            room = scan2.nextLine();
+            //scheduleP.displayRoomList(eventTime, intDuration);
+            ArrayList<Integer> availableRooms = roomManager.getAvailableRooms(eventTime, intDuration);
+
+            roomP.printAvailableRoomNumbers(availableRooms);
+            roomP.printChooseAvailableRoom();
+
+            roomInput = scan2.nextLine();
             try {
-                Integer intRoom = Integer.parseInt(room);
-                if (room.equals("0")) {
+                room = Integer.parseInt(roomInput);
+                if (room == 0) {
                     return;
-                } else if (!eventManager.getAvailableRooms(eventTime, intDuration).contains(intRoom)){
-                    scheduleP.printFailRoom();
+                } else if (!availableRooms.contains(room)){ //!eventManager.getAvailableRooms(eventTime, intDuration).contains(intRoom)
+                    //scheduleP.printFailRoom();
+                    roomP.printRoomNotAvailable();
                     ValidRoom = false;
                 } else {
                     ValidRoom = true;
                 }
-            }catch (Exception e){
-                scheduleP.printFailRoom();
+            } catch (Exception e){
+                roomP.printRoomNotAvailable();
             }
-
         } while (!ValidRoom);
 
         String capacity;
         boolean ValidCapacity = false;
         do {
             Scanner scanC = new Scanner(System.in);
-            scheduleP.printCapacityPrompt(room);
+            int roomCapacity = roomManager.getRoomCapacity(room);
+            scheduleP.printCapacityPrompt(roomCapacity);
             capacity = scanC.nextLine();
             try {
                 int intCapacity = Integer.parseInt(capacity);
-                if (eventManager.hasCapacityConflict(intCapacity, eventManager.getRoom(Integer.parseInt(room)))){
+                if (intCapacity <= 0 || roomManager.hasCapacityConflict(room, intCapacity)){ //eventManager.hasCapacityConflict(intCapacity, eventManager.getRoom(Integer.parseInt(room)))
                     scheduleP.printInvalidCapacity();
                     ValidCapacity = false;
                 } else {
@@ -233,8 +246,7 @@ public class ScheduleController {
             } while (!ValidSpeaker);
         }
 
-        Integer intRoom = Integer.parseInt(room);
-        this.callAddEvent(name.trim(), speakers, eventTime, eventManager.getRoom(intRoom), intDuration,
+        this.callAddEvent(name.trim(), speakers, eventTime, room, intDuration,
                 Integer.parseInt(capacity));
     }
 
@@ -263,16 +275,14 @@ public class ScheduleController {
             }
         } while (!ValidEvent);
 
-        if (eventManager.isEqualToRoomCapacity(inputEvent)) {
-            scheduleP.printEventEqualRoom();
-            return;
-        }
+        int roomNumber = eventManager.getRoomByEvent(inputEvent);
+        int roomCapacity = roomManager.getRoomCapacity(roomNumber);
 
         String inputCapacity;
         boolean ValidCapacity = false;
         do {
             Scanner scan2 = new Scanner(System.in);
-            scheduleP.printChangeCapacity(inputEvent, eventManager.getRoomByEvent(inputEvent));
+            scheduleP.printChangeCapacity(inputEvent, roomCapacity);
             inputCapacity = scan2.nextLine();
             try {
                 int intCapacity = Integer.parseInt(inputCapacity);
@@ -280,11 +290,11 @@ public class ScheduleController {
                     return;
                 } else if (intCapacity == eventManager.getCapacityByEvent(inputEvent)){
                     scheduleP.printCapacityMatch();
-                } else if (eventManager.hasCapacityConflict(intCapacity,
-                        eventManager.getRoom(eventManager.getRoomByEvent(inputEvent))) ||
-                        eventManager.isBelowCurrentCapacity(inputEvent, intCapacity)) {
-                    scheduleP.printInvalidCapacity();
+                } else if (roomManager.hasCapacityConflict(roomNumber, intCapacity)) {
+                    roomP.printAboveRoomCapacity();
                     ValidCapacity = false;
+                } else if (intCapacity < eventManager.getNumberOfAttendeesByEvent(inputEvent)) {
+                    scheduleP.printNewCapacityBelowCurrentAttendees();
                 } else {
                     eventManager.changeCapacity(inputEvent, intCapacity);
                     ValidCapacity = true;
@@ -303,7 +313,7 @@ public class ScheduleController {
      */
     public void deleteEventFromConference() {
         String inputEvent;
-        boolean ValidEvent;
+        boolean validEvent;
         do {
             Scanner scan1 = new Scanner(System.in);
             signUpP.displayEventList(eventManager.getEventList(), eventManager);
@@ -313,21 +323,33 @@ public class ScheduleController {
                 return;
             } else if (!eventManager.getEvent(inputEvent)) {
                 scheduleP.printNoEvent();
-                ValidEvent = false;
-            } else if (eventManager.getEvent(inputEvent) && !eventManager.getEventAttendees(inputEvent).isEmpty()) {
-                Scanner scan2 = new Scanner(System.in);
-                scheduleP.printAttendeesExist();
-                if (scan2.nextLine().equals("0")){
-                    return;
-                } else {
-                    ValidEvent = eventManager.deleteConferenceEvent(inputEvent);
-                    scheduleP.printDeletionSuccess();
-                }
+                validEvent = false;
             } else {
-                ValidEvent = eventManager.deleteConferenceEvent(inputEvent);
-                scheduleP.printDeletionSuccess();
+                validEvent = true;
             }
-        } while (!ValidEvent);
+        } while (!validEvent);
+
+        boolean hasBeenDeleted;
+
+        if (eventManager.getEvent(inputEvent) && !eventManager.getEventAttendees(inputEvent).isEmpty()) {
+            Scanner scan2 = new Scanner(System.in);
+            scheduleP.printAttendeesExist();
+            if (!scan2.nextLine().equals("1"))
+                return;
+        }
+
+        int room = eventManager.getRoomByEvent(inputEvent);
+        LocalDateTime dateTime = eventManager.getStartDateTimeByEvent(inputEvent);
+
+        hasBeenDeleted = eventManager.deleteConferenceEvent(inputEvent);
+
+        if (hasBeenDeleted) {
+            roomManager.removeScheduleTime(room, dateTime);
+            scheduleP.printDeletionSuccess();
+        }
+        else {
+            scheduleP.printDeletionFailure();
+        }
     }
 
     /**
@@ -342,7 +364,7 @@ public class ScheduleController {
      * @param capacity - the capacity of the event wanted to be created (receive from UI)
      */
     public void callAddEvent(String name, ArrayList<String> speakers,
-                             LocalDateTime time, Pair<Integer, Integer> room, int duration, int capacity){
+                             LocalDateTime time, int room, int duration, int capacity){
         // create a speaker account if this speaker haven't have an account yet.
         for (String s: speakers) {
             if (!userManager.isOfType(s, "Speaker")) {
@@ -350,7 +372,9 @@ public class ScheduleController {
                 return;
             }
         }
+
         eventManager.addEvent(name, speakers, time, room, duration, capacity);
+        roomManager.addScheduleTime(room, time, duration);
         scheduleP.createEventResult(true, name, speakers, time, room, duration, capacity);
     }
 

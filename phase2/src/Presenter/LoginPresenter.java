@@ -107,10 +107,11 @@ public class LoginPresenter {
                 "1. Create account\n"+
                 "2. Sign up\n" +
                 "3. Manage Events\n" +
-                "4. Send a message\n"+
-                "5. Play Math Game\n" +
-                "6. Log out\n"+
-                "Enter 1, 2, 3, 4 , 5 or 6: ");
+                "4. Manage Rooms\n" +
+                "5. Send a message\n" +
+                "6. Play Math Game\n" +
+                "7. Log out\n"+
+                "Enter 1, 2, 3, 4, 5 or 6: ");
     }
 
     /**
@@ -120,10 +121,11 @@ public class LoginPresenter {
         System.out.println("Welcome to the Speaker Menu! \n" +
                 "Options:\n" +
                 "1. Sign up\n" +
-                "2. Send a message\n"+
-                "3. Play Math Game\n" +
-                "4. Log out\n"+
-                "Enter 1, 2 , 3 or 4: ");
+                "2. Send a message\n" +
+                "3. View room menu\n" +
+                "4. Play Math Game\n" +
+                "5. Log out\n"+
+                "Enter 1, 2, 3, 4, or 5: ");
     }
 
     /**
@@ -133,10 +135,11 @@ public class LoginPresenter {
         System.out.println("Welcome to the Attendee Menu! \n" +
                 "Options:\n" +
                 "1. Sign up\n" +
-                "2. Send a message\n"+
-                "3. Play Math Game\n" +
-                "4. Log out\n"+
-                "Enter 1, 2, 3 or 4: ");
+                "2. Send a message\n" +
+                "3. View room menu\n" +
+                "4. Play Math Game\n" +
+                "5. Log out\n"+
+                "Enter 1, 2, 3, 4, or 5: ");
     }
 
     /**
@@ -146,10 +149,11 @@ public class LoginPresenter {
         System.out.println("\nWelcome to the premium VIP Menu! \n\n" +
                 "Here are the options you can choose:\n" +
                 "1. Sign up\n" +
-                "2. Send a message\n"+
+                "2. Send a message\n" +
+                "3. View room menu\n" +
                 "3. Play Math Game\n" +
                 "4. Log out\n"+
-                "Please enter 1, 2, 3 or 4: ");
+                "Please enter 1, 2, 3, 4, or 5: ");
     }
 
     /**

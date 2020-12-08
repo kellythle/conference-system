@@ -496,7 +496,7 @@ public class MessageManager implements Serializable {
      *
      * @param otherID - username of chat partner
      * @return true if conversation successfully marked as unread, false if given chat partner does not have an
-     * unarchived conversation with current user.
+     * unarchived conversation with current user or user is not a recipient in the conversation.
      */
     public boolean markConversationAsUnread(String otherID){
         if (!getSenderConversations().contains(otherID)){
@@ -505,7 +505,11 @@ public class MessageManager implements Serializable {
         ArrayList<UUID> conversation = getSingleConversationByReceiver(otherID);
         UUID someMessage = conversation.get(0);
         getMessage(someMessage).markAsUnread();
-        return true;
+        if (getSenderUnreadConversations().contains(otherID)){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

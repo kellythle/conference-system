@@ -1,14 +1,14 @@
 package Controller;
 
 import Gateway.ReadWriteGateway;
+import Presenter.InputPresenter;
 import Presenter.ReadWritePresenter;
 import UseCase.EventManager;
 import UseCase.MessageManager;
+import UseCase.RoomManager;
 import UseCase.UserManager;
-import javafx.util.Pair;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -24,6 +24,7 @@ import java.util.Scanner;
 public class ConferenceSystem {
     // Use case class instances
     private EventManager eventManager = new EventManager();
+    private RoomManager roomManager = new RoomManager();
     private UserManager userManager = new UserManager();
     private MessageManager messageManager = new MessageManager();
 
@@ -36,10 +37,13 @@ public class ConferenceSystem {
     // Instance of ReadWriteScanner to read input related to file reading and writing.
     private final Scanner readWriteScanner = new Scanner(System.in);
 
+    private final InputPresenter inputPresenter = new InputPresenter();
+
     // Controller class instances
     private LoginController loginController;
     private SignUpController signUpController;
     private ScheduleController scheduleController;
+    private RoomController roomController;
     private MessageController messageController;
     private OrganizerMessageController organizerMessageController;
     private SpeakerMessageController speakerMessageController;
@@ -50,6 +54,7 @@ public class ConferenceSystem {
     private final String usersPath = "./src/users.ser";
     private final String eventsPath = "./src/events.ser";
     private final String messagesPath = "./src/messages.ser";
+    private final String roomsPath = "./src/rooms.ser";
 
     // Variable for keeping track with user, should be initialized after login.
     String username;
@@ -72,20 +77,9 @@ public class ConferenceSystem {
         // the username of the logged in person to be instantiated.
         loginController = new LoginController(userManager);
         signUpController = new SignUpController(eventManager, userManager);
-        scheduleController = new ScheduleController(eventManager, userManager);
+        scheduleController = new ScheduleController(eventManager, roomManager, userManager);
+        roomController = new RoomController(roomManager);
         gameController = new GameController(userManager);
-
-        // add default rooms
-        if (eventManager.getRoomList() == null || eventManager.getRoomList().isEmpty()) {
-            Pair<Integer, Integer> room1= new Pair<>(1, 2);
-            Pair<Integer, Integer> room2= new Pair<>(2, 2);
-            Pair<Integer, Integer> room3= new Pair<>(3, 2);
-            ArrayList<Pair<Integer, Integer>> rooms = new ArrayList<>();
-            rooms.add(room1);
-            rooms.add(room2);
-            rooms.add(room3);
-            eventManager.setRoomList(rooms);
-        }
 
         //Menu for sign in or register
         initialLoginMenu();
@@ -93,10 +87,10 @@ public class ConferenceSystem {
         messageManager.setSenderID(username);
 
         //initialize all classes that need the username
-        messageController = new MessageController(username, userManager, messageManager);
-        organizerMessageController = new OrganizerMessageController(username, messageManager, userManager);
+        messageController = new MessageController(username, userManager, messageManager, eventManager);
+        organizerMessageController = new OrganizerMessageController(username, messageManager, userManager, eventManager);
         speakerMessageController = new SpeakerMessageController(username, messageManager, userManager, eventManager);
-        myVIPMessageController = new VIPMessageController(username, userManager, messageManager);
+        myVIPMessageController = new VIPMessageController(username, userManager, messageManager, eventManager);
         //2. shows Main menu for each user
         switch (loginController.getUserType(username)){
             case "Organizer":
@@ -132,6 +126,7 @@ public class ConferenceSystem {
             userManager = (UserManager)readWriteGateway.readFromFile(usersPath);
             eventManager = (EventManager)readWriteGateway.readFromFile(eventsPath);
             messageManager = (MessageManager)readWriteGateway.readFromFile(messagesPath);
+            roomManager = (RoomManager)readWriteGateway.readFromFile(roomsPath);
 
         } catch (IOException | ClassNotFoundException e) {
             return false;
@@ -150,6 +145,7 @@ public class ConferenceSystem {
             readWriteGateway.saveToFile(usersPath, userManager);
             readWriteGateway.saveToFile(eventsPath, eventManager);
             readWriteGateway.saveToFile(messagesPath, messageManager);
+            readWriteGateway.saveToFile(roomsPath, roomManager);
         } catch (IOException e) {
             return false;
         }
@@ -283,18 +279,21 @@ public class ConferenceSystem {
                     scheduleMenu();
                     break;
                 case "4":
-                    organizerMessageMenu();
+                    organizerRoomMenu();
                     break;
                 case "5":
-                    gameMenu();
+                    organizerMessageMenu();
                     break;
                 case "6":
+                    gameMenu();
+                    break;
+                case "7":
                     loginController.logout();
                     break;
                 default:
                     loginController.invalidOption();
             }
-        } while (!menuOption.equals("6"));
+        } while (!menuOption.equals("7"));
     }
 
     /**
@@ -339,15 +338,18 @@ public class ConferenceSystem {
                     speakerMessageMenu();
                     break;
                 case "3":
-                    gameMenu();
+                    roomMenu();
                     break;
                 case "4":
+                    gameMenu();
+                    break;
+                case "5":
                     loginController.logout();
                     break;
                 default:
                     loginController.invalidOption();
             }
-        } while (!menuOption.equals("4"));
+        } while (!menuOption.equals("5"));
     }
 
     /**
@@ -366,15 +368,18 @@ public class ConferenceSystem {
                     attendeeMessageMenu();
                     break;
                 case "3":
-                    gameMenu();
+                    roomMenu();
                     break;
                 case "4":
+                    gameMenu();
+                    break;
+                case "5":
                     loginController.logout();
                     break;
                 default:
                     loginController.invalidOption();
             }
-        } while (!menuOption.equals("4"));
+        } while (!menuOption.equals("5"));
     }
 
     /**
@@ -393,15 +398,18 @@ public class ConferenceSystem {
                     VIPMessageMenu();
                     break;
                 case "3":
-                    gameMenu();
+                    roomMenu();
                     break;
                 case "4":
+                    gameMenu();
+                    break;
+                case "5":
                     loginController.logout();
                     break;
                 default:
                     loginController.invalidOption();
             }
-        } while (!menuOption.equals("4"));
+        } while (!menuOption.equals("5"));
     }
 
     /**
@@ -483,7 +491,7 @@ public class ConferenceSystem {
                     organizerMessageController.sendMessagesToSpeakers();
                     break;
                 case "4":
-                    organizerMessageController.sendMessagesToAttendees();
+                    organizerMessageController.sendMessagesToAttendeesVIPs();
                     break;
                 case "5":
                     organizerMessageController.viewArchivedConversations();
@@ -516,9 +524,6 @@ public class ConferenceSystem {
                     break;
                 case "3":
                     speakerMessageController.viewArchivedConversations();
-                    break;
-                case "4":
-                    speakerMessageController.manageFriendList();
                     break;
                 default:
                     speakerMessageController.invalidInput();
@@ -614,5 +619,43 @@ public class ConferenceSystem {
                     gameController.InvalidInput();
             }
         }while(!choice.equals("5"));
+    }
+
+    private void roomMenu() {
+        String option;
+        do {
+            option = roomController.getRoomMenu();
+            switch (option){
+                case "0":
+                    break;
+                case "1":
+                    roomController.displayRooms();
+                    break;
+                default:
+                    inputPresenter.printInvalidInput();
+            }
+        } while (!option.equals("0"));
+    }
+
+    private void organizerRoomMenu() {
+        String option;
+        do {
+            option = roomController.getRoomMenu();
+            switch (option){
+                case "0":
+                    break;
+                case "1":
+                    roomController.displayRooms();
+                    break;
+                case "2":
+                    roomController.createNewRoom();
+                    break;
+                case "3":
+                    roomController.deleteRoom();
+                    break;
+                default:
+                    inputPresenter.printInvalidInput();
+            }
+        } while (!option.equals("0"));
     }
 }

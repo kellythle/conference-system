@@ -1,5 +1,6 @@
 package Controller;
 
+import Presenter.InputPresenter;
 import Presenter.RoomPresenter;
 import UseCase.RoomBuilder;
 import UseCase.RoomManager;
@@ -9,8 +10,13 @@ import java.util.Scanner;
 
 public class RoomController {
     private final RoomManager roomManager;
-    private final RoomPresenter roomPresenter = new RoomPresenter();
     private RoomBuilder roomBuilder = new RoomBuilder();
+
+    private final InputValidator inputValidator = new InputValidator();
+
+    private final RoomPresenter roomPresenter = new RoomPresenter();
+    private final InputPresenter inputPresenter = new InputPresenter();
+
     private Scanner scanner = new Scanner(System.in);
 
     public RoomController(RoomManager roomManager)
@@ -19,89 +25,9 @@ public class RoomController {
     }
 
     public String getRoomMenu() {
-        roomPresenter.printRoomMenu();
+        roomPresenter.printOrganizerRoomMenu();
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
-    }
-
-    /**
-     * Gets an integer greater or equal to a certain integer from the user.
-     * If the user enters a number less than the specified integer,
-     * they will be prompted to try again.
-     *
-     * @param num - the integer that the input should be greater to or equal to.
-     * @return number received as input from user.
-     */
-    private int getIntGreaterOrEqual(int num) {
-        int input;
-        boolean validInput = false;
-
-        do {
-            while (!scanner.hasNextInt()) {
-                scanner.next();
-                roomPresenter.printEnterNumberEqualOrGreater(num);
-            }
-
-            input = scanner.nextInt();
-
-            if (input < num)
-                roomPresenter.printEnterNumberEqualOrGreater(num);
-            else
-                validInput = true;
-
-        } while(!validInput);
-
-        scanner.nextLine(); // Gets rid of the \n after getting the int.
-        return input;
-    }
-
-    /**
-     * Gets a string input from the user and returns a boolean if input is "yes" or "no".
-     * If user enters a value that is not "yes" or "no", the user is prompted for an input again.
-     *
-     * @return true if input was "yes", false if input is "no".
-     */
-    private boolean getStringForBoolean() {
-        String input;
-        boolean output = false;
-        boolean validInput = false;
-
-        while (!validInput) {
-            input = scanner.nextLine().trim().toLowerCase();
-
-            if (input.equals("yes")) {
-                output = true;
-                validInput = true;
-            } else if (input.equals("no")) {
-                validInput = true;
-            } else {
-                roomPresenter.printEnterYesOrNo();
-            }
-        }
-
-        return output;
-    }
-
-    /**
-     * Gets a string input from the user as long as it is not empty. If it is empty,
-     * the user is prompted for an input again.
-     *
-     * @return the nonempty string input.
-     */
-    private String getNonEmptyString() {
-        String input = "";
-        boolean validInput = false;
-
-        while (!validInput) {
-            input = scanner.nextLine();
-
-            if (input == null || input.isEmpty())
-                roomPresenter.printEnterNonEmptyString();
-            else
-                validInput = true;
-        }
-
-        return input;
     }
 
     /**
@@ -112,13 +38,13 @@ public class RoomController {
      * @return an integer greater than or equal to 0
      */
     private int getNewRoomNumber() {
-        int roomNumber = 0;
+        int roomNumber = 1;
         boolean validNumber = false;
 
         roomPresenter.printEnterRoomNumber();
 
         while (!validNumber) {
-            roomNumber = getIntGreaterOrEqual(0);
+            roomNumber = inputValidator.getIntGreaterOrEqual(1);
 
             if (roomManager.doesRoomExist(roomNumber))
                 roomPresenter.printRoomExists();
@@ -137,7 +63,7 @@ public class RoomController {
     private int getNewRoomCapacity() {
         roomPresenter.printEnterCapacity();
 
-        return getIntGreaterOrEqual(3);
+        return inputValidator.getIntGreaterOrEqual(3);
     }
 
     /**
@@ -148,7 +74,7 @@ public class RoomController {
     private int getNewRoomSquareFeet() {
         roomPresenter.printEnterSquareFeet();
 
-        return getIntGreaterOrEqual(1);
+        return inputValidator.getIntGreaterOrEqual(1);
     }
 
     /**
@@ -159,7 +85,7 @@ public class RoomController {
     private int getNewRoomScreens() {
         roomPresenter.printEnterScreens();
 
-        return getIntGreaterOrEqual(0);
+        return inputValidator.getIntGreaterOrEqual(0);
     }
 
     /**
@@ -170,7 +96,7 @@ public class RoomController {
     private boolean getNewRoomSoundSystem() {
         roomPresenter.printEnterSoundSystem();
 
-        return getStringForBoolean();
+        return inputValidator.getStringForBoolean();
     }
 
     /**
@@ -181,7 +107,7 @@ public class RoomController {
     private boolean getNewRoomStage() {
         roomPresenter.printEnterStage();
 
-        return getStringForBoolean();
+        return inputValidator.getStringForBoolean();
     }
 
     /**
@@ -192,7 +118,7 @@ public class RoomController {
     private boolean getNewRoomAccessible() {
         roomPresenter.printEnterAccessible();
 
-        return getStringForBoolean();
+        return inputValidator.getStringForBoolean();
     }
 
     /**
@@ -203,7 +129,7 @@ public class RoomController {
     private boolean getNewRoomWifi() {
         roomPresenter.printEnterWifi();
 
-        return getStringForBoolean();
+        return inputValidator.getStringForBoolean();
     }
 
     /**
@@ -225,7 +151,7 @@ public class RoomController {
     private String getNewRoomDescription() {
         roomPresenter.printEnterDescription();
 
-        return getNonEmptyString();
+        return inputValidator.getNonEmptyString();
     }
 
     /**
@@ -272,7 +198,7 @@ public class RoomController {
         boolean validNumber = false;
 
         while (!validNumber) {
-            roomNumber = getIntGreaterOrEqual(0);
+            roomNumber = inputValidator.getIntGreaterOrEqual(0);
 
             if (!roomManager.doesRoomExist(roomNumber))
                 roomPresenter.printRoomNonExistent();

@@ -69,38 +69,6 @@ public class EventManager implements Serializable {
     }
 
     /**
-     * Returns the list of rooms.
-     *
-     * @return room list
-     */
-    public ArrayList<Pair<Integer, Integer>> getRoomList() {
-        return roomList;
-    }
-
-    /**
-     * Returns the room pair given the room's number.
-     * @param roomNum - the room's number
-     *
-     * @return the room pair
-     */
-    public Pair<Integer, Integer> getRoom(Integer roomNum){
-        for (Pair<Integer, Integer> r: this.getRoomList()){
-            if(r.getKey().equals(roomNum)){
-                return r;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Sets the room list to a version from a read file
-     * @param readInRoomList The version of roomList from a read file
-     */
-    public void setRoomList(ArrayList<Pair<Integer, Integer>> readInRoomList){
-        this.roomList = readInRoomList;
-    }
-
-    /**
      * Returns an event that is created.
      *
      * @param name - the name of this event
@@ -112,7 +80,7 @@ public class EventManager implements Serializable {
      * @return the Event that is created
      */
     private Event createNewEvent(String name, ArrayList<String> speaker,
-                                 LocalDateTime time, Pair<Integer, Integer> room, int duration, int capacity) {
+                                 LocalDateTime time, int room, int duration, int capacity) {
         return new Event(name, speaker, time, room, duration, capacity);
     }
 
@@ -154,9 +122,7 @@ public class EventManager implements Serializable {
     /**
      * Creates an event and is added to the conference.
      * Passes silently if event was not able to be made.
-     * Checks if there exists an event occurring in the same room and
-     * at the same time, if the speaker gives another talk
-     * at the same time, and if the event name already exists.
+     * Checks if the speaker gives another talk at the same time and if the event name already exists.
      *
      * @param name - the name of this event
      * @param speaker - the name(s) of the speaker(s)
@@ -166,15 +132,14 @@ public class EventManager implements Serializable {
      * @param capacity - the capacity of this event
      */
     public void addEvent(String name, ArrayList<String> speaker,
-                         LocalDateTime time, Pair<Integer, Integer> room, int duration, int capacity) {
+                         LocalDateTime time, int room, int duration, int capacity) {
         Event newEvent = createNewEvent(name, speaker, time, room, duration, capacity);
         if(eventList == null || eventList.isEmpty()) {
             this.eventList = new ArrayList<>();
             this.eventList.add(newEvent);
         }
         for (Event e : eventList) {
-            if ((e.getTime() == time && e.getRoomNum().equals(room.getKey())) || (e.getTime() == time
-                    && e.getSpeaker().equals(speaker)) || e.getName().equals(name)) {
+            if ((e.getTime() == time && e.getSpeaker().equals(speaker)) || e.getName().equals(name)) {
                 return;
             }
         }
@@ -328,33 +293,6 @@ public class EventManager implements Serializable {
             }
         }
         return availableList;
-    }
-
-    /**
-     * Returns a list of available rooms.
-     *
-     * @param time - time for Event
-     * @param duration - the duration of an event in hours
-     *
-     * @return a list of available rooms
-     */
-    public ArrayList<Integer> getAvailableRooms (LocalDateTime time, int duration) {
-        ArrayList<Integer> availableRooms = new ArrayList<>();
-        ArrayList<Integer> unavailableRooms = new ArrayList<>();
-        if (this.eventList != null) {
-            for (Event e : this.eventList) {
-                if (this.hasTimeConflict(e, time, duration)){
-                    unavailableRooms.add(e.getRoomNum());
-                }
-            }
-        }
-
-        for (Pair<Integer, Integer> r : this.roomList) {
-            if (!unavailableRooms.contains(r.getKey())) {
-                availableRooms.add(r.getKey());
-            }
-        }
-        return availableRooms;
     }
 
     /**
@@ -528,42 +466,6 @@ public class EventManager implements Serializable {
     }
 
     /**
-     * Returns true if the capacity cannot be used for this event.
-     *
-     * @param capacity - the entered capacity
-     * @param room - the room that the event is chosen in
-     *
-     * @return true if the capacity is not valid, false otherwise.
-     */
-    public boolean hasCapacityConflict(int capacity, Pair<Integer, Integer> room){
-        return capacity <= 0 || capacity > room.getValue();
-    }
-
-    /**
-     * Returns true if the capacity is less than the event's current capacity
-     *
-     * @param event - the event name
-     * @param capacity - the capacity the Organizer wishes to change the event's capacity to
-     *
-     * @return true if the capacity is less than the event's capacity
-     */
-    public boolean isBelowCurrentCapacity(String event, int capacity){
-        return capacity <=  getCapacityByEvent(event);
-    }
-
-    /**
-     * Returns true if capacity is equal to the room's capacity
-     *
-     * @param event - the event name
-     *
-     * @return true if the capacity if equal to the event room's capacity
-     */
-    public boolean isEqualToRoomCapacity(String event){
-        return getCapacityByEvent(event) == getRoom(getRoomByEvent(event)).getValue();
-    }
-
-
-    /**
      * Returns the capacity of an event given the event's name.
      *
      * @param event - the name of the event
@@ -587,20 +489,59 @@ public class EventManager implements Serializable {
 
     /**
      * Changes the capacity of an Event.
+     * If event does not exist, fails silently.
      *
      * @param event - event name
      * @param capacity - the new capacity
      */
     public void changeCapacity(String event, int capacity){
         Event e = findEventByName(event);
-        assert e != null;
-        Pair<Integer, Integer> room = new Pair<>(e.getRoomNum(), e.getRoomCapacity());
-        Event newEvent = new Event(e.getName(), e.getSpeaker(), e.getTime(), room, e.getDuration(), capacity);
-        for (String user: getEventAttendees(event)) {
-            addUserToEvent(user, newEvent.getName());
+        if (e != null)
+            e.setCapacity(capacity);
+    }
+
+    /**
+     * Returns number of attendees of an event given the event name.
+     * This number includes the speakers at the event.
+     *
+     * @param event the name of the event.
+     * @return number of attendees and speakers attending the event.
+     */
+    public int getNumberOfAttendeesByEvent(String event) {
+        int numAttendees = -1;
+
+        Event e = findEventByName(event);
+
+        if (e != null) {
+            numAttendees = e.getNumberOfAttendees();
         }
-        deleteConferenceEvent(e.getName());
-        addEvent(newEvent.getName(), newEvent.getSpeaker(), newEvent.getTime(), room, newEvent.getDuration(),
-                newEvent.getCapacity());
+        return numAttendees;
+    }
+
+    /**
+     * Gets an event's starting date and time given the event name.
+     *
+     * @param event the name of the event.
+     * @return starting date and time of the event.
+     */
+    public LocalDateTime getStartDateTimeByEvent(String event) {
+        LocalDateTime dateTime = LocalDateTime.now();
+
+        Event e = findEventByName(event);
+
+        if (e != null)
+            dateTime = e.getTime();
+        return dateTime;
+    }
+
+    /**
+     * Returns an arraylist of all speakers of given event namr.
+     *
+     * @param event - given username of event
+     *
+     * @return - ArrayList<Event> that contains username of speakers
+     */
+    public ArrayList<String> getEventSpeakers(String event){
+        return findEventByName(event).getSpeaker();
     }
 }

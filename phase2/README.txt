@@ -147,10 +147,9 @@ of users.
 3. For all users, if you entered 1, you will first view a list of all users with whom you have conversation
 histories. Enter the username of the user whose conversation you wish to view. Speakers will be able to respond
 to a conversations with Attendees, and Attendees will be able to respond to conversations with Attendees and
-Speakers. Organizers do not need the option to respond to conversations, because other Users cannot message
-Organizers. All users will be able to archive or delete conversations or individual messages. For Speakers and
-Attendees, the deletion will only occur in their own inbox. For Organizers and VIPs, the message will also be
-deleted from their conversation partner's inbox.
+Speakers. Organizers can respond to all conversations. All users will be able to archive or delete conversations or
+individual messages. For Speakers and Attendees, the deletion will only occur in their own inbox. For Organizers and
+VIPs, the message will also be deleted from their conversation partner's inbox.
 4. For messaging options, the user will be prompted for which individual username or subset of users they wish to message.
 For example, if a Speaker enters 2, they will be prompted to choose between messaging Attendees of all their talks, or
 Attendees of a specific talk. If they choose a specific talk, then they will be prompted to enter the ID of the event

@@ -15,9 +15,9 @@ public class Event implements Serializable {
     private ArrayList<String> speaker; // an arraylist of name(s) of speaker(s)
     private LocalDateTime time; //time of the event
     private final ArrayList<String> attendees; // names of the attendees
-    private final Pair<Integer, Integer> room; //<room number, capacity>
+    private final int room; // room number
     private final int duration; // the duration of this event
-    private final int capacity; // the capacity of this event
+    private int capacity; // the capacity of this event
 
     /**
      * The name, ID, occurring time, occurring place, and speaker required to create an event.
@@ -28,7 +28,7 @@ public class Event implements Serializable {
      * @param duration - the duration of this event
      * @param capacity - the capacity of this event
      */
-    public Event (String name, ArrayList<String> speaker, LocalDateTime time, Pair<Integer, Integer> room,
+    public Event (String name, ArrayList<String> speaker, LocalDateTime time, int room,
                   int duration, int capacity) {
         this.name = name;
         this.speaker = speaker;
@@ -68,15 +68,7 @@ public class Event implements Serializable {
      * @return the occurring room number of this Event
      */
     public Integer getRoomNum() {
-        return room.getKey();
-    }
-
-    /**
-     * Returns the capacity of the room where this event is hold.
-     * @return the occurring room's capacity of this Event
-     */
-    public Integer getRoomCapacity() {
-        return room.getValue();
+        return room;
     }
 
     /**
@@ -126,5 +118,24 @@ public class Event implements Serializable {
      */
     public void setTime(LocalDateTime time) {
         this.time = time;
+    }
+
+    /**
+     * This method sets the capacity of this event.
+     *
+     * @param capacity the capacity of the event.
+     */
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    /**
+     * This method returns the current number of attendees of the event.
+     * This number includes the speakers at the event.
+     *
+     * @return number of attendees and speakers attending the event.
+     */
+    public int getNumberOfAttendees() {
+        return attendees.size() + speaker.size();
     }
 }
