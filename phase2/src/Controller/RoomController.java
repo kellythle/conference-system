@@ -15,7 +15,6 @@ public class RoomController {
     private final InputValidator inputValidator = new InputValidator();
 
     private final RoomPresenter roomPresenter = new RoomPresenter();
-    private final InputPresenter inputPresenter = new InputPresenter();
 
     private final Scanner scanner = new Scanner(System.in);
 
