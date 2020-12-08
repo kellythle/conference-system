@@ -6,7 +6,6 @@ import Presenter.SignUpPresenter;
 import UseCase.EventManager;
 import UseCase.RoomManager;
 import UseCase.UserManager;
-import javafx.util.Pair;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

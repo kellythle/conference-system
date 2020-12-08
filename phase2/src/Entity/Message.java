@@ -8,7 +8,7 @@ import java.util.UUID;
  * A class that represents a Message.
  */
 public class Message implements Serializable, Comparable<Message> {
-    private UUID id; // id of message
+    private final UUID id; // id of message
     private final String sender;// Stores the name of the sender
     private String receiver;// Stores the name of the receiver
     private String content;// Stores the content of the message

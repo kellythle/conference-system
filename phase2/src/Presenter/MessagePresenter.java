@@ -347,7 +347,7 @@ public class MessagePresenter {
      * @param username - username of the user
      */
     public void printEnrolledSpeakers(UserManager userManager, EventManager eventManager, String username){
-        ArrayList<String> speakers = new ArrayList<String>();
+        ArrayList<String> speakers = new ArrayList<>();
         for (String event: userManager.getRegisteredEvents(username)) {
             for (String speaker: eventManager.getEventSpeakers(event)){
                 if (!speakers.contains(speaker)) {

@@ -44,7 +44,7 @@ public class SpeakerMessageController extends MessageController {
     public boolean sendAllMessageAllEvent(String messageContent) {
         ArrayList<String> usernames = new ArrayList<>();
         for (Event event : myEventManager.getEventList()) {
-            if (event.getSpeaker().equals(username)) {
+            if (event.getSpeaker().contains(username)) {
                 if (event.getAttendees().isEmpty()) {
                     messagePresenter.printNoAttendees(event.getName());
                 }
@@ -90,7 +90,7 @@ public class SpeakerMessageController extends MessageController {
                     messagePresenter.printNoAttendees(eventName);
                     return false;
                 }
-                if (!event.getSpeaker().equals(username)) {
+                if (!event.getSpeaker().contains(username)) {
                     return false;
                 }
                 for (String userName : event.getAttendees()) {

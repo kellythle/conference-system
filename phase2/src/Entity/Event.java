@@ -1,7 +1,5 @@
 package Entity;
 
-import javafx.util.Pair;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
