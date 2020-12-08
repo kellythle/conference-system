@@ -101,7 +101,7 @@ public class LoginController {
      * Overload createAccount that takes in user input
      * @param type- string representing the user type that he/she want
      */
-    public void createAccount(String type, Boolean needCode){
+    public void createAccount(String type){
         lp.inputNameOfType(type);
         boolean nameIsZero;
         String userName;
@@ -125,19 +125,24 @@ public class LoginController {
             validPW = this.validPassword(password);
         }while(!validPW);
 
-        // checks activation code for VIP requests
-        if(type.equals("VIP") && needCode) {
-            lp.promptInvCode();
-            if(um.checkInvitationCode(scanner.nextLine())) {
-                lp.printValidInvCode();
-            }
-            else {
-                lp.printInvalidInvCode();
-                return; // makes sure the account does not get created
-            }
-        }
-
         createAccount(userName, password, type);
+    }
+
+    /**
+     * For general users check the code to allow them to create VIP account
+     * @return whether he/she can create a VIP or not
+     */
+    public boolean codeCheck(){
+        lp.promptInvCode();
+        if(um.checkInvitationCode(scanner.nextLine())) {
+            lp.printValidInvCode();
+            return true;
+        }
+        else {
+            lp.printInvalidInvCode();
+            lp.printOrganizerCreateUserMenu();
+            return false; // make sure the account does not get created
+        }
     }
 
     /**
