@@ -8,10 +8,16 @@ public class RoomPresenter {
 
     public void printRoomMenu() {
         System.out.print("Welcome to the room menu! Please select one of the following options:\n" +
-                "1. Add a new room.\n" +
-                "2. View list of rooms.\n" +
+                "1. View list of rooms.\n" +
+                "Please choose an option, or enter 0 to exit the room menu: \n");
+    }
+
+    public void printOrganizerRoomMenu() {
+        System.out.print("Welcome to the room menu! Please select one of the following options:\n" +
+                "1. View list of rooms.\n" +
+                "2. Add a new room.\n" +
                 "3. Delete a room.\n" +
-                "4. Exit room menu.\n");
+                "Please choose an option, or enter 0 to exit the room menu: \n");
     }
 
     public void printEnterNumberEqualOrGreater(int number) {
