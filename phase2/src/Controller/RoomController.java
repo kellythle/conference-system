@@ -1,6 +1,5 @@
 package Controller;
 
-import Presenter.InputPresenter;
 import Presenter.RoomPresenter;
 import UseCase.RoomBuilder;
 import UseCase.RoomManager;
