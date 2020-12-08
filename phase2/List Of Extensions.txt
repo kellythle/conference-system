@@ -26,3 +26,4 @@ show up. So we chose 3 optional extensions.
     (b) Allow speakers to sign up for events (except the events they are speaking).
     (c) Friend list system.
     (d) Game System. Allows user to play some math games.
+    (e) Remove past event automatically.
