@@ -51,9 +51,10 @@ public class ConferenceSystem {
     private GameController gameController;
 
     // File paths
-    private final String usersPath = "./src/users.ser";
-    private final String eventsPath = "./src/events.ser";
-    private final String messagesPath = "./src/messages.ser";
+    private final String usersPath = "./phase2/src/users.ser";
+    private final String eventsPath = "./phase2/src/events.ser";
+    private final String messagesPath = "./phase2/src/messages.ser";
+    private final String roomsPath = "./phase2/src/rooms.ser";
 
     // Variable for keeping track with user, should be initialized after login.
     String username;
@@ -125,6 +126,7 @@ public class ConferenceSystem {
             userManager = (UserManager)readWriteGateway.readFromFile(usersPath);
             eventManager = (EventManager)readWriteGateway.readFromFile(eventsPath);
             messageManager = (MessageManager)readWriteGateway.readFromFile(messagesPath);
+            roomManager = (RoomManager)readWriteGateway.readFromFile(roomsPath);
 
         } catch (IOException | ClassNotFoundException e) {
             return false;
@@ -143,6 +145,7 @@ public class ConferenceSystem {
             readWriteGateway.saveToFile(usersPath, userManager);
             readWriteGateway.saveToFile(eventsPath, eventManager);
             readWriteGateway.saveToFile(messagesPath, messageManager);
+            readWriteGateway.saveToFile(roomsPath, roomManager);
         } catch (IOException e) {
             return false;
         }

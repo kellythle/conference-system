@@ -1,10 +1,10 @@
 package Entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.TreeMap;
 
-public class Room {
+public class Room implements Serializable {
     private TreeMap<LocalDateTime, LocalDateTime> schedule = new TreeMap<>();
     private int roomNumber;
     private int capacity;
