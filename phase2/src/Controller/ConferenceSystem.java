@@ -51,10 +51,10 @@ public class ConferenceSystem {
     private GameController gameController;
 
     // File paths
-    private final String usersPath = ".../src/users.ser";
-    private final String eventsPath = ".../src/events.ser";
-    private final String messagesPath = ".../src/messages.ser";
-    private final String roomsPath = ".../src/rooms.ser";
+    private final String usersPath = "./src/users.ser";
+    private final String eventsPath = "./src/events.ser";
+    private final String messagesPath = "./src/messages.ser";
+    private final String roomsPath = "./src/rooms.ser";
 
     // Variable for keeping track with user, should be initialized after login.
     String username;
