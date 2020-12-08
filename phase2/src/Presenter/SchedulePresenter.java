@@ -147,50 +147,23 @@ public class SchedulePresenter {
     /**
      * Prints a prompt for the Organizer to choose a capacity for their event.
      */
-    public void printCapacityPrompt(String room){
+    public void printCapacityPrompt(int roomCapacity){
         System.out.println("Enter the maximum capacity of people for this event " + "(0 < capacity <= " +
-                eventManager.getRoom(Integer.parseInt(room)).getValue() +"): ");
+                roomCapacity +"): "); //eventManager.getRoom(Integer.parseInt(room)).getValue()
     }
 
     /**
-     *
+     * Prints a string indicating entered capacity is invalid.
      */
     public void printInvalidCapacity(){
-        System.out.println("That capacity is below or equal to the current capacity, " +
-                "over the room capacity, or not a correct format.");
+        System.out.println("Invalid capacity entered.");
     }
 
     /**
-     * Prints a string of all the available and unavailable rooms for an event
-     * given the chosen time and prompts the user to enter the room they wish
-     * to book for their event.
-     *
-     * @param time - the chosen time
-     * @param duration - the duration of an event
+     * Prints a string indicating capacity entered is less than current number of attendees and speakers for the event.
      */
-    public void displayRoomList (LocalDateTime time, int duration) {
-        StringBuilder availableRooms = new StringBuilder("Available Rooms: ");
-        StringBuilder unavailableRooms = new StringBuilder("Unavailable Rooms: ");
-        for (Pair<Integer, Integer> r: eventManager.getRoomList()) {
-            if (!eventManager.getAvailableRooms(time, duration).contains(r.getKey())) {
-                unavailableRooms.append(r.getKey().toString()).append(", ");
-            } else {
-                availableRooms.append(r.getKey().toString()).append(", ");
-            }
-        }
-
-        availableRooms = new StringBuilder(availableRooms.toString().replaceAll(", $", ""));
-        unavailableRooms = new StringBuilder(unavailableRooms.toString().replaceAll(", $", ""));
-        System.out.println("Here are the available and unavailable rooms:\n" + availableRooms + "\n" +
-                unavailableRooms + "\nPlease enter the room you wish to book for this Event or 0 to return to the " +
-                "Scheduling Menu: ");
-    }
-
-    /**
-     * Prints "That room does not exist or is unavailable."
-     */
-    public void printFailRoom(){
-        System.out.println("That room does not exist or is unavailable.");
+    public void printNewCapacityBelowCurrentAttendees() {
+        System.out.println("The capacity entered cannot be lower than the current number of attendees and speakers signed up for the event.");
     }
 
     /**
@@ -206,7 +179,7 @@ public class SchedulePresenter {
      * @param capacity - the capacity of the event
      */
     public void createEventResult(boolean creationSuccess, String name, ArrayList<String> speaker, LocalDateTime time,
-                                  Pair<Integer, Integer> room, int duration, int capacity) {
+                                  int room, int duration, int capacity) {
         String speakerString;
         if (speaker.isEmpty()){
             speakerString = "No speakers";
@@ -219,7 +192,7 @@ public class SchedulePresenter {
                     "\n" + "Time: " + time.toString() +
                     "\n" + "Duration: " + duration + " hours" +
                     "\n" + "Speaker(s): " + speakerString +
-                    "\n" + "Room Number: " + room.getKey().toString() +
+                    "\n" + "Room Number: " + room +
                     "\n" + "Capacity: " + capacity + " people");
         } else{
             System.out.println("Event Creation Failed.");
@@ -268,7 +241,7 @@ public class SchedulePresenter {
      */
     public void printAttendeesExist() {
         System.out.println("There are attendees that are registered for this event. Do you still wish to delete " +
-                "this event?\nEnter 0 to keep the event and return to the Scheduling menu or 1 to delete the event.");
+                "this event?\nEnter 1 to delete the event or enter anything else to keep the event and return to the Scheduling menu.");
     }
 
     /**
@@ -276,6 +249,13 @@ public class SchedulePresenter {
      */
     public void printDeletionSuccess(){
         System.out.println("You have successfully deleted this event.");
+    }
+
+    /**
+     * Prints message indicating the event was not successfully deleted.
+     */
+    public void printDeletionFailure() {
+        System.out.println("The event was unable to be deleted");
     }
 
     /**
@@ -320,20 +300,13 @@ public class SchedulePresenter {
      * Prints the capacity of the event and what the Organizer would like to change it to.
      *
      * @param event - the event that is chosen
-     * @param room - the room number of the event
+     * @param roomCapacity - the capacity of the event's room
      */
-    public void printChangeCapacity(String event, Integer room){
+    public void printChangeCapacity(String event, int roomCapacity){
         System.out.println(event + "'s current Capacity is " + eventManager.getCapacityByEvent(event) + " and its " +
-                "Room's Capacity is " + eventManager.getRoom(room).getValue() + ".\nEnter the new " +
-                "Room Capacity (must not be greater than " + eventManager.getRoom(room).getValue() +
+                "Room's Capacity is " + roomCapacity + ".\nEnter the new " +
+                "Room Capacity (must not be greater than " + roomCapacity +
                 ") you would like or enter 0 to return to the Scheduling Menu: ");
-    }
-
-    /**
-     * Print "Your Event's Capacity is already equal to the Room's Capacity."
-     */
-    public void printEventEqualRoom() {
-        System.out.println("Your Event's Capacity is already equal to the Room's Capacity.");
     }
 
     /**
