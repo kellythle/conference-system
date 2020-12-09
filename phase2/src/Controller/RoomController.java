@@ -10,18 +10,23 @@ import java.util.Scanner;
 public class RoomController {
     private final RoomManager roomManager;
     private final RoomBuilder roomBuilder = new RoomBuilder();
-
     private final InputValidator inputValidator = new InputValidator();
-
     private final RoomPresenter roomPresenter = new RoomPresenter();
-
     private final Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Constructor for the RoomController taking a RoomManager.
+     * @param roomManager the RoomManager
+     */
     public RoomController(RoomManager roomManager)
     {
         this.roomManager = roomManager;
     }
 
+    /**
+     * Displays the room menu and gets input from the user about which option they would like to select.
+     * @return the selected option
+     */
     public String getRoomMenu() {
         roomPresenter.printOrganizerRoomMenu();
         Scanner scanner = new Scanner(System.in);
