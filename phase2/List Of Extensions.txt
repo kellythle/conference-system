@@ -7,10 +7,9 @@ show up. So we chose 3 optional extensions.
     (a) Multiple types of events: Includes normal event (1 speaker), panel (2 speakers), and party (no speakers).
     (b) Events can be canceled by at least one organizer.
     (c) VIP user:
-        - special code required to create VIP accounts
-        - can message any organizer/speaker/VIP, or attendee if they're friends
+        - special code required to create VIP accounts, from a perfect score in a math game's hard mode
+        - can message any organizer, also VIPs or attendees if they're friends
         - custom UI (slightly nicer)
-        - show friend request at top
     (d) Organizers can create other users including: Attendee, Speaker, and VIP.
     (e) Events and Rooms have maximum capacity.
 2. Optional extensions

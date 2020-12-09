@@ -55,18 +55,20 @@ This option menu includes the following:
 The login system give user access to sign in an existed account or register a new account.
 1. Once you use the application, there is a start menu coming with 2 options: Sign in and register. You can choose either
 of them. If the user input unrelated strings, the system will notify the user to follow the instruction.
-2. For new user, choosing 'register' and you will enter register menu. You can choose the user type. For p1 we don't set
-any restrictions on username and password so you input anything as well as it is not empty, on which case the system will
-warn you not leaving it empty.
+2. For new user, choosing 'register' and you will enter register menu. You can choose the user type. There are a few
+restrictions on username and password so you input. Usernames cannot be empty, be "0" as it is reserved for menues, or,
+a duplicate regardless of case. The password has to be within length 4-8 and not contain repeating characters. You would
+also need a special invitation code, achieved by getting a perfect score on the math game's hard mode, to make a VIP.
 3. For existed user, choosing 'sign in ', logging in and you will see the main menu if it is a successful login.Try again
  if you input anything wrong. For different type of user you can different stuff.
 (a). For organizer you can create other users, access to sign up system, schedule system, messaging system, play math games
 and logout option.
 (b). For speaker you can only access to sign up system, messaging system, play math games and logout.
 (c). For attendee you can access to sign up system and message system, play math games as well as an option to logout.
-(d). If you choose logout on any menu there is a logout menu to assure whether you want logout or still keep login. If
+(d). For VIP you can access sign up system and message system, play math games as well as an option to logout.
+(e). If you choose logout on any menu there is a logout menu to assure whether you want logout or still keep login. If
 you choose to logout you will logout successfully if the system tell you that.
-(e). In any menu if you are too naughty to input something outside the options, our system will inform you to follow our
+(f). In any menu if you are too naughty to input something outside the options, our system will inform you to follow our
 instructions politely.
 
 
