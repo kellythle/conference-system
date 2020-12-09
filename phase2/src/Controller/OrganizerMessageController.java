@@ -33,7 +33,9 @@ public class OrganizerMessageController extends MessageController {
     public boolean sendSingleMessage(String receiverID, String messageContent){
         if (myUserManager.canSend(username, receiverID)){
             return myMessageManager.createMessage(receiverID, messageContent);
-        } else {return false;}
+        } else {
+            messagePresenter.printCannotSend();
+            return false;}
     }
 
     /**

@@ -125,6 +125,18 @@ be prompted to enter a new capacity.
 This system helps view or send messages.
 1. Message System is accessible for all Users, but menu options will be generated for different types
 of users.
+
+VIP and attendee:
+- Friend list system (Only able to message each other(VIP and Attendee)) if they are friends)
+- Able to message Speakers of their enrolled talks
+- Attendees cannot message Organizer, VIP can message Organizer
+Speaker:
+- Able to message to all users attending their talks regardless of type
+Organizer:
+- Able to message all users regardless of type
+
+All user can reply to anyone if they received message.
+
 2. On the Message System menu, there are these options:
     For Attendees   0. Exit Message Menu.
            & VIPS:  1. View conversations and reply to messages.
@@ -157,8 +169,9 @@ as well as the content of the message.
 5. All users can view their archived messages, and delete archived conversations or unarchive conversations. Organizers
 can also view the system's message trash bin, view messages that have been fully deleted by both its sender and receiver
 (or by an Organizer or VIP), and clear the system's storage of fully deleted messages.
-6. Speakers, Attendees, and VIPs can manage their friend requests. Organizers can message anyone, so they don't have
-friend lists.
+6. Attendees and VIPs can only send messages to other Attendees and VIPs only if they are friends. They can request each
+other to be friends and can either accept or decline the request. If friend request is accepted then the user is added to
+friend list.
 7. Entering 0 for any type of User will return you to the main menu.
 
 
