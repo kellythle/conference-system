@@ -330,7 +330,7 @@ public class UserManager implements Serializable {
      */
     public boolean addFriendRequest(String username, String receiver){
         if (!isFriend(username, receiver) && !isFriendRequestSent(username, receiver)){
-            if (getUserType(receiver).equals("VIP")) {
+            if (getUserType(username).equals("VIP")) {
                 getUserByName(receiver).addVIPFriendRequest(username);
                 return true;
             }

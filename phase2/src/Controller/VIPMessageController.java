@@ -39,9 +39,8 @@ public class VIPMessageController extends MessageController{
      */
     @Override
     public void sendMessage(){
-        messagePresenter.printAttendees(myUserManager);
+        messagePresenter.printFriendList(myUserManager, username);
         messagePresenter.printEnrolledSpeakers(myUserManager, myEventManager, username);
-        messagePresenter.printVIPs(myUserManager);
         messagePresenter.printOrganizers(myUserManager);
         Scanner scanner = new Scanner(System.in);
         messagePresenter.printReceiverIDPrompt();
