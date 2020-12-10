@@ -259,7 +259,6 @@ public class ConferenceSystem {
         }while (!menuOption.equals("4"));
     }
 
-
     /**
      * organizer menu helper class
      */
@@ -624,7 +623,7 @@ public class ConferenceSystem {
     private void roomMenu() {
         String option;
         do {
-            option = roomController.getRoomMenu();
+            option = roomController.getRoomMenu("non-organizer");
             switch (option){
                 case "0":
                     break;
@@ -640,7 +639,7 @@ public class ConferenceSystem {
     private void organizerRoomMenu() {
         String option;
         do {
-            option = roomController.getRoomMenu();
+            option = roomController.getRoomMenu("organizer");
             switch (option){
                 case "0":
                     break;

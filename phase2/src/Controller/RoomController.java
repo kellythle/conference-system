@@ -27,8 +27,12 @@ public class RoomController {
      * Displays the room menu and gets input from the user about which option they would like to select.
      * @return the selected option
      */
-    public String getRoomMenu() {
-        roomPresenter.printOrganizerRoomMenu();
+    public String getRoomMenu(String type) {
+
+        if (type.toLowerCase().equals("organizer"))
+            roomPresenter.printOrganizerRoomMenu();
+        else
+            roomPresenter.printRoomMenu();
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
     }
@@ -232,6 +236,9 @@ public class RoomController {
         roomPresenter.printSelectRoomForFullInfo();
 
         int displayRoomNumber = getRoomNumber();
+
+        if (displayRoomNumber == 0)
+            return;
 
         roomPresenter.printRoomFull(displayRoomNumber, roomManager);
     }
