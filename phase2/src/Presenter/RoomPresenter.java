@@ -285,7 +285,7 @@ public class RoomPresenter {
      * Prints a message indicating the user should enter the number of the room they want to delete.
      */
     public void printSelectRoomForDeletion() {
-        System.out.println("Enter the number of the room to delete: ");
+        System.out.println("Enter the number of the room to delete, or enter 0 to cancel: ");
     }
 
     /**
