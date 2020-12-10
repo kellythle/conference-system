@@ -7,8 +7,8 @@ Table of Contents:
     - [Sign Up System]
     - [Schedule System]
     - [Message System]
-    - [Questions for TA]
-
+    - [Room System]
+    - [Math Game System]
 
 
 ======== [Important Note for First Time Running the Program] ========
@@ -21,8 +21,8 @@ appear when running the program again (provided there are no other issues while 
 
 For more information, please refer to the [Reading and Writing to Files] section of this readme.
 
-The file paths of the files is with the assumption that the group_0210 directory is the working directory.
-
+IMPORTANT: The file reading and writing assumes that the working directory is the phase 2 folder inside group_0210.
+Please confirm this before running, otherwise reading and writing from files will not function.
 
 
 ======== [Reading and Writing to Files] ========
@@ -176,7 +176,27 @@ other to be friends and can either accept or decline the request. If friend requ
 friend list.
 7. Entering 0 for any type of User will return you to the main menu.
 
+======== [Room System] ========
+This system allows users to interact with rooms. The room menu allows users to view a list of registered rooms,
+add a room to the list of rooms, or delete a room from the list of rooms.
 
+1. View a list of registered rooms:
+
+Any type of user is allowed to view a list of registered rooms. Selecting the option to show the list of registered
+rooms will display a brief overview of each room, including the room number, capacity, and description. The user can
+select a room number to view the room's complete information.
+
+2. Add a room:
+
+Only organizers are able to add a room to the list of registered rooms. Selecting the option to add a room will prompt
+the user to enter in various information about the room, such as the room's number, capacity, square feet, among others.
+The room will be added to the list once these prompts have been answered.
+
+3. Delete a room:
+
+Only organizers are able to delete a room from the list of registered rooms. Selecting the option to delete a room will
+prompt the user to enter in the room's number. The room can only be deleted if there are no events scheduled for
+the future.
 
 ======== [Math Game System] ========
 This system allows you to play some math games. Including summation, subtraction, multiplication, and division.
