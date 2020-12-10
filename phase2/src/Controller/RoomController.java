@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class RoomController {
     private final RoomManager roomManager;
-    private final RoomBuilder roomBuilder = new RoomBuilder();
+    private RoomBuilder roomBuilder = new RoomBuilder();
     private final InputValidator inputValidator = new InputValidator();
     private final RoomPresenter roomPresenter = new RoomPresenter();
     private final Scanner scanner = new Scanner(System.in);
@@ -177,7 +177,7 @@ public class RoomController {
         String specialFeatures = getNewRoomSpecialFeatures();
         String description = getNewRoomDescription();
 
-        roomBuilder.roomNumber(roomNumber)
+        roomBuilder = roomBuilder.roomNumber(roomNumber)
                 .roomNumber(roomNumber)
                 .capacity(capacity)
                 .squareFootage(squareFeet)
@@ -207,7 +207,7 @@ public class RoomController {
         while (!validNumber) {
             roomNumber = inputValidator.getIntGreaterOrEqual(0);
 
-            if (!roomManager.doesRoomExist(roomNumber))
+            if (!roomManager.doesRoomExist(roomNumber) && roomNumber != 0)
                 roomPresenter.printRoomNonExistent();
             else
                 validNumber = true;
