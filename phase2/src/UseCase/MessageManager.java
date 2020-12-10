@@ -505,11 +505,7 @@ public class MessageManager implements Serializable {
         ArrayList<UUID> conversation = getSingleConversationByReceiver(otherID);
         UUID someMessage = conversation.get(0);
         getMessage(someMessage).markAsUnread();
-        if (getSenderUnreadConversations().contains(otherID)){
-            return true;
-        } else {
-            return false;
-        }
+        return getSenderUnreadConversations().contains(otherID);
     }
 
     /**
@@ -548,8 +544,9 @@ public class MessageManager implements Serializable {
     public ArrayList<UUID> getFullyDeletedMessagesByUser(String messenger){
         ArrayList<UUID> messageList = new ArrayList<>();
         for (UUID i: deletedMessages.keySet()){
-            Message m = deletedMessages.get(i);
-            if (m.getSender().equals(messenger)||m.getReceiver().equals(messenger)){
+            String one = getMessageSender(i);
+            String two = getMessageReceiver(i);
+            if (one.equals(messenger)||two.equals(messenger)){
                 messageList.add(i);
             }
         }

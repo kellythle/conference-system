@@ -135,8 +135,8 @@ public class MessagePresenter {
         System.out.println(unread);
         System.out.println("Options:\n" +
                 "Enter a username to see your message history \n" +
-                "1. Mark conversation as read \n" +
-                "2. Mark conversation as unread\n" +
+                "1. Mark a conversation as read \n" +
+                "2. Mark a conversation as unread\n" +
                 "(Note: you can only mark a conversation as unread if you have received messages in it)\n" +
                 "Enter a username, 1, 2, or anything else to return to Message Menu:");
     }
@@ -201,8 +201,8 @@ public class MessagePresenter {
                 "0: Reply to this conversation\n" +
                 "1. Archive a single message\n" +
                 "2. Archive entire conversation\n" +
-                "3. Delete a single message (only from your inbox, unless you have VIP status)\n" +
-                "4. Delete conversation (only from your inbox, unless you have VIP status)\n" +
+                "3. Delete a single message (only from your inbox, unless you have VIP or Organizer status)\n" +
+                "4. Delete conversation (only from your inbox, unless you have VIP or Organizer status)\n" +
                 "5. Continue browsing conversations\n" +
                 "Enter 0, 1, 2, 3, 4, 5, or anything else to return to the Message Menu: ");
     }
@@ -444,10 +444,10 @@ public class MessagePresenter {
     }
 
     /**
-     * Print notification of message unarchived.
+     * Print notification of conversation unarchived.
      */
     public void printMessageUnarchived(){
-        System.out.println("Message successfully unarchived.");
+        System.out.println("Conversation successfully unarchived.");
     }
 
     /**
@@ -682,10 +682,10 @@ public class MessagePresenter {
      * Display the fully deleted messages by a given user.
      *
      * @param messageManager - an instance of MessageManager
-     * @param username - the username of the user whose deleted messages you wish to view
+     * @param userID - the username of the user whose deleted messages you wish to view
      */
-    public void viewUserFullyDeletedMessage(MessageManager messageManager, String username){
-        ArrayList<UUID> messages = messageManager.getFullyDeletedMessagesByUser(username);
+    public void viewUserFullyDeletedMessage(MessageManager messageManager, String userID){
+        ArrayList<UUID> messages = messageManager.getFullyDeletedMessagesByUser(userID);
         for (UUID i: messages){
             String messageContent = messageManager.getMessageSender(i) + " sent to "
                     + messageManager.getMessageReceiver(i) + ":\n" + messageManager.getMessageContent(i) +

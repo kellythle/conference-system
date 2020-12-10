@@ -29,7 +29,14 @@ public class OrganizerMessageController extends MessageController {
         super(username, myUserManager, myMessageManager, eventManager);
     }
 
-
+    /**
+     * Sends single message to given user.
+     *
+     * @param receiverID String username of the recipient of the message
+     * @param messageContent String content of the message
+     * @return true if message created
+     */
+    @Override
     public boolean sendSingleMessage(String receiverID, String messageContent){
         if (myUserManager.canSend(username, receiverID)){
             return myMessageManager.createMessage(receiverID, messageContent);
@@ -193,7 +200,7 @@ public class OrganizerMessageController extends MessageController {
             clearDeletedMessagesBin();
         }
         else if (myMessageManager.getDeletedMessagesSenderReceivers().contains(input)){
-            viewUserDeletedMessagesBin(username);
+            viewUserDeletedMessagesBin(input);
         }
     }
 
@@ -213,10 +220,10 @@ public class OrganizerMessageController extends MessageController {
     /**
      * Displays messages fully deleted that belong to a specific user, given a username.
      *
-     * @param username - username of the user whose deleted messages are displayed.
+     * @param userID - username of the user whose deleted messages are displayed.
      */
-    private void viewUserDeletedMessagesBin(String username){
-        messagePresenter.viewUserFullyDeletedMessage(myMessageManager,username);
+    private void viewUserDeletedMessagesBin(String userID){
+        messagePresenter.viewUserFullyDeletedMessage(myMessageManager, userID);
         Scanner scan = new Scanner(System.in);
         String input = scan.nextLine();
         if (input.equals("0")){
