@@ -111,7 +111,7 @@ public class LoginPresenter {
                 "5. Send a message\n" +
                 "6. Play Math Game\n" +
                 "7. Log out\n"+
-                "Enter 1, 2, 3, 4, 5 or 6: ");
+                "Enter 1, 2, 3, 4, 5, 6 or 7: ");
     }
 
     /**
@@ -151,8 +151,8 @@ public class LoginPresenter {
                 "1. Sign up\n" +
                 "2. Send a message\n" +
                 "3. View room menu\n" +
-                "3. Play Math Game\n" +
-                "4. Log out\n"+
+                "4. Play Math Game\n" +
+                "5. Log out\n"+
                 "Please enter 1, 2, 3, 4, or 5: ");
     }
 
