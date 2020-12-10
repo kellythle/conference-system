@@ -140,7 +140,6 @@ public class LoginController {
         }
         else {
             lp.printInvalidInvCode();
-            lp.printInitialAccountCreationMenu();
             return false; // make sure the account does not get created
         }
     }
