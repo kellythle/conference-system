@@ -1,7 +1,6 @@
 package Presenter;
 
 import UseCase.EventManager;
-import javafx.util.Pair;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
