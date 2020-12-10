@@ -267,20 +267,5 @@ public class RoomController {
         } else {
             roomPresenter.printRoomDeletionFailure();
         }
-
-    }
-
-    public void getSearchParameters() {
-        int capacity = getNewRoomCapacity();
-        int squareFeet = getNewRoomSquareFeet();
-        int screens = getNewRoomScreens();
-        boolean soundSystem = getNewRoomSoundSystem();
-        boolean stage = getNewRoomStage();
-        boolean accessible = getNewRoomAccessible();
-        boolean wifi = getNewRoomWifi();
-        String specialFeatures = getNewRoomSpecialFeatures();
-        String description = getNewRoomDescription();
-
-
     }
 }

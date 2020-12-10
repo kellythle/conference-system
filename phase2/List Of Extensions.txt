@@ -19,7 +19,11 @@ show up. So we chose 3 optional extensions.
         inboxes--and clear it.
     (b) Allows user to request events by a specific day, time or speaker,and requested events. For speakers,
     they can also see events that they speaks.
-    (c) Separate Room as an Entity from Event. So room now has more features other than capacity and room number.
+    (c) Separate Room as an Entity from Event. Each Room class contains information about room capacity, square footage,
+    if it has accessibility features, and others. There are several options for interacting with rooms:
+        - View a list of all of the rooms that have been registered.
+        - Register a room.
+        - Delete a room.
 3. Our own extensions
     (a) Advance password restrictions.
     (b) Allow speakers to sign up for events (except the events they are speaking).
