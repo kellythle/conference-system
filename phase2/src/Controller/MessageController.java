@@ -382,7 +382,10 @@ public class MessageController {
     public void sendingFriendRequest(String receiver) {
         if (myUserManager.containsUser(receiver)) {
             if (myUserManager.getUserType(receiver).equals("Attendee") || myUserManager.getUserType(receiver).equals("VIP")) {
-                if (!myUserManager.addFriendRequest(username, receiver)) {
+                if (!myUserManager.isFriend(username, receiver) && !myUserManager.isFriendRequestSent(receiver, username)) {
+                    myUserManager.addFriendRequest(username, receiver);
+                }
+                else {
                     messagePresenter.printAlreadySent();
                 }
             } else {
