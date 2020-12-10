@@ -166,7 +166,6 @@ public class ScheduleController {
         boolean ValidRoom = false;
         do {
             Scanner scan2 = new Scanner(System.in);
-            //scheduleP.displayRoomList(eventTime, intDuration);
             ArrayList<Integer> availableRooms = roomManager.getAvailableRooms(eventTime, intDuration);
 
             roomP.printAvailableRoomNumbers(availableRooms);
@@ -177,8 +176,7 @@ public class ScheduleController {
                 room = Integer.parseInt(roomInput);
                 if (room == 0) {
                     return;
-                } else if (!availableRooms.contains(room)){ //!eventManager.getAvailableRooms(eventTime, intDuration).contains(intRoom)
-                    //scheduleP.printFailRoom();
+                } else if (!availableRooms.contains(room)){
                     roomP.printRoomNotAvailable();
                     ValidRoom = false;
                 } else {
