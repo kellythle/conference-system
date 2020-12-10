@@ -1,7 +1,6 @@
 package UseCase;
 
 import Entity.Event;
-import javafx.util.Pair;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -17,7 +16,6 @@ import java.util.Objects;
 public class EventManager implements Serializable {
 
     private ArrayList<Event> eventList = new ArrayList<>();
-    private ArrayList<Pair<Integer, Integer>> roomList = new ArrayList<>();
 
     /**
      * Returns the starting time of this conference
@@ -57,7 +55,6 @@ public class EventManager implements Serializable {
         }
         return availableTimes;
     }
-
 
     /**
      * Returns the list of events.
@@ -260,9 +257,7 @@ public class EventManager implements Serializable {
             else if((eStartHour < startHour && startHour < eEndHour)){
                 return true;
             }
-            else if((startHour < eStartHour && eStartHour < endHour)) {
-                return true;
-            }
+            else return startHour < eStartHour && eStartHour < endHour;
         }
         return false;
     }

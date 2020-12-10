@@ -8,6 +8,12 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * A Use Case that deals with how Room entities can be used, and stores a TreeMap of all the currently
+ * registered rooms.
+ *
+ * @author Filip Jovanovic
+ */
 public class RoomManager implements Serializable {
     private final TreeMap<Integer, Room> roomMap = new TreeMap<>();
 
@@ -251,11 +257,10 @@ public class RoomManager implements Serializable {
         Room room = roomMap.get(roomNumber);
         TreeMap<LocalDateTime, LocalDateTime> schedule = room.getSchedule();
 
-        for (LocalDateTime startDateTime : schedule.keySet()) {
-            if (startDateTime.isBefore(LocalDateTime.now())) {
-                room.removeFromSchedule(startDateTime);
-            }
-        }
+        if (schedule.isEmpty())
+            return;
+
+        schedule.entrySet().removeIf(entry -> entry.getKey().isBefore(LocalDateTime.now())); // Using predicates
     }
 }
 

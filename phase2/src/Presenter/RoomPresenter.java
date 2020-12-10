@@ -4,6 +4,11 @@ import UseCase.RoomManager;
 
 import java.util.ArrayList;
 
+/**
+ * A presenter class for printing messages related to room actions.
+ *
+ * @author Filip Jovanovic
+ */
 public class RoomPresenter {
 
     /**

@@ -4,6 +4,11 @@ import Presenter.InputPresenter;
 
 import java.util.Scanner;
 
+/**
+ * A controller class used for validating inputs that have certain restrictions on them.
+ *
+ * @author Filip Jovanovic
+ */
 public class InputValidator {
     Scanner scanner = new Scanner(System.in);
     InputPresenter inputPresenter = new InputPresenter();

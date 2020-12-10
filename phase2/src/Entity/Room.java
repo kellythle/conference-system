@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.TreeMap;
 
+/**
+ * An entity class that represents a room.
+ *
+ * @author Filip Jovanovic
+ */
 public class Room implements Serializable {
     private TreeMap<LocalDateTime, LocalDateTime> schedule = new TreeMap<>();
     private int roomNumber;

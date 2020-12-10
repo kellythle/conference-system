@@ -2,6 +2,11 @@ package UseCase;
 
 import Entity.Room;
 
+/**
+ * A Builder class for creating new Room objects.
+ *
+ * @author Filip Jovanovic
+ */
 public class RoomBuilder {
     private int roomNumber;
     private int capacity;

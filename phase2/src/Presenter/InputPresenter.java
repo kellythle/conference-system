@@ -1,5 +1,8 @@
 package Presenter;
 
+/**
+ * A presenter class for messages related to validating input from the user.
+ */
 public class InputPresenter {
 
     /**

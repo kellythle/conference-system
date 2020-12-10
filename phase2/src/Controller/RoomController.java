@@ -7,6 +7,11 @@ import UseCase.RoomManager;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * A controller class that deals with displaying a list of rooms, adding rooms, and deleting rooms.
+ *
+ * @author Filip Jovanovic
+ */
 public class RoomController {
     private final RoomManager roomManager;
     private RoomBuilder roomBuilder = new RoomBuilder();
