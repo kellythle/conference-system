@@ -5,7 +5,7 @@ an employment fair, etc.) to communicate with each other in very specific ways. 
 In Phase 0, we designed a program that will allow Attendees to sign up for events and message each other. 
 
 In Phase 1, we created our program that organized a tech conference, where there were organizers, speakers, 
-and attendees. Each speaker could give one or more talks. Organizers decidecd when and where the talks will 
+and attendees. Each speaker could give one or more talks. Organizers decided when and where the talks will 
 take place. Attendees could view the schedule of talks by time, title, or speaker. 
 
 At the end of Phase 2, we had an app that allowed Organizers of a conference to plan the event, allowed Speakers at the event to learn 
