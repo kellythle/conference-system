@@ -12,4 +12,12 @@ At the end of Phase 2, we had an app that allowed Organizers of a conference to 
 the information they need to speak and communicate with the Attendees of their presentation, allowed Attendees to sign up for events and network 
 with each other, and more.
 
-
+## Authors
+CSC207 Fall 2020 group_0210
+*Filip Jovanovic
+*Jennifer Kim
+*Kelly Le
+*Richard Wu
+*William Wang
+*Wenying Wu
+*Ann Yen
