@@ -1,7 +1,0 @@
-Questions:
-1. Can you explain the concept of MVP again? (An Yen)
-2. When writing CRC cards, how can I identify Use cases with Entities? (An Yen)
-3. How can we deal with/make design decisions with regards to design principles that conflict? (Wenying)
-4. How do we decide which nouns to choose as entities? (Jennifer)
-5. Can you explain exactly what a 'responsibility' is for Single Responsibility Principle? (Filip)
-6. How would you recommend us to combine our Phase 0s so we can continue on with Phase 1 after? (Kelly)
