@@ -14,10 +14,10 @@ with each other, and more.
 
 ## Authors
 CSC207 Fall 2020 group_0210
--Filip Jovanovic
--Jennifer Kim
--Kelly Le
--Richard Wu
--William Wang
--Wenying Wu
--Ann Yen
+- Filip Jovanovic
+- Jennifer Kim
+- Kelly Le
+- Richard Wu
+- William Wang
+- Wenying Wu
+- Ann Yen
